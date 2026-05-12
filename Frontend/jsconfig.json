@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@food/*": ["./src/modules/food/frontend/src/*"]
+    }
+  },
+  "include": ["src"]
+}

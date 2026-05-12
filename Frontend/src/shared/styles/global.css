@@ -1,0 +1,280 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "leaflet/dist/leaflet.css";
+@import "./design-system.css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  font-family: 'Poppins', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
+  --font-outfit: 'Outfit', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --radius: 0.625rem;
+  
+  --background: #ffffff;
+  --foreground: oklch(0.2 0.05 50);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.05 50);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.05 50);
+  --primary: oklch(0.7 0.15 85);
+  --primary-foreground: oklch(0.15 0.05 50);
+  --secondary: oklch(0.95 0.02 90);
+  --secondary-foreground: oklch(0.3 0.08 60);
+  --muted: oklch(0.96 0.01 90);
+  --muted-foreground: oklch(0.5 0.05 50);
+  --accent: oklch(0.92 0.08 75);
+  --accent-foreground: oklch(0.25 0.06 55);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.9 0.02 85);
+  --input: oklch(0.95 0.01 90);
+  --ring: oklch(0.7 0.15 85);
+  --sidebar: oklch(0.98 0.01 90);
+  --sidebar-foreground: oklch(0.2 0.05 50);
+  --sidebar-primary: oklch(0.7 0.15 85);
+  --sidebar-primary-foreground: oklch(0.15 0.05 50);
+  --sidebar-accent: oklch(0.95 0.02 90);
+  --sidebar-accent-foreground: oklch(0.3 0.08 60);
+  --sidebar-border: oklch(0.9 0.02 85);
+  --sidebar-ring: oklch(0.7 0.15 85);
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+  --font-display: 'Outfit', sans-serif;
+  --shadow-premium: 0 10px 40px -10px rgba(0,0,0,0.1);
+  --shadow-soft: 0 4px 20px -2px rgba(0,0,0,0.05);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Blinkit Brand Colors */
+  --color-brand-50: #f0fdf4;
+  --color-brand-100: #dcfce7;
+  --color-brand-200: #bbf7d0;
+  --color-brand-300: #86efac;
+  --color-brand-400: #2e7d32;
+  --color-brand-500: #15803d;
+  --color-brand-600: #0c831f;
+  --color-brand-700: #0a6919;
+  --color-brand-800: #085013;
+  --color-brand-900: #06390e;
+  --color-brand-950: #021e07;
+  
+  --color-page-bg: #ffffff;
+  --color-primary-orange: #cc2532;
+  --font-poppins: var(--font-poppins);
+  --font-outfit: var(--font-outfit);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground m-0 min-h-screen;
+  }
+}
+
+@layer utilities {
+  .dark .quick-theme-scope [class~="bg-white"]:not([class*="dark:bg"]) {
+    background-color: #111827;
+  }
+
+  .dark .quick-theme-scope [class~="bg-slate-50"]:not([class*="dark:bg"]) {
+    background-color: #0f172a;
+  }
+
+  .dark .quick-theme-scope [class~="bg-slate-100"]:not([class*="dark:bg"]) {
+    background-color: #1e293b;
+  }
+
+  .dark .quick-theme-scope [class~="text-black"]:not([class*="dark:text"]) {
+    color: #f8fafc;
+  }
+
+  .dark .quick-theme-scope [class~="text-slate-900"]:not([class*="dark:text"]) {
+    color: #f8fafc;
+  }
+
+  .dark .quick-theme-scope [class~="text-slate-800"]:not([class*="dark:text"]) {
+    color: #e2e8f0;
+  }
+
+  .dark .quick-theme-scope [class~="text-slate-700"]:not([class*="dark:text"]) {
+    color: #cbd5e1;
+  }
+
+  .dark .quick-theme-scope [class~="text-slate-600"]:not([class*="dark:text"]) {
+    color: #94a3b8;
+  }
+
+  .dark .quick-theme-scope [class~="text-gray-800"]:not([class*="dark:text"]) {
+    color: #e2e8f0;
+  }
+
+  .dark .quick-theme-scope [class~="text-gray-700"]:not([class*="dark:text"]) {
+    color: #cbd5e1;
+  }
+
+  .dark .quick-theme-scope [class~="text-gray-600"]:not([class*="dark:text"]) {
+    color: #94a3b8;
+  }
+
+  .dark .quick-theme-scope [class~="border-slate-100"]:not([class*="dark:border"]) {
+    border-color: rgba(148, 163, 184, 0.16);
+  }
+
+  .dark .quick-theme-scope [class~="border-slate-200"]:not([class*="dark:border"]) {
+    border-color: rgba(148, 163, 184, 0.2);
+  }
+
+  .dark .quick-theme-scope [class~="border-gray-100"]:not([class*="dark:border"]) {
+    border-color: rgba(148, 163, 184, 0.16);
+  }
+
+  .dark .quick-theme-scope [class~="border-gray-200"]:not([class*="dark:border"]) {
+    border-color: rgba(148, 163, 184, 0.2);
+  }
+
+  .mesh-gradient-light {
+    background-color: #fdfdfd;
+    background-image:
+      radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(244, 63, 94, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(245, 158, 11, 0.05) 0px, transparent 50%);
+  }
+
+  .custom-scrollbar-dark::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .custom-scrollbar-dark::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .custom-scrollbar-dark::-webkit-scrollbar-thumb {
+    @apply bg-white/10 rounded-full hover:bg-white/20 transition-colors;
+  }
+
+  .scrollbar-hide,
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar,
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .content-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 720px;
+  }
+  
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  
+  .animate-scroll {
+    animation: scroll 15s linear infinite;
+  }
+
+  .classic-marquee-track {
+    animation: hero-marquee 22s linear infinite;
+    will-change: transform;
+  }
+
+  @keyframes hero-marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fade-in-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slide-in-left { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes fade-down { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+
+.animate-fade-in { animation: fade-in 0.6s ease-out; }
+.animate-fade-in-up { animation: fade-in-up 0.6s ease-out; }
+.animate-slide-in-left { animation: slide-in-left 0.8s ease-out; }
+.animate-fade-down { animation: fade-down 0.5s ease-out; }
+
+.leaflet-container { height: 100%; width: 100%; z-index: 1; }
+.custom-marker { background: transparent; border: none; }
+.touch-none { touch-action: none; }
+.touch-pan-x { touch-action: pan-x; }
+
+/* Google Places Autocomplete dropdown should overlay modals */
+.pac-container {
+  z-index: 999999 !important;
+  pointer-events: auto !important;
+}
+}

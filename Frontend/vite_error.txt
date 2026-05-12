@@ -1,0 +1,36 @@
+﻿[36mvite v7.3.1 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32mΓ£ô[39m 2386 modules transformed.
+node.exe : [31mΓ£ù[39m Build failed in 28.58s
+At C:\Program Files\nodejs\npx.ps1:29 char:3
++   & $NODE_EXE $NPX_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([31mΓ£ù[39m Build failed in 28.58s:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[31merror during build:
+[31m[vite]: Rollup failed to resolve import "react-hook-form" from 
+"C:/Users/SHUBHAM/Desktop/AppZeto-Master-Product-/Frontend/src/modules/hotel/app/admin/pages/AdminSignup.jsx".
+This is most likely unintended because it can break your application at runtime.
+If you do want to externalize this module explicitly add it to
+`build.rollupOptions.external`[31m
+    at viteLog (file:///C:/Users/SHUBHAM/Desktop/AppZeto-Master-Product-/Frontend/node_modules/vite/dist/node/chunks/co
+nfig.js:33635:57)
+    at 
+file:///C:/Users/SHUBHAM/Desktop/AppZeto-Master-Product-/Frontend/node_modules/vite/dist/node/chunks/config.js:33669:73
+    at onwarn (file:///C:/Users/SHUBHAM/Desktop/AppZeto-Master-Product-/Frontend/node_modules/@vitejs/plugin-react/dist
+/index.js:76:7)
+    at 
+file:///C:/Users/SHUBHAM/Desktop/AppZeto-Master-Product-/Frontend/node_modules/vite/dist/node/chunks/config.js:33669:28
+    at onRollupLog (file:///C:/Users/SHUBHAM/Desktop/AppZeto-Master-Product-/Frontend/node_modules/vite/dist/node/chunk
+s/config.js:33664:63)
+    at onLog (file:///C:/Users/SHUBHAM/Desktop/AppZeto-Master-Product-/Frontend/node_modules/vite/dist/node/chunks/conf
+ig.js:33467:4)
+    at file:///C:/Users/SHUBHAM/Desktop/AppZeto-Master-Product-/Frontend/node_modules/rollup/dist/es/shared/node-entry.
+js:21028:32
+    at Object.logger [as onLog] (file:///C:/Users/SHUBHAM/Desktop/AppZeto-Master-Product-/Frontend/node_modules/rollup/
+dist/es/shared/node-entry.js:23023:9)
+    at ModuleLoader.handleInvalidResolvedId (file:///C:/Users/SHUBHAM/Desktop/AppZeto-Master-Product-/Frontend/node_mod
+ules/rollup/dist/es/shared/node-entry.js:21767:26)
+    at file:///C:/Users/SHUBHAM/Desktop/AppZeto-Master-Product-/Frontend/node_modules/rollup/dist/es/shared/node-entry.
+js:21725:26[39m
