@@ -14,7 +14,9 @@ import {
     uploadRestaurantCoverImagesController,
     uploadRestaurantMenuImagesController,
     getRestaurantComplaintsController,
-    deleteRestaurantAccountController
+    deleteRestaurantAccountController,
+    getRestaurantReferralStatsController,
+    getRestaurantReferralDetailsController
 } from '../controllers/restaurant.controller.js';
 import {
     createRestaurantSupportTicketController,
@@ -192,6 +194,10 @@ router.post('/orders/:orderId/resend-notification', authMiddleware, requireResta
 
 // Complaints (restaurant dashboard)
 router.get('/complaints', authMiddleware, requireRestaurant, getRestaurantComplaintsController);
+
+// Referrals
+router.get('/referral-stats', authMiddleware, requireRestaurant, getRestaurantReferralStatsController);
+router.get('/referral-details', authMiddleware, requireRestaurant, getRestaurantReferralDetailsController);
 router.post('/support/tickets', authMiddleware, requireRestaurant, createRestaurantSupportTicketController);
 router.get('/support/tickets', authMiddleware, requireRestaurant, listRestaurantSupportTicketsController);
 

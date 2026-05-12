@@ -1,4 +1,7 @@
 import { FoodRestaurant } from '../models/restaurant.model.js';
+import { FoodRestaurantWallet } from '../models/restaurantWallet.model.js';
+import { FoodReferralSettings } from '../../admin/models/referralSettings.model.js';
+import { FoodReferralLog } from '../../admin/models/referralLog.model.js';
 import { FoodRestaurantOutletTimings } from '../models/outletTimings.model.js';
 import { uploadImageBuffer } from '../../../../services/cloudinary.service.js';
 import { ValidationError } from '../../../../core/auth/errors.js';
@@ -303,7 +306,8 @@ export const registerRestaurant = async (payload, files) => {
         accountHolderName,
         accountType,
         featuredDish,
-        offer
+        offer,
+        ref
     } = payload;
 
     if (!ownerPhone) {
@@ -432,6 +436,65 @@ export const registerRestaurant = async (payload, files) => {
             menuImages,
             ...images
         });
+
+        // --- Referral Handling ---
+        const refRaw = typeof ref === 'string' ? String(ref).trim() : '';
+        if (refRaw) {
+            try {
+                // Find referrer by ID or referralCode
+                const referrerQuery = mongoose.Types.ObjectId.isValid(refRaw)
+                    ? { _id: new mongoose.Types.ObjectId(refRaw) }
+                    : { referralCode: refRaw };
+
+                const [referrer, settingsDoc] = await Promise.all([
+                    FoodRestaurant.findOne(referrerQuery).select('_id referralCount').lean(),
+                    FoodReferralSettings.findOne({ isActive: true }).sort({ createdAt: -1 }).lean()
+                ]);
+
+                if (referrer && settingsDoc) {
+                    const referrerReward = Math.max(0, Number(settingsDoc.restaurant?.referrerReward) || 0);
+                    const refereeReward = Math.max(0, Number(settingsDoc.restaurant?.refereeReward) || 0);
+                    const limit = Math.max(0, Number(settingsDoc.restaurant?.limit) || 0);
+
+                    if (
+                        (referrerReward > 0 || refereeReward > 0) &&
+                        limit > 0 &&
+                        Number(referrer.referralCount || 0) < limit
+                    ) {
+                        // Update new restaurant with referrer info
+                        await FoodRestaurant.updateOne({ _id: restaurant._id }, { $set: { referredBy: referrer._id } });
+
+                        // Create referral log as PENDING
+                        await FoodReferralLog.create({
+                            referrerId: referrer._id,
+                            refereeId: restaurant._id,
+                            role: 'RESTAURANT',
+                            rewardAmount: referrerReward,
+                            referrerRewardAmount: referrerReward,
+                            refereeRewardAmount: refereeReward,
+                            status: 'pending'
+                        });
+                    } else {
+                        await FoodReferralLog.create({
+                            referrerId: referrer._id,
+                            refereeId: restaurant._id,
+                            role: 'RESTAURANT',
+                            rewardAmount: referrerReward,
+                            status: 'rejected',
+                            reason:
+                                referrerReward <= 0 && refereeReward <= 0
+                                    ? 'reward_disabled'
+                                    : limit <= 0
+                                    ? 'limit_disabled'
+                                    : 'limit_reached'
+                        });
+                    }
+                }
+            } catch (e) {
+                console.error('Referral log creation failed (restaurant):', e);
+            }
+        }
+        // --- End Referral Handling ---
 
         const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
         const shortDaysMap = { Mon: "Monday", Tue: "Tuesday", Wed: "Wednesday", Thu: "Thursday", Fri: "Friday", Sat: "Saturday", Sun: "Sunday" };

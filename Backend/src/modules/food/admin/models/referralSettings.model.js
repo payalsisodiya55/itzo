@@ -12,6 +12,11 @@ const referralSettingsSchema = new mongoose.Schema(
             refereeReward: { type: Number, min: 0, default: 0 },
             limit: { type: Number, min: 0, default: 0 },
         },
+        restaurant: {
+            referrerReward: { type: Number, min: 0, default: 0 },
+            refereeReward: { type: Number, min: 0, default: 0 },
+            limit: { type: Number, min: 0, default: 0 },
+        },
         isActive: { type: Boolean, default: true, index: true }
     },
     { collection: 'food_referral_settings', timestamps: true }

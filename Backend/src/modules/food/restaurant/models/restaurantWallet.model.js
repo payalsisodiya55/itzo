@@ -17,6 +17,8 @@ const restaurantWalletSchema = new mongoose.Schema(
         lockedAmount: { type: Number, default: 0, min: 0 },
         /** Lifetime earnings */
         totalEarnings: { type: Number, default: 0, min: 0 },
+        /** Total amount from referrals */
+        referralEarnings: { type: Number, default: 0, min: 0 },
         /** Total amount already settled/paid out */
         totalSettled: { type: Number, default: 0, min: 0 }
     },

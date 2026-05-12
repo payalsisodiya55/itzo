@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { FoodOrder } from '../../orders/models/order.model.js';
 import { FoodTransaction } from '../../orders/models/foodTransaction.model.js';
 import { FoodRestaurant } from '../models/restaurant.model.js';
+import { FoodRestaurantWallet } from '../models/restaurantWallet.model.js';
 import { FoodRestaurantWithdrawal } from '../models/foodRestaurantWithdrawal.model.js';
 
 function toTwoDigitYearString(dateObj) {
@@ -129,6 +130,10 @@ export async function getRestaurantFinance(restaurantId, query = {}) {
         0
     );
 
+    // Add referral earnings from wallet that haven't been withdrawn yet
+    const wallet = await FoodRestaurantWallet.findOne({ restaurantId: rid }).select('balance referralEarnings').lean();
+    const referralBalance = Number(wallet?.referralEarnings || 0);
+
     // Block only pending withdrawals from available balance.
     // Approved/rejected requests are processed records and should not keep locking payout.
     const pendingWithdrawalsAgg = await FoodRestaurantWithdrawal.aggregate([
@@ -143,7 +148,7 @@ export async function getRestaurantFinance(restaurantId, query = {}) {
         { $group: { _id: null, total: { $sum: '$amount' } } }
     ]);
     const totalPendingWithdrawals = Number(pendingWithdrawalsAgg?.[0]?.total || 0);
-    const availableBalance = Math.max(0, globalEstimatedPayout - totalPendingWithdrawals);
+    const availableBalance = Math.max(0, globalEstimatedPayout + referralBalance - totalPendingWithdrawals);
 
     const currentCycle = {
         start: { ...nowWindow.startMeta },

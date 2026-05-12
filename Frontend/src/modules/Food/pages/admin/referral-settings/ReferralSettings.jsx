@@ -20,6 +20,11 @@ export default function ReferralSettings() {
       refereeReward: "",
       limit: "",
     },
+    restaurant: {
+      referrerReward: "",
+      refereeReward: "",
+      limit: "",
+    },
     isActive: true,
   })
 
@@ -39,6 +44,11 @@ export default function ReferralSettings() {
             referrerReward: s.delivery?.referrerReward ?? "",
             refereeReward: s.delivery?.refereeReward ?? "",
             limit: s.delivery?.limit ?? "",
+          },
+          restaurant: {
+            referrerReward: s.restaurant?.referrerReward ?? "",
+            refereeReward: s.restaurant?.refereeReward ?? "",
+            limit: s.restaurant?.limit ?? "",
           },
           isActive: s.isActive !== false,
         })
@@ -68,6 +78,11 @@ export default function ReferralSettings() {
           referrerReward: Number(settings.delivery.referrerReward) || 0,
           refereeReward: Number(settings.delivery.refereeReward) || 0,
           limit: Number(settings.delivery.limit) || 0,
+        },
+        restaurant: {
+          referrerReward: Number(settings.restaurant.referrerReward) || 0,
+          refereeReward: Number(settings.restaurant.refereeReward) || 0,
+          limit: Number(settings.restaurant.limit) || 0,
         },
         isActive: settings.isActive,
       }
@@ -146,7 +161,7 @@ export default function ReferralSettings() {
               <Loader2 className="w-6 h-6 animate-spin text-orange-600" />
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div className="border border-slate-200 rounded-xl p-4">
                 <h3 className="font-semibold text-slate-900 mb-3 text-lg border-b pb-2">User Referral</h3>
                 <div className="space-y-4">
@@ -218,6 +233,44 @@ export default function ReferralSettings() {
                       inputMode="numeric"
                       className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
                       placeholder="e.g. 5"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="border border-slate-200 rounded-xl p-4">
+                <h3 className="font-semibold text-slate-900 mb-3 text-lg border-b pb-2">Restaurant Referral</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Referrer Reward (₹)</label>
+                    <input
+                      value={settings.restaurant.referrerReward}
+                      onChange={onChange("restaurant", "referrerReward")}
+                      inputMode="numeric"
+                      className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+                      placeholder="e.g. 500"
+                    />
+                    <p className="text-[10px] text-slate-500 mt-1">Amount the existing restaurant gets</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Referee Reward (₹)</label>
+                    <input
+                      value={settings.restaurant.refereeReward}
+                      onChange={onChange("restaurant", "refereeReward")}
+                      inputMode="numeric"
+                      className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+                      placeholder="e.g. 100"
+                    />
+                    <p className="text-[10px] text-slate-500 mt-1">Amount the new restaurant gets</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Max referrals per restaurant</label>
+                    <input
+                      value={settings.restaurant.limit}
+                      onChange={onChange("restaurant", "limit")}
+                      inputMode="numeric"
+                      className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+                      placeholder="e.g. 3"
                     />
                   </div>
                 </div>

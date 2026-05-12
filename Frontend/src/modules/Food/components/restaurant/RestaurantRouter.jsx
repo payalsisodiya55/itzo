@@ -37,6 +37,7 @@ const FinanceDetailsPage = lazy(() => import("@food/pages/restaurant/FinanceDeta
 const WithdrawalHistoryPage = lazy(() => import("@food/pages/restaurant/WithdrawalHistoryPage"))
 const DownloadReport = lazy(() => import("@food/pages/restaurant/DownloadReport"))
 const RestaurantProfilePage = lazy(() => import("@food/pages/restaurant/RestaurantProfilePage"))
+const RestaurantReferEarn = lazy(() => import("@food/pages/restaurant/RestaurantReferEarn"))
 
 const ManageOutlets = lazy(() => import("@food/pages/restaurant/ManageOutlets"))
 const UpdateBankDetails = lazy(() => import("@food/pages/restaurant/UpdateBankDetails"))
@@ -104,6 +105,7 @@ export default function RestaurantRouter() {
         <Route element={<ProtectedRoute requiredRole="restaurant" loginPath="/food/restaurant/login"><DiningReservations /></ProtectedRoute>} path="reservations" />
         <Route element={<ProtectedRoute requiredRole="restaurant" loginPath="/food/restaurant/login"><ZoneSetup /></ProtectedRoute>} path="zone-setup" />
         <Route element={<ProtectedRoute requiredRole="restaurant" loginPath="/food/restaurant/login"><RestaurantProfilePage /></ProtectedRoute>} path="profile" />
+        <Route element={<ProtectedRoute requiredRole="restaurant" loginPath="/food/restaurant/login"><RestaurantReferEarn /></ProtectedRoute>} path="refer-earn" />
         <Route path="*" element={<Navigate to="/food/restaurant" replace />} />
       </Routes>
     </Suspense>

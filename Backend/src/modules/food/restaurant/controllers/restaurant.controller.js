@@ -14,6 +14,10 @@ import {
     getRestaurantComplaints,
     deleteRestaurantAccount
 } from '../services/restaurant.service.js';
+import { 
+    getRestaurantReferralStats, 
+    getRestaurantReferralDetails 
+} from '../services/restaurantReferral.service.js';
 import { validateRestaurantRegisterDto } from '../validators/restaurant.validator.js';
 import { sendResponse } from '../../../../utils/response.js';
 
@@ -151,6 +155,26 @@ export const deleteRestaurantAccountController = async (req, res, next) => {
         const restaurantId = req.user?.userId;
         const result = await deleteRestaurantAccount(restaurantId);
         return sendResponse(res, 200, 'Account deleted successfully', result);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const getRestaurantReferralStatsController = async (req, res, next) => {
+    try {
+        const restaurantId = req.user?.userId;
+        const data = await getRestaurantReferralStats(restaurantId);
+        return sendResponse(res, 200, 'Referral stats fetched successfully', data);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const getRestaurantReferralDetailsController = async (req, res, next) => {
+    try {
+        const restaurantId = req.user?.userId;
+        const data = await getRestaurantReferralDetails(restaurantId);
+        return sendResponse(res, 200, 'Referral details fetched successfully', data);
     } catch (error) {
         next(error);
     }

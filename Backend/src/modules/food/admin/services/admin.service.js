@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { ValidationError } from '../../../../core/auth/errors.js';
 import { FoodRestaurant } from '../../restaurant/models/restaurant.model.js';
+import { FoodRestaurantWallet } from '../../restaurant/models/restaurantWallet.model.js';
 import { FoodDeliveryPartner } from '../../delivery/models/deliveryPartner.model.js';
 import { DeliverySupportTicket } from '../../delivery/models/supportTicket.model.js';
 import { FoodZone } from '../models/zone.model.js';
@@ -1940,6 +1941,11 @@ export async function upsertReferralSettings(body = {}) {
             refereeReward: Math.max(0, Number(body.delivery?.refereeReward) || 0),
             limit: Math.max(0, Number(body.delivery?.limit) || 0)
         },
+        restaurant: {
+            referrerReward: Math.max(0, Number(body.restaurant?.referrerReward) || 0),
+            refereeReward: Math.max(0, Number(body.restaurant?.refereeReward) || 0),
+            limit: Math.max(0, Number(body.restaurant?.limit) || 0)
+        },
         isActive: body.isActive !== false
     };
 
@@ -3414,6 +3420,58 @@ export async function approveRestaurant(id) {
     ).lean();
 
     if (updated) {
+        // --- Referral Reward Crediting ---
+        try {
+            const referralLog = await FoodReferralLog.findOne({
+                refereeId: updated._id,
+                role: 'RESTAURANT',
+                status: 'pending'
+            });
+
+            if (referralLog) {
+                const referrerReward = Number(referralLog.referrerRewardAmount) || 0;
+                const refereeReward = Number(referralLog.refereeRewardAmount) || 0;
+
+                // Credit Referrer
+                if (referrerReward > 0) {
+                    await FoodRestaurantWallet.findOneAndUpdate(
+                        { restaurantId: referralLog.referrerId },
+                        {
+                            $inc: {
+                                balance: referrerReward,
+                                totalEarnings: referrerReward,
+                                referralEarnings: referrerReward
+                            }
+                        },
+                        { upsert: true }
+                    );
+                    // Increment referrer count
+                    await FoodRestaurant.updateOne({ _id: referralLog.referrerId }, { $inc: { referralCount: 1 } });
+                }
+
+                // Credit Referee (Approved Restaurant)
+                if (refereeReward > 0) {
+                    await FoodRestaurantWallet.findOneAndUpdate(
+                        { restaurantId: updated._id },
+                        {
+                            $inc: {
+                                balance: refereeReward,
+                                totalEarnings: refereeReward,
+                                referralEarnings: refereeReward
+                            }
+                        },
+                        { upsert: true }
+                    );
+                }
+
+                // Update log to credited
+                await FoodReferralLog.updateOne({ _id: referralLog._id }, { $set: { status: 'credited' } });
+            }
+        } catch (e) {
+            console.error('Referral crediting failed on approval:', e);
+        }
+        // --- End Referral Reward Crediting ---
+
         try {
             const { notifyOwnersSafely } = await import('../../../../core/notifications/firebase.service.js');
             await notifyOwnersSafely(

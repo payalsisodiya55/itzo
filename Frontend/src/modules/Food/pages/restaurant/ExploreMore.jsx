@@ -29,6 +29,7 @@ import {
   Calendar,
   MapPin,
   LogOut,
+  Gift,
 } from "lucide-react"
 import { Card, CardContent } from "@food/components/ui/card"
 import { DateRangeCalendar } from "@food/components/ui/date-range-calendar"
@@ -742,6 +743,7 @@ export default function ExploreMore() {
   const settingsItems = [
     { id: 3, label: "Delivery settings", icon: Truck, route: "/restaurant/delivery-settings" },
     { id: 4, label: "Zone Setup", icon: MapPin, route: "/restaurant/zone-setup" },
+    { id: 10, label: "Refer & Earn", icon: Gift, route: "/restaurant/refer-earn" },
   ]
 
   const ordersItems = [
@@ -827,10 +829,7 @@ export default function ExploreMore() {
                 whileHover={{ scale: 1.02, y: -1 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => {
-                  if (item.id === 5) {
-                    // Schedule off card
-                    handleScheduleOffClick()
-                  } else if (item.route) {
+                  if (item.route) {
                     navigate(item.route)
                   }
                 }}

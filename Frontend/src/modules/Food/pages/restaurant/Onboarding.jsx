@@ -459,6 +459,7 @@ export default function RestaurantOnboarding() {
     ownerPhone: "",
     primaryContactNumber: "",
     zoneId: "",
+    ref: "",
     location: {
       formattedAddress: "",
       addressLine1: "",
@@ -730,6 +731,13 @@ export default function RestaurantOnboarding() {
       ownerPhone: verifiedPhoneNumber,
     }))
   }, [verifiedPhoneNumber])
+
+  useEffect(() => {
+    const ref = searchParams.get("ref")
+    if (ref) {
+      setStep1((prev) => ({ ...prev, ref }))
+    }
+  }, [searchParams])
 
   useEffect(() => {
     if (typeof window === "undefined" || !window.visualViewport) return undefined
@@ -1204,6 +1212,7 @@ export default function RestaurantOnboarding() {
         formData.append("formattedAddress", step1.location?.formattedAddress || "")
         formData.append("latitude", String(step1.location?.latitude || ""))
         formData.append("longitude", String(step1.location?.longitude || ""))
+        formData.append("ref", step1.ref || "")
 
         // Step 2
         formData.append("cuisines", (step2.cuisines || []).join(","))

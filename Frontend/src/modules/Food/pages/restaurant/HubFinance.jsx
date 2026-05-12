@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef, useEffect } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
-import { Bell, Menu, ChevronDown, Calendar, Download, ArrowRight, FileText, Wallet, X } from "lucide-react"
+import { Bell, Menu, ChevronDown, Calendar, Download, ArrowRight, FileText, Wallet, X, Gift } from "lucide-react"
 import BottomNavOrders from "@food/components/restaurant/BottomNavOrders"
 import { restaurantAPI } from "@food/api"
 const debugLog = (...args) => {}
@@ -32,6 +32,7 @@ export default function HubFinance() {
   const [submittingWithdrawal, setSubmittingWithdrawal] = useState(false)
   const [withdrawalRequests, setWithdrawalRequests] = useState([])
   const [loadingWithdrawals, setLoadingWithdrawals] = useState(false)
+  const [referralStats, setReferralStats] = useState(null)
 
   // Fetch finance data on mount
   useEffect(() => {
@@ -54,7 +55,19 @@ export default function HubFinance() {
       }
     }
 
+    const fetchReferralStats = async () => {
+      try {
+        const response = await restaurantAPI.getReferralStats()
+        if (response.data?.success) {
+          setReferralStats(response.data.data)
+        }
+      } catch (error) {
+        debugError('Error fetching referral stats:', error)
+      }
+    }
+
     fetchFinanceData()
+    fetchReferralStats()
   }, [])
 
   useEffect(() => {
@@ -816,6 +829,37 @@ export default function HubFinance() {
                     </button>
                   </>
                 )}
+              </div>
+            </div>
+
+            {/* Referral Earnings */}
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <h2 className="text-base font-bold text-gray-900">Referral earnings</h2>
+                <button 
+                  onClick={() => navigate("/restaurant/refer-earn")}
+                  className="text-sm font-medium text-orange-600 hover:underline"
+                >
+                  Refer more
+                </button>
+              </div>
+              <div className="bg-white rounded-lg p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-2xl font-bold text-gray-900">
+                      ₹{(referralStats?.totalReferralEarnings || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      From {referralStats?.referralCount || 0} approved referrals
+                    </p>
+                  </div>
+                  <div className="bg-orange-50 p-3 rounded-full">
+                    <Gift className="w-6 h-6 text-orange-600" />
+                  </div>
+                </div>
+                <p className="text-[11px] text-gray-500 mt-4 border-t pt-3">
+                  Referral earnings are automatically added to your withdrawable balance.
+                </p>
               </div>
             </div>
 

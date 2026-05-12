@@ -1419,6 +1419,15 @@ export const restaurantAPI = {
       params,
       contextModule: "restaurant",
     }),
+  /** Referral stats and details (restaurant dashboard) */
+  getReferralStats: () =>
+    apiClient.get("/food/restaurant/referral-stats", {
+      contextModule: "restaurant",
+    }),
+  getReferralDetails: () =>
+    apiClient.get("/food/restaurant/referral-details", {
+      contextModule: "restaurant",
+    }),
 };
 
 function stableStringify(value) {

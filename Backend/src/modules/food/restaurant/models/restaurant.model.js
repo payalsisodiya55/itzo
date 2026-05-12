@@ -249,6 +249,22 @@ const restaurantSchema = new mongoose.Schema(
       enum: ["pending", "approved", "rejected"],
       default: "pending",
     },
+    referralCode: {
+      type: String,
+      unique: true,
+      sparse: true,
+      trim: true,
+    },
+    referralCount: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    referredBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "FoodRestaurant",
+      index: true,
+    },
     approvedAt: {
       type: Date,
     },
@@ -290,6 +306,10 @@ restaurantSchema.pre("save", async function (next) {
     } catch (error) {
       return next(error);
     }
+  }
+
+  if (!this.referralCode) {
+    this.referralCode = this.restaurantId || String(this._id);
   }
   next();
 });
