@@ -18,7 +18,10 @@ const getZoneName = (zone) => {
   return zone?.name || zone?.zoneName || zone?.serviceLocation || "Unnamed zone"
 }
 
-const formatRestaurantId = (id) => {
+const formatRestaurantId = (restaurant) => {
+  if (restaurant?.restaurantId) return `#${restaurant.restaurantId}`
+  
+  const id = restaurant?._id || restaurant?.id || restaurant
   if (!id) return "REST000000"
 
   const idString = String(id)
@@ -2021,7 +2024,7 @@ export default function LandingPageManagement() {
                             >
                               <div className="min-w-0">
                                 <p className="text-sm font-medium text-slate-800 truncate">{restaurant.name}</p>
-                                 <p className="text-xs text-slate-500 truncate">ID #{formatRestaurantId(restaurant.restaurantId || restaurant._id)}</p>
+                                 <p className="text-xs text-slate-500 truncate">ID {formatRestaurantId(restaurant)}</p>
                               </div>
                               <Checkbox
                                 checked={isChecked}
@@ -2341,7 +2344,7 @@ export default function LandingPageManagement() {
                                 {restaurant.name || 'Unnamed Restaurant'}
                               </h3>
                               <p className="text-sm text-slate-500 truncate">
-                                ID #{formatRestaurantId(restaurant.restaurantId || restaurant._id)}
+                                ID {formatRestaurantId(restaurant)}
                               </p>
                               {restaurant.rating && (
                                 <div className="flex items-center gap-1 mt-1">

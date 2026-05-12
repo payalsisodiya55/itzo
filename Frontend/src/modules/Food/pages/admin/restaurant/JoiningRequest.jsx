@@ -32,7 +32,10 @@ const formatTime12Hour = (timeStr) => {
   return `${String(hour).padStart(2, "0")}:${String(m).padStart(2, "0")} ${period}`
 }
 
-const formatRestaurantId = (id) => {
+const formatRestaurantId = (restaurant) => {
+  if (restaurant?.restaurantId) return `#${restaurant.restaurantId}`
+  
+  const id = restaurant?._id || restaurant?.id
   if (!id) return "REST000000"
 
   const idString = String(id)
@@ -867,7 +870,7 @@ export default function JoiningRequest() {
                         )}
                         <div className="flex items-center gap-1 text-slate-600">
                           <Building2 className="w-4 h-4" />
-                          <span className="text-sm">{formatRestaurantId(r?.restaurantId || r?._id || "N/A")}</span>
+                          <span className="text-sm">{formatRestaurantId(r)}</span>
                         </div>
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                           approvalStatus === "approved" ? "bg-green-100 text-green-700" : (approvalStatus === "rejected" || approvalStatus === "Rejected") ? "bg-red-100 text-red-700" : (r?.reVerification?.isZoneUpdate || r?.reVerification?.reVerificationReason === 'FSSAI License Update' ? "bg-purple-100 text-purple-700" : "bg-amber-100 text-amber-700")
@@ -1366,7 +1369,7 @@ export default function JoiningRequest() {
                         {(r.restaurantId || r._id) && (
                           <div>
                             <p className="text-xs text-slate-500 mb-1">Restaurant ID</p>
-                            <p className="font-medium text-slate-900">{formatRestaurantId(r.restaurantId || r._id)}</p>
+                            <p className="font-medium text-slate-900">{formatRestaurantId(r)}</p>
                           </div>
                         )}
                         {r.approvedAt != null && (

@@ -481,6 +481,7 @@ export const getCurrentRestaurantProfile = async (restaurantId) => {
     const doc = await FoodRestaurant.findById(restaurantId)
         .select(
             [
+                'restaurantId',
                 'restaurantName',
                 'cuisines',
                 'location',
@@ -557,6 +558,7 @@ export const updateRestaurantAcceptingOrders = async (restaurantId, isAcceptingO
             new: true,
             runValidators: true,
             projection: [
+                'restaurantId',
                 'restaurantName',
                 'cuisines',
                 'location',
@@ -996,6 +998,7 @@ export const updateRestaurantProfile = async (restaurantId, body = {}) => {
                 new: true,
                 runValidators: true,
                 projection: [
+                    'restaurantId',
                     'restaurantName',
                     'cuisines',
                     'location',
@@ -1108,7 +1111,7 @@ export const uploadRestaurantProfileImage = async (restaurantId, file) => {
                 rejectionReason: 1
             }
         },
-        { new: true, projection: 'profileImage coverImages restaurantName cuisines location menuImages addressLine1 addressLine2 area city state pincode landmark ownerName ownerEmail ownerPhone primaryContactNumber pureVegRestaurant openingTime closingTime openDays status createdAt updatedAt' }
+        { new: true, projection: 'restaurantId profileImage coverImages restaurantName cuisines location menuImages addressLine1 addressLine2 area city state pincode landmark ownerName ownerEmail ownerPhone primaryContactNumber pureVegRestaurant openingTime closingTime openDays status createdAt updatedAt' }
     ).lean();
 
     if (!doc) throw new ValidationError('Restaurant not found');
@@ -1310,6 +1313,7 @@ export const listApprovedRestaurants = async (query = {}) => {
     const sortBy = parseSortBy(query.sortBy);
 
     const projection = {
+        restaurantId: 1,
         restaurantName: 1,
         area: 1,
         city: 1,

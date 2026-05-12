@@ -165,27 +165,30 @@ export default function RestaurantsList() {
   const [locationMapError, setLocationMapError] = useState("")
   const [locationZoneHint, setLocationZoneHint] = useState("")
 
-  // Format Restaurant ID to REST format (e.g., REST422829)
-  const formatRestaurantId = (id) => {
+  // Format Restaurant ID to REST format (e.g., REST000001)
+  const formatRestaurantId = (restaurant) => {
+    // 1. Prefer the explicit restaurantId from backend if it exists
+    if (restaurant?.restaurantId) return `#${restaurant.restaurantId}`
+    
+    // 2. Handle cases where we only have the MongoDB _id
+    const id = restaurant?._id || restaurant?.id || (typeof restaurant === 'string' ? restaurant : null)
     if (!id) return "REST000000"
 
     const idString = String(id)
-    // Extract last 6 digits from the ID
-    // Handle formats like "REST-1768045396242-2829" or "1768045396242-2829"
+    // If it's already a sequential ID string, just return it
+    if (idString.startsWith("REST") && idString.length === 10) return `#${idString}`
+
+    // 3. Legacy Fallback: Extract last 6 digits for MongoDB IDs
     const parts = idString.split(/[-.]/)
     let lastDigits = ""
 
-    // Get the last part and extract digits
     if (parts.length > 0) {
       const lastPart = parts[parts.length - 1]
-      // Extract only digits from the last part
       const digits = lastPart.match(/\d+/g)
       if (digits && digits.length > 0) {
-        // Get last 6 digits from all digits found
         const allDigits = digits.join("")
         lastDigits = allDigits.slice(-6).padStart(6, "0")
       } else {
-        // If no digits in last part, look for digits in all parts
         const allParts = parts.join("")
         const allDigits = allParts.match(/\d+/g)
         if (allDigits && allDigits.length > 0) {
@@ -195,7 +198,6 @@ export default function RestaurantsList() {
       }
     }
 
-    // If no digits found, use a hash of the ID
     if (!lastDigits) {
       const hash = idString.split("").reduce((acc, char) => {
         return ((acc << 5) - acc) + char.charCodeAt(0) | 0
@@ -203,7 +205,7 @@ export default function RestaurantsList() {
       lastDigits = Math.abs(hash).toString().slice(-6).padStart(6, "0")
     }
 
-    return `REST${lastDigits}`
+    return `#REST${lastDigits}`
   }
 
   // Fetch restaurants from backend API
@@ -1546,7 +1548,7 @@ export default function RestaurantsList() {
                               >
                                 {restaurant.name}
                               </span>
-                              <span className="text-xs text-slate-500">ID #{formatRestaurantId(restaurant.originalData?.restaurantId || restaurant.originalData?._id || restaurant._id || restaurant.id)}</span>
+                              <span className="text-xs text-slate-500">ID {formatRestaurantId(restaurant.originalData || restaurant)}</span>
                               <span className="text-xs text-slate-500">{renderStars(restaurant.rating)}</span>
                             </div>
                           </div>
@@ -1881,7 +1883,7 @@ export default function RestaurantsList() {
                         )}
                         <div className="flex items-center gap-2 text-slate-500 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-100">
                           <Building2 className="w-4 h-4" />
-                          <span className="text-xs font-bold tracking-wider">{formatRestaurantId(r?.restaurantId || r?._id)}</span>
+                          <span className="text-xs font-bold tracking-wider">{formatRestaurantId(r)}</span>
                         </div>
                       </div>
                     </div>
@@ -2147,7 +2149,7 @@ export default function RestaurantsList() {
                         {r.restaurantId && (
                           <div>
                             <p className="text-xs text-slate-500 mb-1">Restaurant ID</p>
-                            <p className="font-medium text-slate-900">{formatRestaurantId(r.restaurantId)}</p>
+                            <p className="font-medium text-slate-900">{formatRestaurantId(r)}</p>
                           </div>
                         )}
                         {r.slug && (
@@ -2505,7 +2507,7 @@ export default function RestaurantsList() {
                         {r?.restaurantId && (
                           <div>
                             <p className="text-xs text-slate-500 mb-1">Restaurant ID</p>
-                            <p className="font-medium text-slate-900">{formatRestaurantId(r.restaurantId)}</p>
+                            <p className="font-medium text-slate-900">{formatRestaurantId(r)}</p>
                           </div>
                         )}
                         {r?.phoneVerified !== undefined && (

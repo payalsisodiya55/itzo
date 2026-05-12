@@ -110,8 +110,13 @@ export default function HubFinance() {
     }
   }, [financeData])
 
-  // Format restaurant ID to REST###### format (e.g., REST005678)
-  const formatRestaurantId = (restaurantId) => {
+  // Format restaurant ID to REST###### format (e.g., REST000001)
+  const formatRestaurantId = (restaurant) => {
+    // If the whole object is passed, check for restaurantId field
+    if (restaurant?.restaurantId) return `#${restaurant.restaurantId}`
+    
+    // If just the ID string is passed or fallback
+    const restaurantId = typeof restaurant === 'string' ? restaurant : (restaurant?._id || restaurant?.id)
     if (!restaurantId) return ''
     
     // Extract numeric part from the end (e.g., "REST-1768762345335-5678" -> "5678")

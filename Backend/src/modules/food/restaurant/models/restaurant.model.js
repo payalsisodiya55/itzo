@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { Counter } from "../../../../core/models/counter.model.js";
 
 const normalizeRatingValue = (value) => {
   const numeric = Number(value);
@@ -42,6 +43,11 @@ const geoPointSchema = new mongoose.Schema(
 
 const restaurantSchema = new mongoose.Schema(
   {
+    restaurantId: {
+      type: String,
+      unique: true,
+      trim: true,
+    },
     restaurantName: {
       type: String,
       required: true,
@@ -271,6 +277,22 @@ const restaurantSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
+
+restaurantSchema.pre("save", async function (next) {
+  if (this.isNew && !this.restaurantId) {
+    try {
+      const counter = await Counter.findOneAndUpdate(
+        { model: "restaurant" },
+        { $inc: { seq: 1 } },
+        { new: true, upsert: true }
+      );
+      this.restaurantId = `REST${String(counter.seq).padStart(6, "0")}`;
+    } catch (error) {
+      return next(error);
+    }
+  }
+  next();
+});
 
 restaurantSchema.pre("validate", function normalizeDerivedFields(next) {
   const name =

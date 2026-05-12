@@ -130,9 +130,14 @@ export default function DiningList() {
         return result
     }, [restaurants, searchQuery, selectedCategory])
 
-    const formatRestaurantId = (id) => {
+    const formatRestaurantId = (restaurant) => {
+        if (restaurant?.restaurantId) return restaurant.restaurantId
+        
+        const id = restaurant?._id || restaurant?.id || restaurant
         if (!id) return "REST000000"
-        return `REST${String(id).slice(-6).toUpperCase()}`
+        const idString = String(id)
+        if (idString.startsWith("REST")) return idString
+        return `REST${idString.slice(-6).toUpperCase()}`
     }
 
     const renderStars = (rating) => {
@@ -321,7 +326,7 @@ export default function DiningList() {
                                                             </div>
                                                             <div className="flex flex-col">
                                                                 <span className="text-sm font-medium text-slate-900">{restaurant.name}</span>
-                                                                <span className="text-xs text-slate-500">#{formatRestaurantId(restaurant.originalData?.restaurantId || restaurant._id)}</span>
+                                                                <span className="text-xs text-slate-500">#{formatRestaurantId(restaurant.originalData || restaurant)}</span>
                                                             </div>
                                                         </div>
                                                     </td>
