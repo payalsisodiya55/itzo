@@ -1,6 +1,7 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom"
 import { useEffect, useState, createContext, useContext } from "react"
 import { ProfileProvider } from "@food/context/ProfileContext"
+import { loadBusinessSettings, setAppType } from "@common/utils/businessSettings"
 import LocationPrompt from "./LocationPrompt"
 import { CartProvider } from "@food/context/CartContext"
 import { OrdersProvider } from "@food/context/OrdersContext"
@@ -107,6 +108,12 @@ function LocationSelectorProvider({ children }) {
 
 export default function UserLayout({ children }) {
   const location = useLocation()
+
+  useEffect(() => {
+    // Initialize user app settings and favicon
+    setAppType('user')
+    loadBusinessSettings()
+  }, [])
 
   useEffect(() => {
     // Reset scroll to top whenever location changes (pathname, search, or hash)

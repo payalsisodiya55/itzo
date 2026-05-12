@@ -56,26 +56,45 @@ export default function SuperAppPortal() {
 
   const [enabledModules, setEnabledModules] = React.useState({
     food: true,
-
     quickCommerce: true,
   })
+  const [companyName, setCompanyName] = React.useState("App")
+  const [logoUrl, setLogoUrl] = React.useState(null)
 
   React.useEffect(() => {
     const loadSettings = async () => {
       try {
-        const { getCachedSettings, loadBusinessSettings } = await import("@common/utils/businessSettings")
+        const { getCachedSettings, loadBusinessSettings, getCompanyName, getAppLogo, setAppType } = await import("@common/utils/businessSettings")
+        setAppType('user')
         let settings = getCachedSettings()
         if (!settings) {
           settings = await loadBusinessSettings()
         }
-        if (settings?.modules) {
-          setEnabledModules(settings.modules)
+        if (settings) {
+          if (settings.modules) {
+            setEnabledModules(settings.modules)
+          }
+          setCompanyName(getCompanyName())
+          setLogoUrl(getAppLogo('user'))
         }
       } catch (err) {
         console.error("Failed to load settings in Portal:", err)
       }
     }
     loadSettings()
+
+    // Listen for business settings updates
+    const handleSettingsUpdate = (e) => {
+      const settings = e.detail;
+      if (settings) {
+        if (settings.modules) setEnabledModules(settings.modules);
+        // We can't easily call getCompanyName/getAppLogo here without importing them again
+        // or having them in scope. Since they are imported inside the async loadSettings,
+        // it's better to just re-trigger loadSettings or have the utilities available.
+      }
+    };
+    window.addEventListener('businessSettingsUpdated', handleSettingsUpdate);
+    return () => window.removeEventListener('businessSettingsUpdated', handleSettingsUpdate);
   }, [])
 
   const filteredServices = useMemo(() => {
@@ -155,9 +174,13 @@ export default function SuperAppPortal() {
           <motion.div 
             animate={isNativeLikeShell ? undefined : { rotate: [0, 10, -10, 0] }}
             transition={isNativeLikeShell ? undefined : { duration: 4, repeat: Infinity }}
-            className="w-5 h-5 bg-gradient-to-br from-[#CB202D] to-red-700 rounded-md flex items-center justify-center shadow-md flex-shrink-0"
+            className="w-5 h-5 bg-gradient-to-br from-[#CB202D] to-red-700 rounded-md flex items-center justify-center shadow-md flex-shrink-0 overflow-hidden"
           >
-             <span className="text-white text-[9px] font-black italic">Z</span>
+             {logoUrl ? (
+               <img src={logoUrl} alt={companyName} className="w-full h-full object-contain" />
+             ) : (
+               <span className="text-white text-[9px] font-black italic">{companyName.charAt(0).toUpperCase()}</span>
+             )}
           </motion.div>
           <span className="text-[9px] sm:text-[10px] font-black tracking-[0.18em] text-[#BABCBD] uppercase whitespace-nowrap overflow-hidden text-ellipsis">
             Everything you need, delivered
@@ -171,7 +194,7 @@ export default function SuperAppPortal() {
           className="text-4xl sm:text-5xl md:text-7xl font-black text-[#1A202C] tracking-tight leading-[0.95]"
         >
           Welcome to <br />
-          <span className={`text-transparent bg-clip-text bg-gradient-to-r from-[#CB202D] via-rose-500 to-[#CB202D] bg-[length:200%_auto] block mt-1 sm:mt-2 ${isNativeLikeShell ? "" : "animate-gradient"}`}>Zozomen</span>
+          <span className={`text-transparent bg-clip-text bg-gradient-to-r from-[#CB202D] via-rose-500 to-[#CB202D] bg-[length:200%_auto] block mt-1 sm:mt-2 ${isNativeLikeShell ? "" : "animate-gradient"}`}>{companyName}</span>
         </motion.h1>
 
         <motion.p 
@@ -291,7 +314,7 @@ export default function SuperAppPortal() {
       <div className="mt-4 hidden sm:flex flex-col items-center gap-3 opacity-50">
          <div className="flex items-center gap-1.5 grayscale">
             <ShieldCheck className="w-4 h-4" />
-            <span className="text-[10px] font-black uppercase tracking-widest">Secure by Zozomen</span>
+            <span className="text-[10px] font-black uppercase tracking-widest">Secure by {companyName}</span>
          </div>
       </div>
     </div>

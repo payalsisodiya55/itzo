@@ -1,5 +1,6 @@
-import { Suspense, lazy } from "react"
+import { Suspense, lazy, useEffect } from "react"
 import { Routes, Route, Navigate } from "react-router-dom"
+import { loadBusinessSettings, setAppType } from "@common/utils/businessSettings"
 import ProtectedRoute from "@food/components/ProtectedRoute"
 import Loader from "@food/components/Loader"
 
@@ -49,6 +50,12 @@ const ForgotPassword = lazy(() => import("@food/pages/restaurant/auth/ForgotPass
 const VerificationPending = lazy(() => import("@food/pages/restaurant/auth/VerificationPending"))
 
 export default function RestaurantRouter() {
+  useEffect(() => {
+    // Initialize restaurant app settings and favicon
+    setAppType('restaurant')
+    loadBusinessSettings()
+  }, [])
+
   return (
     <Suspense fallback={<Loader />}>
       <Routes>

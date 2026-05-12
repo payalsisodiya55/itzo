@@ -9,7 +9,7 @@ import { Card, CardContent } from "@food/components/ui/card"
 import api from "@food/api"
 import { API_ENDPOINTS } from "@food/api/config"
 import { useCompanyName } from "@food/hooks/useCompanyName"
-import { getCachedSettings, loadBusinessSettings } from "@common/utils/businessSettings"
+import { getCachedSettings, loadBusinessSettings, getAppLogo } from "@common/utils/businessSettings"
 
 const debugLog = (...args) => {}
 const debugWarn = (...args) => {}
@@ -54,14 +54,15 @@ export default function About() {
     
     const loadLogo = async () => {
       try {
-        const cached = getCachedSettings()
-        if (cached?.logo?.url) {
-          setLogoUrl(cached.logo.url)
+        const cachedLogo = getAppLogo('user')
+        if (cachedLogo) {
+          setLogoUrl(cachedLogo)
         }
         
         const settings = await loadBusinessSettings()
-        if (settings?.logo?.url) {
-          setLogoUrl(settings.logo.url)
+        if (settings) {
+          const userLogo = getAppLogo('user')
+          if (userLogo) setLogoUrl(userLogo)
         }
       } catch (error) {
         debugError('Error loading logo:', error)
@@ -71,9 +72,9 @@ export default function About() {
 
     // Listen for business settings updates
     const handleSettingsUpdate = () => {
-      const cached = getCachedSettings()
-      if (cached?.logo?.url) {
-        setLogoUrl(cached.logo.url)
+      const userLogo = getAppLogo('user')
+      if (userLogo) {
+        setLogoUrl(userLogo)
       }
     }
     window.addEventListener('businessSettingsUpdated', handleSettingsUpdate)

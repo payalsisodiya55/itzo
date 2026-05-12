@@ -8,12 +8,42 @@ import { API_ENDPOINTS } from "@/services/api/config";
 import { searchAPI } from "@/services/api";
 
 const SETTINGS_KEY = 'global_business_settings';
+let currentAppType = 'user'; // Default to user app
+
+/**
+ * Detect app type from URL if not set
+ */
+const detectAppType = () => {
+  const path = window.location.pathname;
+  if (path.includes('/admin')) return 'admin';
+  if (path.includes('/restaurant')) return 'restaurant';
+  if (path.includes('/delivery')) return 'delivery';
+  if (path.includes('/seller')) return 'seller';
+  return 'user';
+};
+
+// Initialize app type
+if (typeof window !== 'undefined') {
+  currentAppType = detectAppType();
+}
+
+/**
+ * Set current app type manually
+ */
+export const setAppType = (appType) => {
+  currentAppType = appType;
+  if (cachedSettings) {
+    const favicon = getAppFavicon(appType);
+    if (favicon) updateFavicon(favicon);
+  }
+};
 
 // Initialize from localStorage immediately so it's available for components on mount
 let cachedSettings = (() => {
   try {
     const saved = localStorage.getItem(SETTINGS_KEY);
-    return saved ? JSON.parse(saved) : null;
+    const settings = saved ? JSON.parse(saved) : null;
+    return settings;
   } catch (e) {
     return null;
   }
@@ -31,9 +61,11 @@ export const updateThemeColor = (color) => {
 // Apply cached settings immediately on module load if they exist
 if (cachedSettings) {
   setTimeout(() => {
-    updateFavicon(cachedSettings.favicon?.url);
     updateTitle(cachedSettings.companyName);
     updateThemeColor(cachedSettings.themeColor);
+    // Also apply favicon if we have it
+    const favicon = getAppFavicon(currentAppType);
+    if (favicon) updateFavicon(favicon);
   }, 0);
 }
 
@@ -64,9 +96,13 @@ export const loadBusinessSettings = async () => {
           localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
         } catch (e) {}
         
-        updateFavicon(settings.favicon?.url);
         updateTitle(settings.companyName);
         updateThemeColor(settings.themeColor);
+        
+        // Auto update favicon based on current app type
+        const favicon = getAppFavicon(currentAppType);
+        if (favicon) updateFavicon(favicon);
+
         return settings;
       }
       return cachedSettings;
@@ -85,14 +121,27 @@ export const loadBusinessSettings = async () => {
  */
 export const updateFavicon = (url) => {
   if (!url || typeof document === 'undefined') return;
-  const existingFavicons = document.querySelectorAll("link[rel*='icon']");
-  existingFavicons.forEach(el => el.remove());
+  
+  // Remove all existing favicon links to prevent conflicts
+  const existingLinks = document.querySelectorAll("link[rel*='icon']");
+  existingLinks.forEach(el => el.remove());
+
+  // Create new favicon link
   const link = document.createElement("link");
   link.rel = "icon";
-  link.type = "image/png";
+  link.type = "image/x-icon";
   link.href = url;
   link.crossOrigin = "anonymous";
   document.head.appendChild(link);
+  
+  // Also update/create apple-touch-icon if needed
+  let appleIcon = document.querySelector("link[rel='apple-touch-icon']");
+  if (!appleIcon) {
+    appleIcon = document.createElement("link");
+    appleIcon.rel = "apple-touch-icon";
+    document.head.appendChild(appleIcon);
+  }
+  appleIcon.href = url;
 };
 
 /**
@@ -114,9 +163,12 @@ export const setCachedSettings = (settings) => {
       localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
     } catch (e) {}
     
-    updateFavicon(settings.favicon?.url);
     updateTitle(settings.companyName);
     updateThemeColor(settings.themeColor);
+    
+    // Auto update favicon based on current app type
+    const favicon = getAppFavicon(currentAppType);
+    if (favicon) updateFavicon(favicon);
     
     // Dispatch event so all components listening can update immediately
     window.dispatchEvent(new CustomEvent('businessSettingsUpdated', { detail: settings }));
@@ -148,12 +200,12 @@ export const getAppLogo = (appType) => {
   if (!settings) return null;
   
   switch(appType) {
-    case 'admin': return settings.adminLogo?.url || settings.logo?.url;
-    case 'user': return settings.userLogo?.url || settings.logo?.url;
-    case 'delivery': return settings.deliveryLogo?.url || settings.logo?.url;
-    case 'restaurant': return settings.restaurantLogo?.url || settings.logo?.url;
-    case 'seller': return settings.sellerLogo?.url || settings.logo?.url;
-    default: return settings.logo?.url;
+    case 'admin': return settings.adminLogo?.url;
+    case 'user': return settings.userLogo?.url;
+    case 'delivery': return settings.deliveryLogo?.url;
+    case 'restaurant': return settings.restaurantLogo?.url;
+    case 'seller': return settings.sellerLogo?.url;
+    default: return null;
   }
 };
 
@@ -165,12 +217,12 @@ export const getAppFavicon = (appType) => {
   if (!settings) return null;
   
   switch(appType) {
-    case 'admin': return settings.adminFavicon?.url || settings.favicon?.url;
-    case 'user': return settings.userFavicon?.url || settings.favicon?.url;
-    case 'delivery': return settings.deliveryFavicon?.url || settings.favicon?.url;
-    case 'restaurant': return settings.restaurantFavicon?.url || settings.favicon?.url;
-    case 'seller': return settings.sellerFavicon?.url || settings.favicon?.url;
-    default: return settings.favicon?.url;
+    case 'admin': return settings.adminFavicon?.url;
+    case 'user': return settings.userFavicon?.url;
+    case 'delivery': return settings.deliveryFavicon?.url;
+    case 'restaurant': return settings.restaurantFavicon?.url;
+    case 'seller': return settings.sellerFavicon?.url;
+    default: return null;
   }
 };
 

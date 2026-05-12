@@ -48,8 +48,8 @@ export async function updateGlobalSettings(req, res, next) {
         
         const { 
             companyName, email, phoneCountryCode, phoneNumber, address, state, pincode, region, 
-            logoUrl, adminLogoUrl, adminFaviconUrl, userLogoUrl, userFaviconUrl, deliveryLogoUrl, deliveryFaviconUrl, restaurantLogoUrl, restaurantFaviconUrl, sellerLogoUrl, sellerFaviconUrl,
-            faviconUrl, themeColor, modules 
+            adminLogoUrl, adminFaviconUrl, userLogoUrl, userFaviconUrl, deliveryLogoUrl, deliveryFaviconUrl, restaurantLogoUrl, restaurantFaviconUrl, sellerLogoUrl, sellerFaviconUrl,
+            themeColor, modules 
         } = data;
         
         console.log("Updating global settings with data:", data);
@@ -87,9 +87,9 @@ export async function updateGlobalSettings(req, res, next) {
 
         // Update URLs if provided
         const mediaFields = [
-            'logo', 'adminLogo', 'adminFavicon', 'userLogo', 'userFavicon', 
+            'adminLogo', 'adminFavicon', 'userLogo', 'userFavicon', 
             'deliveryLogo', 'deliveryFavicon', 'restaurantLogo', 'restaurantFavicon', 
-            'sellerLogo', 'sellerFavicon', 'favicon'
+            'sellerLogo', 'sellerFavicon'
         ];
         mediaFields.forEach(field => {
             const urlKey = `${field}Url`;
@@ -117,7 +117,6 @@ export async function updateGlobalSettings(req, res, next) {
         // Handle file uploads
         if (req.files) {
             const mediaUploadFields = [
-                { name: 'logo', folder: 'business/logos' },
                 { name: 'adminLogo', folder: 'business/logos/admin' },
                 { name: 'adminFavicon', folder: 'business/favicons/admin' },
                 { name: 'userLogo', folder: 'business/logos/user' },
@@ -127,8 +126,7 @@ export async function updateGlobalSettings(req, res, next) {
                 { name: 'restaurantLogo', folder: 'business/logos/restaurant' },
                 { name: 'restaurantFavicon', folder: 'business/favicons/restaurant' },
                 { name: 'sellerLogo', folder: 'business/logos/seller' },
-                { name: 'sellerFavicon', folder: 'business/favicons/seller' },
-                { name: 'favicon', folder: 'business/favicons' }
+                { name: 'sellerFavicon', folder: 'business/favicons/seller' }
             ];
 
             for (const field of mediaUploadFields) {

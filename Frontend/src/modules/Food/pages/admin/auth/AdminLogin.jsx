@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import { adminAPI } from "@food/api"
 import { setAuthData } from "@food/utils/auth"
-import { loadBusinessSettings, getCachedSettings } from "@common/utils/businessSettings"
+import { loadBusinessSettings, getCachedSettings, getAppLogo } from "@common/utils/businessSettings"
 import { Button } from "@food/components/ui/button"
 import {
   Card,
@@ -30,7 +30,7 @@ export default function AdminLogin() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
   const [successMessage, setSuccessMessage] = useState("")
-  const [logoUrl, setLogoUrl] = useState(() => getCachedSettings()?.logo?.url || null)
+  const [logoUrl, setLogoUrl] = useState(() => getAppLogo('admin'))
   const [companyName, setCompanyName] = useState(() => getCachedSettings()?.companyName || null)
   const submittingRef = useRef(false)
 
@@ -47,8 +47,9 @@ export default function AdminLogin() {
     const fetchLogo = async () => {
       try {
         const settings = await loadBusinessSettings()
-        if (settings?.logo?.url) {
-          setLogoUrl(settings.logo.url)
+        const adminLogo = getAppLogo('admin')
+        if (adminLogo) {
+          setLogoUrl(adminLogo)
         }
         if (settings?.companyName) {
           setCompanyName(settings.companyName)
@@ -64,8 +65,9 @@ export default function AdminLogin() {
     const handleSettingsUpdate = async () => {
       // Force reload settings from backend
       const settings = await loadBusinessSettings();
-      if (settings?.logo?.url) {
-        setLogoUrl(settings.logo.url);
+      const adminLogo = getAppLogo('admin');
+      if (adminLogo) {
+        setLogoUrl(adminLogo);
       }
     };
     window.addEventListener('businessSettingsUpdated', handleSettingsUpdate);

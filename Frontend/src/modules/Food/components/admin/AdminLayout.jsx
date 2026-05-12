@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { Outlet } from "react-router-dom"
+import { loadBusinessSettings, setAppType } from "@common/utils/businessSettings"
 import AdminSidebar from "./AdminSidebar"
 import AdminNavbar from "./AdminNavbar"
 import { API_BASE_URL } from "@food/api/config"
@@ -14,6 +15,10 @@ export default function AdminLayout() {
 
   // Get initial collapsed state from localStorage to set initial margin
   useEffect(() => {
+    // Initialize admin app settings and favicon
+    setAppType('admin')
+    loadBusinessSettings()
+
     try {
       const saved = localStorage.getItem('admin_sidebar_state')
       if (saved !== null) {

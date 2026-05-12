@@ -263,7 +263,7 @@ const SidebarContent = ({ items, title, onClose, openMenu, handleToggle, hovered
           )}
           <div>
             <h1 className="text-base font-black tracking-tight text-white leading-none">
-              {companyName || 'Zozomen'}
+              {companyName || 'App'}
             </h1>
             <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] mt-1 block">
               {title}

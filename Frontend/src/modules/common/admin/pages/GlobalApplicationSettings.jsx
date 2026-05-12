@@ -123,12 +123,6 @@ const GlobalApplicationSettings = () => {
   const [sellerFaviconPreview, setSellerFaviconPreview] = useState(null);
   const [sellerFaviconFile, setSellerFaviconFile] = useState(null);
 
-  // Hidden original logo/favicon state to maintain compatibility with backend logic if needed
-  const [logoPreview, setLogoPreview] = useState(null);
-  const [logoFile, setLogoFile] = useState(null);
-  const [faviconPreview, setFaviconPreview] = useState(null);
-  const [faviconFile, setFaviconFile] = useState(null);
-
   const [formData, setFormData] = useState({
     companyName: "",
     themeColor: "#0a0a0a",
@@ -151,9 +145,6 @@ const GlobalApplicationSettings = () => {
           phoneNumber: settings.phone?.number || "",
           address: settings.address || "",
         });
-
-        if (settings.logo?.url) setLogoPreview(settings.logo.url);
-        if (settings.favicon?.url) setFaviconPreview(settings.favicon.url);
 
         if (settings.adminLogo?.url) setAdminLogoPreview(settings.adminLogo.url);
         if (settings.adminFavicon?.url) setAdminFaviconPreview(settings.adminFavicon.url);
@@ -205,8 +196,6 @@ const GlobalApplicationSettings = () => {
       };
 
       const files = {};
-      if (logoFile) files.logo = logoFile;
-      if (faviconFile) files.favicon = faviconFile;
 
       if (adminLogoFile) files.adminLogo = adminLogoFile;
       if (adminFaviconFile) files.adminFavicon = adminFaviconFile;

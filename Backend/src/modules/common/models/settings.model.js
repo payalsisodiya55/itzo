@@ -12,10 +12,6 @@ const globalSettingsSchema = new mongoose.Schema(
         state: { type: String, default: '' },
         pincode: { type: String, default: '' },
         region: { type: String, default: 'India' },
-        logo: {
-            url: { type: String, default: '' },
-            publicId: { type: String, default: '' }
-        },
         adminLogo: {
             url: { type: String, default: '' },
             publicId: { type: String, default: '' }
@@ -53,10 +49,6 @@ const globalSettingsSchema = new mongoose.Schema(
             publicId: { type: String, default: '' }
         },
         sellerFavicon: {
-            url: { type: String, default: '' },
-            publicId: { type: String, default: '' }
-        },
-        favicon: {
             url: { type: String, default: '' },
             publicId: { type: String, default: '' }
         },

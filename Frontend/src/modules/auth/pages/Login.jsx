@@ -5,7 +5,7 @@ import { Phone, Lock, ArrowRight, ShieldCheck, Loader2, UserRound } from "lucide
 import { toast } from "sonner"
 import { authAPI, userAPI } from "@food/api"
 import { isModuleAuthenticated, setAuthData } from "@food/utils/auth"
-import zozomenLogo from "@/assets/zozomenLogo.png"
+import { loadBusinessSettings, getCachedSettings, getAppLogo, getCompanyName, setAppType } from "@common/utils/businessSettings"
 
 export default function UnifiedOTPFastLogin() {
   const RESEND_COOLDOWN_SECONDS = 60
@@ -18,8 +18,24 @@ export default function UnifiedOTPFastLogin() {
   const [showNameInput, setShowNameInput] = useState(false)
   const [name, setName] = useState("")
   const [nameError, setNameError] = useState("")
+  const [logoUrl, setLogoUrl] = useState(() => getAppLogo('user'))
+  const [companyName, setCompanyName] = useState(() => getCompanyName())
   const location = useLocation()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        setAppType('user')
+        const settings = await loadBusinessSettings()
+        if (settings) {
+          setLogoUrl(getAppLogo('user'))
+          setCompanyName(getCompanyName())
+        }
+      } catch (error) {}
+    }
+    fetchSettings()
+  }, [])
   const searchParams = new URLSearchParams(location.search)
   const referralCode = searchParams.get("ref") || ""
   
@@ -292,14 +308,18 @@ export default function UnifiedOTPFastLogin() {
             animate={{ scale: 1 }}
             className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-3 shadow-xl overflow-hidden"
           >
-             <img src={zozomenLogo} alt="Zozomen" className="w-full h-full object-contain p-2" />
+             {logoUrl ? (
+               <img src={logoUrl} alt={companyName} className="w-full h-full object-contain p-2" />
+             ) : (
+               <span className="text-[#CB202D] text-xl font-black italic">{companyName.charAt(0).toUpperCase()}</span>
+             )}
           </motion.div>
           <motion.h1 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-2xl md:text-5xl font-black tracking-tight mb-1"
           >
-            Zozomen
+            {companyName}
           </motion.h1>
           <p className="text-xs md:text-base font-bold text-white/90 tracking-[0.2em] uppercase">
             Taste the best, forget the rest
