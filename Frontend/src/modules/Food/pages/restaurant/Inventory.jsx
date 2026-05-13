@@ -1815,7 +1815,7 @@ export default function Inventory() {
           <motion.button
             onClick={() => setActiveTab("all-items")}
             className={`relative overflow-hidden rounded-[24px] border px-4 py-3 text-sm font-semibold whitespace-nowrap ${activeTab === "all-items"
-                ? "border-[#49AB14] text-white shadow-[0_18px_32px_-24px_rgba(73,171,20,0.8)]"
+                ? "border-[#FE5502] text-white shadow-[0_18px_32px_-24px_rgba(73,171,20,0.8)]"
                 : "border-white/80 bg-white/80 text-slate-700 shadow-[0_16px_40px_-34px_rgba(15,23,42,0.45)]"
               }`}
             animate={{
@@ -1826,7 +1826,7 @@ export default function Inventory() {
             {activeTab === "all-items" && (
               <motion.div
                 layoutId="activeTabBackground"
-                className="absolute inset-0 rounded-[24px] bg-[#49AB14] -z-10"
+                className="absolute inset-0 rounded-[24px] bg-[#FE5502] -z-10"
                 initial={false}
                 transition={{
                   type: "spring",
@@ -1837,7 +1837,7 @@ export default function Inventory() {
             )}
             <span className="relative z-10 flex items-center justify-center gap-2">
               <span>All items</span>
-              <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${activeTab === "all-items" ? "bg-white text-[#49AB14]" : "bg-slate-100 text-slate-600"
+              <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${activeTab === "all-items" ? "bg-white text-[#FE5502]" : "bg-slate-100 text-slate-600"
                 }`}>
                 {totalItems}
               </span>
@@ -1847,7 +1847,7 @@ export default function Inventory() {
           <motion.button
             onClick={() => setActiveTab("add-ons")}
             className={`relative overflow-hidden rounded-[24px] border px-4 py-3 text-sm font-semibold whitespace-nowrap ${activeTab === "add-ons"
-                ? "border-[#49AB14] text-white shadow-[0_18px_32px_-24px_rgba(73,171,20,0.8)]"
+                ? "border-[#FE5502] text-white shadow-[0_18px_32px_-24px_rgba(73,171,20,0.8)]"
                 : "border-white/80 bg-white/80 text-slate-700 shadow-[0_16px_40px_-34px_rgba(15,23,42,0.45)]"
               }`}
             animate={{
@@ -1858,7 +1858,7 @@ export default function Inventory() {
             {activeTab === "add-ons" && (
               <motion.div
                 layoutId="activeTabBackground"
-                className="absolute inset-0 rounded-[24px] bg-[#49AB14] -z-10"
+                className="absolute inset-0 rounded-[24px] bg-[#FE5502] -z-10"
                 initial={false}
                 transition={{
                   type: "spring",
@@ -2126,7 +2126,7 @@ export default function Inventory() {
                         type="button"
                         onClick={handleSaveAddon}
                         disabled={savingAddon}
-                        className="px-4 py-2 bg-[#49AB14] text-white rounded-md text-sm font-medium hover:bg-[#3d8f11] disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                        className="px-4 py-2 bg-[#FE5502] text-white rounded-md text-sm font-medium hover:bg-[#E64D02] disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                       >
                         {savingAddon && <Loader2 className="h-4 w-4 animate-spin" />}
                         <span>{savingAddon ? "Saving..." : "Submit for approval"}</span>
@@ -2202,7 +2202,7 @@ export default function Inventory() {
                               onCheckedChange={(checked) =>
                                 handleAddonToggle(addon.id, checked)
                               }
-                              className="data-[state=checked]:bg-[#49AB14]"
+                              className="data-[state=checked]:bg-[#FE5502]"
                             />
                           </div>
                         </div>
@@ -2302,7 +2302,7 @@ export default function Inventory() {
                           onCheckedChange={(checked) =>
                             handleToggleChange("category", category.id, null, checked)
                           }
-                          className="data-[state=checked]:bg-[#49AB14]"
+                          className="data-[state=checked]:bg-[#FE5502]"
                         />
                       </div>
 
@@ -2423,7 +2423,7 @@ export default function Inventory() {
                                       onCheckedChange={(checked) =>
                                         handleToggleChange("item", category.id, item.id, checked)
                                       }
-                                      className="data-[state=checked]:bg-[#49AB14]"
+                                      className="data-[state=checked]:bg-[#FE5502]"
                                     />
                                   </div>
                                 </div>
@@ -2766,7 +2766,7 @@ export default function Inventory() {
               setIsAddAddonOpen(true)
               window.scrollTo({ top: 0, behavior: "smooth" })
             }}
-            className="rounded-full bg-[#49AB14] px-5 py-3 text-sm font-semibold text-white shadow-[0_22px_40px_-24px_rgba(73,171,20,0.6)]"
+            className="rounded-full bg-[#FE5502] px-5 py-3 text-sm font-semibold text-white shadow-[0_22px_40px_-24px_rgba(73,171,20,0.6)]"
           >
             + Add add-on
           </motion.button>
@@ -2780,7 +2780,7 @@ export default function Inventory() {
                 },
               })
             }}
-            className="rounded-full bg-[#49AB14] px-5 py-3 text-sm font-semibold text-white shadow-[0_22px_40px_-24px_rgba(73,171,20,0.6)]"
+            className="rounded-full bg-[#FE5502] px-5 py-3 text-sm font-semibold text-white shadow-[0_22px_40px_-24px_rgba(73,171,20,0.6)]"
           >
             + Add item
           </motion.button>

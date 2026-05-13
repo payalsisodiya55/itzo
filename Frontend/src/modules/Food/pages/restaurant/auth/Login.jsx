@@ -128,7 +128,7 @@ export default function RestaurantLogin() {
       style={{ paddingBottom: keyboardInset ? `${keyboardInset + 24}px` : undefined }}
     >
       {/* Curved Header Background */}
-      <div className="relative h-[300px] w-full bg-[#49AB14] overflow-hidden">
+      <div className="relative h-[300px] w-full bg-[#FE5502] overflow-hidden">
         {/* Abstract Circles like in the image */}
         <div className="absolute -top-10 -left-10 w-48 h-48 rounded-full bg-white/10" />
         <div className="absolute top-20 -right-10 w-64 h-64 rounded-full bg-white/10" />
@@ -140,7 +140,7 @@ export default function RestaurantLogin() {
       <div id="login-content" className="flex-1 flex flex-col items-center px-4 sm:px-8 -mt-12 sm:-mt-16 z-10 overflow-hidden">
         <div className="w-28 h-28 sm:w-32 sm:h-32 bg-white rounded-full shadow-xl flex items-center justify-center border-4 border-slate-50 mb-4 sm:mb-6">
           <div className="text-center">
-            <div className="w-16 h-16 bg-[#49AB14] rounded-2xl mx-auto flex items-center justify-center transform rotate-12 shadow-lg mb-1">
+            <div className="w-16 h-16 bg-[#FE5502] rounded-2xl mx-auto flex items-center justify-center transform rotate-12 shadow-lg mb-1">
               <ShieldCheck className="w-8 h-8 text-white -rotate-12" />
             </div>
           </div>
@@ -160,7 +160,7 @@ export default function RestaurantLogin() {
             <div className="space-y-3">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-1">Registered Mobile Number</label>
               
-              <div className="flex items-center gap-2 h-16 bg-slate-50 border border-slate-100 rounded-[32px] px-6 focus-within:border-[#49AB14]/30 focus-within:ring-4 focus-within:ring-[#49AB14]/5 transition-all overflow-hidden">
+              <div className="flex items-center gap-2 h-16 bg-slate-50 border border-slate-100 rounded-[32px] px-6 focus-within:border-[#FE5502]/30 focus-within:ring-4 focus-within:ring-[#FE5502]/5 transition-all overflow-hidden">
                 <div className="flex items-center gap-1.5">
                   <span className="font-bold text-slate-900 text-lg">{formData.countryCode}</span>
                 </div>
@@ -178,13 +178,13 @@ export default function RestaurantLogin() {
                   value={formData.phone}
                   onChange={handlePhoneChange}
                   onFocus={ensurePhoneFieldVisible}
-                  className="min-w-0 flex-1 h-12 bg-transparent border-0 outline-none ring-0 shadow-none focus:border-0 focus:outline-none focus:ring-0 focus:shadow-none text-left text-lg font-bold leading-none tracking-[0.02em] text-slate-900 placeholder-slate-300 caret-[#49AB14] px-2"
+                  className="min-w-0 flex-1 h-12 bg-transparent border-0 outline-none ring-0 shadow-none focus:border-0 focus:outline-none focus:ring-0 focus:shadow-none text-left text-lg font-bold leading-none tracking-[0.02em] text-slate-900 placeholder-slate-300 caret-[#FE5502] px-2"
                   style={{ WebkitTextFillColor: "#0f172a", opacity: 1 }}
                 />
               </div>
 
               {error && (
-                <p className="text-[#49AB14] text-xs font-bold italic ml-4 animate-bounce">
+                <p className="text-[#FE5502] text-xs font-bold italic ml-4 animate-bounce">
                   {error}
                 </p>
               )}
@@ -195,7 +195,7 @@ export default function RestaurantLogin() {
               disabled={!isValidPhone || isSending}
               className={`w-full h-14 sm:h-16 rounded-[32px] font-black text-base sm:text-lg tracking-widest uppercase transition-all duration-300 ${
                 isValidPhone && !isSending
-                  ? "bg-[#49AB14] hover:bg-[#3d8f11] text-white shadow-lg shadow-[#49AB14]/20 transform active:scale-[0.98]"
+                  ? "bg-[#FE5502] hover:bg-[#E64D02] text-white shadow-lg shadow-[#FE5502]/20 transform active:scale-[0.98]"
                   : "bg-slate-100 text-slate-400 cursor-not-allowed"
               }`}
             >
@@ -209,7 +209,7 @@ export default function RestaurantLogin() {
               <button
                 type="button"
                 onClick={() => navigate("/food/restaurant/terms")}
-                className="bg-transparent border-0 p-0 text-[#49AB14] font-bold hover:underline cursor-pointer"
+                className="bg-transparent border-0 p-0 text-[#FE5502] font-bold hover:underline cursor-pointer"
               >
                 Terms & Conditions
               </button>

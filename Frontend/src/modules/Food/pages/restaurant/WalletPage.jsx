@@ -177,12 +177,12 @@ export default function WalletPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
-          className={isBalanceAdjusted ? "bg-[#49AB14]/10 border-2 border-[#49AB14]/20 rounded-xl p-4 md:p-6 mb-4 shadow-md" : "bg-[#ffebee] rounded-xl p-4 md:p-6 mb-4 shadow-md"}
+          className={isBalanceAdjusted ? "bg-[#FE5502]/10 border-2 border-[#FE5502]/20 rounded-xl p-4 md:p-6 mb-4 shadow-md" : "bg-[#ffebee] rounded-xl p-4 md:p-6 mb-4 shadow-md"}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className={isBalanceAdjusted ? "bg-[#49AB14]/20 rounded-lg p-3" : "bg-red-200/50 rounded-lg p-3"}>
-                <DollarSign className={isBalanceAdjusted ? "w-6 h-6 md:w-8 md:h-8 text-[#49AB14]" : "w-6 h-6 md:w-8 md:h-8 text-red-700"} />
+              <div className={isBalanceAdjusted ? "bg-[#FE5502]/20 rounded-lg p-3" : "bg-red-200/50 rounded-lg p-3"}>
+                <DollarSign className={isBalanceAdjusted ? "w-6 h-6 md:w-8 md:h-8 text-[#FE5502]" : "w-6 h-6 md:w-8 md:h-8 text-red-700"} />
               </div>
               <div>
                 <p className="text-gray-800 text-sm md:text-base mb-1 font-medium">{isBalanceAdjusted ? "Balance Adjusted" : "Balance Unadjusted"}</p>
@@ -215,7 +215,7 @@ export default function WalletPage() {
               <Card className="bg-white shadow-md border-0 py-0 gap-0 h-full w-full">
                 <CardContent className="p-2 relative flex flex-col px-2 h-full justify-between">
                   <div className="absolute right-1 top-1 opacity-10">
-                    <Hand className="w-6 h-6 md:w-8 md:h-8 text-[#49AB14]" />
+                    <Hand className="w-6 h-6 md:w-8 md:h-8 text-[#FE5502]" />
                   </div>
                   <p className="text-gray-600 text-[9px] md:text-xs mb-0.5 leading-tight">Cash in Hand</p>
                   <p className="text-gray-900 text-xs md:text-sm font-bold">{formatCurrency(balances.cashInHand)}</p>
@@ -266,7 +266,7 @@ export default function WalletPage() {
               <Card className="bg-white shadow-md border-0 py-0 gap-0 h-full w-full">
                 <CardContent className="p-2 relative flex flex-col px-2 h-full justify-between">
                   <div className="absolute right-1 top-1 opacity-10">
-                    <CheckCircle className="w-6 h-6 md:w-8 md:h-8 text-[#49AB14]" />
+                    <CheckCircle className="w-6 h-6 md:w-8 md:h-8 text-[#FE5502]" />
                   </div>
                   <p className="text-gray-600 text-[9px] md:text-xs mb-0.5 leading-tight">Already Withdraw</p>
                   <p className="text-gray-900 text-xs md:text-sm font-bold">{formatCurrency(balances.alreadyWithdraw)}</p>

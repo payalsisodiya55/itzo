@@ -428,7 +428,7 @@ export default function Feedback() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${
-                activeTab === tab.id ? "bg-[#49AB14] text-white shadow-lg shadow-[#49AB14]/20" : "bg-white text-gray-600 border border-gray-200"
+                activeTab === tab.id ? "bg-[#FE5502] text-white shadow-lg shadow-[#FE5502]/20" : "bg-white text-gray-600 border border-gray-200"
               }`}
             >
               {tab.label}
@@ -520,7 +520,7 @@ export default function Feedback() {
                   <div className="flex items-center gap-3">
                     <img src={review.userImage} className="w-8 h-8 rounded-full border border-gray-100" />
                     <p className="font-bold text-gray-900 text-sm">{review.userName}</p>
-                    <div className="ml-auto flex items-center gap-1 bg-[#49AB14] text-white px-1.5 py-0.5 rounded text-[10px] font-bold">
+                    <div className="ml-auto flex items-center gap-1 bg-[#FE5502] text-white px-1.5 py-0.5 rounded text-[10px] font-bold">
                       {review.rating} <Star className="w-2 h-2 fill-current" />
                     </div>
                   </div>
