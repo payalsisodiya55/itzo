@@ -8,9 +8,8 @@ import { initiateRefund } from '../../core/payments/refund.service.js';
  * Called by BullMQ when a delivery_completed event fires.
  *
  * Splits the order total into:
- * 1. Restaurant commission credit
- * 2. Delivery partner earning credit
- * 3. Platform profit credit (admin wallet)
+ * 1. Delivery partner earning credit
+ * 2. Platform profit credit (admin wallet)
  *
  * Also handles refunds on order cancellation.
  *
@@ -52,31 +51,12 @@ export const processPaymentJob = async (job) => {
 async function handleDeliveryCompleted(data) {
     const {
         orderMongoId, orderId,
-        restaurantId, deliveryPartnerId,
+        deliveryPartnerId,
         riderEarning = 0, platformProfit = 0,
-        commissionAmount = 0,
-        total = 0, paymentMethod
+        paymentMethod
     } = data;
 
-    // 1. Credit restaurant wallet with their commission (payout)
-    if (restaurantId && commissionAmount > 0) {
-        try {
-            await creditWallet({
-                entityType: 'restaurant',
-                entityId: restaurantId,
-                amount: commissionAmount,
-                description: `Order ${orderId} - restaurant commission`,
-                category: 'commission',
-                orderId: orderMongoId,
-                metadata: { orderId, paymentMethod }
-            });
-            logger.info(`[PaymentProcessor] Restaurant ${restaurantId} credited ${commissionAmount} for order ${orderId}`);
-        } catch (err) {
-            logger.error(`[PaymentProcessor] Failed to credit restaurant: ${err.message}`);
-        }
-    }
-
-    // 2. Credit delivery partner wallet with their earning
+    // 1. Credit delivery partner wallet with their earning
     if (deliveryPartnerId && riderEarning > 0) {
         try {
             await creditWallet({
@@ -103,7 +83,7 @@ async function handleDeliveryCompleted(data) {
         }
     }
 
-    // 3. Credit admin/platform wallet with platform profit
+    // 2. Credit admin/platform wallet with platform profit
     if (platformProfit > 0) {
         try {
             await creditWallet({

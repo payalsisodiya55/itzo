@@ -4,7 +4,7 @@ import { FoodItem } from '../models/food.model.js';
 import { FoodAddon } from '../../restaurant/models/foodAddon.model.js';
 import { FoodRestaurant } from '../../restaurant/models/restaurant.model.js';
 import { syncMenuItemApprovalStatus } from '../../restaurant/services/restaurantMenu.service.js';
-import { getFoodDisplayPrice, serializeFoodVariants } from './foodVariant.service.js';
+import { getFoodDisplayPrice, getFoodDisplayOtherPrice, serializeFoodVariants } from './foodVariant.service.js';
 
 const toRestaurantDisplayId = (mongoId) => {
     const s = String(mongoId || '');
@@ -32,7 +32,7 @@ export async function listPendingFoodApprovals(query = {}) {
         .sort({ requestedAt: -1, createdAt: -1 })
         .skip(skip)
         .limit(limit)
-        .select('restaurantId categoryName name price variants image foodType approvalStatus requestedAt createdAt')
+        .select('restaurantId categoryName name price otherPrice variants image foodType approvalStatus requestedAt createdAt')
         .lean();
 
     const addonList = await FoodAddon.find({ approvalStatus: 'pending' })
@@ -65,6 +65,7 @@ export async function listPendingFoodApprovals(query = {}) {
         subsectionName: '',
         approvalStatus: f.approvalStatus || 'pending',
         price: getFoodDisplayPrice(f),
+        otherPrice: getFoodDisplayOtherPrice(f),
         variants: serializeFoodVariants(f.variants),
         image: f.image || '',
         images: f.image ? [f.image] : [],

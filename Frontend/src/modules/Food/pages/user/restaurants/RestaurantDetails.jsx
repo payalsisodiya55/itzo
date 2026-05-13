@@ -760,6 +760,7 @@ function RestaurantDetailsContent() {
                       name: item.name || "Unnamed Item",
                       foodType,
                       price: getFoodDisplayPrice(item),
+                      otherPrice: item.otherPrice || 0,
                       variants: getFoodVariants(item),
                       variations: getFoodVariants(item),
                       isAvailable: item.isAvailable !== false,
@@ -1175,6 +1176,7 @@ function RestaurantDetailsContent() {
       itemId: item.id,
       name: item.name,
       price: resolvedVariant?.price ?? item.price,
+      otherPrice: resolvedVariant?.otherPrice ?? item.otherPrice ?? item.originalPrice ?? 0,
       variantId: resolvedVariant?.id || "",
       variantName: resolvedVariant?.name || "",
       variantPrice: resolvedVariant?.price ?? item.price,
@@ -2422,16 +2424,62 @@ function RestaurantDetailsContent() {
                                 </div>
                               )}
 
-                              <div className="flex items-center gap-3 mt-1">
-                                <p className="font-semibold text-gray-900 dark:text-white">{getFoodPriceLabel(item)}</p>
-                                {/* Preparation Time - Show if available */}
-                                {item.preparationTime && String(item.preparationTime).trim() && (
-                                  <div className="flex items-center gap-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-full">
-                                    <Clock size={12} className="text-gray-500" />
-                                    <span>{String(item.preparationTime).trim()}</span>
-                                  </div>
-                                )}
-                              </div>
+                               <div className="flex flex-col mt-1">
+                                 <div className="flex flex-col gap-1">
+                                   <div className="flex items-center gap-2">
+                                     <p className="font-bold text-gray-900 dark:text-white text-base">
+                                       {RUPEE_SYMBOL}{Math.round(getFoodDisplayPrice(item))}
+                                     </p>
+                                     {/* Preparation Time - Show if available */}
+                                     {item.preparationTime && String(item.preparationTime).trim() && (
+                                       <div className="flex items-center gap-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-full">
+                                         <Clock size={12} className="text-gray-500" />
+                                         <span>{String(item.preparationTime).trim()}</span>
+                                       </div>
+                                     )}
+                                   </div>
+                                   
+                                   {(() => {
+                                     const variants = getFoodVariants(item);
+                                     const price = getFoodDisplayPrice(item);
+                                     
+                                     let otherPrice = Number(item.otherPrice) || 0;
+                                     if (variants.length > 0) {
+                                       const validOtherPrices = variants
+                                         .map(v => Number(v.otherPrice) || 0)
+                                         .filter(p => p > 0);
+                                       
+                                       if (validOtherPrices.length > 0) {
+                                         otherPrice = Math.min(...validOtherPrices);
+                                       }
+                                     }
+                                     
+                                     if (otherPrice > 0 && otherPrice > price) {
+                                       const savingsAmount = otherPrice - price;
+                                       const discountPercent = Math.round((savingsAmount / otherPrice) * 100);
+                                       return (
+                                         <div className="flex items-center gap-2">
+                                           <span className="text-[10px] font-semibold text-gray-500 bg-gray-50 px-1.5 py-0.5 rounded border border-gray-100">
+                                             Other: {RUPEE_SYMBOL}{Math.round(otherPrice)}
+                                           </span>
+                                           <div className="flex items-center gap-1 bg-green-50 px-1.5 py-0.5 rounded border border-green-100">
+                                             <span className="text-[10px] font-bold text-green-700">
+                                               SAVE {RUPEE_SYMBOL}{Math.round(savingsAmount)}
+                                             </span>
+                                             <span className="text-[9px] font-medium text-green-600 opacity-80">
+                                               ({discountPercent}%)
+                                             </span>
+                                           </div>
+                                         </div>
+                                       );
+                                     }
+                                     return null;
+                                   })()}
+                                 </div>
+                                 {hasFoodVariants(item) && (
+                                   <p className="text-[10px] text-gray-500 font-medium mt-0.5">Customisable</p>
+                                 )}
+                               </div>
 
                               {/* Description - Show if available */}
                               {item.description && (
@@ -2643,14 +2691,60 @@ function RestaurantDetailsContent() {
                                           </div>
                                         )}
 
-                                        <div className="flex items-center gap-3 mt-1">
-                                          <p className="font-semibold text-gray-900 dark:text-white">{getFoodPriceLabel(item)}</p>
-                                          {/* Preparation Time - Show if available */}
-                                          {item.preparationTime && String(item.preparationTime).trim() && (
-                                            <div className="flex items-center gap-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-full">
-                                              <Clock size={12} className="text-gray-500" />
-                                              <span>{String(item.preparationTime).trim()}</span>
+                                        <div className="flex flex-col mt-1">
+                                          <div className="flex flex-col gap-1">
+                                            <div className="flex items-center gap-2">
+                                              <p className="font-bold text-gray-900 dark:text-white text-base">
+                                                {RUPEE_SYMBOL}{Math.round(getFoodDisplayPrice(item))}
+                                              </p>
+                                              {/* Preparation Time - Show if available */}
+                                              {item.preparationTime && String(item.preparationTime).trim() && (
+                                                <div className="flex items-center gap-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-full">
+                                                  <Clock size={12} className="text-gray-500" />
+                                                  <span>{String(item.preparationTime).trim()}</span>
+                                                </div>
+                                              )}
                                             </div>
+                                            
+                                            {(() => {
+                                              const variants = getFoodVariants(item);
+                                              const price = getFoodDisplayPrice(item);
+                                              
+                                              let otherPrice = Number(item.otherPrice) || 0;
+                                              if (variants.length > 0) {
+                                                const validOtherPrices = variants
+                                                  .map(v => Number(v.otherPrice) || 0)
+                                                  .filter(p => p > 0);
+                                                
+                                                if (validOtherPrices.length > 0) {
+                                                  otherPrice = Math.min(...validOtherPrices);
+                                                }
+                                              }
+                                              
+                                              if (otherPrice > 0 && otherPrice > price) {
+                                                const savingsAmount = otherPrice - price;
+                                                const discountPercent = Math.round((savingsAmount / otherPrice) * 100);
+                                                return (
+                                                  <div className="flex items-center gap-2">
+                                                    <span className="text-[10px] font-semibold text-gray-500 bg-gray-50 px-1.5 py-0.5 rounded border border-gray-100">
+                                                      Other: {RUPEE_SYMBOL}{Math.round(otherPrice)}
+                                                    </span>
+                                                    <div className="flex items-center gap-1 bg-green-50 px-1.5 py-0.5 rounded border border-green-100">
+                                                      <span className="text-[10px] font-bold text-green-700">
+                                                        SAVE {RUPEE_SYMBOL}{Math.round(savingsAmount)}
+                                                      </span>
+                                                      <span className="text-[9px] font-medium text-green-600 opacity-80">
+                                                        ({discountPercent}%)
+                                                      </span>
+                                                    </div>
+                                                  </div>
+                                                );
+                                              }
+                                              return null;
+                                            })()}
+                                          </div>
+                                          {hasFoodVariants(item) && (
+                                            <p className="text-[10px] text-gray-500 font-medium mt-0.5">Customisable</p>
                                           )}
                                         </div>
 

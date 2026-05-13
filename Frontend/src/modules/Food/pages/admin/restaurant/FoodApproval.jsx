@@ -380,7 +380,14 @@ export default function FoodApproval() {
                     </div>
                     <div>
                         <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Price</label>
-                        <p className="text-sm font-bold text-green-600">{selectedRequest.price !== null && selectedRequest.price !== undefined ? `₹${selectedRequest.price}` : '-'}</p>
+                        <p className="text-sm font-bold text-green-600">
+                          ₹{selectedRequest.price !== null && selectedRequest.price !== undefined ? selectedRequest.price : '-'}
+                          {selectedRequest.otherPrice > 0 && (
+                            <span className="ml-2 text-[10px] font-medium text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded border border-gray-200">
+                              Other: ₹{selectedRequest.otherPrice}
+                            </span>
+                          )}
+                        </p>
                     </div>
                     <div>
                         <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Status</label>
@@ -418,7 +425,14 @@ export default function FoodApproval() {
                       {selectedRequest.variants.map((variant, idx) => (
                         <div key={idx} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
                           <span className="text-sm font-medium text-gray-900">{variant.name || variant.variantName || '-'}</span>
-                          <span className="text-sm font-bold text-green-600">₹{variant.price || 0}</span>
+                          <div className="text-right flex flex-col items-end gap-1">
+                            <span className="text-sm font-bold text-green-600">₹{variant.price || 0}</span>
+                            {variant.otherPrice > 0 && (
+                              <span className="text-[9px] font-medium text-gray-500 bg-gray-100 px-1 py-0.5 rounded border border-gray-200">
+                                Other: ₹{variant.otherPrice}
+                              </span>
+                            )}
+                          </div>
                         </div>
                       ))}
                     </div>

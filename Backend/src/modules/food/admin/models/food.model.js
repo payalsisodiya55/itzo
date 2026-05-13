@@ -3,7 +3,8 @@ import mongoose from 'mongoose';
 const foodVariantSchema = new mongoose.Schema(
     {
         name: { type: String, required: true, trim: true },
-        price: { type: Number, required: true, min: 0 }
+        price: { type: Number, required: true, min: 0 },
+        otherPrice: { type: Number, min: 0, default: 0 }
     },
     { _id: true }
 );
@@ -16,6 +17,7 @@ const foodSchema = new mongoose.Schema(
         name: { type: String, required: true, trim: true, index: true },
         description: { type: String, trim: true, default: '' },
         price: { type: Number, required: true, min: 0 },
+        otherPrice: { type: Number, min: 0, default: 0 },
         variants: { type: [foodVariantSchema], default: [] },
         image: { type: String, trim: true, default: '' },
         foodType: { type: String, enum: ['Veg', 'Non-Veg'], default: 'Non-Veg' },

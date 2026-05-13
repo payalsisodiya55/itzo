@@ -55,7 +55,6 @@ export const adminSidebarMenu = [
         subItems: [
           { label: "Restaurants List", path: "/admin/food/restaurants" },
           { label: "New Joining Request", path: "/admin/food/restaurants/joining-request" },
-          { label: "Restaurant Commission", path: "/admin/food/restaurants/commission" },
           { label: "Restaurant Reviews", path: "/admin/food/restaurants/reviews" },
           { label: "Restaurant Complaints", path: "/admin/food/restaurants/complaints" },
         ],

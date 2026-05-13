@@ -6,6 +6,7 @@ import { FoodRestaurant } from '../models/restaurant.model.js';
 import {
     extractRawFoodVariants,
     getFoodDisplayPrice,
+    getFoodDisplayOtherPrice,
     hasFoodVariants,
     normalizeFoodVariantsInput
 } from '../../admin/services/foodVariant.service.js';
@@ -32,50 +33,57 @@ const normalizeFoodType = (v) => {
 
 const getCreateFoodPricing = (body = {}) => {
     const variants = normalizeFoodVariantsInput(extractRawFoodVariants(body));
-    if (variants.length > 0) {
-        return {
-            price: getFoodDisplayPrice({ variants }),
-            variants
-        };
-    }
+    
+    // Prefer explicitly provided price/otherPrice from body, fallback to variant calculation
+    const bodyPrice = Number(body.price);
+    const bodyOtherPrice = Number(body.otherPrice);
+    
+    const price = (Number.isFinite(bodyPrice) && bodyPrice > 0) 
+        ? bodyPrice 
+        : getFoodDisplayPrice({ variants });
+        
+    const otherPrice = (Number.isFinite(bodyOtherPrice) && bodyOtherPrice > 0)
+        ? bodyOtherPrice
+        : getFoodDisplayOtherPrice({ variants });
 
-    const price = Number(body.price);
-    if (!Number.isFinite(price) || price < 0) throw new ValidationError('Price is invalid');
     return {
         price,
-        variants: []
+        otherPrice,
+        variants
     };
 };
 
 const getUpdatedFoodPricing = (existing = {}, body = {}) => {
     const variantsTouched = body.variants !== undefined || body.variations !== undefined;
-    const existingHasVariants = hasFoodVariants(existing);
     const update = {};
 
     if (variantsTouched) {
         const variants = normalizeFoodVariantsInput(extractRawFoodVariants(body));
         update.variants = variants;
-
-        if (variants.length > 0) {
-            update.price = getFoodDisplayPrice({ variants });
-            return update;
-        }
-
-        const nextBasePrice = body.price !== undefined ? Number(body.price) : Number(existingHasVariants ? NaN : existing.price);
-        if (!Number.isFinite(nextBasePrice) || nextBasePrice < 0) {
-            throw new ValidationError('Base price is required when variants are removed');
-        }
-        update.price = nextBasePrice;
-        return update;
     }
 
-    if (body.price !== undefined) {
-        if (existingHasVariants) {
-            throw new ValidationError('Update variants instead of base price for foods with variants');
+    // Check if price/otherPrice are provided in body
+    const bodyPrice = Number(body.price);
+    const bodyOtherPrice = Number(body.otherPrice);
+
+    if (Number.isFinite(bodyPrice) && bodyPrice > 0) {
+        update.price = bodyPrice;
+    } else if (variantsTouched) {
+        // Recalculate if variants changed and no explicit price provided
+        const variants = update.variants || [];
+        if (variants.length > 0) {
+            update.price = getFoodDisplayPrice({ variants });
         }
-        const price = Number(body.price);
-        if (!Number.isFinite(price) || price < 0) throw new ValidationError('Price is invalid');
-        update.price = price;
+    }
+
+    if (Number.isFinite(bodyOtherPrice) && bodyOtherPrice > 0) {
+        update.otherPrice = bodyOtherPrice;
+    } else if (variantsTouched) {
+        // Recalculate if variants changed and no explicit otherPrice provided
+        const variants = update.variants || [];
+        if (variants.length > 0) {
+            update.otherPrice = getFoodDisplayOtherPrice({ variants });
+        }
     }
 
     return update;
@@ -183,7 +191,7 @@ export async function createRestaurantFood(restaurantId, body = {}) {
     if (!name) throw new ValidationError('Item name is required');
     if (name.length > 200) throw new ValidationError('Item name is too long');
 
-    const { price, variants } = getCreateFoodPricing(body);
+    const { price, otherPrice, variants } = getCreateFoodPricing(body);
 
     const description = toStr(body.description);
     const image = toStr(body.image);
@@ -199,6 +207,7 @@ export async function createRestaurantFood(restaurantId, body = {}) {
         name,
         description,
         price,
+        otherPrice,
         variants,
         image,
         foodType,

@@ -42,10 +42,10 @@ export default function BusinessPlanPage() {
   }, [])
 
   const plan = {
-    title: "Commission Base Plan",
-    rate: "10.0 %",
+    title: "Business Base Plan",
+    rate: "Standard",
     description:
-      "Restaurant will pay 10.0% commission to StackFood from each order. You will get access of all the features and options in restaurant panel , app and interaction with user.",
+      "Restaurant will get access to all the features and options in the restaurant panel, app, and user interaction flow with standard business access.",
   }
 
   const plans = [

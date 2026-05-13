@@ -29,6 +29,7 @@ const createVariantDraft = (variant = {}) => ({
   id: String(variant?.id || variant?._id || `variant-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`),
   name: String(variant?.name || ""),
   price: variant?.price != null ? String(variant.price) : "",
+  otherPrice: variant?.otherPrice != null ? String(variant.otherPrice) : "",
 })
 
 export default function FoodsList() {
@@ -121,30 +122,31 @@ export default function FoodsList() {
         ? list.filter((f) => String(f?.approvalStatus || "").toLowerCase() === "approved")
         : []
       setFoods(
-        Array.isArray(approvedOnly)
-          ? approvedOnly.map((f) => ({
-              id: String(f.id || f._id || ""),
-              _id: f._id || f.id,
-              name: f.name || "Unnamed Item",
-              image: f.image || "https://via.placeholder.com/40",
-              status: f.isAvailable !== false && String(f.approvalStatus || "").toLowerCase() !== "rejected",
-              restaurantId: String(f.restaurantId || ""),
-              restaurantName: f.restaurantName || "Unknown Restaurant",
-              categoryId: String(f.categoryId || ""),
-              categoryName: f.categoryName || "",
-              basePrice: f.price != null ? Number(f.price) : null,
-              price: getFoodDisplayPrice(f),
-              variants: getFoodVariants(f),
-              foodType: f.foodType || "Non-Veg",
-              approvalStatus: f.approvalStatus || "approved",
-              description: f.description || "",
-              preparationTime: f.preparationTime || "",
-              isAvailable: f.isAvailable !== false,
-              createdAt: f.createdAt,
-              updatedAt: f.updatedAt,
-            }))
-          : []
-      )
+                Array.isArray(approvedOnly)
+                  ? approvedOnly.map((f) => ({
+                      id: String(f.id || f._id || ""),
+                      _id: f._id || f.id,
+                      name: f.name || "Unnamed Item",
+                      image: f.image || "https://via.placeholder.com/40",
+                      status: f.isAvailable !== false && String(f.approvalStatus || "").toLowerCase() !== "rejected",
+                      restaurantId: String(f.restaurantId || ""),
+                      restaurantName: f.restaurantName || "Unknown Restaurant",
+                      categoryId: String(f.categoryId || ""),
+                      categoryName: f.categoryName || "",
+                      basePrice: f.price != null ? Number(f.price) : null,
+                      price: getFoodDisplayPrice(f),
+                      otherPrice: f.otherPrice || 0,
+                      variants: getFoodVariants(f),
+                      foodType: f.foodType || "Non-Veg",
+                      approvalStatus: f.approvalStatus || "approved",
+                      description: f.description || "",
+                      preparationTime: f.preparationTime || "",
+                      isAvailable: f.isAvailable !== false,
+                      createdAt: f.createdAt,
+                      updatedAt: f.updatedAt,
+                    }))
+                  : []
+              )
       setImageVersion(Date.now())
     } catch (error) {
       debugError("Error fetching foods:", error)
@@ -273,6 +275,7 @@ export default function FoodsList() {
       categoryName: String(food.categoryName || ""),
       name: String(food.name || ""),
       price: String(food.basePrice ?? food.price ?? ""),
+      otherPrice: String(food.otherPrice || ""),
       variants: getFoodVariants(food).map(createVariantDraft),
       description: String(food.description || ""),
       image: String(food.image || ""),
@@ -401,11 +404,13 @@ export default function FoodsList() {
         categoryId: foodForm.categoryId || undefined,
         categoryName: String(foodForm.categoryName || "").trim(),
         name: foodForm.name.trim(),
-        price: hasVariants ? undefined : parsedPrice,
+        price: parsedPrice,
+        otherPrice: Number(foodForm.otherPrice) || 0,
         variants: normalizedVariants.map((variant) => ({
           ...(variant.id && !variant.id.startsWith("variant-") ? { _id: variant.id } : {}),
           name: variant.name,
           price: variant.price,
+          otherPrice: Number(variant.otherPrice) || 0,
         })),
         description: foodForm.description.trim(),
         image: imageUrl,
@@ -714,7 +719,21 @@ export default function FoodsList() {
               </div>
               <div className="grid grid-cols-2 gap-4 text-sm bg-slate-50 border border-slate-200 rounded-lg p-4">
                 <p><span className="font-semibold text-slate-700">Restaurant:</span> <span className="text-slate-900">{selectedFood.restaurantName || "-"}</span></p>
-                <p><span className="font-semibold text-slate-700">Price:</span> <span className="text-slate-900">{selectedFood.variants?.length ? `Starting from \u20B9${selectedFood.price}` : `\u20B9${selectedFood.price}`}</span></p>
+                <div className="flex flex-col">
+                  <p>
+                    <span className="font-semibold text-slate-700">Price:</span>{" "}
+                    <span className="text-slate-900">
+                      {selectedFood.variants?.length ? `Starting from \u20B9${selectedFood.price}` : `\u20B9${selectedFood.price}`}
+                    </span>
+                  </p>
+                  {selectedFood.otherPrice > 0 && (
+                    <p className="mt-1">
+                      <span className="text-[10px] font-medium text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded border border-gray-200">
+                        Other: ₹{selectedFood.otherPrice}
+                      </span>
+                    </p>
+                  )}
+                </div>
                 <p><span className="font-semibold text-slate-700">Category:</span> <span className="text-slate-900">{selectedFood.categoryName || "-"}</span></p>
                 <p><span className="font-semibold text-slate-700">Food Type:</span> <span className="text-slate-900">{selectedFood.foodType || "-"}</span></p>
                 <p><span className="font-semibold text-slate-700">Approval:</span> <span className="text-slate-900 capitalize">{selectedFood.approvalStatus || "-"}</span></p>
@@ -722,11 +741,18 @@ export default function FoodsList() {
               {selectedFood.variants?.length ? (
                 <div className="rounded-lg border border-slate-200 bg-white p-4">
                   <p className="text-sm font-semibold text-slate-800 mb-2">Variants</p>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     {selectedFood.variants.map((variant) => (
-                      <div key={variant.id || variant._id} className="flex items-center justify-between text-sm text-slate-700">
+                      <div key={variant.id || variant._id} className="flex items-center justify-between text-sm text-slate-700 border-b border-slate-50 pb-2 last:border-0 last:pb-0">
                         <span>{variant.name}</span>
-                        <span className="font-semibold text-slate-900">{"\u20B9"}{variant.price}</span>
+                        <div className="text-right flex flex-col items-end gap-1">
+                          <span className="font-semibold text-slate-900">{"\u20B9"}{variant.price}</span>
+                          {variant.otherPrice > 0 && (
+                            <span className="text-[9px] font-medium text-gray-500 bg-gray-100 px-1 py-0.5 rounded border border-gray-200">
+                              Other: ₹{variant.otherPrice}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -844,18 +870,26 @@ export default function FoodsList() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Base Price</label>
-                <input
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  value={foodForm.price}
-                  onChange={(e) => setFoodForm((prev) => ({ ...prev, price: e.target.value }))}
-                  disabled={(foodForm.variants || []).length > 0}
-                  className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm bg-white disabled:bg-slate-100 disabled:text-slate-400"
-                />
-                {(foodForm.variants || []).length > 0 ? (
-                  <p className="mt-1 text-xs text-slate-500">Variants are active, so customers will see the lowest variant price as the starting price.</p>
-                ) : null}
+                <div className="grid grid-cols-2 gap-2">
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={foodForm.price}
+                    onChange={(e) => setFoodForm((prev) => ({ ...prev, price: e.target.value }))}
+                    placeholder="Price"
+                    className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm bg-white"
+                  />
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={foodForm.otherPrice}
+                    onChange={(e) => setFoodForm((prev) => ({ ...prev, otherPrice: e.target.value }))}
+                    placeholder="Other Price"
+                    className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm bg-white"
+                  />
+                </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Food Type</label>
@@ -964,16 +998,29 @@ export default function FoodsList() {
                             className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white"
                           />
                         </div>
-                        <div>
-                          <label className="block text-xs font-medium text-slate-600 mb-1">Variant price</label>
-                          <input
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            value={variant.price}
-                            onChange={(e) => handleVariantChange(variant.id, "price", e.target.value)}
-                            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white"
-                          />
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <label className="block text-xs font-medium text-slate-600 mb-1">Price</label>
+                            <input
+                              type="number"
+                              min="0"
+                              step="0.01"
+                              value={variant.price}
+                              onChange={(e) => handleVariantChange(variant.id, "price", e.target.value)}
+                              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-medium text-slate-600 mb-1">Other Price</label>
+                            <input
+                              type="number"
+                              min="0"
+                              step="0.01"
+                              value={variant.otherPrice}
+                              onChange={(e) => handleVariantChange(variant.id, "otherPrice", e.target.value)}
+                              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white"
+                            />
+                          </div>
                         </div>
                       </div>
                       <button

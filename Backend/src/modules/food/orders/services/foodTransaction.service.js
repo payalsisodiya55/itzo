@@ -1,89 +1,11 @@
 import { FoodTransaction } from '../models/foodTransaction.model.js';
-import { FoodRestaurantCommission } from '../../admin/models/restaurantCommission.model.js';
 import { FoodDeliveryCommissionRule } from '../../admin/models/deliveryCommissionRule.model.js';
 import mongoose from 'mongoose';
-
-const RESTAURANT_COMMISSION_CACHE_MS = 60 * 1000;
-let restaurantCommissionRulesCache = null;
-let restaurantCommissionRulesLoadedAt = 0;
 
 const DELIVERY_COMMISSION_CACHE_MS = 10 * 1000;
 let deliveryCommissionRulesCache = null;
 let deliveryCommissionRulesLoadedAt = 0;
 
-async function getActiveRestaurantCommissionRules() {
-  const now = Date.now();
-  if (
-    restaurantCommissionRulesCache &&
-    now - restaurantCommissionRulesLoadedAt < RESTAURANT_COMMISSION_CACHE_MS
-  ) {
-    return restaurantCommissionRulesCache;
-  }
-
-  const list = await FoodRestaurantCommission.find({
-    status: { $ne: false },
-  }).lean();
-  restaurantCommissionRulesCache = list || [];
-  restaurantCommissionRulesLoadedAt = now;
-  return restaurantCommissionRulesCache;
-}
-
-export function computeRestaurantCommissionAmount(baseAmount, rule) {
-  const safeBase = Math.max(0, Number(baseAmount) || 0);
-  if (!Number.isFinite(safeBase) || safeBase < 0) return 0;
-
-  const commissionType = rule?.defaultCommission?.type || 'percentage';
-  const commissionValue = Math.max(
-    0,
-    Number(rule?.defaultCommission?.value ?? 0) || 0
-  );
-
-  let commissionAmount = 0;
-  if (commissionType === 'percentage') {
-    commissionAmount = safeBase * (commissionValue / 100);
-  } else if (commissionType === 'amount') {
-    commissionAmount = commissionValue;
-  }
-
-  // Round to 2 decimals and clamp to [0, base]
-  commissionAmount = Math.round((commissionAmount || 0) * 100) / 100;
-  commissionAmount = Math.max(0, Math.min(commissionAmount, safeBase));
-
-  return { commissionAmount, commissionType, commissionValue, baseAmount: safeBase };
-}
-
-export async function getRestaurantCommissionSnapshot(orderDoc) {
-  const baseAmount = Number(orderDoc?.pricing?.subtotal ?? 0) || 0;
-  const restaurantIdRaw =
-    orderDoc?.restaurantId?._id ?? orderDoc?.restaurantId ?? null;
-
-  if (!restaurantIdRaw) {
-    return {
-      commissionAmount: 0,
-      commissionType: 'percentage',
-      commissionValue: 0,
-      baseAmount,
-    };
-  }
-
-  const rules = await getActiveRestaurantCommissionRules();
-  const rule =
-    rules.find((r) => String(r.restaurantId) === String(restaurantIdRaw)) ||
-    // Fallback: accept legacy docs where restaurantId may be stored under `restaurant` / `restaurant_id`
-    rules.find((r) => String(r.restaurant || r.restaurant_id || '') === String(restaurantIdRaw)) ||
-    null;
-
-  if (!rule) {
-    return {
-      commissionAmount: 0,
-      commissionType: 'percentage',
-      commissionValue: 0,
-      baseAmount,
-    };
-  }
-
-  return computeRestaurantCommissionAmount(baseAmount, rule);
-}
 
 export async function getActiveCommissionRules() {
   const now = Date.now();
@@ -136,7 +58,6 @@ export async function getRiderEarning(distanceKm) {
  * Creates an initial 'pending' transaction when an order is created.
  */
 export async function createInitialTransaction(order) {
-    const { commissionAmount } = await getRestaurantCommissionSnapshot(order);
     const normalizedOrderType = ['food', 'quick', 'mixed'].includes(String(order?.orderType || ''))
         ? String(order.orderType)
         : 'food';
@@ -145,14 +66,6 @@ export async function createInitialTransaction(order) {
     // Split logic
     const totalCustomerPaid = order.pricing?.total || 0;
     const riderShare = order.riderEarning || 0;
-    // Prefer commission already computed & stored on the order (source of truth for this order),
-    // fallback to rule snapshot for older orders.
-    const restaurantCommissionFromOrder = Number(order.pricing?.restaurantCommission);
-    const restaurantCommission =
-        Number.isFinite(restaurantCommissionFromOrder) && restaurantCommissionFromOrder > 0
-            ? restaurantCommissionFromOrder
-            : (commissionAmount || 0);
-
     // Phase 3A: Segregated calculations for mixed orders
     let restaurantNet = 0;
     let sellerShare = 0;
@@ -163,7 +76,7 @@ export async function createInitialTransaction(order) {
             .filter(i => i.type === 'food')
             .reduce((sum, i) => sum + (Number(i.price) * Number(i.quantity)), 0);
         
-        restaurantNet = foodSubtotal + (order.pricing?.packagingFee || 0) - restaurantCommission;
+        restaurantNet = foodSubtotal + (order.pricing?.packagingFee || 0);
 
         // Seller logic (from receivable rules)
         const quickItems = (order.items || []).filter(i => i.type === 'quick');
@@ -177,12 +90,20 @@ export async function createInitialTransaction(order) {
             sellerShare = quickItems.reduce((sum, i) => sum + (Number(i.price) * Number(i.quantity)), 0);
         }
     } else {
-        restaurantNet = (order.pricing?.subtotal || 0) + (order.pricing?.packagingFee || 0) - restaurantCommission;
+        restaurantNet = (order.pricing?.subtotal || 0) + (order.pricing?.packagingFee || 0);
         sellerShare = 0;
         sellerCommission = 0;
     }
 
-    const platformNetProfit = (order.pricing?.platformFee || 0) + (order.pricing?.deliveryFee || 0) + restaurantCommission - riderShare;
+    const restaurantDeliveryFee = Number(order.pricing?.restaurantDeliveryFee || 0) || 0;
+    const totalDeliveryFee =
+        Number(order.pricing?.totalDeliveryFee ?? order.pricing?.deliveryFee ?? 0) || 0;
+
+    if (restaurantDeliveryFee > 0) {
+        restaurantNet = Math.max(0, restaurantNet - restaurantDeliveryFee);
+    }
+
+    const platformNetProfit = (order.pricing?.platformFee || 0) + totalDeliveryFee - riderShare;
 
     const transaction = new FoodTransaction({
         orderId: order._id,
@@ -216,8 +137,17 @@ export async function createInitialTransaction(order) {
             tax: Number(order.pricing?.tax || 0) || 0,
             packagingFee: Number(order.pricing?.packagingFee || 0) || 0,
             deliveryFee: Number(order.pricing?.deliveryFee || 0) || 0,
+            totalDeliveryFee,
+            userDeliveryFee: Number(order.pricing?.userDeliveryFee ?? order.pricing?.deliveryFee ?? 0) || 0,
+            restaurantDeliveryFee,
+            sponsoredDelivery: Boolean(order.pricing?.sponsoredDelivery),
+            sponsoredKm: Number(order.pricing?.sponsoredKm || 0) || 0,
+            deliveryDistanceKm:
+                order.pricing?.deliveryDistanceKm == null
+                    ? null
+                    : Number(order.pricing.deliveryDistanceKm) || 0,
+            deliverySponsorType: String(order.pricing?.deliverySponsorType || 'USER_FULL'),
             platformFee: Number(order.pricing?.platformFee || 0) || 0,
-            restaurantCommission,
             discount: Number(order.pricing?.discount || 0) || 0,
             total: Number(order.pricing?.total || 0) || 0,
             currency: String(order.pricing?.currency || order.currency || 'INR'),
@@ -227,7 +157,6 @@ export async function createInitialTransaction(order) {
             restaurantShare: Math.max(0, restaurantNet),
             sellerShare: Math.max(0, sellerShare),
             sellerCommission: Math.max(0, sellerCommission),
-            restaurantCommission,
             riderShare,
             platformNetProfit,
             taxAmount: order.pricing?.tax || 0

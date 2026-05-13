@@ -13,6 +13,7 @@ export const normalizeFoodVariants = (value) =>
         _id: id,
         name,
         price,
+        otherPrice: Number(entry?.otherPrice) || 0,
       }
     })
     .filter(Boolean)
@@ -25,13 +26,18 @@ export const hasFoodVariants = (item = {}) => getFoodVariants(item).length > 0
 export const getDefaultFoodVariant = (item = {}) => getFoodVariants(item)[0] || null
 
 export const getFoodDisplayPrice = (item = {}) => {
+  // Prefer the item's own price if it's valid and positive
+  const price = Number(item?.price)
+  if (Number.isFinite(price) && price > 0) {
+    return price
+  }
+
   const variants = getFoodVariants(item)
   if (variants.length > 0) {
     return Math.min(...variants.map((variant) => Number(variant.price) || 0))
   }
 
-  const price = Number(item?.price)
-  return Number.isFinite(price) ? price : 0
+  return 0
 }
 
 export const getFoodPriceLabel = (item = {}) => {

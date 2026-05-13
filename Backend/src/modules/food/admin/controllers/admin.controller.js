@@ -4,7 +4,7 @@ import { validateCategoryListQuery, validateCategoryRejectDto, validateCategoryU
 import { validateCreateOfferDto, validateUpdateOfferCartVisibilityDto } from '../validators/offer.validator.js';
 import { validateAddDeliveryBonusDto } from '../validators/deliveryBonus.validator.js';
 import { validateCheckCompletionsDto, validateEarningAddonHistoryActionDto, validateEarningAddonUpsertDto, validateToggleEarningAddonStatusDto } from '../validators/earningAddon.validator.js';
-import { validateDeliveryCommissionRuleDto, validateOptionalStatusDto, validateRestaurantCommissionUpsertDto } from '../validators/commission.validator.js';
+import { validateDeliveryCommissionRuleDto, validateOptionalStatusDto } from '../validators/commission.validator.js';
 import { validateFeeSettingsUpsertDto } from '../validators/feeSettings.validator.js';
 import { validateDeliveryEmergencyHelpUpsertDto } from '../validators/deliveryEmergencyHelp.validator.js';
 import { validateReferralSettingsUpsertDto } from '../validators/referralSettings.validator.js';
@@ -810,100 +810,6 @@ export async function checkEarningAddonCompletions(req, res, next) {
         const { deliveryPartnerId, force } = validateCheckCompletionsDto(req.body || {});
         const data = await adminService.checkEarningAddonCompletions(deliveryPartnerId, force);
         res.status(200).json({ success: true, message: 'Completion check done', data });
-    } catch (error) {
-        next(error);
-    }
-}
-
-// ----- Restaurant Commission (admin) -----
-export async function getRestaurantCommissions(req, res, next) {
-    try {
-        const data = await adminService.getRestaurantCommissions();
-        res.status(200).json({ success: true, message: 'Restaurant commissions fetched successfully', data });
-    } catch (error) {
-        next(error);
-    }
-}
-
-export async function getRestaurantCommissionBootstrap(req, res, next) {
-    try {
-        const data = await adminService.getRestaurantCommissionBootstrap();
-        res.status(200).json({ success: true, message: 'Restaurant commission bootstrap fetched successfully', data });
-    } catch (error) {
-        next(error);
-    }
-}
-
-export async function getRestaurantCommissionById(req, res, next) {
-    try {
-        const { id } = req.params;
-        if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ success: false, message: 'Invalid commission id' });
-        }
-        const commission = await adminService.getRestaurantCommissionById(id);
-        if (!commission) {
-            return res.status(404).json({ success: false, message: 'Commission not found' });
-        }
-        res.status(200).json({ success: true, message: 'Commission fetched successfully', data: { commission } });
-    } catch (error) {
-        next(error);
-    }
-}
-
-export async function createRestaurantCommission(req, res, next) {
-    try {
-        const body = validateRestaurantCommissionUpsertDto(req.body || {});
-        const created = await adminService.createRestaurantCommission(body);
-        res.status(201).json({ success: true, message: 'Commission created successfully', data: { commission: created } });
-    } catch (error) {
-        next(error);
-    }
-}
-
-export async function updateRestaurantCommission(req, res, next) {
-    try {
-        const { id } = req.params;
-        if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ success: false, message: 'Invalid commission id' });
-        }
-        const body = validateRestaurantCommissionUpsertDto(req.body || {});
-        const updated = await adminService.updateRestaurantCommission(id, body);
-        if (!updated) {
-            return res.status(404).json({ success: false, message: 'Commission not found' });
-        }
-        res.status(200).json({ success: true, message: 'Commission updated successfully', data: { commission: updated } });
-    } catch (error) {
-        next(error);
-    }
-}
-
-export async function deleteRestaurantCommission(req, res, next) {
-    try {
-        const { id } = req.params;
-        if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ success: false, message: 'Invalid commission id' });
-        }
-        const result = await adminService.deleteRestaurantCommission(id);
-        if (!result) {
-            return res.status(404).json({ success: false, message: 'Commission not found' });
-        }
-        res.status(200).json({ success: true, message: 'Commission deleted successfully', data: result });
-    } catch (error) {
-        next(error);
-    }
-}
-
-export async function toggleRestaurantCommissionStatus(req, res, next) {
-    try {
-        const { id } = req.params;
-        if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ success: false, message: 'Invalid commission id' });
-        }
-        const updated = await adminService.toggleRestaurantCommissionStatus(id);
-        if (!updated) {
-            return res.status(404).json({ success: false, message: 'Commission not found' });
-        }
-        res.status(200).json({ success: true, message: 'Status updated successfully', data: { commission: updated } });
     } catch (error) {
         next(error);
     }

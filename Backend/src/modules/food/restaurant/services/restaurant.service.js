@@ -1507,6 +1507,20 @@ export const getApprovedRestaurantByIdOrSlug = async (idOrSlug) => {
         };
     }
 
+    // Public restaurant code path, e.g. REST000003
+    if (/^REST\d{6}$/i.test(value)) {
+        const doc = await FoodRestaurant.findOne({
+            restaurantId: value.toUpperCase(),
+            status: 'approved',
+        }).lean();
+        if (!doc) return null;
+        return {
+            ...doc,
+            rating: normalizeRatingValue(doc.rating),
+            totalRatings: normalizeTotalRatingsValue(doc.totalRatings)
+        };
+    }
+
     // Slug path: use normalized field for index-friendly exact match.
     const restaurantNameNormalized = normalizeName(value);
     if (!restaurantNameNormalized) return null;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Search, TrendingUp, TrendingDown, DollarSign, ShoppingCart, XCircle, Star, Calendar, BarChart3, Users, Award, Package } from 'lucide-react'
+import { Search, TrendingUp, TrendingDown, DollarSign, ShoppingCart, XCircle, Star, Calendar, BarChart3, Users, Package } from 'lucide-react'
 import { adminAPI } from '@food/api'
 const debugLog = (...args) => {}
 const debugWarn = (...args) => {}
@@ -68,12 +68,10 @@ export default function PointOfSale() {
     completedOrders: 0,
     averageRating: 0,
     totalRatings: 0,
-    commissionPercentage: 0,
     monthlyProfit: 0,
     yearlyProfit: 0,
     averageOrderValue: 0,
     totalRevenue: 0,
-    totalCommission: 0,
     restaurantEarning: 0,
     restaurantProfit: 0,
     monthlyOrders: 0,
@@ -106,12 +104,10 @@ export default function PointOfSale() {
         completedOrders: 0,
         averageRating: 0,
         totalRatings: 0,
-        commissionPercentage: 0,
         monthlyProfit: 0,
         yearlyProfit: 0,
         averageOrderValue: 0,
         totalRevenue: 0,
-        totalCommission: 0,
         restaurantEarning: 0,
         restaurantProfit: 0,
         monthlyOrders: 0,
@@ -164,20 +160,10 @@ export default function PointOfSale() {
         const { restaurant, analytics, paymentSummary: apiPaymentSummary } = analyticsResponse.data.data
         
         debugLog('Analytics data received:', analytics)
-        debugLog('Commission percentage from API:', analytics.commissionPercentage)
-        debugLog('Commission percentage type:', typeof analytics.commissionPercentage)
-        
         // Set restaurant data
         setRestaurantData(restaurant)
         setPaymentSummary(apiPaymentSummary || null)
-        
-        // Parse commission percentage - handle both number and string
-        const commissionPercentage = analytics.commissionPercentage !== undefined && analytics.commissionPercentage !== null
-          ? parseFloat(analytics.commissionPercentage) || 0
-          : 0;
-        
-        debugLog('Parsed commission percentage:', commissionPercentage)
-        
+
         // Set analytics data - ensure all values are numbers, not null/undefined
         setAnalyticsData({
           totalOrders: Number(analytics.totalOrders) || 0,
@@ -185,12 +171,10 @@ export default function PointOfSale() {
           completedOrders: Number(analytics.completedOrders) || 0,
           averageRating: Number(analytics.averageRating) || 0,
           totalRatings: Number(analytics.totalRatings) || 0,
-          commissionPercentage: commissionPercentage,
           monthlyProfit: analytics.monthlyProfit || 0,
           yearlyProfit: analytics.yearlyProfit || 0,
           averageOrderValue: analytics.averageOrderValue || 0,
           totalRevenue: analytics.totalRevenue || 0,
-          totalCommission: analytics.totalCommission || 0,
           restaurantEarning: analytics.restaurantEarning || 0,
           restaurantProfit: analytics.restaurantProfit || 0,
           monthlyOrders: analytics.monthlyOrders || 0,
@@ -213,12 +197,10 @@ export default function PointOfSale() {
           completedOrders: 0,
           averageRating: 0,
           totalRatings: 0,
-          commissionPercentage: 0,
           monthlyProfit: 0,
           yearlyProfit: 0,
           averageOrderValue: 0,
           totalRevenue: 0,
-          totalCommission: 0,
           restaurantEarning: 0,
           restaurantProfit: 0,
           monthlyOrders: 0,
@@ -259,12 +241,10 @@ export default function PointOfSale() {
         completedOrders: 0,
         averageRating: 0,
         totalRatings: 0,
-        commissionPercentage: 0,
         monthlyProfit: 0,
         yearlyProfit: 0,
         averageOrderValue: 0,
         totalRevenue: 0,
-        totalCommission: 0,
         restaurantEarning: 0,
         restaurantProfit: 0,
         monthlyOrders: 0,
@@ -497,20 +477,7 @@ export default function PointOfSale() {
                 <p className="text-2xl font-bold text-[#334257]">{analyticsData.averageRating.toFixed(1)}</p>
                 <p className="text-xs text-[#8a94aa] mt-2">From {formatNumber(analyticsData.totalRatings)} reviews</p>
               </div>
-
-              {/* Commission Rate */}
-              <div className="bg-white rounded-lg shadow-sm border border-[#e3e6ef] p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 bg-purple-100 rounded-lg">
-                    <Award className="w-6 h-6 text-purple-600" />
-                  </div>
-                  <span className="text-sm font-semibold text-purple-600">{analyticsData.commissionPercentage}%</span>
-                  </div>
-                <h3 className="text-sm font-medium text-[#8a94aa] mb-1">Commission Rate</h3>
-                <p className="text-2xl font-bold text-[#334257]">{analyticsData.commissionPercentage}%</p>
-                <p className="text-xs text-[#8a94aa] mt-2">Set Commission</p>
-                  </div>
-                  </div>
+            </div>
 
             {/* Profit & Revenue Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -587,10 +554,6 @@ export default function PointOfSale() {
                     <span className="text-base font-semibold text-[#334257]">{formatCurrency(analyticsData.totalRevenue)}</span>
                   </div>
                   <div className="flex justify-between items-center py-3 border-b border-[#e3e6ef]">
-                    <span className="text-sm text-[#8a94aa]">Total Commission (Admin)</span>
-                    <span className="text-base font-semibold text-[#006fbd]">{formatCurrency(analyticsData.totalCommission)}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-3 border-b border-[#e3e6ef]">
                     <span className="text-sm text-[#8a94aa]">Restaurant Share</span>
                     <span className="text-base font-semibold text-green-600">{formatCurrency(analyticsData.restaurantEarning)}</span>
                   </div>
@@ -607,14 +570,6 @@ export default function PointOfSale() {
                   <div className="flex justify-between items-center py-3 border-b border-[#e3e6ef]">
                     <span className="text-sm text-[#8a94aa]">Completion Rate</span>
                     <span className="text-base font-semibold text-green-600">{analyticsData.completionRate.toFixed(1)}%</span>
-                  </div>
-                  <div className="flex justify-between items-center py-3 border-b border-[#e3e6ef]">
-                    <span className="text-sm text-[#8a94aa]">Commission Percentage</span>
-                    <span className="text-base font-semibold text-[#334257]">
-                      {analyticsData.commissionPercentage !== undefined && analyticsData.commissionPercentage !== null
-                        ? `${analyticsData.commissionPercentage}%`
-                        : '0%'}
-                    </span>
                   </div>
                 </div>
               </div>
@@ -658,10 +613,6 @@ export default function PointOfSale() {
                   <div className="flex justify-between items-center py-2 border-b border-[#e3e6ef]">
                     <span className="text-sm text-[#8a94aa]">Restaurant Share</span>
                     <span className="text-sm font-semibold text-green-700">{formatCurrency(paymentSummary?.restaurantShare || 0)}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-[#e3e6ef]">
-                    <span className="text-sm text-[#8a94aa]">Restaurant Commission (Admin)</span>
-                    <span className="text-sm font-semibold text-[#334257]">{formatCurrency(paymentSummary?.restaurantCommission || 0)}</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-[#e3e6ef]">
                     <span className="text-sm text-[#8a94aa]">Rider Share</span>
@@ -777,7 +728,7 @@ export default function PointOfSale() {
             </div>
             <p className="text-base font-medium text-[#334257] mb-2">Select a Restaurant</p>
             <p className="text-sm text-[#8a94aa] max-w-md mx-auto">
-              Please select a restaurant from the dropdown above to view detailed analytics, profit information, and commission details.
+              Please select a restaurant from the dropdown above to view detailed analytics, profit information, and payment details.
             </p>
           </div>
         )}

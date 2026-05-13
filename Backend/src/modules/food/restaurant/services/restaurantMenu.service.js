@@ -3,7 +3,7 @@ import { ValidationError } from '../../../../core/auth/errors.js';
 import { FoodRestaurant } from '../models/restaurant.model.js';
 import { FoodItem } from '../../admin/models/food.model.js';
 import { FoodCategory } from '../../admin/models/category.model.js';
-import { getFoodDisplayPrice, serializeFoodVariants } from '../../admin/services/foodVariant.service.js';
+import { getFoodDisplayPrice, getFoodDisplayOtherPrice, serializeFoodVariants } from '../../admin/services/foodVariant.service.js';
 
 const buildMenuFromFoods = async (foods = []) => {
     const categoryIds = Array.from(
@@ -51,6 +51,7 @@ const buildMenuFromFoods = async (foods = []) => {
             name: food.name,
             description: food.description || '',
             price: getFoodDisplayPrice(food),
+            otherPrice: getFoodDisplayOtherPrice(food),
             variants: serializeFoodVariants(food.variants),
             variations: serializeFoodVariants(food.variants),
             image: food.image || '',
@@ -123,6 +124,13 @@ export async function getPublicApprovedRestaurantMenu(restaurantIdOrSlug) {
     let restaurant = null;
     if (/^[0-9a-fA-F]{24}$/.test(value)) {
         restaurant = await FoodRestaurant.findOne({ _id: value, status: 'approved' })
+            .select('_id status')
+            .lean();
+    } else if (/^REST\d{6}$/i.test(value)) {
+        restaurant = await FoodRestaurant.findOne({
+            restaurantId: value.toUpperCase(),
+            status: 'approved',
+        })
             .select('_id status')
             .lean();
     } else {

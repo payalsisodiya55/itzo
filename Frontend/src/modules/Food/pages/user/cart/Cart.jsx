@@ -279,9 +279,9 @@ export default function Cart() {
 
   // Fee settings from database (used for platform fee and GST fallback only)
   const [feeSettings, setFeeSettings] = useState({
-    deliveryFee: 25,
-    deliveryFeeRanges: [],
-    freeDeliveryThreshold: 149,
+    baseDistanceKm: 3,
+    baseDeliveryFee: 25,
+    perKmCharge: 10,
     platformFee: 5,
     gstRate: 5,
   })
@@ -1017,13 +1017,17 @@ export default function Cart() {
   // Fetch fee settings on mount
   useEffect(() => {
     const fetchFeeSettings = async () => {
+      if (typeof adminAPI.getPublicFeeSettings !== "function") return
       try {
         const response = await adminAPI.getPublicFeeSettings()
         if (response.data.success && response.data.data.feeSettings) {
           setFeeSettings({
-            deliveryFee: response.data.data.feeSettings.deliveryFee || 25,
-            deliveryFeeRanges: response.data.data.feeSettings.deliveryFeeRanges || [],
-            freeDeliveryThreshold: response.data.data.feeSettings.freeDeliveryThreshold || 149,
+            baseDistanceKm: response.data.data.feeSettings.baseDistanceKm || 3,
+            baseDeliveryFee:
+              response.data.data.feeSettings.baseDeliveryFee ||
+              response.data.data.feeSettings.deliveryFee ||
+              25,
+            perKmCharge: response.data.data.feeSettings.perKmCharge || 10,
             platformFee: response.data.data.feeSettings.platformFee || 5,
             gstRate: response.data.data.feeSettings.gstRate || 5,
           })
@@ -1055,32 +1059,12 @@ export default function Cart() {
       return 0
     }
 
-    const ranges = Array.isArray(feeSettings.deliveryFeeRanges) ? [...feeSettings.deliveryFeeRanges] : []
-    if (ranges.length > 0) {
-      const sortedRanges = ranges.sort((a, b) => Number(a.min) - Number(b.min))
-      for (let i = 0; i < sortedRanges.length; i += 1) {
-        const range = sortedRanges[i]
-        const min = Number(range.min)
-        const max = Number(range.max)
-        const fee = Number(range.fee)
-        const isLastRange = i === sortedRanges.length - 1
-        const inRange = isLastRange
-          ? subtotal >= min && subtotal <= max
-          : subtotal >= min && subtotal < max
-
-        if (inRange) return fee
-      }
-
-      return 0
-    }
-
-    if (subtotal >= feeSettings.freeDeliveryThreshold) {
-      return 0
-    }
-
-    return Number(feeSettings.deliveryFee || 0)
+    return Number(feeSettings.baseDeliveryFee || 0)
   })()
-  const deliveryFee = pricing?.deliveryFee || fallbackDeliveryFee
+  const deliveryFee =
+    pricing?.deliveryFee !== undefined && pricing?.deliveryFee !== null
+      ? Number(pricing.deliveryFee || 0)
+      : fallbackDeliveryFee
   const deliveryFeeBreakdown = pricing?.deliveryFeeBreakdown || null
   const hasDistanceDeliveryBreakdown =
     deliveryFeeBreakdown?.source === "distance" &&
@@ -1088,11 +1072,20 @@ export default function Cart() {
   const deliveryFeeBreakdownText = hasDistanceDeliveryBreakdown
     ? `Distance ${Number(deliveryFeeBreakdown.distanceKm).toFixed(1)} km: ${RUPEE_SYMBOL}${Number(deliveryFeeBreakdown.basePayout || 0).toFixed(0)} base + ${Number(deliveryFeeBreakdown.extraDistanceKm || 0).toFixed(1)} km x ${RUPEE_SYMBOL}${Number(deliveryFeeBreakdown.commissionPerKm || 0).toFixed(0)}`
     : null
-  const platformFee = pricing?.platformFee || feeSettings.platformFee
-  const gstCharges = pricing?.tax || Math.round(subtotal * (feeSettings.gstRate / 100))
-  const discount = pricing?.discount || (appliedCoupon ? Math.min(appliedCoupon.discount, subtotal * 0.5) : 0)
+  const platformFee = pricing?.platformFee ?? feeSettings.platformFee
+  const gstCharges = pricing?.tax ?? Math.round(subtotal * (feeSettings.gstRate / 100))
+  const discount = pricing?.discount ?? (appliedCoupon ? Math.min(appliedCoupon.discount, subtotal * 0.5) : 0)
   const totalBeforeDiscount = subtotal + deliveryFee + platformFee + gstCharges
-  const total = pricing?.total || (totalBeforeDiscount - discount)
+  const total = pricing?.total ?? (totalBeforeDiscount - discount)
+  
+  // Calculate other platform total for comparison
+  const otherPlatformSubtotal = cart.reduce((sum, item) => {
+    const itemOtherPrice = item.otherPrice || item.price || 0;
+    return sum + (itemOtherPrice * (item.quantity || 1));
+  }, 0);
+  
+  const otherPlatformSavings = Math.max(0, otherPlatformSubtotal - subtotal);
+
   const savings = pricing?.savings ?? Math.max(0, totalBeforeDiscount - total)
   const isUserCodAllowed = userProfile?.isCodAllowed !== false
   const paymentOptions = [
@@ -1506,14 +1499,35 @@ export default function Cart() {
       debugLog("?? Applied coupon:", appliedCoupon?.code || "None")
       debugLog("?? Delivery address:", defaultAddress?.label || defaultAddress?.city)
 
+      // Ensure we place the order with backend-calculated pricing when available.
+      let resolvedPricing = pricing
+      if (!resolvedPricing) {
+        const pricingResponse = await orderAPI.calculateOrder({
+          orderType: "food",
+          items: cart.map(mapOrderItem),
+          restaurantId: restaurantData?.restaurantId || restaurantData?._id || restaurantId || undefined,
+          address: defaultAddress,
+          couponCode: appliedCoupon?.code || couponCode || undefined,
+        })
+        resolvedPricing = pricingResponse?.data?.data?.pricing || null
+        if (resolvedPricing) {
+          setPricing(resolvedPricing)
+        }
+      }
+
       // Ensure couponCode is included in pricing
-      const orderPricing = pricing || {
+      const orderPricing = resolvedPricing || {
         subtotal,
         deliveryFee,
         tax: gstCharges,
         platformFee,
         discount,
         total,
+        totalDeliveryFee: deliveryFee,
+        userDeliveryFee: deliveryFee,
+        restaurantDeliveryFee: 0,
+        sponsoredDelivery: false,
+        sponsoredKm: 0,
         couponCode: appliedCoupon?.code || null
       };
 
@@ -2062,11 +2076,12 @@ export default function Cart() {
       {/* Scrollable Content Area */}
       <div className="flex-1 overflow-y-auto overflow-x-hidden pb-28 md:pb-32">
         {/* Savings Banner */}
-        {savings > 0 && (
-          <div className="bg-blue-100 dark:bg-blue-900/20 px-4 md:px-6 py-2 md:py-3 flex-shrink-0">
-            <div className="max-w-7xl mx-auto">
-              <p className="text-sm md:text-base font-medium text-blue-800 dark:text-blue-200">
-                Saved {RUPEE_SYMBOL}{savings} on this order
+        {otherPlatformSavings > 0 && (
+          <div className="bg-green-100 dark:bg-green-900/20 px-4 md:px-6 py-2 md:py-3 flex-shrink-0 border-b border-green-200 dark:border-green-800/30">
+            <div className="max-w-7xl mx-auto flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-green-700 dark:text-green-400" />
+              <p className="text-sm md:text-base font-bold text-green-800 dark:text-green-200">
+                You're saving {RUPEE_SYMBOL}{Math.round(otherPlatformSavings)} compared to other platforms!
               </p>
             </div>
           </div>
@@ -2091,6 +2106,19 @@ export default function Cart() {
                         {item.variantName ? (
                           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{item.variantName}</p>
                         ) : null}
+                        {Number(item.otherPrice || 0) > Number(item.price || 0) ? (
+                          <div className="mt-1 flex items-center gap-2 flex-wrap">
+                            <span className="text-xs font-semibold text-gray-900 dark:text-gray-100">
+                              {RUPEE_SYMBOL}{Number(item.price || 0).toFixed(0)}
+                            </span>
+                            <span className="text-[11px] text-gray-400 line-through">
+                              {RUPEE_SYMBOL}{Number(item.otherPrice || 0).toFixed(0)}
+                            </span>
+                            <span className="text-[10px] font-bold text-green-600 dark:text-green-400">
+                              Save {RUPEE_SYMBOL}{Math.max(0, Number(item.otherPrice || 0) - Number(item.price || 0)).toFixed(0)}
+                            </span>
+                          </div>
+                        ) : null}
                       </div>
 
                       <div className="flex shrink-0 items-center gap-2 md:gap-4">
@@ -2113,9 +2141,16 @@ export default function Cart() {
                           </button>
                         </div>
 
-                        <p className="text-sm md:text-base font-medium text-gray-800 dark:text-gray-200 min-w-[50px] md:min-w-[70px] text-right">
-                          {RUPEE_SYMBOL}{((item.price || 0) * (item.quantity || 1)).toFixed(0)}
-                        </p>
+                        <div className="min-w-[50px] md:min-w-[86px] text-right">
+                          {Number(item.otherPrice || 0) > Number(item.price || 0) ? (
+                            <p className="text-[11px] text-gray-400 line-through">
+                              {RUPEE_SYMBOL}{(Number(item.otherPrice || 0) * (item.quantity || 1)).toFixed(0)}
+                            </p>
+                          ) : null}
+                          <p className="text-sm md:text-base font-medium text-gray-800 dark:text-gray-200">
+                            {RUPEE_SYMBOL}{((item.price || 0) * (item.quantity || 1)).toFixed(0)}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -2357,7 +2392,9 @@ export default function Cart() {
                 {deliveryFee === 0 && (
                   <div className="px-4 py-3 md:px-6 md:py-4 border-b border-dashed border-gray-200 dark:border-gray-800 flex items-center gap-3 bg-[#f4fcf7] dark:bg-green-900/10">
                     <CheckCircle2 className="h-5 w-5 text-green-600 fill-green-600/20" />
-                    <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">You saved {RUPEE_SYMBOL}{feeSettings.deliveryFee || 25} on delivery</span>
+                    <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+                      You saved {RUPEE_SYMBOL}{Number((pricing?.totalDeliveryFee ?? deliveryFee ?? feeSettings.baseDeliveryFee) || 0).toFixed(2)} on delivery
+                    </span>
                   </div>
                 )}
 
@@ -2676,6 +2713,11 @@ export default function Cart() {
                         )}
                       </div>
                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Incl. taxes and charges</p>
+                      {otherPlatformSubtotal > subtotal && (
+                        <p className="text-xs font-semibold text-green-700 dark:text-green-400 mt-1">
+                          Other platform item total {RUPEE_SYMBOL}{otherPlatformSubtotal.toFixed(0)} • Save {RUPEE_SYMBOL}{otherPlatformSavings.toFixed(0)}
+                        </p>
+                      )}
                     </div>
                   </div>
                   <ChevronRight className={`h-5 w-5 text-gray-400 transition-transform ${showBillDetails ? 'rotate-90' : ''}`} />
@@ -2685,13 +2727,22 @@ export default function Cart() {
                   <div className="mt-4 pt-4 border-t border-dashed border-gray-200 dark:border-gray-800 space-y-3">
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-600 dark:text-gray-400">Item Total</span>
-                      <span className="text-gray-800 dark:text-gray-200 font-medium">{RUPEE_SYMBOL}{subtotal.toFixed(2)}</span>
+                      <div className="text-right flex items-center gap-2">
+                        {otherPlatformSubtotal > subtotal && (
+                          <span className="text-[10px] font-medium text-gray-500 bg-gray-50 px-1.5 py-0.5 rounded border border-gray-100">
+                            Other: {RUPEE_SYMBOL}{otherPlatformSubtotal.toFixed(0)}
+                          </span>
+                        )}
+                        <span className="text-gray-800 dark:text-gray-200 font-medium">{RUPEE_SYMBOL}{subtotal.toFixed(2)}</span>
+                      </div>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-600 dark:text-gray-400">Delivery Fee</span>
-                      <span className={deliveryFee === 0 ? "text-[#cc2532] font-medium" : "text-gray-800 dark:text-gray-200 font-medium"}>
-                        {deliveryFee === 0 ? "FREE" : `${RUPEE_SYMBOL}${deliveryFee.toFixed(2)}`}
-                      </span>
+                      <div className="text-right">
+                        <span className={deliveryFee === 0 ? "text-[#cc2532] font-medium" : "text-gray-800 dark:text-gray-200 font-medium"}>
+                          {deliveryFee === 0 ? "FREE" : `${RUPEE_SYMBOL}${deliveryFee.toFixed(2)}`}
+                        </span>
+                      </div>
                     </div>
                     {deliveryFeeBreakdownText && (
                       <div className="text-[11px] text-gray-500 dark:text-gray-400 -mt-1.5 ml-1 border-l-2 border-gray-100 pl-2">
@@ -2700,7 +2751,9 @@ export default function Cart() {
                     )}
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-600 dark:text-gray-400">Platform Fee</span>
-                      <span className="text-gray-800 dark:text-gray-200 font-medium">{RUPEE_SYMBOL}{platformFee.toFixed(2)}</span>
+                      <div className="text-right">
+                        <span className="text-gray-800 dark:text-gray-200 font-medium">{RUPEE_SYMBOL}{platformFee.toFixed(2)}</span>
+                      </div>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-600 dark:text-gray-400">GST and Restaurant Charges</span>
@@ -2712,10 +2765,25 @@ export default function Cart() {
                         <span>-{RUPEE_SYMBOL}{discount.toFixed(2)}</span>
                       </div>
                     )}
+                    
                     <div className="flex justify-between text-base font-bold pt-3 mt-1 border-t border-gray-100 dark:border-gray-800 text-gray-900 dark:text-white">
                       <span>To Pay</span>
                       <span>{RUPEE_SYMBOL}{total.toFixed(2)}</span>
                     </div>
+
+                    {/* Price Comparison Summary - Moved below To Pay */}
+                    {otherPlatformSubtotal > subtotal && (
+                      <div className="mt-3 p-3 bg-green-50 dark:bg-green-900/10 rounded-xl border border-green-100 dark:border-green-800/30">
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs font-bold text-green-700 dark:text-green-400 uppercase tracking-wider">Other Platform Price</span>
+                          <span className="text-sm font-bold text-gray-500">{RUPEE_SYMBOL}{otherPlatformSubtotal.toFixed(0)}</span>
+                        </div>
+                        <div className="flex justify-between items-center mt-1">
+                          <span className="text-xs font-bold text-green-700 dark:text-green-400 uppercase tracking-wider">Your Savings</span>
+                          <span className="text-sm font-black text-green-600">{RUPEE_SYMBOL}{otherPlatformSavings.toFixed(0)}</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

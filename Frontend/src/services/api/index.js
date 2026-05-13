@@ -762,40 +762,6 @@ export const adminAPI = {
       contextModule: "admin",
     }),
 
-  /** Restaurant Commission (admin) */
-  getRestaurantCommissionBootstrap: () =>
-    apiClient.get("/food/admin/restaurant-commissions/bootstrap", {
-      contextModule: "admin",
-    }),
-  getRestaurantCommissions: (params = {}) =>
-    apiClient.get("/food/admin/restaurant-commissions", {
-      params,
-      contextModule: "admin",
-    }),
-  getRestaurantCommissionById: (id) =>
-    apiClient.get(`/food/admin/restaurant-commissions/${String(id)}`, {
-      contextModule: "admin",
-    }),
-  createRestaurantCommission: (body) =>
-    apiClient.post("/food/admin/restaurant-commissions", body ?? {}, {
-      contextModule: "admin",
-    }),
-  updateRestaurantCommission: (id, body) =>
-    apiClient.patch(
-      `/food/admin/restaurant-commissions/${String(id)}`,
-      body ?? {},
-      { contextModule: "admin" },
-    ),
-  deleteRestaurantCommission: (id) =>
-    apiClient.delete(`/food/admin/restaurant-commissions/${String(id)}`, {
-      contextModule: "admin",
-    }),
-  toggleRestaurantCommissionStatus: (id) =>
-    apiClient.patch(
-      `/food/admin/restaurant-commissions/${String(id)}/toggle`,
-      {},
-      { contextModule: "admin" },
-    ),
   /** Backward-compatible alias used in UI */
   getApprovedRestaurants: (params = {}) =>
     apiClient.get("/food/admin/restaurants", {

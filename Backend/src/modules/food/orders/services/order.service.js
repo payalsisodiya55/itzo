@@ -13,7 +13,6 @@ import { buildPaginationOptions, buildPaginatedResult } from '../../../../utils/
 import { FoodOffer } from '../../admin/models/offer.model.js';
 import { FoodOfferUsage } from '../../admin/models/offerUsage.model.js';
 import { FoodDeliveryCommissionRule } from '../../admin/models/deliveryCommissionRule.model.js';
-import { FoodRestaurantCommission } from '../../admin/models/restaurantCommission.model.js';
 import {
   sendNotificationToOwner,
   sendNotificationToOwners,
@@ -227,6 +226,174 @@ function getPointLatLng(locationLike) {
   return { lat: Number(lat), lng: Number(lng) };
 }
 
+function roundCurrency(value) {
+  const num = Number(value);
+  if (!Number.isFinite(num)) return 0;
+  return Number(num.toFixed(2));
+}
+
+function normalizeFoodFeeSettings(feeDoc = null) {
+  const defaultFeeSettings = {
+    deliveryFee: 25,
+    baseDistanceKm: 3,
+    baseDeliveryFee: 25,
+    perKmCharge: 10,
+    sponsorRules: [],
+    platformFee: 5,
+    gstRate: 5,
+    mixedOrderDistanceLimit: 2,
+    mixedOrderAngleLimit: 35,
+  };
+
+  const feeSettings = {
+    ...defaultFeeSettings,
+    ...(feeDoc || {}),
+  };
+
+  feeSettings.baseDistanceKm = Number(
+    feeSettings.baseDistanceKm ?? defaultFeeSettings.baseDistanceKm,
+  );
+  feeSettings.baseDeliveryFee = Number(
+    feeSettings.baseDeliveryFee ??
+      feeSettings.deliveryFee ??
+      defaultFeeSettings.baseDeliveryFee,
+  );
+  feeSettings.perKmCharge = Number(
+    feeSettings.perKmCharge ?? defaultFeeSettings.perKmCharge,
+  );
+  feeSettings.deliveryFee = Number(
+    feeSettings.deliveryFee ?? feeSettings.baseDeliveryFee ?? defaultFeeSettings.deliveryFee,
+  );
+  feeSettings.platformFee = Number(
+    feeSettings.platformFee ?? defaultFeeSettings.platformFee,
+  );
+  feeSettings.gstRate = Number(feeSettings.gstRate ?? defaultFeeSettings.gstRate);
+  feeSettings.mixedOrderDistanceLimit = Number(
+    feeSettings.mixedOrderDistanceLimit ?? defaultFeeSettings.mixedOrderDistanceLimit,
+  );
+  feeSettings.mixedOrderAngleLimit = Number(
+    feeSettings.mixedOrderAngleLimit ?? defaultFeeSettings.mixedOrderAngleLimit,
+  );
+  feeSettings.sponsorRules = Array.isArray(feeSettings.sponsorRules)
+    ? feeSettings.sponsorRules
+    : [];
+
+  return feeSettings;
+}
+
+function calculateBaseDeliveryFeeForDistance(distanceKm, feeSettings) {
+  const distance = Number(distanceKm);
+  const baseDistance = Number(feeSettings?.baseDistanceKm || 0);
+  const baseFee = Number(feeSettings?.baseDeliveryFee ?? feeSettings?.deliveryFee ?? 0);
+  const perKmCharge = Number(feeSettings?.perKmCharge || 0);
+
+  if (!Number.isFinite(distance) || distance <= baseDistance) {
+    return roundCurrency(Math.max(0, baseFee));
+  }
+
+  const extraKm = Math.max(0, distance - baseDistance);
+  return roundCurrency(Math.max(0, baseFee + extraKm * perKmCharge));
+}
+
+function resolveSponsorRule(subtotal, distanceKm, sponsorRules = []) {
+  const safeSubtotal = Number(subtotal);
+  const safeDistance = Number(distanceKm);
+  if (!Number.isFinite(safeSubtotal) || !Number.isFinite(safeDistance)) return null;
+
+  const normalizedRules = (Array.isArray(sponsorRules) ? sponsorRules : [])
+    .map((rule, index) => {
+      const minOrderAmount = Number(rule?.minOrderAmount);
+      const maxOrderAmount =
+        rule?.maxOrderAmount == null || rule?.maxOrderAmount === ""
+          ? null
+          : Number(rule.maxOrderAmount);
+      const maxDistanceKm = Number(rule?.maxDistanceKm);
+      const sponsoredKm =
+        rule?.sponsoredKm == null || rule?.sponsoredKm === ""
+          ? null
+          : Number(rule.sponsoredKm);
+      return {
+        index,
+        minOrderAmount,
+        maxOrderAmount,
+        maxDistanceKm,
+        sponsorType: String(rule?.sponsorType || "").trim().toUpperCase(),
+        sponsoredKm,
+      };
+    })
+    .filter((rule) =>
+      Number.isFinite(rule.minOrderAmount) &&
+      Number.isFinite(rule.maxDistanceKm) &&
+      rule.maxDistanceKm >= 0 &&
+      ["USER_FULL", "RESTAURANT_FULL", "SPLIT"].includes(rule.sponsorType),
+    )
+    .sort((a, b) => {
+      if (b.minOrderAmount !== a.minOrderAmount) return b.minOrderAmount - a.minOrderAmount;
+      if (a.maxDistanceKm !== b.maxDistanceKm) return a.maxDistanceKm - b.maxDistanceKm;
+      return a.index - b.index;
+    });
+
+  return (
+    normalizedRules.find((rule) => {
+      const orderOk =
+        safeSubtotal >= rule.minOrderAmount &&
+        (rule.maxOrderAmount == null || safeSubtotal <= rule.maxOrderAmount);
+      const distanceOk = safeDistance <= rule.maxDistanceKm;
+      return orderOk && distanceOk;
+    }) || null
+  );
+}
+
+function calculateFoodDeliveryPricing({
+  subtotal,
+  distanceKm,
+  feeSettings,
+}) {
+  const safeDistance =
+    Number.isFinite(Number(distanceKm)) && Number(distanceKm) >= 0
+      ? Number(distanceKm)
+      : 0;
+  const totalDeliveryFee = calculateBaseDeliveryFeeForDistance(safeDistance, feeSettings);
+  const matchedRule = resolveSponsorRule(subtotal, safeDistance, feeSettings?.sponsorRules);
+
+  let userDeliveryFee = totalDeliveryFee;
+  let restaurantDeliveryFee = 0;
+  let sponsoredKm = 0;
+  let deliverySponsorType = "USER_FULL";
+
+  if (matchedRule?.sponsorType === "RESTAURANT_FULL") {
+    userDeliveryFee = 0;
+    restaurantDeliveryFee = totalDeliveryFee;
+    sponsoredKm = safeDistance;
+    deliverySponsorType = "RESTAURANT_FULL";
+  } else if (matchedRule?.sponsorType === "SPLIT") {
+    const safeSponsoredKm = Math.max(
+      0,
+      Math.min(safeDistance, Number(matchedRule.sponsoredKm || 0)),
+    );
+    restaurantDeliveryFee = Math.min(
+      totalDeliveryFee,
+      calculateBaseDeliveryFeeForDistance(safeSponsoredKm, feeSettings),
+    );
+    userDeliveryFee = Math.max(0, roundCurrency(totalDeliveryFee - restaurantDeliveryFee));
+    sponsoredKm = safeSponsoredKm;
+    deliverySponsorType = "SPLIT";
+  } else if (matchedRule?.sponsorType === "USER_FULL") {
+    deliverySponsorType = "USER_FULL";
+  }
+
+  return {
+    totalDeliveryFee: roundCurrency(totalDeliveryFee),
+    userDeliveryFee: roundCurrency(userDeliveryFee),
+    restaurantDeliveryFee: roundCurrency(restaurantDeliveryFee),
+    deliveryFee: roundCurrency(userDeliveryFee),
+    sponsoredDelivery: roundCurrency(restaurantDeliveryFee) > 0,
+    sponsoredKm: roundCurrency(sponsoredKm),
+    deliveryDistanceKm: roundCurrency(safeDistance),
+    deliverySponsorType,
+  };
+}
+
 function angleBetweenPickupVectors(userPoint, firstPoint, secondPoint) {
   if (!userPoint || !firstPoint || !secondPoint) return null;
   const v1x = Number(firstPoint.lng) - Number(userPoint.lng);
@@ -243,11 +410,22 @@ function angleBetweenPickupVectors(userPoint, firstPoint, secondPoint) {
 async function fetchPickupSourcesByType(items = []) {
   const foodSourceIds = [...new Set(items.filter((item) => item.type === "food").map((item) => item.sourceId).filter(Boolean))];
   const quickSourceIds = [...new Set(items.filter((item) => item.type === "quick").map((item) => item.sourceId).filter(Boolean))];
+  const foodObjectIds = foodSourceIds
+    .filter((id) => mongoose.isValidObjectId(id))
+    .map((id) => new mongoose.Types.ObjectId(id));
+  const foodReadableIds = foodSourceIds
+    .filter((id) => /^REST\d{6}$/i.test(String(id)))
+    .map((id) => String(id).toUpperCase());
 
   const [restaurants, sellers] = await Promise.all([
     foodSourceIds.length
-      ? FoodRestaurant.find({ _id: { $in: foodSourceIds.filter((id) => mongoose.isValidObjectId(id)).map((id) => new mongoose.Types.ObjectId(id)) } })
-          .select("restaurantName location addressLine1 area city state zoneId status")
+      ? FoodRestaurant.find({
+          $or: [
+            ...(foodObjectIds.length ? [{ _id: { $in: foodObjectIds } }] : []),
+            ...(foodReadableIds.length ? [{ restaurantId: { $in: foodReadableIds } }] : []),
+          ],
+        })
+          .select("restaurantId restaurantName location addressLine1 area city state zoneId status")
           .lean()
       : [],
     quickSourceIds.length
@@ -259,7 +437,7 @@ async function fetchPickupSourcesByType(items = []) {
 
   const sourceMap = new Map();
   for (const restaurant of restaurants) {
-    sourceMap.set(String(restaurant._id), {
+    const normalizedRestaurant = {
       type: "food",
       sourceId: String(restaurant._id),
       sourceName: restaurant.restaurantName || restaurant.name || "Restaurant",
@@ -271,7 +449,11 @@ async function fetchPickupSourcesByType(items = []) {
         restaurant.location?.formattedAddress ||
         restaurant.addressLine1 ||
         [restaurant.area, restaurant.city, restaurant.state].filter(Boolean).join(", "),
-    });
+    };
+    sourceMap.set(String(restaurant._id), normalizedRestaurant);
+    if (restaurant.restaurantId) {
+      sourceMap.set(String(restaurant.restaurantId).toUpperCase(), normalizedRestaurant);
+    }
   }
   for (const seller of sellers) {
     sourceMap.set(String(seller._id), {
@@ -1519,29 +1701,7 @@ export async function calculateOrder(userId, dto) {
   const feeDoc = await FoodFeeSettings.findOne({ isActive: true })
     .sort({ createdAt: -1 })
     .lean();
-  
-  const defaultFeeSettings = {
-    deliveryFee: 25,
-    deliveryFeeRanges: [],
-    freeDeliveryThreshold: 149,
-    platformFee: 5,
-    gstRate: 5,
-    mixedOrderDistanceLimit: 2,
-    mixedOrderAngleLimit: 35
-  };
-
-  const feeSettings = {
-    ...defaultFeeSettings,
-    ...(feeDoc || {})
-  };
-
-  // Ensure individual fields are numbers and not NaN/undefined even if feeDoc exists
-  feeSettings.platformFee = Number(feeSettings.platformFee ?? defaultFeeSettings.platformFee);
-  feeSettings.gstRate = Number(feeSettings.gstRate ?? defaultFeeSettings.gstRate);
-  feeSettings.deliveryFee = Number(feeSettings.deliveryFee ?? defaultFeeSettings.deliveryFee);
-  feeSettings.freeDeliveryThreshold = Number(feeSettings.freeDeliveryThreshold ?? defaultFeeSettings.freeDeliveryThreshold);
-  feeSettings.mixedOrderDistanceLimit = Number(feeSettings.mixedOrderDistanceLimit ?? defaultFeeSettings.mixedOrderDistanceLimit);
-  feeSettings.mixedOrderAngleLimit = Number(feeSettings.mixedOrderAngleLimit ?? defaultFeeSettings.mixedOrderAngleLimit);
+  const feeSettings = normalizeFoodFeeSettings(feeDoc);
 
   const sourceMap = await fetchPickupSourcesByType(items);
   const pickupPoints = buildPickupPointsFromItems(items, sourceMap);
@@ -1614,48 +1774,44 @@ export async function calculateOrder(userId, dto) {
   const packagingFee = 0;
   const platformFee = feeSettings.platformFee;
 
-  // Delivery fee by subtotal range (fallback to flat fee; free above threshold).
-  const freeThreshold = feeSettings.freeDeliveryThreshold;
   let deliveryFee = 0;
-  if (
-    Number.isFinite(freeThreshold) &&
-    freeThreshold > 0 &&
-    subtotal >= freeThreshold
-  ) {
-    deliveryFee = 0;
+  let totalDeliveryFee = 0;
+  let userDeliveryFee = 0;
+  let restaurantDeliveryFee = 0;
+  let sponsoredDelivery = false;
+  let sponsoredKm = 0;
+  let deliveryDistanceKm = null;
+  let deliverySponsorType = "USER_FULL";
+
+  if (orderType === "food") {
+    const userPoint = getPointLatLng(dto.address?.location);
+    const restaurantPoint = getPointLatLng(primaryRestaurant?.location);
+    const distanceKm =
+      userPoint && restaurantPoint
+        ? haversineKm(
+            restaurantPoint.lat,
+            restaurantPoint.lng,
+            userPoint.lat,
+            userPoint.lng,
+          )
+        : 0;
+    const deliveryPricing = calculateFoodDeliveryPricing({
+      subtotal,
+      distanceKm,
+      feeSettings,
+    });
+    deliveryFee = deliveryPricing.deliveryFee;
+    totalDeliveryFee = deliveryPricing.totalDeliveryFee;
+    userDeliveryFee = deliveryPricing.userDeliveryFee;
+    restaurantDeliveryFee = deliveryPricing.restaurantDeliveryFee;
+    sponsoredDelivery = deliveryPricing.sponsoredDelivery;
+    sponsoredKm = deliveryPricing.sponsoredKm;
+    deliveryDistanceKm = deliveryPricing.deliveryDistanceKm;
+    deliverySponsorType = deliveryPricing.deliverySponsorType;
   } else {
-    const ranges = Array.isArray(feeSettings.deliveryFeeRanges)
-      ? [...feeSettings.deliveryFeeRanges]
-      : [];
-    if (ranges.length > 0) {
-      ranges.sort((a, b) => Number(a.min) - Number(b.min));
-      let matched = null;
-      for (let i = 0; i < ranges.length; i += 1) {
-        const r = ranges[i] || {};
-        const min = Number(r.min);
-        const max = Number(r.max);
-        const fee = Number(r.fee);
-        if (
-          !Number.isFinite(min) ||
-          !Number.isFinite(max) ||
-          !Number.isFinite(fee)
-        )
-          continue;
-        const isLast = i === ranges.length - 1;
-        const inRange = isLast
-          ? subtotal >= min && subtotal <= max
-          : subtotal >= min && subtotal < max;
-        if (inRange) {
-          matched = fee;
-          break;
-        }
-      }
-      deliveryFee = Number.isFinite(matched)
-        ? matched
-        : feeSettings.deliveryFee;
-    } else {
-      deliveryFee = feeSettings.deliveryFee;
-    }
+    deliveryFee = feeSettings.deliveryFee;
+    totalDeliveryFee = deliveryFee;
+    userDeliveryFee = deliveryFee;
   }
 
   const quickFeeDoc = (orderType === "mixed")
@@ -1806,6 +1962,20 @@ export async function calculateOrder(userId, dto) {
       tax,
       packagingFee,
       deliveryFee: selectedDeliveryFee,
+      totalDeliveryFee:
+        orderType === "food" ? totalDeliveryFee : selectedDeliveryFee,
+      userDeliveryFee:
+        orderType === "food" ? userDeliveryFee : selectedDeliveryFee,
+      restaurantDeliveryFee:
+        orderType === "food" ? restaurantDeliveryFee : 0,
+      sponsoredDelivery:
+        orderType === "food" ? sponsoredDelivery : false,
+      sponsoredKm:
+        orderType === "food" ? sponsoredKm : 0,
+      deliveryDistanceKm:
+        orderType === "food" ? deliveryDistanceKm : null,
+      deliverySponsorType:
+        orderType === "food" ? deliverySponsorType : "USER_FULL",
       platformFee,
       discount,
       total,
@@ -1909,11 +2079,66 @@ export async function createOrder(userId, dto) {
     tax: Number(dto.pricing?.tax ?? 0),
     packagingFee: Number(dto.pricing?.packagingFee ?? 0),
     deliveryFee: Number(dto.pricing?.deliveryFee ?? 0),
+    totalDeliveryFee: Number(
+      dto.pricing?.totalDeliveryFee ?? dto.pricing?.deliveryFee ?? 0,
+    ),
+    userDeliveryFee: Number(
+      dto.pricing?.userDeliveryFee ?? dto.pricing?.deliveryFee ?? 0,
+    ),
+    restaurantDeliveryFee: Number(dto.pricing?.restaurantDeliveryFee ?? 0),
+    sponsoredDelivery: Boolean(dto.pricing?.sponsoredDelivery),
+    sponsoredKm: Number(dto.pricing?.sponsoredKm ?? 0),
+    deliveryDistanceKm:
+      dto.pricing?.deliveryDistanceKm == null
+        ? null
+        : Number(dto.pricing.deliveryDistanceKm),
+    deliverySponsorType: String(
+      dto.pricing?.deliverySponsorType ||
+        (Number(dto.pricing?.restaurantDeliveryFee || 0) > 0 ? "RESTAURANT_FULL" : "USER_FULL"),
+    ),
     platformFee: Number(dto.pricing?.platformFee ?? 0),
     discount: Number(dto.pricing?.discount ?? 0),
     total: Number(dto.pricing?.total ?? 0),
     currency: String(dto.pricing?.currency || "INR"),
   };
+  normalizedPricing.totalDeliveryFee = Math.max(0, normalizedPricing.totalDeliveryFee);
+  normalizedPricing.userDeliveryFee = Math.max(
+    0,
+    Number.isFinite(normalizedPricing.userDeliveryFee)
+      ? normalizedPricing.userDeliveryFee
+      : normalizedPricing.deliveryFee,
+  );
+  normalizedPricing.restaurantDeliveryFee = Math.max(
+    0,
+    Number.isFinite(normalizedPricing.restaurantDeliveryFee)
+      ? normalizedPricing.restaurantDeliveryFee
+      : 0,
+  );
+  normalizedPricing.sponsoredKm = Math.max(
+    0,
+    Number.isFinite(normalizedPricing.sponsoredKm) ? normalizedPricing.sponsoredKm : 0,
+  );
+  normalizedPricing.deliveryFee = Math.max(
+    0,
+    Number.isFinite(normalizedPricing.deliveryFee)
+      ? normalizedPricing.deliveryFee
+      : normalizedPricing.userDeliveryFee,
+  );
+  if (normalizedPricing.totalDeliveryFee < normalizedPricing.deliveryFee) {
+    normalizedPricing.totalDeliveryFee = normalizedPricing.deliveryFee;
+  }
+  if (
+    normalizedPricing.restaurantDeliveryFee <= 0 &&
+    normalizedPricing.totalDeliveryFee > normalizedPricing.deliveryFee
+  ) {
+    normalizedPricing.restaurantDeliveryFee = Math.max(
+      0,
+      normalizedPricing.totalDeliveryFee - normalizedPricing.deliveryFee,
+    );
+  }
+  normalizedPricing.sponsoredDelivery =
+    Boolean(dto.pricing?.sponsoredDelivery) ||
+    normalizedPricing.restaurantDeliveryFee > 0;
   const computedTotal = Math.max(
     0,
     (Number.isFinite(normalizedPricing.subtotal)
@@ -1963,6 +2188,9 @@ export async function createOrder(userId, dto) {
       `Food order ${orderId}: distance not available, rider earning set to 0`,
     );
   }
+  if (normalizedPricing.deliveryDistanceKm == null && Number.isFinite(distanceKm)) {
+    normalizedPricing.deliveryDistanceKm = Number(distanceKm.toFixed(2));
+  }
 
   const riderEarning =
     orderType === "food" || orderType === "quick" || orderType === "mixed"
@@ -1988,22 +2216,14 @@ export async function createOrder(userId, dto) {
       ? Math.max(0, Number(normalizedPricing.deliveryFee || 0) - quickLegDeliveryFee)
       : 0;
 
-  // Calculate restaurant commission from subtotal
-  const { commissionAmount: restaurantCommission } =
-    hasFoodItems
-      ? await foodTransactionService.getRestaurantCommissionSnapshot({
-          pricing: normalizedPricing,
-          restaurantId: primaryRestaurantId,
-        })
-      : { commissionAmount: 0 };
-
-  normalizedPricing.restaurantCommission = restaurantCommission || 0;
-
   const platformProfit = Math.max(
     0,
-    (Number.isFinite(normalizedPricing.deliveryFee) ? normalizedPricing.deliveryFee : 0) +
-      (Number.isFinite(normalizedPricing.platformFee) ? normalizedPricing.platformFee : 0) +
-      restaurantCommission -
+    (Number.isFinite(normalizedPricing.totalDeliveryFee)
+      ? normalizedPricing.totalDeliveryFee
+      : Number.isFinite(normalizedPricing.deliveryFee)
+        ? normalizedPricing.deliveryFee
+        : 0) +
+      (Number.isFinite(normalizedPricing.platformFee) ? normalizedPricing.platformFee : 0) -
       riderEarning,
   );
 

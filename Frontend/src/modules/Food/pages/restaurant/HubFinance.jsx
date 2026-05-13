@@ -191,9 +191,8 @@ export default function HubFinance() {
 
   const invoiceSummary = useMemo(() => {
     const earnings = invoiceOrders.reduce((sum, order) => sum + (order.payout || order.restaurantEarning || 0), 0)
-    const commission = invoiceOrders.reduce((sum, order) => sum + (order.commission || 0), 0)
     const gross = invoiceOrders.reduce((sum, order) => sum + (order.totalAmount || order.orderTotal || 0), 0)
-    return { earnings, commission, gross, count: invoiceOrders.length }
+    return { earnings, gross, count: invoiceOrders.length }
   }, [invoiceOrders])
 
   const handleViewDetails = () => {
@@ -1199,8 +1198,8 @@ export default function HubFinance() {
                   <p className="text-base font-semibold text-gray-900">₹{invoiceSummary.earnings.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                 </div>
                 <div className="rounded-md bg-gray-50 p-3">
-                  <p className="text-xs text-gray-600">Commission</p>
-                  <p className="text-base font-semibold text-gray-900">₹{invoiceSummary.commission.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                  <p className="text-xs text-gray-600">Orders</p>
+                  <p className="text-base font-semibold text-gray-900">{invoiceSummary.count}</p>
                 </div>
                 <div className="rounded-md bg-gray-50 p-3">
                   <p className="text-xs text-gray-600">Gross amount</p>

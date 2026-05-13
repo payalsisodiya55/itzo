@@ -633,6 +633,7 @@ export default function Under250() {
       id: item.id,
       name: item.name,
       price: item.price,
+      otherPrice: item.otherPrice || item.originalPrice || 0,
       image: item.image,
       restaurant: restaurant,
       description: item.description || "",

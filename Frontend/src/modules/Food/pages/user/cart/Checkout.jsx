@@ -37,9 +37,11 @@ export default function Checkout() {
   }, [addresses, selectedAddressId, getDefaultAddress])
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity * 83, 0)
+  const otherPlatformSubtotal = cart.reduce((sum, item) => sum + (item.otherPrice || item.price) * item.quantity * 83, 0)
   const deliveryFee = 2.99 * 83
   const tax = subtotal * 0.08
   const total = subtotal + deliveryFee + tax
+  const otherPlatformSavings = Math.max(0, otherPlatformSubtotal - subtotal)
 
   const handlePlaceOrder = async () => {
     if (!selectedAddress || !selectedPayment) {
@@ -281,9 +283,22 @@ export default function Checkout() {
                   </div>
 
                   <div className="space-y-2 md:space-y-3 pt-4 md:pt-6 border-t dark:border-gray-700">
+                    {otherPlatformSavings > 0 && (
+                      <div className="flex justify-between text-sm md:text-base text-green-600 font-bold mb-2 p-2 bg-green-50 rounded-lg border border-green-100">
+                        <span>Other platform comparison</span>
+                        <span>-₹{Math.round(otherPlatformSavings)}</span>
+                      </div>
+                    )}
                     <div className="flex justify-between text-sm md:text-base">
                       <span className="text-muted-foreground">Subtotal</span>
-                      <span className="dark:text-gray-200">₹{subtotal.toFixed(0)}</span>
+                      <div className="text-right">
+                        {otherPlatformSubtotal > subtotal && (
+                          <span className="text-[10px] font-medium text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded border border-gray-200 mr-2">
+                            Other: ₹{Math.round(otherPlatformSubtotal)}
+                          </span>
+                        )}
+                        <span className="dark:text-gray-200">₹{subtotal.toFixed(0)}</span>
+                      </div>
                     </div>
                     <div className="flex justify-between text-sm md:text-base">
                       <span className="text-muted-foreground">Delivery Fee</span>

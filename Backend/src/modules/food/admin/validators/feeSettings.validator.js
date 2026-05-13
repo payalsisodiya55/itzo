@@ -1,16 +1,19 @@
 import { z } from 'zod';
 import { ValidationError } from '../../../../core/auth/errors.js';
 
-const rangeSchema = z.object({
-    min: z.number().min(0),
-    max: z.number().min(0),
-    fee: z.number().min(0)
+const sponsorRuleSchema = z.object({
+    minOrderAmount: z.number().min(0),
+    maxOrderAmount: z.number().min(0).nullable().optional(),
+    maxDistanceKm: z.number().min(0),
+    sponsorType: z.enum(['USER_FULL', 'RESTAURANT_FULL', 'SPLIT']),
+    sponsoredKm: z.number().min(0).nullable().optional()
 });
 
 const feeSettingsUpsertSchema = z.object({
-    deliveryFee: z.number().min(0).nullable().optional(),
-    deliveryFeeRanges: z.array(rangeSchema).optional(),
-    freeDeliveryThreshold: z.number().min(0).nullable().optional(),
+    baseDistanceKm: z.number().min(0).nullable().optional(),
+    baseDeliveryFee: z.number().min(0).nullable().optional(),
+    perKmCharge: z.number().min(0).nullable().optional(),
+    sponsorRules: z.array(sponsorRuleSchema).optional(),
     platformFee: z.number().min(0).nullable().optional(),
     gstRate: z.number().min(0).max(100).nullable().optional(),
     mixedOrderDistanceLimit: z.number().min(0).nullable().optional(),
@@ -20,25 +23,39 @@ const feeSettingsUpsertSchema = z.object({
 
 export const validateFeeSettingsUpsertDto = (body) => {
     const normalized = {
-        deliveryFee:
-            body?.deliveryFee === null
+        baseDistanceKm:
+            body?.baseDistanceKm === null
                 ? null
-                : body?.deliveryFee !== undefined
-                    ? Number(body.deliveryFee)
+                : body?.baseDistanceKm !== undefined
+                    ? Number(body.baseDistanceKm)
                     : undefined,
-        deliveryFeeRanges: Array.isArray(body?.deliveryFeeRanges)
-            ? body.deliveryFeeRanges.map((r) => ({
-                min: Number(r?.min),
-                max: Number(r?.max),
-                fee: Number(r?.fee)
+        baseDeliveryFee:
+            body?.baseDeliveryFee === null
+                ? null
+                : body?.baseDeliveryFee !== undefined
+                    ? Number(body.baseDeliveryFee)
+                    : undefined,
+        perKmCharge:
+            body?.perKmCharge === null
+                ? null
+                : body?.perKmCharge !== undefined
+                    ? Number(body.perKmCharge)
+                    : undefined,
+        sponsorRules: Array.isArray(body?.sponsorRules)
+            ? body.sponsorRules.map((rule) => ({
+                minOrderAmount: Number(rule?.minOrderAmount),
+                maxOrderAmount:
+                    rule?.maxOrderAmount === null || rule?.maxOrderAmount === undefined || rule?.maxOrderAmount === ''
+                        ? null
+                        : Number(rule.maxOrderAmount),
+                maxDistanceKm: Number(rule?.maxDistanceKm),
+                sponsorType: String(rule?.sponsorType || '').trim().toUpperCase(),
+                sponsoredKm:
+                    rule?.sponsoredKm === null || rule?.sponsoredKm === undefined || rule?.sponsoredKm === ''
+                        ? null
+                        : Number(rule.sponsoredKm)
             }))
             : undefined,
-        freeDeliveryThreshold:
-            body?.freeDeliveryThreshold === null
-                ? null
-                : body?.freeDeliveryThreshold !== undefined
-                    ? Number(body.freeDeliveryThreshold)
-                    : undefined,
         platformFee:
             body?.platformFee === null ? null : body?.platformFee !== undefined ? Number(body.platformFee) : undefined,
         gstRate:
@@ -55,23 +72,26 @@ export const validateFeeSettingsUpsertDto = (body) => {
         throw new ValidationError(result.error.errors[0].message);
     }
 
-    // Validate ranges: min < max, non-overlapping after sorting
-    const ranges = Array.isArray(result.data.deliveryFeeRanges) ? result.data.deliveryFeeRanges : undefined;
-    if (ranges) {
-        const sorted = [...ranges].sort((a, b) => a.min - b.min);
-        for (const r of sorted) {
-            if (r.min >= r.max) {
-                throw new ValidationError('Each range must have min less than max');
+    const sponsorRules = Array.isArray(result.data.sponsorRules) ? result.data.sponsorRules : undefined;
+    if (sponsorRules) {
+        for (const rule of sponsorRules) {
+            if (
+                rule.maxOrderAmount != null &&
+                Number.isFinite(rule.maxOrderAmount) &&
+                rule.maxOrderAmount < rule.minOrderAmount
+            ) {
+                throw new ValidationError('Maximum order amount must be greater than or equal to minimum order amount');
+            }
+            if (rule.sponsorType === 'SPLIT') {
+                const sponsoredKm = Number(rule.sponsoredKm);
+                if (!Number.isFinite(sponsoredKm) || sponsoredKm < 0) {
+                    throw new ValidationError('Sponsored KM is required for split rules');
+                }
+            }
+            if (rule.sponsorType !== 'SPLIT') {
+                rule.sponsoredKm = null;
             }
         }
-        for (let i = 1; i < sorted.length; i++) {
-            const prev = sorted[i - 1];
-            const cur = sorted[i];
-            if (cur.min < prev.max) {
-                throw new ValidationError('Delivery fee ranges must not overlap');
-            }
-        }
-        result.data.deliveryFeeRanges = sorted;
     }
 
     return result.data;

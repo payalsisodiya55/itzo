@@ -12,7 +12,6 @@ import { FoodOfferUsage } from '../models/offerUsage.model.js';
 import { DeliveryBonusTransaction } from '../models/deliveryBonusTransaction.model.js';
 import { FoodEarningAddon } from '../models/earningAddon.model.js';
 import { FoodEarningAddonHistory } from '../models/earningAddonHistory.model.js';
-import { FoodRestaurantCommission } from '../models/restaurantCommission.model.js';
 import { FoodDeliveryCommissionRule } from '../models/deliveryCommissionRule.model.js';
 import { FoodFeeSettings } from '../models/feeSettings.model.js';
 import { FeedbackExperience } from '../models/feedbackExperience.model.js';
@@ -478,11 +477,7 @@ export async function getDashboardStats(query = {}) {
                             $cond: [{ $eq: ['$orderStatus', 'delivered'] }, { $ifNull: ['$pricing.total', 0] }, 0] 
                         } 
                     },
-                    commissionTotal: { 
-                        $sum: { 
-                            $cond: [{ $eq: ['$orderStatus', 'delivered'] }, { $ifNull: ['$pricing.restaurantCommission', 0] }, 0] 
-                        } 
-                    },
+                    commissionTotal: { $sum: 0 },
                     platformFeeTotal: { 
                         $sum: { 
                             $cond: [
@@ -703,12 +698,12 @@ export async function getDashboardStats(query = {}) {
             }
         },
         revenue: { total: Number(totals.revenueTotal || 0) },
-        commission: { total: Number(totals.commissionTotal || 0) },
+        commission: { total: 0 },
         platformFee: { total: Number(totals.platformFeeTotal || 0) },
         deliveryFee: { total: Number(totals.deliveryFeeTotal || 0) },
         gst: { total: Number(totals.gstTotal || 0) },
         totalAdminEarnings: Number(totals.adminNetProfit || 0) + Number(totals.gstTotal || 0),
-        deliveryProfit: Number(totals.adminNetProfit || 0) - Number(totals.commissionTotal || 0) - Number(totals.platformFeeTotal || 0),
+        deliveryProfit: Number(totals.adminNetProfit || 0) - Number(totals.platformFeeTotal || 0),
         restaurants: {
             total: Number(restaurantsTotal || 0),
             pendingRequests: Number(restaurantsPending || 0)
@@ -933,22 +928,6 @@ export async function getRestaurantReport(query = {}) {
                 return { restaurants: [], total: 0, page, limit };
             }
         }
-    }
-
-    const typeRaw = String(query.type || '').trim().toLowerCase();
-    if (typeRaw === 'commission') {
-        const commissionRows = await FoodRestaurantCommission.find({ status: { $ne: false } })
-            .select('restaurantId')
-            .lean();
-        const commissionRestaurantIds = commissionRows
-            .map((row) => row?.restaurantId)
-            .filter((id) => mongoose.Types.ObjectId.isValid(id))
-            .map((id) => new mongoose.Types.ObjectId(id));
-
-        if (!commissionRestaurantIds.length) {
-            return { restaurants: [], total: 0, page, limit };
-        }
-        restaurantFilter._id = { $in: commissionRestaurantIds };
     }
 
     const searchRaw = String(query.search || '').trim();
@@ -1647,104 +1626,6 @@ export async function updateSupportTicket(id, body = {}) {
     return updated || null;
 }
 
-// ----- Restaurant Commission (admin) -----
-export async function getRestaurantCommissions() {
-    const list = await FoodRestaurantCommission.find({})
-        .sort({ createdAt: -1 })
-        .populate({ path: 'restaurantId', select: 'restaurantName' })
-        .lean();
-
-    const commissions = list.map((c, index) => ({
-        _id: c._id,
-        sl: index + 1,
-        restaurantId: c.restaurantId?._id ? String(c.restaurantId._id) : String(c.restaurantId),
-        restaurantName: c.restaurantId?.restaurantName || '',
-        restaurant: c.restaurantId?._id ? { _id: c.restaurantId._id, name: c.restaurantId.restaurantName } : null,
-        defaultCommission: c.defaultCommission || { type: 'percentage', value: 0 },
-        notes: c.notes || '',
-        status: c.status !== false
-    }));
-
-    return { commissions };
-}
-
-export async function getRestaurantCommissionBootstrap() {
-    const [commissionsData, restaurantsData] = await Promise.all([
-        getRestaurantCommissions(),
-        getRestaurants({ status: 'approved', limit: 1000, page: 1 })
-    ]);
-
-    const commissionByRestaurantId = new Set(
-        (commissionsData.commissions || []).map((c) => String(c.restaurantId))
-    );
-
-    const restaurants = (restaurantsData.restaurants || []).map((r) => ({
-        _id: r._id,
-        name: r.restaurantName || r.name || '',
-        restaurantId: r._id ? `REST${r._id.toString().slice(-6).padStart(6, '0')}` : '',
-        ownerName: r.ownerName || '',
-        hasCommissionSetup: commissionByRestaurantId.has(String(r._id))
-    }));
-
-    return { commissions: commissionsData.commissions || [], restaurants };
-}
-
-export async function getRestaurantCommissionById(id) {
-    if (!id || !mongoose.Types.ObjectId.isValid(id)) return null;
-    const doc = await FoodRestaurantCommission.findById(id)
-        .populate({ path: 'restaurantId', select: 'restaurantName' })
-        .lean();
-    if (!doc) return null;
-    return {
-        _id: doc._id,
-        restaurantId: doc.restaurantId?._id ? String(doc.restaurantId._id) : String(doc.restaurantId),
-        restaurant: doc.restaurantId?._id ? { _id: doc.restaurantId._id, name: doc.restaurantId.restaurantName } : null,
-        restaurantName: doc.restaurantId?.restaurantName || '',
-        defaultCommission: doc.defaultCommission || { type: 'percentage', value: 0 },
-        notes: doc.notes || '',
-        status: doc.status !== false
-    };
-}
-
-export async function createRestaurantCommission(body) {
-    const exists = await FoodRestaurantCommission.findOne({ restaurantId: body.restaurantId }).lean();
-    if (exists) {
-        throw new ValidationError('Commission already exists for this restaurant');
-    }
-    const created = await FoodRestaurantCommission.create({
-        restaurantId: body.restaurantId,
-        defaultCommission: body.defaultCommission,
-        notes: body.notes || '',
-        status: true
-    });
-    return created.toObject();
-}
-
-export async function updateRestaurantCommission(id, body) {
-    if (!id || !mongoose.Types.ObjectId.isValid(id)) return null;
-    const updated = await FoodRestaurantCommission.findByIdAndUpdate(
-        id,
-        { $set: { defaultCommission: body.defaultCommission, notes: body.notes || '' } },
-        { new: true }
-    ).lean();
-    return updated;
-}
-
-export async function deleteRestaurantCommission(id) {
-    if (!id || !mongoose.Types.ObjectId.isValid(id)) return null;
-    const deleted = await FoodRestaurantCommission.findByIdAndDelete(id).lean();
-    return deleted ? { id } : null;
-}
-
-export async function toggleRestaurantCommissionStatus(id) {
-    if (!id || !mongoose.Types.ObjectId.isValid(id)) return null;
-    const doc = await FoodRestaurantCommission.findById(id);
-    if (!doc) return null;
-    doc.status = !Boolean(doc.status);
-    await doc.save();
-    return doc.toObject();
-}
-
 // ----- Delivery Boy Commission Rule (admin) -----
 export async function getDeliveryCommissionRules() {
     const list = await FoodDeliveryCommissionRule.find({}).sort({ createdAt: -1 }).lean();
@@ -1866,10 +1747,26 @@ export async function toggleDeliveryCommissionRuleStatus(id, status) {
 }
 
 // ----- Fee Settings (admin) -----
+function stripLegacyFoodFeeSettingsFields(doc) {
+    if (!doc || typeof doc !== 'object') return doc || null;
+    const next = { ...doc };
+    delete next.deliveryFeeRanges;
+    delete next.freeDeliveryThreshold;
+    return next;
+}
+
 export async function getFeeSettings() {
     const doc = await FoodFeeSettings.findOne({ isActive: true }).sort({ createdAt: -1 }).lean();
+    if (doc?._id && ('deliveryFeeRanges' in doc || 'freeDeliveryThreshold' in doc)) {
+        await FoodFeeSettings.findByIdAndUpdate(doc._id, {
+            $unset: {
+                deliveryFeeRanges: 1,
+                freeDeliveryThreshold: 1
+            }
+        });
+    }
     // If not configured yet, return null so UI does not show defaults automatically.
-    return { feeSettings: doc || null };
+    return { feeSettings: stripLegacyFoodFeeSettingsFields(doc) || null };
 }
 
 export async function upsertFeeSettings(body) {
@@ -1879,13 +1776,21 @@ export async function upsertFeeSettings(body) {
         const $set = {};
         const $unset = {};
 
-        if (body.deliveryFee === null) $unset.deliveryFee = 1;
-        else if (body.deliveryFee !== undefined) $set.deliveryFee = body.deliveryFee;
+        if (body.baseDistanceKm === null) $unset.baseDistanceKm = 1;
+        else if (body.baseDistanceKm !== undefined) $set.baseDistanceKm = body.baseDistanceKm;
 
-        if (body.deliveryFeeRanges !== undefined) $set.deliveryFeeRanges = body.deliveryFeeRanges;
+        if (body.baseDeliveryFee === null) {
+            $unset.baseDeliveryFee = 1;
+            $unset.deliveryFee = 1;
+        } else if (body.baseDeliveryFee !== undefined) {
+            $set.baseDeliveryFee = body.baseDeliveryFee;
+            $set.deliveryFee = body.baseDeliveryFee;
+        }
 
-        if (body.freeDeliveryThreshold === null) $unset.freeDeliveryThreshold = 1;
-        else if (body.freeDeliveryThreshold !== undefined) $set.freeDeliveryThreshold = body.freeDeliveryThreshold;
+        if (body.perKmCharge === null) $unset.perKmCharge = 1;
+        else if (body.perKmCharge !== undefined) $set.perKmCharge = body.perKmCharge;
+
+        if (body.sponsorRules !== undefined) $set.sponsorRules = body.sponsorRules;
 
         if (body.platformFee === null) $unset.platformFee = 1;
         else if (body.platformFee !== undefined) $set.platformFee = body.platformFee;
@@ -1897,28 +1802,45 @@ export async function upsertFeeSettings(body) {
 
         if (body.isActive !== undefined) $set.isActive = body.isActive;
 
+        // Remove legacy subtotal-range fields when the new delivery model is saved.
+        if (
+            body.baseDistanceKm !== undefined ||
+            body.baseDeliveryFee !== undefined ||
+            body.perKmCharge !== undefined ||
+            body.sponsorRules !== undefined
+        ) {
+            $unset.deliveryFeeRanges = 1;
+            $unset.freeDeliveryThreshold = 1;
+        }
+
         const update = {};
         if (Object.keys($set).length) update.$set = $set;
         if (Object.keys($unset).length) update.$unset = $unset;
-        if (!Object.keys(update).length) return existing.toObject();
+        if (!Object.keys(update).length) {
+            return stripLegacyFoodFeeSettingsFields(existing.toObject());
+        }
 
         const updated = await FoodFeeSettings.findByIdAndUpdate(existing._id, update, { new: true }).lean();
-        return updated;
+        return stripLegacyFoodFeeSettingsFields(updated);
     }
 
     const payload = {
-        deliveryFeeRanges: body.deliveryFeeRanges ?? [],
         isActive: body.isActive !== false
     };
-    if (body.deliveryFee !== undefined && body.deliveryFee !== null) payload.deliveryFee = body.deliveryFee;
-    if (body.freeDeliveryThreshold !== undefined && body.freeDeliveryThreshold !== null) payload.freeDeliveryThreshold = body.freeDeliveryThreshold;
+    if (body.baseDistanceKm !== undefined && body.baseDistanceKm !== null) payload.baseDistanceKm = body.baseDistanceKm;
+    if (body.baseDeliveryFee !== undefined && body.baseDeliveryFee !== null) {
+        payload.baseDeliveryFee = body.baseDeliveryFee;
+        payload.deliveryFee = body.baseDeliveryFee;
+    }
+    if (body.perKmCharge !== undefined && body.perKmCharge !== null) payload.perKmCharge = body.perKmCharge;
+    if (body.sponsorRules !== undefined) payload.sponsorRules = body.sponsorRules ?? [];
     if (body.platformFee !== undefined && body.platformFee !== null) payload.platformFee = body.platformFee;
     if (body.gstRate !== undefined && body.gstRate !== null) payload.gstRate = body.gstRate;
     if (body.mixedOrderDistanceLimit !== undefined) payload.mixedOrderDistanceLimit = body.mixedOrderDistanceLimit;
     if (body.mixedOrderAngleLimit !== undefined) payload.mixedOrderAngleLimit = body.mixedOrderAngleLimit;
 
     const created = await FoodFeeSettings.create(payload);
-    return created.toObject();
+    return stripLegacyFoodFeeSettingsFields(created.toObject());
 }
 
 // ----- Referral Settings (admin) -----
@@ -2252,9 +2174,8 @@ export async function getRestaurantAnalytics(restaurantId) {
     if (!restaurantId || !mongoose.Types.ObjectId.isValid(restaurantId)) return null;
     const rId = new mongoose.Types.ObjectId(restaurantId);
 
-    const [restaurant, commissionDoc, orders, txRows] = await Promise.all([
+    const [restaurant, orders, txRows] = await Promise.all([
         FoodRestaurant.findById(rId).lean(),
-        FoodRestaurantCommission.findOne({ restaurantId: rId, status: { $ne: false } }).lean(),
         FoodOrder.find({ restaurantId: rId, orderType: 'food' }).lean(),
         FoodTransaction.find({ restaurantId: rId })
             .populate('orderId', 'orderStatus createdAt pricing')
@@ -2286,10 +2207,7 @@ export async function getRestaurantAnalytics(restaurantId) {
     // 2) Restaurant share (payout to restaurant)
     const restaurantEarning = sum(completedTx, (tx) => tx?.amounts?.restaurantShare);
 
-    // 3) Restaurant commission paid to admin
-    const totalCommission = sum(completedTx, (tx) => tx?.amounts?.restaurantCommission ?? tx?.pricing?.restaurantCommission);
-
-    // 4) Restaurant profit (in this system, equals restaurant share)
+    // 3) Restaurant profit (in this system, equals restaurant share)
     const restaurantProfit = restaurantEarning;
 
     const monthlyOrdersList = orders.filter(o => {
@@ -2323,27 +2241,16 @@ export async function getRestaurantAnalytics(restaurantId) {
     }, {});
     const repeatCustomers = Object.values(customerOrderCounts).filter(count => count > 1).length;
 
-    // 5) Restaurant commission percent
-    const commissionType = commissionDoc?.defaultCommission?.type || 'percentage';
-    const commissionValue = Number(commissionDoc?.defaultCommission?.value || 0) || 0;
-    const completedSubtotal = sum(completedTx, (tx) => tx?.pricing?.subtotal ?? tx?.orderId?.pricing?.subtotal);
-    const computedCommissionPercent =
-        commissionType === 'percentage'
-            ? commissionValue
-            : (completedSubtotal > 0 ? (totalCommission / completedSubtotal) * 100 : 0);
-
     const analytics = {
         totalOrders: totalOrdersCount,
         cancelledOrders: cancelledOrders.length,
         completedOrders: completedOrders.length,
         averageRating: Number(restaurant.rating || 0),
         totalRatings: Number(restaurant.totalRatings || 0),
-        commissionPercentage: computedCommissionPercent,
         monthlyProfit,
         yearlyProfit,
         averageOrderValue: avgOrderValue,
         totalRevenue,
-        totalCommission,
         restaurantEarning, // restaurant share
         restaurantProfit,
         monthlyOrders: monthlyOrdersList.length,
@@ -2371,7 +2278,6 @@ export async function getRestaurantAnalytics(restaurantId) {
 
         // Split (who got what)
         restaurantShare: restaurantEarning,
-        restaurantCommission: totalCommission,
         riderShare: sum(completedTx, (tx) => tx?.amounts?.riderShare),
         platformNetProfit: sum(completedTx, (tx) => tx?.amounts?.platformNetProfit),
     };

@@ -131,7 +131,6 @@ export default function AdminHome() {
 
   // Calculate totals from real data
   const revenueTotal = dashboardData?.revenue?.total || 0
-  const commissionTotal = dashboardData?.commission?.total || 0
   const ordersTotal = dashboardData?.orders?.total || 0
   const platformFeeTotal = dashboardData?.platformFee?.total || 0
   const deliveryFeeTotal = dashboardData?.deliveryFee?.total || 0
@@ -164,7 +163,6 @@ export default function AdminHome() {
 
   const activityFeed = dashboardData?.liveSignals || []
   const totalRevenueHelper = [
-    `Comm: ${formatCurrency(commissionTotal)}`,
     `Platform: ${formatCurrency(platformFeeTotal)}`,
     `Delivery Net: ${formatCurrency(deliveryProfit)}`,
     `GST: ${formatCurrency(gstTotal)}`,
@@ -228,14 +226,6 @@ export default function AdminHome() {
               icon={<ShoppingBag className="h-5 w-5 text-emerald-600" />}
               accent="bg-emerald-200/40"
               path="/admin/food/transaction-report"
-            />
-            <MetricCard
-              title="Commission earned"
-              value={formatCurrency(commissionTotal)}
-              helper={`${periodLabel} restaurant cut`}
-              icon={<ArrowUpRight className="h-5 w-5 text-indigo-600" />}
-              accent="bg-indigo-200/40"
-              path="/admin/food/restaurants/commission"
             />
             <MetricCard
               title="Orders processed"
@@ -368,10 +358,6 @@ export default function AdminHome() {
                           <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.25} />
                           <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0} />
                         </linearGradient>
-                        <linearGradient id="comFill" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#a855f7" stopOpacity={0.25} />
-                          <stop offset="95%" stopColor="#a855f7" stopOpacity={0} />
-                        </linearGradient>
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                       <XAxis dataKey="month" stroke="#6b7280" />
@@ -389,14 +375,6 @@ export default function AdminHome() {
                         fillOpacity={1}
                         fill="url(#revFill)"
                         name="Gross revenue"
-                      />
-                      <Area
-                        type="monotone"
-                        dataKey="commission"
-                        stroke="#a855f7"
-                        fillOpacity={1}
-                        fill="url(#comFill)"
-                        name="Commission"
                       />
                       <Bar
                         dataKey="orders"
@@ -495,7 +473,6 @@ export default function AdminHome() {
                       />
                       <Legend />
                       <Bar dataKey="orders" fill="#0ea5e9" radius={[8, 8, 0, 0]} name="Orders" />
-                      <Bar dataKey="commission" fill="#a855f7" radius={[8, 8, 0, 0]} name="Commission" />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>

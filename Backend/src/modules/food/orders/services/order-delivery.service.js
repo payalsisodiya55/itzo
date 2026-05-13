@@ -926,7 +926,6 @@ export async function completeDelivery(orderId, deliveryPartnerId, body = {}) {
     paymentStatus: order.payment?.status,
     riderEarning: order.riderEarning || 0,
     platformProfit: order.platformProfit || 0,
-    commissionAmount: order.pricing?.restaurantCommission || 0,
     total: order.pricing?.total || 0
   });
   return sanitizeOrderForExternal(order);
