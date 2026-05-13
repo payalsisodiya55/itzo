@@ -50,8 +50,8 @@ const RecommendedSection = memo(({ recommendedForYouRestaurants }) => {
                   <p className="text-sm font-bold text-gray-900 truncate">
                     {restaurant.name}
                   </p>
-                  <p className="text-[10px] text-[#cc2532] font-extrabold mt-1.5 flex items-center gap-1 uppercase tracking-wider">
-                    <Flame className="w-3.5 h-3.5 fill-[#cc2532]" />
+                  <p className="text-[10px] text-[#FE5502] font-extrabold mt-1.5 flex items-center gap-1 uppercase tracking-wider">
+                    <Flame className="w-3.5 h-3.5 fill-[#FE5502]" />
                     NEAR & FAST
                   </p>
                 </div>

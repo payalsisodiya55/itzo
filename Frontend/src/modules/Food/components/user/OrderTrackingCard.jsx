@@ -11,7 +11,7 @@ const CookingAnimation = memo(() => (
       <motion.div animate={{ opacity: [0, 0.8, 0], y: [0, -8, -12], scale: [0.8, 1.2, 1] }} transition={{ duration: 1.5, repeat: Infinity, delay: 1, ease: "easeOut" }} className="w-1.5 h-3 bg-red-400/60 rounded-full blur-[1px]" />
     </div>
     <motion.div animate={{ rotate: [-2, 2, -2] }} transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut" }} className="relative z-10 mt-1">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#cc2532] drop-shadow-sm">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#FE5502] drop-shadow-sm">
         {/* Cooker Body */}
         <path d="M6 10h12v6a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4v-6z" />
         {/* Lid Rim */}
@@ -438,11 +438,11 @@ function OrderTrackingCardInner({ hasBottomNav = true }) {
               <p className="text-gray-900 font-bold text-base md:text-lg truncate tracking-tight">{displayName}</p>
               <div className="flex items-center gap-1.5 mt-0.5">
                 <p className="text-gray-500 font-medium text-xs md:text-sm truncate">{statusText}</p>
-                <ChevronRight className={`w-3.5 h-3.5 ${isQuickOrder ? 'text-blue-500' : 'text-[#cc2532]'} shrink-0 group-hover:translate-x-1 transition-transform`} />
+                <ChevronRight className={`w-3.5 h-3.5 ${isQuickOrder ? 'text-blue-500' : 'text-[#FE5502]'} shrink-0 group-hover:translate-x-1 transition-transform`} />
               </div>
             </div>
 
-            <div className={`bg-gradient-to-br ${isQuickOrder ? 'from-blue-500 to-blue-600 shadow-blue-500/20 border-blue-200' : 'from-[#cc2532] to-[#a81e29] shadow-red-500/20 border-red-200'} shadow-lg rounded-xl px-4 py-2 shrink-0 flex flex-col items-center justify-center border`}>
+            <div className={`bg-gradient-to-br ${isQuickOrder ? 'from-blue-500 to-blue-600 shadow-blue-500/20 border-blue-200' : 'from-[#FE5502] to-[#C83C00] shadow-red-500/20 border-red-200'} shadow-lg rounded-xl px-4 py-2 shrink-0 flex flex-col items-center justify-center border`}>
               <p className={`${isQuickOrder ? 'text-blue-50' : 'text-red-50'} text-[10px] font-bold uppercase tracking-wider opacity-95 leading-tight mb-[2px]`}>
                 {orderStatus === "scheduled" ? "Scheduled" : "arriving in"}
               </p>

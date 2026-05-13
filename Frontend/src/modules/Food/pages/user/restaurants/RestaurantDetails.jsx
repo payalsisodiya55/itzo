@@ -2025,7 +2025,7 @@ function RestaurantDetailsContent() {
                     placeholder="Search for dishes..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-10 py-2.5 rounded-full border border-gray-200 dark:border-gray-800 shadow-sm bg-white dark:bg-[#1a1a1a] text-sm dark:text-white focus:outline-none focus:ring-2 focus:ring-[#cc2532] focus:border-transparent"
+                    className="w-full pl-10 pr-10 py-2.5 rounded-full border border-gray-200 dark:border-gray-800 shadow-sm bg-white dark:bg-[#1a1a1a] text-sm dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FE5502] focus:border-transparent"
                     autoFocus
                   />
                   {searchQuery && (
@@ -2113,7 +2113,7 @@ function RestaurantDetailsContent() {
            <div className="flex items-center justify-between gap-4">
              <div className="flex items-center gap-4">
                 <div className="h-12 w-12 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
-                  <Percent className="h-6 w-6 text-[#cc2532]" />
+                  <Percent className="h-6 w-6 text-[#FE5502]" />
                 </div>
                 <div>
                    <h3 className="text-sm font-black text-gray-900 dark:text-white uppercase tracking-tight">
@@ -2142,7 +2142,7 @@ function RestaurantDetailsContent() {
               {highlightOffers.slice(0, 2).map((_, i) => (
                 <div 
                   key={i} 
-                  className={`h-1.5 w-1.5 rounded-full transition-colors ${i === highlightIndex % 2 ? 'bg-[#cc2532]' : 'bg-gray-200'}`} 
+                  className={`h-1.5 w-1.5 rounded-full transition-colors ${i === highlightIndex % 2 ? 'bg-[#FE5502]' : 'bg-gray-200'}`} 
                 />
               ))}
            </div>
@@ -2218,7 +2218,7 @@ function RestaurantDetailsContent() {
                     onClick={() => setSelectedMenuCategory("all")}
                     className={`flex items-center gap-2 whitespace-nowrap rounded-full border px-3 py-1.5 text-sm font-semibold transition-colors ${
                       selectedMenuCategory === "all"
-                        ? "border-[#cc2532] bg-red-50 text-[#cc2532]"
+                        ? "border-[#FE5502] bg-red-50 text-[#FE5502]"
                         : "border-gray-300 bg-white text-gray-700"
                     }`}
                   >
@@ -2231,7 +2231,7 @@ function RestaurantDetailsContent() {
                       onClick={() => setSelectedMenuCategory(category.id)}
                       className={`flex items-center gap-2 whitespace-nowrap rounded-full border px-3 py-1.5 text-sm font-semibold transition-colors ${
                         selectedMenuCategory === category.id
-                          ? "border-[#cc2532] bg-red-50 text-[#cc2532]"
+                          ? "border-[#FE5502] bg-red-50 text-[#FE5502]"
                           : "border-gray-300 bg-white text-gray-700"
                       }`}
                     >
@@ -2391,7 +2391,7 @@ function RestaurantDetailsContent() {
                                 delete dishCardRefs.current[item.id]
                               }
                             }}
-                            className={`flex gap-4 p-4 border-b border-gray-100 last:border-none relative cursor-pointer transition-all duration-300 ${highlightedDishId === item.id ? "bg-red-50 ring-2 ring-[#cc2532] ring-inset dark:bg-orange-950/20" : ""}`}
+                            className={`flex gap-4 p-4 border-b border-gray-100 last:border-none relative cursor-pointer transition-all duration-300 ${highlightedDishId === item.id ? "bg-red-50 ring-2 ring-[#FE5502] ring-inset dark:bg-orange-950/20" : ""}`}
                             onClick={() => handleItemClick(item)}
                           >
                             {/* Left Side - Details */}
@@ -2416,7 +2416,7 @@ function RestaurantDetailsContent() {
                               {isRecommendedItem(item) && (
                                 <div className="flex items-center gap-2 mt-1">
                                   <div className="h-1.5 w-16 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                                    <div className="h-full bg-[#cc2532] w-3/4"></div>
+                                    <div className="h-full bg-[#FE5502] w-3/4"></div>
                                   </div>
                                   <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">Highly reordered</span>
                                 </div>
@@ -2495,7 +2495,7 @@ function RestaurantDetailsContent() {
                                   animate={{ opacity: 1, scale: 1 }}
                                   className={`absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white border font-bold px-4 py-1.5 rounded-lg shadow-md flex items-center gap-1 ${shouldShowGrayscale
                                     ? 'border-gray-300 text-gray-400 cursor-not-allowed opacity-50'
-                                    : 'border-[#cc2532] text-[#cc2532] hover:bg-red-50'
+                                    : 'border-[#FE5502] text-[#FE5502] hover:bg-red-50'
                                     }`}
                                 >
                                   <button
@@ -2506,7 +2506,7 @@ function RestaurantDetailsContent() {
                                       }
                                     }}
                                     disabled={shouldShowGrayscale}
-                                    className={shouldShowGrayscale ? 'text-gray-400 cursor-not-allowed' : 'text-[#cc2532] hover:text-[#a81e29]'}
+                                    className={shouldShowGrayscale ? 'text-gray-400 cursor-not-allowed' : 'text-[#FE5502] hover:text-[#C83C00]'}
                                   >
                                     <Minus size={14} />
                                   </button>
@@ -2519,7 +2519,7 @@ function RestaurantDetailsContent() {
                                       }
                                     }}
                                     disabled={shouldShowGrayscale}
-                                    className={shouldShowGrayscale ? 'text-gray-400 cursor-not-allowed' : 'text-[#cc2532] hover:text-[#a81e29]'}
+                                    className={shouldShowGrayscale ? 'text-gray-400 cursor-not-allowed' : 'text-[#FE5502] hover:text-[#C83C00]'}
                                   >
                                     <Plus size={14} className="stroke-[3px]" />
                                   </button>
@@ -2539,7 +2539,7 @@ function RestaurantDetailsContent() {
                                   disabled={shouldShowGrayscale}
                                   className={`absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white border font-bold px-6 py-1.5 rounded-lg shadow-md flex items-center gap-1 transition-colors ${shouldShowGrayscale
                                     ? 'border-gray-300 text-gray-400 cursor-not-allowed opacity-50'
-                                    : 'border-[#cc2532] text-[#cc2532] hover:bg-red-50'
+                                    : 'border-[#FE5502] text-[#FE5502] hover:bg-red-50'
                                     }`}
                                 >
                                   ADD <Plus size={14} className="stroke-[3px]" />
@@ -2612,7 +2612,7 @@ function RestaurantDetailsContent() {
                                           delete dishCardRefs.current[item.id]
                                         }
                                       }}
-                                      className={`flex gap-4 p-4 border-b border-gray-100 last:border-none relative cursor-pointer transition-all duration-300 ${highlightedDishId === item.id ? "bg-red-50 ring-2 ring-[#cc2532] ring-inset dark:bg-orange-950/20" : ""}`}
+                                      className={`flex gap-4 p-4 border-b border-gray-100 last:border-none relative cursor-pointer transition-all duration-300 ${highlightedDishId === item.id ? "bg-red-50 ring-2 ring-[#FE5502] ring-inset dark:bg-orange-950/20" : ""}`}
                                       onClick={() => handleItemClick(item)}
                                     >
                                       {/* Left Side - Details */}
@@ -2637,7 +2637,7 @@ function RestaurantDetailsContent() {
                                         {isRecommendedItem(item) && (
                                           <div className="flex items-center gap-2 mt-1">
                                             <div className="h-1.5 w-16 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                                              <div className="h-full bg-[#cc2532] w-3/4"></div>
+                                              <div className="h-full bg-[#FE5502] w-3/4"></div>
                                             </div>
                                             <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">Highly reordered</span>
                                           </div>
@@ -2716,7 +2716,7 @@ function RestaurantDetailsContent() {
                                             animate={{ opacity: 1, scale: 1 }}
                                             className={`absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white border font-bold px-4 py-1.5 rounded-lg shadow-md flex items-center gap-1 ${shouldShowGrayscale
                                               ? 'border-gray-300 text-gray-400 cursor-not-allowed opacity-50'
-                                              : 'border-[#cc2532] text-[#cc2532] hover:bg-red-50'
+                                              : 'border-[#FE5502] text-[#FE5502] hover:bg-red-50'
                                               }`}
                                           >
                                             <button
@@ -2727,7 +2727,7 @@ function RestaurantDetailsContent() {
                                                 }
                                               }}
                                               disabled={shouldShowGrayscale}
-                                              className={shouldShowGrayscale ? 'text-gray-400 cursor-not-allowed' : 'text-[#cc2532] hover:text-[#a81e29]'}
+                                              className={shouldShowGrayscale ? 'text-gray-400 cursor-not-allowed' : 'text-[#FE5502] hover:text-[#C83C00]'}
                                             >
                                               <Minus size={14} />
                                             </button>
@@ -2740,7 +2740,7 @@ function RestaurantDetailsContent() {
                                                 }
                                               }}
                                               disabled={shouldShowGrayscale}
-                                              className={shouldShowGrayscale ? 'text-gray-400 cursor-not-allowed' : 'text-[#cc2532] hover:text-[#a81e29]'}
+                                              className={shouldShowGrayscale ? 'text-gray-400 cursor-not-allowed' : 'text-[#FE5502] hover:text-[#C83C00]'}
                                             >
                                               <Plus size={14} className="stroke-[3px]" />
                                             </button>
@@ -2760,7 +2760,7 @@ function RestaurantDetailsContent() {
                                             disabled={shouldShowGrayscale}
                                             className={`absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white border font-bold px-6 py-1.5 rounded-lg shadow-md flex items-center gap-1 transition-colors ${shouldShowGrayscale
                                               ? 'border-gray-300 text-gray-400 cursor-not-allowed opacity-50'
-                                              : 'border-[#cc2532] text-[#cc2532] hover:bg-red-50'
+                                              : 'border-[#FE5502] text-[#FE5502] hover:bg-red-50'
                                               }`}
                                           >
                                             ADD <Plus size={14} className="stroke-[3px]" />
@@ -2811,11 +2811,11 @@ function RestaurantDetailsContent() {
       {!showFilterSheet && !showMenuSheet && !showMenuOptionsSheet && (
         <div className="sticky dark:bg-[#1a1a1a] bottom-4 flex justify-end px-4 z-50 mt-auto">
           <Button
-            className="bg-[#1a1a1a] dark:bg-[#cc2532] hover:bg-black dark:hover:bg-[#a81e29] text-white flex items-center gap-2 shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/10 dark:border-[#cc2532]/20 px-6 py-6 rounded-full font-bold transform transition-all duration-300 hover:scale-110 active:scale-95 group"
+            className="bg-[#1a1a1a] dark:bg-[#FE5502] hover:bg-black dark:hover:bg-[#C83C00] text-white flex items-center gap-2 shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/10 dark:border-[#FE5502]/20 px-6 py-6 rounded-full font-bold transform transition-all duration-300 hover:scale-110 active:scale-95 group"
             size="lg"
             onClick={() => setShowMenuSheet(true)}
           >
-            <Utensils className="h-5 w-5 text-[#cc2532] dark:text-white group-hover:rotate-12 transition-transform" />
+            <Utensils className="h-5 w-5 text-[#FE5502] dark:text-white group-hover:rotate-12 transition-transform" />
             <span className="tracking-wide">MENU</span>
           </Button>
         </div>
@@ -2900,7 +2900,7 @@ function RestaurantDetailsContent() {
                   {/* Close Button */}
                   <div className="border-t border-gray-200 dark:border-gray-800 px-4 py-4 bg-white dark:bg-[#1a1a1a]">
                     <Button
-                      className="w-full bg-[#1a1a1a] dark:bg-[#cc2532] hover:bg-[#cc2532] dark:hover:bg-[#a81e29] text-white border-0 flex items-center justify-center gap-2 py-6 rounded-xl font-bold transition-all shadow-lg"
+                      className="w-full bg-[#1a1a1a] dark:bg-[#FE5502] hover:bg-[#FE5502] dark:hover:bg-[#C83C00] text-white border-0 flex items-center justify-center gap-2 py-6 rounded-xl font-bold transition-all shadow-lg"
                       onClick={() => setShowMenuSheet(false)}
                     >
                       <X className="h-5 w-5" />
@@ -3035,7 +3035,7 @@ function RestaurantDetailsContent() {
                           }))
                         }
                         className={`flex items-center gap-2 px-4 py-2.5 rounded-lg border-2 transition-all w-full ${filters.highlyReordered
-                          ? "border-[#cc2532] dark:border-[#cc2532] bg-red-50 dark:bg-[#cc2532]/20 text-[#cc2532] dark:text-[#cc2532]"
+                          ? "border-[#FE5502] dark:border-[#FE5502] bg-red-50 dark:bg-[#FE5502]/20 text-[#FE5502] dark:text-[#FE5502]"
                           : "border-gray-200 dark:border-gray-700 bg-white dark:bg-[#2a2a2a] text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600"
                           }`}
                       >
@@ -3081,7 +3081,7 @@ function RestaurantDetailsContent() {
                       Clear All
                     </button>
                     <Button
-                      className="bg-[#cc2532] hover:bg-[#a81e29] text-white px-6 py-2.5 rounded-lg font-bold"
+                      className="bg-[#FE5502] hover:bg-[#C83C00] text-white px-6 py-2.5 rounded-lg font-bold"
                       onClick={() => setShowFilterSheet(false)}
                     >
                       Apply {activeFilterCount > 0 && `(${activeFilterCount})`}
@@ -3140,9 +3140,9 @@ function RestaurantDetailsContent() {
                             className="p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#2a2a2a]"
                           >
                             {outlet?.isNearest && (
-                              <div className="flex items-center gap-1.5 mb-2 px-2 py-1 bg-red-50 dark:bg-[#cc2532]/20 rounded-md">
-                                <Zap className="h-3.5 w-3.5 text-[#cc2532] dark:text-[#cc2532] fill-[#cc2532] dark:fill-[#cc2532]" />
-                                <span className="text-xs font-semibold text-[#cc2532] dark:text-[#cc2532]">
+                              <div className="flex items-center gap-1.5 mb-2 px-2 py-1 bg-red-50 dark:bg-[#FE5502]/20 rounded-md">
+                                <Zap className="h-3.5 w-3.5 text-[#FE5502] dark:text-[#FE5502] fill-[#FE5502] dark:fill-[#FE5502]" />
+                                <span className="text-xs font-semibold text-[#FE5502] dark:text-[#FE5502]">
                                   Nearest available outlet
                                 </span>
                               </div>
@@ -3295,7 +3295,7 @@ function RestaurantDetailsContent() {
                   {/* Done Button */}
                   <div className="border-t border-gray-200 dark:border-gray-800 px-4 py-4">
                     <Button
-                      className="w-full bg-[#cc2532] hover:bg-[#a81e29] text-white py-3 rounded-lg font-bold"
+                      className="w-full bg-[#FE5502] hover:bg-[#C83C00] text-white py-3 rounded-lg font-bold"
                       onClick={() => {
                         setShowManageCollections(false)
                       }}
@@ -3801,7 +3801,7 @@ function RestaurantDetailsContent() {
                   {/* Close Button */}
                   <div className="border-t border-gray-200 dark:border-gray-800 px-4 py-4 bg-white dark:bg-[#1a1a1a]">
                     <Button
-                      className="w-full bg-[#1a1a1a] dark:bg-[#cc2532] hover:bg-[#cc2532] dark:hover:bg-[#a81e29] text-white border-0 flex items-center justify-center gap-2 py-6 rounded-xl font-bold transition-all shadow-lg"
+                      className="w-full bg-[#1a1a1a] dark:bg-[#FE5502] hover:bg-[#FE5502] dark:hover:bg-[#C83C00] text-white border-0 flex items-center justify-center gap-2 py-6 rounded-xl font-bold transition-all shadow-lg"
                       onClick={() => setShowOffersSheet(false)}
                     >
                       <X className="h-5 w-5" />

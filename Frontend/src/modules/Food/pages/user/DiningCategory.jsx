@@ -140,7 +140,7 @@ export default function DiningCategory() {
             className="h-auto rounded-full border border-[#e7d8c5] bg-white px-4 py-2 text-left hover:bg-[#fff3e6] dark:border-gray-700 dark:bg-[#1a1a1a] dark:hover:bg-gray-800"
           >
             <div className="flex items-center gap-2">
-              <FaLocationDot className="h-4 w-4 text-[#cc2532]" />
+              <FaLocationDot className="h-4 w-4 text-[#FE5502]" />
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#aa8b68] dark:text-gray-400">Dining In</p>
                 <p className="text-sm font-bold text-[#2f2215] dark:text-white">{cityName}</p>
@@ -161,7 +161,7 @@ export default function DiningCategory() {
               </p>
             </div>
             <div className="inline-flex items-center gap-2 self-start rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#6b5641] shadow-sm dark:border dark:border-gray-700 dark:bg-[#1a1a1a] dark:text-gray-300">
-              <MapPin className="h-4 w-4 text-[#cc2532]" />
+              <MapPin className="h-4 w-4 text-[#FE5502]" />
               <span>{restaurants.length} places found</span>
             </div>
           </div>
@@ -250,7 +250,7 @@ export default function DiningCategory() {
                       </div>
 
                       <div className="flex items-center gap-2 text-sm text-[#5f4c39] dark:text-gray-300">
-                        <UtensilsCrossed className="h-4 w-4 text-[#cc2532]" />
+                        <UtensilsCrossed className="h-4 w-4 text-[#FE5502]" />
                         <span className="line-clamp-1">{restaurant.cuisine}</span>
                       </div>
 
@@ -266,7 +266,7 @@ export default function DiningCategory() {
 
                       <div className="flex items-center justify-between border-t border-dashed border-[#ead7c0] pt-4 dark:border-gray-700">
                         <div className="text-sm font-semibold text-[#4c3b2c] dark:text-gray-200">{restaurant.price}</div>
-                        <div className="inline-flex items-center gap-2 text-sm font-bold text-[#cc2532]">
+                        <div className="inline-flex items-center gap-2 text-sm font-bold text-[#FE5502]">
                           <BadgePercent className="h-4 w-4" />
                           <span>Menu & booking</span>
                         </div>

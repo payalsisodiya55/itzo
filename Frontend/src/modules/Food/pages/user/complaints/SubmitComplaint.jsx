@@ -166,7 +166,7 @@ export default function SubmitComplaint() {
         <button
           type="button"
           onClick={() => navigate("/user/profile/support")}
-          className="ml-auto text-sm font-semibold text-[#cc2532]"
+          className="ml-auto text-sm font-semibold text-[#FE5502]"
         >
           View History
         </button>
@@ -208,7 +208,7 @@ export default function SubmitComplaint() {
           <select
             value={formData.complaintType}
             onChange={(e) => setFormData({ ...formData, complaintType: e.target.value })}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#cc2532] focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FE5502] focus:border-transparent"
             required
           >
             <option value="">Select complaint type</option>
@@ -230,7 +230,7 @@ export default function SubmitComplaint() {
             value={formData.subject}
             onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
             placeholder="Brief description of your complaint"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#cc2532] focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FE5502] focus:border-transparent"
             required
             maxLength={200}
           />
@@ -246,7 +246,7 @@ export default function SubmitComplaint() {
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             placeholder="Please provide detailed information about your complaint..."
             rows={6}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#cc2532] focus:border-transparent resize-none"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FE5502] focus:border-transparent resize-none"
             required
             maxLength={1000}
           />
@@ -271,7 +271,7 @@ export default function SubmitComplaint() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full bg-[#cc2532] text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 hover:bg-[#a81e29] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-[#FE5502] text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 hover:bg-[#C83C00] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {submitting ? (
               <>

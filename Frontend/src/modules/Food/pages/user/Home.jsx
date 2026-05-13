@@ -172,7 +172,7 @@ export default function Home() {
   const [availabilityTick, setAvailabilityTick] = useState(Date.now());
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
   const [activeTab, setActiveTab] = useState("food");
-  const [quickThemeColor, setQuickThemeColor] = useState("#cc2532");
+  const [quickThemeColor, setQuickThemeColor] = useState("#FE5502");
   const [showToast, setShowToast] = useState(false);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
 
@@ -359,8 +359,8 @@ export default function Home() {
 
 
             <Suspense fallback={<HeroBannerSkeleton className="h-full w-full px-4 mt-3" />}>
-              <section className="content-auto px-4 pt-3 sm:pt-4 lg:pt-5">
-                <div className="overflow-hidden rounded-[22px] border border-slate-100 bg-white shadow-[0_18px_40px_-24px_rgba(15,23,42,0.3)] h-48 sm:h-56 md:h-64 lg:h-72">
+              <section className="content-auto px-4 py-4 sm:py-6 lg:py-8">
+                <div className="overflow-hidden rounded-2xl h-48 sm:h-64 md:h-72 lg:h-[350px] shadow-lg border border-gray-100">
                   <BannerSection
                     showBannerSkeleton={banners.loading}
                     heroBannerImages={banners.images}
@@ -370,6 +370,7 @@ export default function Home() {
                     heroShellRef={heroShellRef}
                     navigate={navigate}
                     backendOrigin={BACKEND_ORIGIN}
+                    hideOverlay={true}
                   />
                 </div>
               </section>

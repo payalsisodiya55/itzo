@@ -168,7 +168,7 @@ export default function Coffee() {
                     <div className="mb-2">
                       <div className={`inline-flex items-center gap-1 px-2 py-1 rounded ${isHighRating
                           ? 'bg-green-600 text-white'
-                          : 'bg-[#cc2532] text-white'
+                          : 'bg-[#FE5502] text-white'
                         }`}>
                         <span className="text-sm font-semibold">{store.rating}</span>
                         <Star className={`h-3 w-3 ${isHighRating ? 'fill-white text-white' : 'fill-white text-white'}`} />
@@ -186,7 +186,7 @@ export default function Coffee() {
                         {store.price}
                       </p>
                       {store.offer && (
-                        <span className="text-sm font-medium text-[#cc2532]">
+                        <span className="text-sm font-medium text-[#FE5502]">
                           {store.offer}
                         </span>
                       )}

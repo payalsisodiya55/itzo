@@ -158,7 +158,7 @@ export default function DiningRestaurantDetails() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#f6f7fb]">
-        <Loader2 className="h-8 w-8 animate-spin text-[#cc2532]" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#FE5502]" />
       </div>
     )
   }

@@ -48,7 +48,7 @@ import { RESTAURANT_PIN_SVG, CUSTOMER_PIN_SVG, RIDER_BIKE_SVG } from "@food/cons
 // Fallback definitions in case imports fail at runtime or are shadowed
 const DEFAULT_CUSTOMER_PIN = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="#10B981"><path d="M12 2C8.13 2 5 5.13 5 9c0 4.17 4.42 9.92 6.24 12.11.4.48 1.08.48 1.52 0C14.58 18.92 19 13.17 19 9c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"/><circle cx="12" cy="9" r="3" fill="#FFFFFF"/></svg>`;
 const SAFE_CUSTOMER_PIN = typeof CUSTOMER_PIN_SVG !== 'undefined' ? CUSTOMER_PIN_SVG : DEFAULT_CUSTOMER_PIN;
-const DEFAULT_RESTAURANT_PIN = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="#cc2532"><path d="M12 2C8.13 2 5 5.13 5 9c0 4.17 4.42 9.92 6.24 12.11.4.48 1.08.48 1.52 0C14.58 18.92 19 13.17 19 9c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"/><circle cx="12" cy="9" r="3" fill="#FFFFFF"/></svg>`;
+const DEFAULT_RESTAURANT_PIN = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="#FE5502"><path d="M12 2C8.13 2 5 5.13 5 9c0 4.17 4.42 9.92 6.24 12.11.4.48 1.08.48 1.52 0C14.58 18.92 19 13.17 19 9c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"/><circle cx="12" cy="9" r="3" fill="#FFFFFF"/></svg>`;
 const SAFE_RESTAURANT_PIN = typeof RESTAURANT_PIN_SVG !== 'undefined' ? RESTAURANT_PIN_SVG : DEFAULT_RESTAURANT_PIN;
 
 const debugLog = (...args) => console.log('[OrderTracking]', ...args)
@@ -2140,7 +2140,7 @@ export default function OrderTracking() {
                 transition={{ delay: 1.5 }}
                 className="mt-8"
               >
-                <div className="w-8 h-8 border-2 border-[#cc2532] border-t-transparent rounded-full animate-spin mx-auto" />
+                <div className="w-8 h-8 border-2 border-[#FE5502] border-t-transparent rounded-full animate-spin mx-auto" />
                 <p className="text-sm text-gray-500 mt-3">Loading order details...</p>
               </motion.div>
             </motion.div>
@@ -2253,7 +2253,7 @@ export default function OrderTracking() {
               <div className="mt-5 rounded-2xl border border-white/70 bg-white/90 p-4">
                 <div className="flex items-start gap-3">
                   <div className="flex flex-col items-center pt-1">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 text-[#cc2532]">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 text-[#FE5502]">
                       <MapPin className="h-5 w-5" />
                     </div>
                     <div className="my-2 h-10 w-px border-l-2 border-dashed border-emerald-200" />
@@ -2591,7 +2591,7 @@ export default function OrderTracking() {
                   onClick={handleCallRestaurant}
                   whileTap={{ scale: 0.9 }}
                 >
-                  <Phone className="w-5 h-5 text-[#cc2532]" />
+                  <Phone className="w-5 h-5 text-[#FE5502]" />
                 </motion.button>
               )}
             </div>
@@ -2628,7 +2628,7 @@ export default function OrderTracking() {
                           onClick={(e) => handleCallPickupSource(source.phone, e)}
                           whileTap={{ scale: 0.9 }}
                         >
-                          <Phone className={`w-5 h-5 ${isQuick ? 'text-sky-600' : 'text-[#cc2532]'}`} />
+                          <Phone className={`w-5 h-5 ${isQuick ? 'text-sky-600' : 'text-[#FE5502]'}`} />
                         </motion.button>
                       ) : null}
                     </div>

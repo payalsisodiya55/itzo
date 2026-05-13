@@ -12,7 +12,7 @@ const SERVICES = [
     image: "/super-app/food.png",
     path: "/food/user",
     icon: UtensilsCrossed,
-    color: "from-[#FF4D4D] to-[#CB202D]",
+    color: "from-primary-orange to-primary-hover",
     badge: "Fast",
     badgeIcon: "⚡"
   },
@@ -174,7 +174,7 @@ export default function SuperAppPortal() {
           <motion.div 
             animate={isNativeLikeShell ? undefined : { rotate: [0, 10, -10, 0] }}
             transition={isNativeLikeShell ? undefined : { duration: 4, repeat: Infinity }}
-            className="w-5 h-5 bg-gradient-to-br from-[#CB202D] to-red-700 rounded-md flex items-center justify-center shadow-md flex-shrink-0 overflow-hidden"
+            className="w-8 h-8 bg-gradient-to-br from-primary-orange to-primary-hover rounded-md flex items-center justify-center shadow-md flex-shrink-0 overflow-hidden"
           >
              {logoUrl ? (
                <img src={logoUrl} alt={companyName} className="w-full h-full object-contain" />
@@ -194,7 +194,7 @@ export default function SuperAppPortal() {
           className="text-4xl sm:text-5xl md:text-7xl font-black text-[#1A202C] tracking-tight leading-[0.95]"
         >
           Welcome to <br />
-          <span className={`text-transparent bg-clip-text bg-gradient-to-r from-[#CB202D] via-rose-500 to-[#CB202D] bg-[length:200%_auto] block mt-1 sm:mt-2 ${isNativeLikeShell ? "" : "animate-gradient"}`}>{companyName}</span>
+          <span className={`text-transparent bg-clip-text bg-gradient-to-r from-primary-orange via-orange-400 to-primary-orange bg-[length:200%_auto] block mt-1 sm:mt-2 ${isNativeLikeShell ? "" : "animate-gradient"}`}>{companyName}</span>
         </motion.h1>
 
         <motion.p 

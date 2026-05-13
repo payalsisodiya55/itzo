@@ -71,7 +71,7 @@ const quickTheme = (baseColor) => {
 };
 
 const foodTheme = (vegMode) => {
-  const base = vegMode ? "#2f7a46" : "#cc2532";
+  const base = vegMode ? "#2f7a46" : "#FE5502";
   return {
     topBg: `linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%), ${base}`,
     accent: base,
@@ -531,8 +531,8 @@ export default function HomeHeader({
               className="flex-1 rounded-[12px] h-[46px] flex items-center px-3 cursor-pointer relative overflow-hidden bg-white shadow-[0_6px_18px_rgba(15,23,42,0.10)] border-0 text-left"
               onClick={handleSearchFocus}
             >
-              <div className="absolute left-0 top-0 bottom-0 w-[2.5px] rounded-l-[12px] bg-gradient-to-b from-[#cc2532] to-[#a81e29]" />
-              <Search className="h-[16px] w-[16px] ml-1.5 mr-2 flex-shrink-0 text-[#cc2532]" strokeWidth={2.3} />
+              <div className="absolute left-0 top-0 bottom-0 w-[2.5px] rounded-l-[12px] bg-gradient-to-b from-[#FE5502] to-[#C83C00]" />
+              <Search className="h-[16px] w-[16px] ml-1.5 mr-2 flex-shrink-0 text-[#FE5502]" strokeWidth={2.3} />
               <div className="flex-1 overflow-hidden relative h-[20px]">
                 <AnimatePresence mode="wait">
                   <motion.span
@@ -557,7 +557,7 @@ export default function HomeHeader({
                     isListening ? "bg-red-500 scale-110 animate-pulse" : "bg-red-50 hover:bg-red-100"
                   )}
                 >
-                  <Mic className={cn("h-[14px] w-[14px]", isListening ? "text-white" : "text-[#cc2532]")} strokeWidth={2.3} />
+                  <Mic className={cn("h-[14px] w-[14px]", isListening ? "text-white" : "text-[#FE5502]")} strokeWidth={2.3} />
                 </button>
               </div>
             </div>
