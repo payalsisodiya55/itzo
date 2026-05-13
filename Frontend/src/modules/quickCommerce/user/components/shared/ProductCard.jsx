@@ -249,7 +249,7 @@ const ProductCard = React.memo(
               </div>
 
               {quantity > 0 ? (
-                <div className="flex items-center bg-[#cc2532] text-white rounded-lg md:rounded-xl shadow-md h-6 md:h-7.5 overflow-hidden ring-1 ring-[#cc2532]/20">
+                <div className="flex items-center bg-[#FE5502] text-white rounded-lg md:rounded-xl shadow-md h-6 md:h-7.5 overflow-hidden ring-1 ring-[#FE5502]/20">
                   <button
                     onClick={handleDecrement}
                     className="w-6 md:w-7.5 h-full hover:bg-black/10 transition-colors flex items-center justify-center border-r border-white/10">
@@ -268,8 +268,8 @@ const ProductCard = React.memo(
                 <button
                   onClick={handleAddToCart}
                   className={cn(
-                    "w-6 h-6 md:w-7.5 md:h-7.5 flex items-center justify-center bg-white border-[1px] border-[#cc2532] text-[#cc2532] rounded-lg md:rounded-xl shadow-sm transition-all duration-300 active:scale-95 font-bold",
-                    "hover:bg-[#cc2532] hover:text-white"
+                    "w-6 h-6 md:w-7.5 md:h-7.5 flex items-center justify-center bg-white border-[1px] border-[#FE5502] text-[#FE5502] rounded-lg md:rounded-xl shadow-sm transition-all duration-300 active:scale-95 font-bold",
+                    "hover:bg-[#FE5502] hover:text-white"
                   )}>
                   <Plus size={14} strokeWidth={3} />
                 </button>

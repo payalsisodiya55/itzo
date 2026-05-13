@@ -552,7 +552,7 @@ const MainLocationHeader = ({
                   className="text-slate-900 hover:text-slate-700 transition-all relative group">
                   <ShoppingCartOutlinedIcon sx={{ fontSize: 24 }} />
                   {cartCount > 0 && (
-                    <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 bg-[#cc2532] text-white text-[9px] font-black rounded-full flex items-center justify-center border-2 border-red-800 shadow-sm transition-transform group-hover:-translate-y-0.5">
+                    <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 bg-[#FE5502] text-white text-[9px] font-black rounded-full flex items-center justify-center border-2 border-red-800 shadow-sm transition-transform group-hover:-translate-y-0.5">
                       {cartCount > 99 ? "99+" : cartCount}
                     </span>
                   )}
@@ -623,7 +623,7 @@ const MainLocationHeader = ({
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.98 }}
                   className="flex-1 rounded-[12px] md:rounded-full px-4 h-[44px] shadow-md flex items-center bg-white border border-gray-100 cursor-pointer">
-                  <SearchIcon sx={{ color: "#cc2532", fontSize: 22 }} />
+                  <SearchIcon sx={{ color: "#FE5502", fontSize: 22 }} />
                   <input
                     type="text"
                     placeholder={searchPlaceholder || "Search Products..."}
@@ -631,7 +631,7 @@ const MainLocationHeader = ({
                     className="flex-1 bg-transparent border-none outline-none pl-3 text-slate-800 font-bold placeholder:text-slate-300 text-[15px] cursor-pointer"
                   />
                   <div className="flex items-center gap-2 border-l border-red-100 pl-3">
-                    <MicIcon sx={{ color: "#cc2532", fontSize: 20 }} />
+                    <MicIcon sx={{ color: "#FE5502", fontSize: 20 }} />
                   </div>
                 </motion.div>
               </div>

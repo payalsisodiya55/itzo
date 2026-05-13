@@ -463,7 +463,7 @@ export default function Profile() {
               <motion.div
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{ duration: 0.3, type: "spring", stiffness: 300 }}>
-                <Avatar className="h-16 w-16 bg-red-100 border-0">
+                <Avatar className="h-16 w-16 bg-primary-orange/10 border-0">
                   {userProfile?.profileImage && (
                     <AvatarImage
                       src={
@@ -474,7 +474,7 @@ export default function Profile() {
                       alt={displayName}
                     />
                   )}
-                  <AvatarFallback className="bg-red-100 text-red-600 text-2xl font-semibold">
+                  <AvatarFallback className="bg-primary-orange/10 text-primary-orange text-2xl font-semibold">
                     {avatarInitial}
                   </AvatarFallback>
                 </Avatar>
@@ -530,8 +530,8 @@ export default function Profile() {
                   <div className="flex items-center gap-2">
                     <motion.span
                       className={`text-xs font-medium px-2 py-1 rounded ${isComplete
-                          ? "bg-green-100 text-green-700 border border-green-300"
-                          : "bg-red-50 text-red-700"
+                          ? "bg-primary-orange/10 text-primary-orange border border-primary-orange/30"
+                          : "bg-primary-orange/5 text-primary-orange"
                         }`}
                       whileHover={{ scale: 1.1 }}
                       transition={{ duration: 0.2 }}>
@@ -566,7 +566,7 @@ export default function Profile() {
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-base font-semibold text-green-600 dark:text-green-400">
+                    <span className="text-base font-semibold text-primary-orange">
                       {"\u20B9"}{Number(walletBalance || 0).toFixed(0)}
                     </span>
                     <motion.div
@@ -653,7 +653,7 @@ export default function Profile() {
                     </span>
                   </div>
                   {referralReward > 0 && (
-                    <span className="text-xs font-semibold px-2 py-1 rounded bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-300">
+                    <span className="text-xs font-semibold px-2 py-1 rounded bg-primary-orange/10 text-primary-orange">
                       Earn {"\u20B9"}{referralReward}
                     </span>
                   )}
@@ -670,7 +670,7 @@ export default function Profile() {
                       e.stopPropagation();
                       handleShareReferral();
                     }}
-                    className="inline-flex items-center gap-1 text-xs text-[#cc2532] font-medium ml-2 px-2 py-1 rounded-md"
+                    className="inline-flex items-center gap-1 text-xs text-[#FE5502] font-medium ml-2 px-2 py-1 rounded-md"
                     disabled={!referralLink}>
                     <Share2 className="h-3.5 w-3.5" />
                     Refer
@@ -792,7 +792,7 @@ export default function Profile() {
         {/* Food Section */}
         <div className="mb-3">
           <div className="flex items-center gap-2 mb-2 px-1">
-            <div className="w-1 h-4 bg-[#cc2532] rounded"></div>
+            <div className="w-1 h-4 bg-[#FE5502] rounded"></div>
             <h3 className="text-base font-semibold text-gray-900 dark:text-white">
               Food
             </h3>
@@ -857,7 +857,7 @@ export default function Profile() {
         {/* Dining Section */}
         <div className="mb-3">
           <div className="flex items-center gap-2 mb-2 px-1">
-            <div className="w-1 h-4 bg-[#cc2532] rounded"></div>
+            <div className="w-1 h-4 bg-[#FE5502] rounded"></div>
             <h3 className="text-base font-semibold text-gray-900 dark:text-white">
               Dining
             </h3>
@@ -983,7 +983,7 @@ export default function Profile() {
         {/* More Section */}
         <div className="mb-8 pb-8">
           <div className="flex items-center gap-2 mb-2 px-1">
-            <div className="w-1 h-4 bg-[#cc2532] rounded"></div>
+            <div className="w-1 h-4 bg-[#FE5502] rounded"></div>
             <h3 className="text-base font-semibold text-gray-900 dark:text-white">
               More
             </h3>

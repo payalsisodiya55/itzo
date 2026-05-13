@@ -96,7 +96,7 @@ const CATEGORY_METADATA = {
   Grocery: {
     icon: LocalGroceryStoreIcon,
     theme: {
-      gradient: "linear-gradient(to bottom, #cc2532, #ff5252)",
+      gradient: "linear-gradient(to bottom, #FE5502, #ff5252)",
       shadow: "shadow-red-500/20",
       accent: "text-red-900",
     },
@@ -219,7 +219,7 @@ const categories = [
     name: "Grocery",
     icon: LocalGroceryStoreIcon,
     theme: {
-      gradient: "linear-gradient(to bottom, #cc2532, #ff5252)",
+      gradient: "linear-gradient(to bottom, #FE5502, #ff5252)",
       shadow: "shadow-red-500/20",
       accent: "text-red-900",
     },

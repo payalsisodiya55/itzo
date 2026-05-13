@@ -23,11 +23,11 @@ const CategoryRail = memo(({
           className="flex-shrink-0 flex flex-col items-center gap-2 cursor-pointer group"
           onClick={() => navigate("/user/under-250")}
         >
-          <div className="w-[72px] h-[72px] sm:w-[84px] sm:h-[84px] bg-[#cc2532] rounded-2xl flex flex-col items-center justify-center p-1 shadow-sm transition-transform group-hover:scale-105 group-active:scale-95">
+          <div className="w-[72px] h-[72px] sm:w-[84px] sm:h-[84px] bg-[#FE5502] rounded-2xl flex flex-col items-center justify-center p-1 shadow-sm transition-transform group-hover:scale-105 group-active:scale-95">
             <span className="text-[10px] font-bold text-white/90">UNDER</span>
             <span className="text-sm sm:text-base font-black text-white">₹200</span>
             <div className="mt-1 px-2 py-0.5 bg-white rounded-full">
-              <span className="text-[8px] font-extrabold text-[#cc2532]">Explore</span>
+              <span className="text-[8px] font-extrabold text-[#FE5502]">Explore</span>
             </div>
           </div>
           <span className="text-xs font-semibold text-gray-600">Offers</span>

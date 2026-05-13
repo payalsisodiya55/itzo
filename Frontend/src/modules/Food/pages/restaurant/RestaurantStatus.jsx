@@ -409,7 +409,7 @@ export default function RestaurantStatus() {
             <div className="flex-1">
               <p className="text-base font-bold text-gray-900 mb-1.5">Delivery status</p>
               <div className="flex items-center gap-2">
-                <div className={`w-2 h-2 rounded-full ${deliveryStatus ? 'bg-[#49AB14]' : 'bg-gray-600'}`}></div>
+                <div className={`w-2 h-2 rounded-full ${deliveryStatus ? 'bg-[#FE5502]' : 'bg-gray-600'}`}></div>
                 <p className="text-sm text-gray-500">
                   {deliveryStatus ? 'Receiving orders' : 'Not receiving orders'}
                 </p>
@@ -418,7 +418,7 @@ export default function RestaurantStatus() {
             <Switch
               checked={deliveryStatus}
               onCheckedChange={handleDeliveryStatusChange}
-              className="ml-4 data-[state=unchecked]:bg-gray-300 data-[state=checked]:bg-[#49AB14]"
+              className="ml-4 data-[state=unchecked]:bg-gray-300 data-[state=checked]:bg-[#FE5502]"
             />
           </div>
 
