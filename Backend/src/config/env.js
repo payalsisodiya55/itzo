@@ -59,7 +59,7 @@ export const config = {
 
     // Firebase / FCM
     firebaseProjectId: process.env.FIREBASE_PROJECT_ID || process.env.VITE_FIREBASE_PROJECT_ID,
-    firebaseDatabaseUrl: process.env.VITE_FIREBASE_DATABASE_URL,
+    firebaseDatabaseUrl: process.env.FIREBASE_DATABASE_URL || process.env.VITE_FIREBASE_DATABASE_URL,
     firebaseServiceAccountPath: process.env.FIREBASE_SERVICE_ACCOUNT_PATH,
     firebaseServiceAccount: process.env.FIREBASE_SERVICE_ACCOUNT,
     firebaseWebApiKey: process.env.VITE_FIREBASE_API_KEY || process.env.FIREBASE_API_KEY,
