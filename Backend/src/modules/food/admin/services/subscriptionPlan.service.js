@@ -148,10 +148,28 @@ export async function processSubscriptionExpiry() {
         logger.info(`Subscription Lifecycle: Marked ${pendingCleanup.modifiedCount} stale PENDING as FAILED`);
     }
 
-    // 1. Move ACTIVE -> GRACE (if expiry reached)
+    // 1. Move ACTIVE -> EXPIRED immediately if cancelAtCycleEnd is true (no grace period)
+    const cancelledToExpired = await UserSubscription.updateMany(
+        {
+            status: 'active',
+            cancelAtCycleEnd: true,
+            expiryDate: { $lt: now }
+        },
+        {
+            $set: {
+                status: 'expired'
+            }
+        }
+    );
+    if (cancelledToExpired.modifiedCount > 0) {
+        logger.info(`Subscription Lifecycle: Marked ${cancelledToExpired.modifiedCount} cancelled-at-cycle-end subscriptions as EXPIRED`);
+    }
+
+    // 2. Move standard ACTIVE -> GRACE (if expiry reached and cancelAtCycleEnd is not true)
     const toGrace = await UserSubscription.updateMany(
         {
             status: 'active',
+            cancelAtCycleEnd: { $ne: true },
             expiryDate: { $lt: now }
         },
         {
@@ -165,7 +183,7 @@ export async function processSubscriptionExpiry() {
         logger.info(`Subscription Lifecycle: Moved ${toGrace.modifiedCount} to GRACE state`);
     }
 
-    // 2. Move GRACE -> EXPIRED (if grace window closed)
+    // 3. Move GRACE -> EXPIRED (if grace window closed)
     const toExpired = await UserSubscription.updateMany(
         {
             status: 'grace',
@@ -179,7 +197,10 @@ export async function processSubscriptionExpiry() {
         logger.info(`Subscription Lifecycle: Marked ${toExpired.modifiedCount} as EXPIRED`);
     }
 
-    return { toGrace: toGrace.modifiedCount, toExpired: toExpired.modifiedCount };
+    return { 
+        toGrace: toGrace.modifiedCount, 
+        toExpired: toExpired.modifiedCount + cancelledToExpired.modifiedCount 
+    };
 }
 
 export async function getSubscriptionOverview() {

@@ -143,3 +143,13 @@ export async function getWalletLedgerController(req, res, next) {
         next(err);
     }
 }
+
+export async function cancelAutoRenewController(req, res, next) {
+    try {
+        const { role: userType, userId } = req.user;
+        const result = await userSubscriptionService.cancelAutoRenew(userId, userType);
+        return sendResponse(res, 200, 'Subscription auto-renewal cancelled successfully', result);
+    } catch (err) {
+        next(err);
+    }
+}

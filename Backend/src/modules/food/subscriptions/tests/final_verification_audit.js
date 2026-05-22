@@ -1,4 +1,11 @@
 
+import 'dotenv/config';
+import dns from 'dns';
+try {
+    dns.setServers(['8.8.8.8', '8.8.4.4']);
+} catch (e) {
+    console.warn("Could not set DNS servers:", e.message);
+}
 import mongoose from 'mongoose';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone.js';

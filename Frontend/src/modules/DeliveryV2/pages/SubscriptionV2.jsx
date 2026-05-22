@@ -22,6 +22,8 @@ export default function SubscriptionV2() {
   const [showTopupModal, setShowTopupModal] = useState(false)
   const [topupAmount, setTopupAmount] = useState("")
   const [topupLoading, setTopupLoading] = useState(false)
+  const [showCancelModal, setShowCancelModal] = useState(false)
+  const [cancellingSub, setCancellingSub] = useState(false)
 
   useEffect(() => {
     isMountedRef.current = true
@@ -206,6 +208,25 @@ export default function SubscriptionV2() {
     }
   }
 
+  const handleCancelAutoRenew = async () => {
+    try {
+      setCancellingSub(true)
+      const res = await subscriptionAPI.cancelAutoRenew("DELIVERY_PARTNER")
+      if (res.data?.data) {
+        setActiveSub(res.data.data)
+        toast.success("Auto-renewal cancelled successfully")
+      } else {
+        toast.success("Auto-renewal cancelled")
+        await fetchData()
+      }
+      setShowCancelModal(false)
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Failed to cancel auto-renewal")
+    } finally {
+      setCancellingSub(false)
+    }
+  }
+
   const getPlanIcon = (unit) => {
     switch (unit) {
       case 'DAY': return <Zap className="w-5 h-5 text-amber-500" />;
@@ -271,6 +292,26 @@ export default function SubscriptionV2() {
                         <p className="text-sm font-bold truncate">#{activeSub._id.toString().slice(-6).toUpperCase()}</p>
                       </div>
                     </div>
+
+                    {activeSub.razorpaySubscriptionId && (
+                      <div className="mt-4 pt-4 border-t border-white/5">
+                        {activeSub.cancelAtCycleEnd ? (
+                          <div className="flex items-center gap-2 text-amber-400 text-xs font-bold bg-white/5 p-3 rounded-2xl border border-white/10">
+                            <Info className="w-4 h-4 shrink-0 text-amber-400" />
+                            <span>Auto renewal cancelled. Plan active till {dayjs(activeSub.expiryDate).format("DD MMM, YYYY")}</span>
+                          </div>
+                        ) : (
+                          activeSub.status === 'active' && activeSub.autoRenew && (
+                            <button
+                              onClick={() => setShowCancelModal(true)}
+                              className="w-full py-2.5 px-4 bg-red-600/20 hover:bg-red-600/30 border border-red-500/30 text-red-200 rounded-2xl text-xs font-bold transition-all active:scale-95 flex items-center justify-center gap-2"
+                            >
+                              Cancel Auto Renewal
+                            </button>
+                          )
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -363,50 +404,63 @@ export default function SubscriptionV2() {
             </div>
           ) : (
             <div className="grid gap-4">
-              {sortedPlans.map((plan) => (
-                <div 
-                  key={plan._id}
-                  className={`relative bg-white rounded-[28px] p-5 border-2 transition-all duration-300 ${activeSub?.planId?._id === plan._id ? 'border-[#FE5502] shadow-xl shadow-orange-500/5' : 'border-slate-50 hover:border-slate-200 shadow-sm'}`}
-                >
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-4">
-                      <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-colors ${activeSub?.planId?._id === plan._id ? 'bg-[#FE5502] text-white shadow-lg shadow-orange-500/20' : 'bg-slate-50 text-slate-400'}`}>
-                        {getPlanIcon(plan.durationUnit)}
-                      </div>
-                      <div>
-                        <h4 className="font-black text-slate-900 tracking-tight">{plan.name}</h4>
-                        <div className="flex items-center gap-1.5 mt-0.5">
-                          <span className="text-[#FE5502] font-black text-xl">₹{plan.price}</span>
-                          <span className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">/ {plan.durationValue} {plan.durationUnit.toLowerCase()}</span>
+              {sortedPlans.map((plan) => {
+                const hasLockedSubscription = !!(activeSub && ["active", "grace"].includes(activeSub.status));
+                const isCurrentPlan = !!(activeSub && ["active", "grace"].includes(activeSub.status) && activeSub.planId?._id === plan._id);
+                const isLocked = hasLockedSubscription && !isCurrentPlan;
+                return (
+                  <div 
+                    key={plan._id}
+                    className={`relative bg-white rounded-[28px] p-5 border-2 transition-all duration-300 ${isCurrentPlan ? 'border-[#FE5502] shadow-xl shadow-orange-500/5' : 'border-slate-50 hover:border-slate-200 shadow-sm'}`}
+                  >
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-4">
+                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-colors ${isCurrentPlan ? 'bg-[#FE5502] text-white shadow-lg shadow-orange-500/20' : 'bg-slate-50 text-slate-400'}`}>
+                          {getPlanIcon(plan.durationUnit)}
                         </div>
-                      </div>
-                    </div>
-
-                    {plan.durationUnit === 'DAY' ? (
-                      <div className="bg-slate-50 border border-slate-100 rounded-2xl p-3 max-w-[140px] relative overflow-hidden group/tip">
-                        <div className="flex items-start gap-2 relative z-10">
-                          <Info className="w-3.5 h-3.5 text-slate-400 group-hover/tip:text-[#FE5502] transition-colors shrink-0 mt-0.5" />
-                          <div>
-                            <p className="text-[10px] font-black text-slate-900 uppercase leading-none mb-1">Auto Start</p>
-                            <p className="text-[9px] text-slate-400 font-bold leading-tight">Activates when you go Online.</p>
+                        <div>
+                          <h4 className="font-black text-slate-900 tracking-tight">{plan.name}</h4>
+                          <div className="flex items-center gap-1.5 mt-0.5">
+                            <span className="text-[#FE5502] font-black text-xl">₹{plan.price}</span>
+                            <span className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">/ {plan.durationValue} {plan.durationUnit.toLowerCase()}</span>
                           </div>
                         </div>
-                        <div className="absolute top-0 right-0 p-1 opacity-[0.05] group-hover/tip:opacity-10 transition-opacity">
-                          <Zap className="w-8 h-8 text-[#FE5502]" />
-                        </div>
                       </div>
-                    ) : (
-                      <Button 
-                        onClick={() => handlePurchase(plan)}
-                        disabled={!!purchasing || (activeSub?.status === 'active' && activeSub?.planId?._id === plan._id)}
-                        className={`rounded-2xl px-6 font-black h-12 transition-all shadow-lg ${activeSub?.planId?._id === plan._id ? 'bg-slate-100 text-slate-400 shadow-none' : 'bg-slate-900 text-white hover:bg-black shadow-slate-200'}`}
-                      >
-                        {purchasing === plan._id ? <Loader2 className="w-5 h-5 animate-spin" /> : activeSub?.planId?._id === plan._id ? 'Current' : 'Subscribe'}
-                      </Button>
-                    )}
+
+                      {plan.durationUnit === 'DAY' ? (
+                        <div className="bg-slate-50 border border-slate-100 rounded-2xl p-3 max-w-[140px] relative overflow-hidden group/tip">
+                          <div className="flex items-start gap-2 relative z-10">
+                            <Info className="w-3.5 h-3.5 text-slate-400 group-hover/tip:text-[#FE5502] transition-colors shrink-0 mt-0.5" />
+                            <div>
+                              <p className="text-[10px] font-black text-slate-900 uppercase leading-none mb-1">Auto Start</p>
+                              <p className="text-[9px] text-slate-400 font-bold leading-tight">Activates when you go Online.</p>
+                            </div>
+                          </div>
+                          <div className="absolute top-0 right-0 p-1 opacity-[0.05] group-hover/tip:opacity-10 transition-opacity">
+                            <Zap className="w-8 h-8 text-[#FE5502]" />
+                          </div>
+                        </div>
+                      ) : (
+                        <Button 
+                          onClick={() => handlePurchase(plan)}
+                          disabled={!!purchasing || hasLockedSubscription}
+                          className={`rounded-2xl px-6 font-black h-12 transition-all shadow-lg ${(isCurrentPlan || isLocked) ? 'bg-slate-100 text-slate-400 shadow-none' : 'bg-slate-900 text-white hover:bg-black shadow-slate-200'}`}
+                        >
+                          {purchasing === plan._id ? (
+                            <Loader2 className="w-5 h-5 animate-spin" />
+                          ) : isCurrentPlan ? (
+                            'Current'
+                          ) : isLocked ? (
+                            'Unavailable'
+                          ) : (
+                            'Subscribe'
+                          )}
+                        </Button>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
@@ -578,6 +632,75 @@ export default function SubscriptionV2() {
                       className="w-full py-1 text-slate-400 font-bold text-[10px] uppercase tracking-[0.2em] hover:text-slate-600 transition-colors"
                     >
                       Cancel Recharge
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Premium Cancel Confirmation Modal */}
+      <AnimatePresence>
+        {showCancelModal && (
+          <div className="fixed inset-0 z-[1000] flex items-end sm:items-center justify-center p-0 sm:p-4">
+            <motion.div 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }} 
+              onClick={() => !cancellingSub && setShowCancelModal(false)} 
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" 
+            />
+            <motion.div 
+              initial={{ y: "100%" }} 
+              animate={{ y: 0 }} 
+              exit={{ y: "100%" }} 
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              className="relative w-full max-w-md bg-white rounded-t-[32px] sm:rounded-[32px] shadow-2xl overflow-hidden border border-slate-100"
+            >
+              {/* Subtle top indicator */}
+              <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-red-500 to-red-400 opacity-20" />
+              
+              <div className="px-6 pt-8 pb-10">
+                {/* Pull Handle */}
+                <div className="w-10 h-1 bg-slate-100 rounded-full mx-auto mb-6 sm:hidden" />
+                
+                {/* Compact Header */}
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-12 h-12 bg-red-50 rounded-2xl flex items-center justify-center text-red-600 shrink-0 border border-red-100">
+                    <AlertCircle className="w-6 h-6" />
+                  </div>
+                  <div className="text-left">
+                    <h3 className="text-xl font-black text-slate-900 tracking-tight leading-none mb-1.5">Cancel Auto-Renewal?</h3>
+                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Stop future auto-debits</p>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
+                    <p className="text-slate-600 text-xs leading-relaxed font-bold">
+                      Your current plan remains <span className="text-green-600 font-black">active</span> until its expiry date. You will not lose paid access, but no further payments will be automatically debited.
+                    </p>
+                  </div>
+
+                  {/* Action Section */}
+                  <div className="space-y-4 pt-2">
+                    <Button 
+                      onClick={handleCancelAutoRenew}
+                      disabled={cancellingSub}
+                      className="w-full h-14 bg-red-600 hover:bg-red-700 text-white rounded-2xl text-sm font-black shadow-xl shadow-red-200 active:scale-95 transition-all flex items-center justify-center gap-2.5 disabled:opacity-40"
+                    >
+                      {cancellingSub ? <Loader2 className="w-5 h-5 animate-spin" /> : <ShieldCheck className="w-5 h-5" />}
+                      {cancellingSub ? 'Cancelling...' : 'Confirm Cancellation'}
+                    </Button>
+                    
+                    <button 
+                      onClick={() => setShowCancelModal(false)}
+                      disabled={cancellingSub}
+                      className="w-full py-1 text-slate-400 font-bold text-[10px] uppercase tracking-[0.2em] hover:text-slate-600 transition-colors"
+                    >
+                      Keep Auto-Renewal
                     </button>
                   </div>
                 </div>

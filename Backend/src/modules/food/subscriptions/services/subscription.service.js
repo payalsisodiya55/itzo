@@ -16,7 +16,7 @@ export async function initiatePurchase(userId, userType, { planId }) {
 
     const restaurantId = userType === 'RESTAURANT' ? userId : null;
     const deliveryBoyId = userType === 'DELIVERY_PARTNER' ? userId : null;
-    const ownerFilter = { $or: [{ restaurantId }, { deliveryBoyId }].filter(Boolean) };
+    const ownerFilter = userType === 'RESTAURANT' ? { restaurantId } : { deliveryBoyId };
 
     // 1. Check if already has an active subscription
     const existing = await UserSubscription.findOne({
@@ -226,7 +226,7 @@ export async function verifyPurchase(userId, userType, data) {
     // 2. Perform direct DB update to activate the subscription immediately (local/fallback bypass)
     const restaurantId = userType === 'RESTAURANT' ? userId : null;
     const deliveryBoyId = userType === 'DELIVERY_PARTNER' ? userId : null;
-    const ownerFilter = { $or: [{ restaurantId }, { deliveryBoyId }].filter(Boolean) };
+    const ownerFilter = userType === 'RESTAURANT' ? { restaurantId } : { deliveryBoyId };
 
     let query = { ...ownerFilter };
     if (razorpayOrderId) {
@@ -287,11 +287,49 @@ export async function verifyPurchase(userId, userType, data) {
 }
 
 export async function getActiveSubscription(userId, userType) {
-    const restaurantId = userType === 'RESTAURANT' ? userId : null;
-    const deliveryBoyId = userType === 'DELIVERY_PARTNER' ? userId : null;
+    const query = { status: { $in: ['active', 'grace'] } };
+    if (userType === 'RESTAURANT') {
+        query.restaurantId = userId;
+    } else {
+        query.deliveryBoyId = userId;
+    }
 
-    return UserSubscription.findOne({
-        $or: [{ restaurantId }, { deliveryBoyId }].filter(Boolean),
-        status: { $in: ['active', 'grace'] }
-    }).populate('planId').lean();
+    return UserSubscription.findOne(query).populate('planId').lean();
+}
+
+export async function cancelAutoRenew(userId, userType) {
+    const query = { status: 'active' };
+    if (userType === 'RESTAURANT') {
+        query.restaurantId = userId;
+    } else {
+        query.deliveryBoyId = userId;
+    }
+
+    // 1. Fetch only the subscription with status === "active" for the user. Do NOT fetch subscriptions in grace status.
+    const sub = await UserSubscription.findOne(query);
+
+    if (!sub) {
+        throw new ValidationError('No active subscription found. Cancellation is only allowed for active subscriptions.');
+    }
+
+    // 2. Validate subscription type (recurring only; has razorpaySubscriptionId and is not a one-time plan; throw validation error otherwise).
+    if (!sub.razorpaySubscriptionId) {
+        throw new ValidationError('This plan does not support recurring billing auto-renewal.');
+    }
+
+    // 3. Validate that cancelAtCycleEnd is not already true.
+    if (sub.cancelAtCycleEnd) {
+        throw new ValidationError('Auto-renewal is already cancelled for this subscription.');
+    }
+
+    // 4. Invoke razorpayHelper.cancelRazorpaySubscription(razorpaySubscriptionId, true) to cancel the subscription on Razorpay at the end of the cycle.
+    await razorpayHelper.cancelRazorpaySubscription(sub.razorpaySubscriptionId, true);
+
+    // 5. Perform an immediate MongoDB update: set autoRenew = false, cancelAtCycleEnd = true, and cancelAt = new Date().
+    sub.autoRenew = false;
+    sub.cancelAtCycleEnd = true;
+    sub.cancelAt = new Date();
+    await sub.save();
+
+    return sub;
 }

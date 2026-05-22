@@ -13,6 +13,7 @@ router.use(requireRoles('RESTAURANT', 'DELIVERY_PARTNER'));
 router.get('/my-subscription', subscriptionController.getMySubscriptionController);
 router.post('/purchase', subscriptionController.initiatePurchaseController);
 router.post('/verify', subscriptionController.verifyPurchaseController);
+router.post('/cancel-auto-renew', subscriptionController.cancelAutoRenewController);
 
 // Wallet Topup & Eligibility
 router.post('/wallet/topup', subscriptionController.createTopupOrderController);

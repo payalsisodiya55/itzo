@@ -895,6 +895,7 @@ export default function Profile() {
 
 
         {/* Quick Commerce Section */}
+        {profileSource !== "food" && (
         <div className="mb-3">
           <div className="flex items-center gap-2 mb-2 px-1">
             <div className="w-1 h-4 bg-[#0c831f] rounded"></div>
@@ -979,6 +980,7 @@ export default function Profile() {
             </Link>
           </div>
         </div>
+        )}
 
         {/* More Section */}
         <div className="mb-8 pb-8">

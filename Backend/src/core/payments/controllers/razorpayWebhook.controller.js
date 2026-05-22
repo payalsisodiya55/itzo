@@ -230,28 +230,31 @@ export const handleRazorpayWebhook = async (req, res) => {
                     const startDate = now;
                     const expiryDate = dayjs(startDate).add(value, unit).toDate();
 
+                    const updateFields = {
+                        status: 'active',
+                        startDate,
+                        expiryDate,
+                        lastRenewedAt: startDate,
+                        renewalCount: 0,
+                        gracePeriodUntil: null,
+                        purchasedPlanName: plan.name,
+                        purchasedPrice: plan.price,
+                        purchasedDuration: plan.durationValue,
+                        purchasedDurationType: plan.durationUnit,
+                        'metadata.lastProcessedEventKey': dedupeKey,
+                        'metadata.lastProcessedEventType': event,
+                        'metadata.lastProcessedAt': now
+                    };
+
+                    if (!subscriptionDoc.cancelAtCycleEnd) {
+                        updateFields.autoRenew = true;
+                        updateFields.cancelAt = null;
+                        updateFields.cancelAtCycleEnd = false;
+                    }
+
                     const result = await UserSubscription.updateOne(
                         { _id: subscriptionDoc._id, 'metadata.lastProcessedEventKey': { $ne: dedupeKey } },
-                        {
-                            $set: {
-                                status: 'active',
-                                startDate,
-                                expiryDate,
-                                lastRenewedAt: startDate,
-                                renewalCount: 0,
-                                autoRenew: true,
-                                gracePeriodUntil: null,
-                                cancelAt: null,
-                                cancelAtCycleEnd: false,
-                                purchasedPlanName: plan.name,
-                                purchasedPrice: plan.price,
-                                purchasedDuration: plan.durationValue,
-                                purchasedDurationType: plan.durationUnit,
-                                'metadata.lastProcessedEventKey': dedupeKey,
-                                'metadata.lastProcessedEventType': event,
-                                'metadata.lastProcessedAt': now
-                            }
-                        }
+                        { $set: updateFields }
                     );
 
                     if (result.modifiedCount > 0) {
@@ -278,23 +281,30 @@ export const handleRazorpayWebhook = async (req, res) => {
                     const base = subscriptionDoc.expiryDate && subscriptionDoc.expiryDate > now ? subscriptionDoc.expiryDate : now;
                     const expiryDate = dayjs(base).add(value, unit).toDate();
 
+                    const updateFields = {
+                        status: 'active',
+                        expiryDate,
+                        lastRenewedAt: now,
+                        gracePeriodUntil: null,
+                        purchasedPlanName: plan.name,
+                        purchasedPrice: plan.price,
+                        purchasedDuration: plan.durationValue,
+                        purchasedDurationType: plan.durationUnit,
+                        'metadata.lastProcessedEventKey': dedupeKey,
+                        'metadata.lastProcessedEventType': event,
+                        'metadata.lastProcessedAt': now
+                    };
+
+                    if (!subscriptionDoc.cancelAtCycleEnd) {
+                        updateFields.autoRenew = true;
+                        updateFields.cancelAt = null;
+                        updateFields.cancelAtCycleEnd = false;
+                    }
+
                     const result = await UserSubscription.updateOne(
                         { _id: subscriptionDoc._id, 'metadata.lastProcessedEventKey': { $ne: dedupeKey } },
                         {
-                            $set: {
-                                status: 'active',
-                                expiryDate,
-                                lastRenewedAt: now,
-                                autoRenew: true,
-                                gracePeriodUntil: null,
-                                purchasedPlanName: plan.name,
-                                purchasedPrice: plan.price,
-                                purchasedDuration: plan.durationValue,
-                                purchasedDurationType: plan.durationUnit,
-                                'metadata.lastProcessedEventKey': dedupeKey,
-                                'metadata.lastProcessedEventType': event,
-                                'metadata.lastProcessedAt': now
-                            },
+                            $set: updateFields,
                             $inc: { renewalCount: 1 }
                         }
                     );

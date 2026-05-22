@@ -59,6 +59,10 @@ export const subscriptionAPI = {
     apiClient.get("/food/subscriptions/eligibility", {
       contextModule: userType.toLowerCase().replace("_partner", ""),
     }),
+  cancelAutoRenew: (userType) =>
+    apiClient.post("/food/subscriptions/cancel-auto-renew", {}, {
+      contextModule: userType.toLowerCase().replace("_partner", ""),
+    }),
 };
 
 const createStubAPI = () =>
