@@ -217,6 +217,24 @@ export async function createRestaurantFood(restaurantId, body = {}) {
         requestedAt: new Date()
     });
 
+    if (doc.image) {
+        // Fire-and-forget background save without awaiting. Catches and logs errors safely.
+        import('../../../media/services/media.service.js')
+            .then(({ saveToSharedMedia }) => {
+                saveToSharedMedia({
+                    url: doc.image,
+                    name: doc.name,
+                    category: doc.categoryName || "",
+                    restaurantId: doc.restaurantId
+                }).catch(err => {
+                    console.error('Failed to auto-save to shared media library in background:', err);
+                });
+            })
+            .catch(err => {
+                console.error('Failed to import media service for background auto-save:', err);
+            });
+    }
+
     try {
         const { notifyAdminsSafely } = await import('../../../../core/notifications/firebase.service.js');
         await notifyAdminsSafely({

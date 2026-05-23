@@ -29,14 +29,14 @@ export const CashLimitInfoV2 = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const profileRes = await deliveryAPI.getProfile();
-        const profile = profileRes?.data?.data?.profile || {};
+        const walletRes = await deliveryAPI.getWallet();
+        const wallet = walletRes?.data?.data?.wallet || {};
         
-        const totalLimit = profile.totalCashLimit || 0;
-        const cashInHand = profile.cashInHand || 0;
-        const deductions = profile.deductions || 0;
-        const withdrawals = profile.totalWithdrawn || 0;
-        const available = profile.availableCashLimit || 0;
+        const totalLimit = Number(wallet.totalCashLimit) || 0;
+        const cashInHand = Number(wallet.cashInHand) || 0;
+        const deductions = Number(wallet.deductions) || 0;
+        const withdrawals = Number(wallet.totalWithdrawn) || 0;
+        const available = Number(wallet.availableCashLimit) || 0;
 
         setWalletState({
            totalCashLimit: totalLimit,
@@ -53,6 +53,7 @@ export const CashLimitInfoV2 = () => {
     };
     fetchData();
   }, []);
+
 
   const DetailRow = ({ label, value, subLabel }) => (
      <div className="py-4 flex justify-between items-start border-b border-gray-100">

@@ -2738,15 +2738,13 @@ export default function Cart() {
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-600 dark:text-gray-400">Delivery Fee</span>
-                      <span className={deliveryFee === 0 ? "text-[#FE5502] font-medium" : "text-gray-800 dark:text-gray-200 font-medium"}>
-                        {deliveryFee === 0 ? "FREE" : `${RUPEE_SYMBOL}${deliveryFee.toFixed(2)}`}
-                      </span>
                       <div className="text-right">
-                        <span className={deliveryFee === 0 ? "text-[#cc2532] font-medium" : "text-gray-800 dark:text-gray-200 font-medium"}>
+                        <span className={deliveryFee === 0 ? "text-[#FE5502] font-semibold" : "text-gray-800 dark:text-gray-200 font-medium"}>
                           {deliveryFee === 0 ? "FREE" : `${RUPEE_SYMBOL}${deliveryFee.toFixed(2)}`}
                         </span>
                       </div>
                     </div>
+
                     {deliveryFeeBreakdownText && (
                       <div className="text-[11px] text-gray-500 dark:text-gray-400 -mt-1.5 ml-1 border-l-2 border-gray-100 pl-2">
                         {deliveryFeeBreakdownText}

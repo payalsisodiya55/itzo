@@ -19,9 +19,10 @@ import {
 import { Switch } from "@food/components/ui/switch"
 // Removed getAllFoods and saveFood - now using menu API
 import api from "@food/api"
-import { restaurantAPI, uploadAPI } from "@food/api"
+import { restaurantAPI, uploadAPI, mediaAPI } from "@food/api"
 import { toast } from "sonner"
 import { ImageSourcePicker } from "@food/components/ImageSourcePicker"
+import ReusableImageLibraryModal from "@food/components/ReusableImageLibraryModal"
 import Cropper from "react-easy-crop"
 import { isFlutterBridgeAvailable } from "@food/utils/imageUploadUtils"
 import { getFoodVariants } from "@food/utils/foodVariants"
@@ -91,6 +92,7 @@ export default function ItemDetailsPage() {
   const [imageFiles, setImageFiles] = useState(new Map()) // Track File objects by preview URL
   const [uploadingImages, setUploadingImages] = useState(false)
   const [isPhotoPickerOpen, setIsPhotoPickerOpen] = useState(false)
+  const [isLibraryOpen, setIsLibraryOpen] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [imageToCrop, setImageToCrop] = useState(null)
   const [crop, setCrop] = useState({ x: 0, y: 0 })
@@ -110,6 +112,81 @@ export default function ItemDetailsPage() {
   const [loadingCategories, setLoadingCategories] = useState(true)
   const [keyboardInset, setKeyboardInset] = useState(0)
   const [isPureVegRestaurant, setIsPureVegRestaurant] = useState(false)
+
+  // Auto-suggestions states & cache
+  const [suggestedImages, setSuggestedImages] = useState([])
+  const [loadingSuggestions, setLoadingSuggestions] = useState(false)
+  const [errorSuggestions, setErrorSuggestions] = useState(false)
+  const debounceTimerRef = useRef(null)
+  const suggestionCacheRef = useRef({ queryKey: "", results: [] })
+
+  // Auto-suggestions query logic with 450ms debounce and deduplication/cache
+  useEffect(() => {
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current)
+    }
+
+    const trimmedName = itemName.trim().toLowerCase()
+    const validCategory = category && category !== "Select category" ? category.trim().toLowerCase() : ""
+
+    // Rule 3: Show suggestions ONLY IF name length >= 3 OR valid category is selected
+    if (trimmedName.length < 3 && !validCategory) {
+      setSuggestedImages([])
+      setLoadingSuggestions(false)
+      return
+    }
+
+    const queryKey = `${trimmedName}||${validCategory}`
+
+    // Rule 7: Prevent duplicate calls for same query & cache last successful query
+    if (queryKey === suggestionCacheRef.current.queryKey) {
+      setSuggestedImages(suggestionCacheRef.current.results)
+      setLoadingSuggestions(false)
+      setErrorSuggestions(false)
+      return
+    }
+
+    setLoadingSuggestions(true)
+    setErrorSuggestions(false)
+
+    debounceTimerRef.current = setTimeout(async () => {
+      try {
+        const params = { limit: 6 }
+        if (trimmedName.length >= 3) {
+          params.search = itemName.trim()
+        } else if (validCategory) {
+          params.category = category.trim()
+        }
+
+        const response = await mediaAPI.getSharedMedia(params)
+        
+        if (response?.data?.success && Array.isArray(response?.data?.data?.items)) {
+          const items = response.data.data.items
+          // Cache successful result
+          suggestionCacheRef.current = {
+            queryKey,
+            results: items
+          }
+          setSuggestedImages(items)
+        } else {
+          setSuggestedImages([])
+        }
+      } catch (err) {
+        debugError("Error fetching suggestions:", err)
+        setErrorSuggestions(true)
+        // Rule 8: Silently hide suggestions section on API failure
+        setSuggestedImages([])
+      } finally {
+        setLoadingSuggestions(false)
+      }
+    }, 450)
+
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current)
+      }
+    }
+  }, [itemName, category])
 
   // Restore draft if exists
   useEffect(() => {
@@ -419,6 +496,41 @@ export default function ItemDetailsPage() {
       tags: ["Vegan"]
     }
   ]
+
+  const handleSelectLibraryImage = (selectedMedia) => {
+    const applySelection = () => {
+      setImageFiles(new Map());
+      setImages([selectedMedia.url]);
+      setIsLibraryOpen(false);
+      toast.success("Image selected from library");
+    };
+
+    if (images.length > 0) {
+      const confirmReplace = window.confirm("Replace current selected image?");
+      if (confirmReplace) {
+        applySelection();
+      }
+    } else {
+      applySelection();
+    }
+  };
+
+  const handleSelectSuggestedImage = (url) => {
+    const applySelection = () => {
+      setImageFiles(new Map());
+      setImages([url]);
+      toast.success("Image selected from suggestions");
+    };
+
+    if (images.length > 0) {
+      const confirmReplace = window.confirm("Replace current selected image?");
+      if (confirmReplace) {
+        applySelection();
+      }
+    } else {
+      applySelection();
+    }
+  };
 
   const handleImageAdd = (file) => {
     if (!file) return
@@ -875,6 +987,13 @@ export default function ItemDetailsPage() {
         [data-slot="switch-thumb"][data-state="checked"] {
           background-color: #ffffff !important;
         }
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
       `}</style>
       {/* Header */}
       <div className="sticky top-0 z-40 bg-white border-b border-gray-200 flex-shrink-0">
@@ -1021,8 +1140,52 @@ export default function ItemDetailsPage() {
               </div>
               <span>Add Image</span>
             </button>
+            <button
+              type="button"
+              onClick={() => setIsLibraryOpen(true)}
+              className="w-full mt-3 flex items-center justify-center gap-2.5 px-6 py-3.5 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 rounded-xl text-sm font-semibold cursor-pointer transition-all shadow-sm active:scale-95"
+            >
+              <div className="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center">
+                <Plus className="w-4 h-4 text-gray-600" />
+              </div>
+              <span>Choose from Library</span>
+            </button>
           </div>
         </div>
+
+        {/* Suggested Images Section */}
+        {(loadingSuggestions || (suggestedImages && suggestedImages.length > 0)) && (
+          <div className="px-4 py-3 bg-white border-t border-b border-gray-100 flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                Suggested Images
+              </span>
+              {loadingSuggestions && (
+                <span className="text-[11px] text-gray-400 animate-pulse">
+                  Finding matching images...
+                </span>
+              )}
+            </div>
+            {!loadingSuggestions && suggestedImages && suggestedImages.length > 0 && (
+              <div className="flex gap-3 overflow-x-auto pb-1 no-scrollbar">
+                {suggestedImages.slice(0, 6).map((item) => (
+                  <button
+                    key={item._id}
+                    type="button"
+                    onClick={() => handleSelectSuggestedImage(item.url)}
+                    className="relative flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border border-gray-200 hover:border-gray-400 active:scale-95 transition-all focus:outline-none"
+                  >
+                    <img
+                      src={item.thumbnailUrl || item.url}
+                      alt="Suggested food template"
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Form Fields */}
         <div className="p-4 space-y-3">
@@ -1534,6 +1697,12 @@ export default function ItemDetailsPage() {
         description="Choose how to upload your item image"
         fileNamePrefix="item-photo"
         galleryInputRef={fileInputRef}
+      />
+      <ReusableImageLibraryModal
+        isOpen={isLibraryOpen}
+        onClose={() => setIsLibraryOpen(false)}
+        onSelect={handleSelectLibraryImage}
+        initialCategory={category}
       />
 
       {/* Crop Modal */}

@@ -15,6 +15,9 @@ import {
 import { Transaction } from "../../../../core/payments/models/transaction.model.js";
 import { getTransactionsByEntity } from "../../../../core/payments/transaction.service.js";
 import { FoodDeliveryWallet } from "../models/deliveryWallet.model.js";
+import { creditWallet } from "../../../../core/payments/wallet.service.js";
+import { logger } from "../../../../utils/logger.js";
+
 
 /**
  * Enhanced wallet fetch for delivery partners.
@@ -35,6 +38,88 @@ export const getDeliveryPartnerWalletEnhanced = async (deliveryPartnerId) => {
   const partnerId = new mongoose.Types.ObjectId(deliveryPartnerId);
   const partner = await FoodDeliveryPartner.findById(partnerId).lean();
   if (!partner) throw new ValidationError("Delivery partner not found");
+
+  // 1. Self-heal completed deliveries that missed wallet credits (e.g., due to disabled queues in local dev)
+  try {
+    const completedOrders = await FoodOrder.find({
+      "dispatch.deliveryPartnerId": partnerId,
+      orderStatus: "delivered",
+    }).lean();
+
+    if (completedOrders.length > 0) {
+      const orderIds = completedOrders.map(o => o._id);
+      const existingTxns = await Transaction.find({
+        entityType: "deliveryBoy",
+        entityId: partnerId,
+        category: "delivery_earning",
+        orderId: { $in: orderIds }
+      }).select("orderId").lean();
+
+      const creditedOrderIds = new Set(existingTxns.map(t => String(t.orderId)));
+
+      for (const order of completedOrders) {
+        if (!creditedOrderIds.has(String(order._id))) {
+          const riderEarning = order.riderEarning || order.pricing?.deliveryFee || 0;
+          const platformProfit = order.platformProfit || 0;
+
+          if (riderEarning > 0) {
+            await creditWallet({
+              entityType: 'deliveryBoy',
+              entityId: partnerId,
+              amount: riderEarning,
+              description: `Order ${order.orderId || order._id} - delivery earning (self-heal)`,
+              category: 'delivery_earning',
+              orderId: order._id,
+              metadata: { orderId: order.orderId, paymentMethod: order.payment?.method }
+            });
+
+            await FoodDeliveryWallet.updateOne(
+              { deliveryPartnerId: partnerId },
+              { $inc: { totalDeliveries: 1 } }
+            );
+            logger.info(`Self-healed credit for delivery partner ${partnerId} order ${order._id}`);
+          }
+
+          if (platformProfit > 0) {
+            try {
+              await creditWallet({
+                entityType: 'admin',
+                entityId: 'platform',
+                amount: platformProfit,
+                description: `Order ${order.orderId || order._id} - platform profit (self-heal)`,
+                category: 'platform_fee',
+                orderId: order._id,
+                metadata: { orderId: order.orderId, paymentMethod: order.payment?.method, riderEarning }
+              });
+            } catch (err) {
+              logger.error(`Self-heal platform profit failed for order ${order._id}: ${err.message}`);
+            }
+          }
+        }
+      }
+    }
+  } catch (err) {
+    logger.error(`Self-healing delivery wallet credits failed: ${err.message}`);
+  }
+
+  // 2. In local development, auto-reject pending withdrawals to allow continuous testing of withdrawal flow
+  if (process.env.NODE_ENV === 'development') {
+    try {
+      const pendingWithdrawalsCount = await FoodDeliveryWithdrawal.countDocuments({
+        deliveryPartnerId: partnerId,
+        status: 'pending'
+      });
+      if (pendingWithdrawalsCount > 0) {
+        await FoodDeliveryWithdrawal.updateMany(
+          { deliveryPartnerId: partnerId, status: 'pending' },
+          { $set: { status: 'rejected', rejectionReason: 'Auto-rejected in development environment for testing' } }
+        );
+        logger.info(`Auto-rejected ${pendingWithdrawalsCount} pending withdrawals for partner ${partnerId} in development`);
+      }
+    } catch (err) {
+      logger.error(`Auto-rejecting pending withdrawals failed: ${err.message}`);
+    }
+  }
 
   const [
     cashLimitSettings,

@@ -2825,5 +2825,9 @@ export const diningAPI = {
     });
   },
 };
+export const mediaAPI = {
+  getSharedMedia: (params = {}) =>
+    apiClient.get("/media/shared", { params, contextModule: "restaurant" }),
+};
 export const heroBannerAPI = createStubAPI();
 export const publicAPI = createStubAPI();

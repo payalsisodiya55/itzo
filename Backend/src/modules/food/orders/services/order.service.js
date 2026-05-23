@@ -57,7 +57,27 @@ function enqueueOrderEvent(action, payload = {}) {
     } catch (err) {
         logger.warn(`BullMQ enqueue order event failed (sync): ${action} - ${err?.message || err}`);
     }
+
+    // Synchronous fallback in development or when BullMQ is disabled
+    if (process.env.BULLMQ_ENABLED !== 'true') {
+        if (['delivery_completed', 'order_cancelled', 'payment_verified'].includes(action)) {
+            import('../../../../queues/processors/payment.processor.js')
+                .then(({ processPaymentJob }) => {
+                    logger.info(`[BullMQ:fallback] Running sync payment processor for action=${action}`);
+                    processPaymentJob({
+                        data: { action, ...payload },
+                        id: `sync_${action}_${Date.now()}`
+                    }).catch((err) => {
+                        logger.error(`[BullMQ:fallback] Sync payment processor failed: ${err.message}`);
+                    });
+                })
+                .catch((err) => {
+                    logger.error(`[BullMQ:fallback] Failed to import payment processor: ${err.message}`);
+                });
+        }
+    }
 }
+
 
 function generateFourDigitDeliveryOtp() {
   return String(Math.floor(1000 + Math.random() * 9000));
