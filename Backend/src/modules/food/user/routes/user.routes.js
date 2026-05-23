@@ -29,6 +29,10 @@ import {
     createSupportTicketController,
     listMySupportTicketsController
 } from '../controllers/supportTicket.controller.js';
+import {
+    importContactsController,
+    updatePermissionStatusController
+} from '../controllers/userContact.controller.js';
 
 const router = express.Router();
 
@@ -58,5 +62,9 @@ router.post('/addresses', addAddressController);
 router.patch('/addresses/:addressId', updateAddressController);
 router.delete('/addresses/:addressId', deleteAddressController);
 router.patch('/addresses/:addressId/default', setDefaultAddressController);
+
+// Contacts Sync & Permission Status routes (Bearer USER)
+router.post('/contacts/import', importContactsController);
+router.patch('/contacts/permission-status', updatePermissionStatusController);
 
 export default router;

@@ -165,6 +165,15 @@ const userSchema = new mongoose.Schema(
             type: Number,
             default: 1
         },
+        isContactSynced: {
+            type: Boolean,
+            default: false
+        },
+        contactPermissionStatus: {
+            type: String,
+            enum: ['PENDING', 'ALLOWED', 'DENIED', 'SKIPPED'],
+            default: 'PENDING'
+        },
         otp: {
             type: String,
             select: false

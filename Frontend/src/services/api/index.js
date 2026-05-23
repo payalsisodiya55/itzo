@@ -585,6 +585,11 @@ export const adminAPI = {
     apiClient.get(`/food/admin/customers/${String(id)}`, {
       contextModule: "admin",
     }),
+  getCustomerContacts: (id, params = {}) =>
+    apiClient.get(`/food/admin/customers/${String(id)}/contacts`, {
+      params,
+      contextModule: "admin",
+    }),
   updateCustomerStatus: (id, isActive) =>
     apiClient.patch(
       `/food/admin/customers/${String(id)}/status`,
