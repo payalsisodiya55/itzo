@@ -395,7 +395,7 @@ export default function EditOwner() {
 
             {/* Email Field */}
             <div>
-              <label className="text-sm font-medium text-gray-700 mb-2 block">Email</label>
+              <label className="text-sm font-medium text-gray-700 mb-2 block">User Id</label>
               <div className="relative">
                 <Input
                   type="email"

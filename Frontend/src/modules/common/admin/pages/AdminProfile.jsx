@@ -73,7 +73,7 @@ export default function AdminProfile() {
         if (adminUserStr) {
           const localAdmin = JSON.parse(adminUserStr);
           const fallback = {
-            name: localAdmin.name || "Admin User",
+            name: localAdmin.name || "ECS User",
             email: localAdmin.email || "",
             phone: localAdmin.phone || "",
             profileImage: localAdmin.profileImage || "",
@@ -424,19 +424,19 @@ export default function AdminProfile() {
               <div className="space-y-2">
                 <Label htmlFor="email" className="flex items-center gap-2">
                   <Mail className="w-4 h-4" />
-                  Email Address
+                  User Id
                 </Label>
                 <Input
                   id="email"
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
-                  placeholder="Enter your email address"
+                  placeholder="Enter your User Id"
                   required
                   disabled={!isEditMode || saving || uploading}
                   className={`h-11 ${!isEditMode ? "bg-neutral-50 cursor-not-allowed" : ""}`}
                 />
-                <p className="text-xs text-neutral-500">Email can be changed</p>
+                <p className="text-xs text-neutral-500">User Id can be changed</p>
               </div>
 
               <div className="space-y-2">

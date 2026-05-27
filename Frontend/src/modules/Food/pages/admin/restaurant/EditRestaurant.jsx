@@ -386,7 +386,7 @@ export default function EditRestaurant() {
         <div className="flex items-center justify-between gap-4 mb-6">
           <div className="flex items-center gap-3">
             <button
-              onClick={() => navigate("/admin/food/restaurants")}
+              onClick={() => navigate("/ecs/food/restaurants")}
               className="p-2 rounded-lg bg-white border border-slate-200 hover:bg-slate-50"
               title="Back"
             >
@@ -460,7 +460,7 @@ export default function EditRestaurant() {
                   </div>
                 </div>
                 <div>
-                  <Label>Primary Email</Label>
+                  <Label>Primary User Id</Label>
                   <Input value={detailsForm.email} onChange={(e) => setDetailsForm((p) => ({ ...p, email: e.target.value }))} />
                 </div>
                 <div>
@@ -468,7 +468,7 @@ export default function EditRestaurant() {
                   <Input value={detailsForm.ownerName} onChange={(e) => setDetailsForm((p) => ({ ...p, ownerName: e.target.value }))} />
                 </div>
                 <div>
-                  <Label>Owner Email</Label>
+                  <Label>Owner User Id</Label>
                   <Input value={detailsForm.ownerEmail} onChange={(e) => setDetailsForm((p) => ({ ...p, ownerEmail: e.target.value }))} />
                 </div>
                 <div>

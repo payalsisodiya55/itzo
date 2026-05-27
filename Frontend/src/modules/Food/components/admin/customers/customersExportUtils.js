@@ -9,7 +9,7 @@ export const exportCustomersToCSV = (customers, filename = "customers") => {
     return
   }
 
-  const headers = ["SI", "Name", "Email", "Phone", "Total Order", "Total Order Amount", "Joining Date", "Status"]
+  const headers = ["SI", "Name", "User Id", "Phone", "Total Order", "Total Order Amount", "Joining Date", "Status"]
   const rows = customers.map((customer, index) => [
     customer.sl || index + 1,
     customer.name || "N/A",
@@ -57,7 +57,7 @@ export const exportCustomersToExcel = (customers, filename = "customers") => {
     return
   }
 
-  const headers = ["SI", "Name", "Email", "Phone", "Total Order", "Total Order Amount", "Joining Date", "Status"]
+  const headers = ["SI", "Name", "User Id", "Phone", "Total Order", "Total Order Amount", "Joining Date", "Status"]
   const rows = customers.map((customer, index) => [
     customer.sl || index + 1,
     customer.name || "N/A",
@@ -153,7 +153,7 @@ export const exportCustomersToPDF = (customers, filename = "customers") => {
 
         // Add table using autoTable
         autoTable(doc, {
-          head: [["SI", "Name", "Email", "Phone", "Total Order", "Total Order Amount", "Joining Date", "Status"]],
+          head: [["SI", "Name", "User Id", "Phone", "Total Order", "Total Order Amount", "Joining Date", "Status"]],
           body: tableData,
           startY: 28,
           styles: {

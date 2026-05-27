@@ -236,7 +236,7 @@ export default function RestaurantSignIn() {
             <div>
               <div className="font-semibold mb-1">Demo Credentials</div>
               <div>
-                <span className="font-semibold">Email :</span> test.restaurant@gmail.com
+                <span className="font-semibold">User Id:/span> test.restaurant@gmail.com
               </div>
               <div>
                 <span className="font-semibold">Password :</span> 12345678

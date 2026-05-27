@@ -463,11 +463,11 @@ export default function SellerOnboarding() {
                   <input required className="rounded-2xl border border-slate-200 px-4 py-3 font-semibold outline-none focus:border-slate-900" placeholder="Shop name" value={form.shopName} onChange={(e) => updateField("shopName", e.target.value.replace(/[^a-zA-Z\s]/g, ""))} />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <label className="text-xs font-bold text-slate-500">Email <span className="text-red-500">*</span></label>
+                  <label className="text-xs font-bold text-slate-500">User Id <span className="text-red-500">*</span></label>
                   <input
                     required
                     className={`rounded-2xl border px-4 py-3 font-semibold outline-none focus:border-slate-900 ${form.email && !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(form.email) ? "border-red-400 bg-red-50" : "border-slate-200"}`}
-                    placeholder="Email (e.g. name@domain.com)"
+                    placeholder="User Id (e.g. name@domain.com)"
                     type="email"
                     value={form.email}
                     onChange={(e) => updateField("email", e.target.value)}

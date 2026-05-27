@@ -58,7 +58,7 @@ const thirdPartyServices = [
   {
     id: 5,
     name: "SendGrid",
-    category: "Email Service",
+    category: "User Id Service",
     description: "Transactional email service",
     enabled: false,
     configured: false,

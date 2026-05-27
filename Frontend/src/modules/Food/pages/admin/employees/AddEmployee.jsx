@@ -137,7 +137,7 @@ export default function AddEmployee() {
     }
 
     if (!email) {
-      nextErrors.email = "Email is required"
+      nextErrors.email = "User Id is required"
     } else if (!EMAIL_REGEX.test(email)) {
       nextErrors.email = "Enter a valid Gmail address"
     }
@@ -205,7 +205,7 @@ export default function AddEmployee() {
       
       if (res.data.success) {
         toast.success(res.data.message)
-        navigate("/admin/food/employees")
+        navigate("/ecs/food/employees")
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to add employee")
@@ -409,7 +409,7 @@ export default function AddEmployee() {
               {/* Email */}
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  Email
+                  User Id
                 </label>
                 <input
                   type="email"

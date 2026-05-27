@@ -343,7 +343,7 @@ const SellerProfile = () => {
 
                 <div className="space-y-3">
                   <label className="text-xs font-black uppercase tracking-widest text-slate-600 ml-1">
-                    Email Address
+                    User Id
                   </label>
                   <div className="relative group">
                     <div className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300">

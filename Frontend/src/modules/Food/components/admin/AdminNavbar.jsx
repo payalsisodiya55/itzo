@@ -251,7 +251,7 @@ export default function AdminNavbar({ onMenuClick }) {
       window.dispatchEvent(new Event('adminAuthChanged'));
 
       // Navigate to admin login page
-      navigate('/admin/login', { replace: true });
+      navigate('/ecs/login', { replace: true });
     } catch (error) {
       // Even if there's an error, we should still clear local data and logout
       debugError("Error during logout:", error);
@@ -267,14 +267,14 @@ export default function AdminNavbar({ onMenuClick }) {
       window.dispatchEvent(new Event('adminAuthChanged'));
 
       // Navigate to login
-      navigate('/admin/login', { replace: true });
+      navigate('/ecs/login', { replace: true });
     }
   };
 
   const notificationCount = adminNotifications.length;
   const openNotificationsPage = () => {
     setNotificationsOpen(false);
-    navigate("/admin/food/notifications");
+    navigate("/ecs/food/notifications");
   };
 
   return (
@@ -382,7 +382,7 @@ export default function AdminNavbar({ onMenuClick }) {
                                 {item?.message || "-"}
                               </p>
                               <p className="text-[11px] text-neutral-400 mt-2">
-                                {item?.metaLabel || item?.category || "Admin alert"}
+                                {item?.metaLabel || item?.category || "ECS alert"}
                               </p>
                             </div>
                             <span className="shrink-0 text-[10px] text-neutral-400">
@@ -404,7 +404,7 @@ export default function AdminNavbar({ onMenuClick }) {
 
                   <div className="hidden md:block">
                     <p className="text-sm font-medium text-neutral-900">
-                      {adminData?.name || "Admin User"}
+                      {adminData?.name || "ECS User"}
                     </p>
                     <p className="text-xs text-neutral-500">
                       {adminData?.email
@@ -437,7 +437,7 @@ export default function AdminNavbar({ onMenuClick }) {
                               ? adminData.profileImage.trim() || undefined
                               : adminData.profileImage?.url || undefined
                           }
-                          alt={adminData.name || "Admin"}
+                          alt={adminData.name || "ECS"}
                           className="w-full h-full object-cover"
                         />
                       ) : (
@@ -455,7 +455,7 @@ export default function AdminNavbar({ onMenuClick }) {
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-neutral-900">
-                        {adminData?.name || "Admin User"}
+                        {adminData?.name || "ECS User"}
                       </p>
                       <p className="text-xs text-neutral-500">
                         {adminData?.email
@@ -476,14 +476,14 @@ export default function AdminNavbar({ onMenuClick }) {
                 <DropdownMenuGroup>
                   <DropdownMenuItem
                     className="cursor-pointer hover:bg-neutral-100 focus:bg-neutral-100"
-                    onClick={() => navigate("/admin/food/profile")}
+                    onClick={() => navigate("/ecs/food/profile")}
                   >
                     <User className="mr-2 w-4 h-4" />
                     <span>Profile</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="cursor-pointer hover:bg-neutral-100 focus:bg-neutral-100"
-                    onClick={() => navigate("/admin/food/settings")}
+                    onClick={() => navigate("/ecs/food/settings")}
                   >
                     <Settings className="mr-2 w-4 h-4" />
                     <span>Settings</span>
@@ -529,10 +529,10 @@ export default function AdminNavbar({ onMenuClick }) {
                 <div className="text-sm text-neutral-500 mb-4">Quick Actions</div>
                 <div className="grid grid-cols-2 gap-3">
                   {[
-                    { icon: Package, label: "Orders", path: "/admin/food/orders/all" },
-                    { icon: Users, label: "Users", path: "/admin/food/customers" },
-                    { icon: UtensilsCrossed, label: "Products", path: "/admin/food/foods" },
-                    { icon: FileText, label: "Reports", path: "/admin/food/transaction-report" },
+                    { icon: Package, label: "Orders", path: "/ecs/food/orders/all" },
+                    { icon: Users, label: "Users", path: "/ecs/food/customers" },
+                    { icon: UtensilsCrossed, label: "Products", path: "/ecs/food/foods" },
+                    { icon: FileText, label: "Reports", path: "/ecs/food/transaction-report" },
                   ].map((action, idx) => (
                     <button
                       key={idx}

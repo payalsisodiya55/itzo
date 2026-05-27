@@ -297,7 +297,7 @@ const FleetRadar = () => {
                               "info",
                             );
                             // Navigate to orders list or specific order (mocking destination)
-                            navigate("/admin/orders");
+                            navigate("/ecs/orders");
                           }}
                           className="p-4 bg-primary text-white rounded-2xl shadow-xl shadow-primary/20 flex items-center justify-between group cursor-pointer">
                           <div className="flex items-center gap-3">

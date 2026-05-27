@@ -429,7 +429,7 @@ const SellerTransactions = () => {
                                             <span>₹{selectedTxn.amount}</span>
                                         </div>
                                         <div className="flex justify-between items-center text-sm font-medium">
-                                            <span className="opacity-60">Admin Fee ({selectedTxn.commissionRate}%)</span>
+                                            <span className="opacity-60">ECS Fee ({selectedTxn.commissionRate}%)</span>
                                             <span className="text-orange-400">-₹{selectedTxn.commissionAmount}</span>
                                         </div>
                                         <div className="flex justify-between items-center text-sm font-medium">

@@ -137,7 +137,7 @@ const AdminWallet = () => {
             iconColor: 'text-blue-500'
         },
         {
-            label: 'Total Admin Earning',
+            label: 'Total ECS Earning',
             value: `₹${(walletData.stats?.totalAdminEarning || 0).toLocaleString()}`,
             description: 'Net profit for platform',
             icon: DollarSign,
@@ -570,8 +570,8 @@ const AdminWallet = () => {
                         </div>
                         <div className="space-y-3">
                             {[
-                                { label: 'Platform Revenue Report', icon: TrendingUp, path: '/admin' },
-                                { label: 'Settlement History', icon: History, path: '/admin/delivery-funds' },
+                                { label: 'Platform Revenue Report', icon: TrendingUp, path: '/ecs' },
+                                { label: 'Settlement History', icon: History, path: '/ecs/delivery-funds' },
                                 { label: 'Tax Statements', icon: DollarSign, path: '#' },
                             ].map((link, i) => (
                                 <button

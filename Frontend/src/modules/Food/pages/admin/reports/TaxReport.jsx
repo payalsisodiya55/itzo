@@ -178,9 +178,9 @@ export default function TaxReport() {
           <h1 className="text-2xl font-bold text-slate-900">Generate Tax Report</h1>
         </div>
 
-        {/* Admin Tax Report Section */}
+        {/* ECS Tax Report Section */}
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
-          <h2 className="text-lg font-semibold text-slate-900 mb-2">Admin Tax Report</h2>
+          <h2 className="text-lg font-semibold text-slate-900 mb-2">ECS Tax Report</h2>
           <p className="text-sm text-slate-600 mb-6">
             To generate you tax report please select & input following field and submit for the result.
           </p>

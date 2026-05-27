@@ -1,13 +1,37 @@
 import React, { useEffect, useState, useRef } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { Routes, Route, Navigate, Link, useLocation, useNavigate } from "react-router-dom"
-import { Phone, Lock, ArrowRight, ShieldCheck, Loader2, UserRound } from "lucide-react"
+import { Phone, Lock, ArrowRight, ShieldCheck, Loader2, UserRound, Mail, ChevronDown } from "lucide-react"
 import { toast } from "sonner"
 import { authAPI, userAPI } from "@food/api"
 import { isModuleAuthenticated, setAuthData } from "@food/utils/auth"
 import { loadBusinessSettings, getCachedSettings, getAppLogo, getCompanyName, setAppType } from "@common/utils/businessSettings"
 
+import loginBanner from "@food/assets/loginbanner.png"
+import foodDiscovery from "@food/assets/food_discovery_bg.png"
+import offerBanner from "@food/assets/offerpagebanner.png"
+import gourmetBanner from "@food/assets/groumetpagebanner.png"
+import collectionsBanner from "@food/assets/collectionspagebanner.png"
+
+const defaultBackgroundImages = [
+  loginBanner,
+  foodDiscovery,
+  offerBanner,
+  gourmetBanner,
+  collectionsBanner
+];
+
 export default function UnifiedOTPFastLogin() {
+  const [backgroundImages, setBackgroundImages] = useState(defaultBackgroundImages)
+  const [currentBg, setCurrentBg] = useState(0)
+
+  useEffect(() => {
+    if (backgroundImages.length === 0) return;
+    const interval = setInterval(() => {
+      setCurrentBg((prev) => (prev + 1) % backgroundImages.length)
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [backgroundImages.length])
   const RESEND_COOLDOWN_SECONDS = 60
   const [phoneNumber, setPhoneNumber] = useState("")
   const [otp, setOtp] = useState("")
@@ -31,6 +55,18 @@ export default function UnifiedOTPFastLogin() {
         if (settings) {
           setLogoUrl(getAppLogo('user'))
           setCompanyName(getCompanyName())
+          
+          const dynamicBanners = [
+            settings.userLoginBanner1?.url,
+            settings.userLoginBanner2?.url,
+            settings.userLoginBanner3?.url,
+            settings.userLoginBanner4?.url,
+            settings.userLoginBanner5?.url
+          ].filter(Boolean);
+          
+          if (dynamicBanners.length > 0) {
+            setBackgroundImages(dynamicBanners);
+          }
         }
       } catch (error) {}
     }
@@ -292,95 +328,98 @@ export default function UnifiedOTPFastLogin() {
   ]
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex flex-col pt-0 sm:pt-0">
-      {/* Top Banner section - Zomato Red */}
-      <div className="w-full bg-primary-orange dark:bg-[#b01c27] rounded-b-[2.5rem] p-6 text-center text-white relative overflow-hidden shadow-2xl">
-        <div className="absolute inset-0 bg-white/5 opacity-50 blur-3xl rounded-full -top-1/2 -left-1/4 animate-pulse" />
-        <div className="absolute right-0 bottom-0 w-32 h-32 md:w-48 md:h-48 opacity-10 pointer-events-none">
-           <svg viewBox="0 0 200 200" fill="currentColor">
-              <path d="M100 0C44.8 0 0 44.8 0 100s44.8 100 100 100 100-44.8 100-100S155.2 0 100 0zm0 180c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"/>
-           </svg>
-        </div>
-        
-        <div className="relative z-10 flex flex-col items-center">
-          <motion.div 
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-3 shadow-xl overflow-hidden"
-          >
-             {logoUrl ? (
-               <img src={logoUrl} alt={companyName} className="w-full h-full object-contain p-2" />
-             ) : (
-               <span className="text-primary-orange text-xl font-black italic">{companyName.charAt(0).toUpperCase()}</span>
-             )}
-          </motion.div>
-          <motion.h1 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-2xl md:text-5xl font-black tracking-tight mb-1"
-          >
-            {companyName}
-          </motion.h1>
-          <p className="text-xs md:text-base font-bold text-white/90 tracking-[0.2em] uppercase">
-            Taste the best, forget the rest
-          </p>
-        </div>
+    <div className="min-h-screen bg-gray-50 dark:bg-neutral-950 flex flex-col md:flex-row md:items-center md:justify-center relative transition-colors duration-1000 md:p-4">
+      {/* Background decoration */}
+      <div className="fixed inset-0 z-0 hidden md:block opacity-30 bg-black">
+        <AnimatePresence mode="popLayout">
+          {backgroundImages.map((img, index) => (
+            index === currentBg && (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.05 }}
+                transition={{ duration: 1.5, ease: "easeInOut" }}
+                className="absolute inset-0 w-full h-full"
+              >
+                <img src={img} alt={`background ${index}`} className="w-full h-full object-cover blur-sm" />
+              </motion.div>
+            )
+          ))}
+        </AnimatePresence>
+        <div className="absolute inset-0 bg-white/70 dark:bg-black/90 z-10" />
       </div>
 
-      <div className="flex-1 max-w-[480px] mx-auto w-full px-6 py-4 flex flex-col justify-center -mt-8 relative z-20">
-        {/* Main Card */}
-        <div className="bg-white dark:bg-[#1a1a1a] rounded-[2rem] p-6 sm:p-8 md:p-12 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.15)] dark:shadow-none border border-gray-50 dark:border-gray-800">
-           <div className="text-center mb-6 space-y-2">
-              <h2 className="text-2xl font-black text-gray-900 dark:text-white">Login or Signup</h2>
-              <div className="h-1 w-12 bg-primary-orange mx-auto rounded-full" />
-           </div>
+      {/* Banner (Mobile Only) */}
+      <div className="absolute top-0 left-0 right-0 h-[50vh] md:hidden z-0 bg-black">
+        <AnimatePresence mode="popLayout">
+          {backgroundImages.map((img, index) => (
+            index === currentBg && (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.05 }}
+                transition={{ duration: 1.5, ease: "easeInOut" }}
+                className="absolute inset-0 w-full h-full"
+              >
+                <img src={img} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              </motion.div>
+            )
+          ))}
+        </AnimatePresence>
+      </div>
 
-          <form onSubmit={showNameInput ? handleSubmitName : step === 1 ? handleSendOTP : handleVerifyOTP} className="space-y-5">
+      <div className="w-full max-w-[420px] bg-white dark:bg-neutral-900 rounded-none md:rounded-2xl shadow-[0_-8px_30px_rgb(0,0,0,0.12)] md:shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.5)] relative z-20 border-t md:border border-gray-100 dark:border-neutral-800 mt-[50vh] md:mt-0 flex-1 md:flex-initial flex flex-col">
+        <div className="p-6 md:p-8 space-y-6 flex-1">
+          <div className="flex items-center justify-between">
+            <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 tracking-tight">
+              Login
+            </h2>
+          </div>
+
+          <form onSubmit={showNameInput ? handleSubmitName : step === 1 ? handleSendOTP : handleVerifyOTP} className="space-y-4">
             {step === 1 ? (
-              <div className="space-y-6">
-                <div className="space-y-4">
-                  <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-1 flex items-center pointer-events-none">
-                      <Phone className="w-5 h-5 text-gray-400 group-focus-within:text-primary-orange transition-colors" />
-                    </div>
-                    <div className="absolute left-8 inset-y-0 flex items-center pointer-events-none">
-                       <span className="text-sm font-bold text-gray-900 dark:text-white border-r border-gray-200 dark:border-gray-800 pr-3">+91</span>
-                    </div>
-                    <input
-                      type="tel"
-                      required
-                      autoFocus
-                      value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, "").slice(0, 10))}
-                      maxLength={10}
-                      className="block w-full pl-20 pr-4 py-3 bg-transparent text-gray-900 dark:text-white border-b-2 border-gray-100 dark:border-gray-800 focus:border-primary-orange outline-none transition-all placeholder:text-gray-300 font-bold text-lg"
-                      placeholder="Phone number"
-                    />
+              <div className="space-y-1">
+                <div className="relative flex items-center group">
+                  <div className="flex items-center justify-center gap-1.5 px-3 h-12 md:h-14 border border-gray-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-gray-700 dark:text-gray-300 rounded-xl rounded-r-none font-medium border-r-0 group-focus-within:border-[#FE5502]">
+                    <img src="https://flagcdn.com/w20/in.png" alt="India" className="w-5 h-auto rounded-[2px]" />
+                    <span>+91</span>
+                    <ChevronDown className="w-4 h-4 text-gray-400" />
                   </div>
+                  <div className="h-8 w-px bg-gray-300 dark:bg-neutral-700 absolute left-[85px] z-10 group-focus-within:bg-[#FE5502]/50 transition-colors" />
+                  <input
+                    type="tel"
+                    required
+                    autoFocus
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                    maxLength={10}
+                    className="flex-1 h-12 md:h-14 w-full text-lg bg-white dark:bg-neutral-900 text-gray-900 dark:text-white border border-gray-300 dark:border-neutral-700 rounded-xl rounded-l-none pl-4 focus:ring-0 focus:border-[#FE5502] focus:outline-none transition-all shadow-none placeholder:text-gray-400"
+                    placeholder="Phone"
+                  />
                 </div>
-                <p className="text-[11px] text-gray-400 text-center leading-relaxed">
-                  We will send success notifications and order updates via SMS
-                </p>
               </div>
             ) : showNameInput ? (
               <div className="space-y-6">
                 <div className="flex items-center gap-3 bg-gray-50 dark:bg-gray-900 p-4 rounded-2xl border border-dashed border-gray-200 dark:border-gray-800">
-                  <div className="w-10 h-10 bg-primary-orange/10 rounded-full flex items-center justify-center">
-                    <ShieldCheck className="w-5 h-5 text-primary-orange" />
+                  <div className="w-10 h-10 bg-[#FE5502]/10 rounded-full flex items-center justify-center">
+                    <ShieldCheck className="w-5 h-5 text-[#FE5502]" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-[10px] uppercase font-black text-gray-400 tracking-widest leading-none mb-1">Verified Number</p>
-                    <p className="text-sm font-black text-gray-900 dark:text-white">+91 {phoneNumber}</p>
+                    <p className="text-[10px] uppercase font-bold text-gray-400 tracking-widest leading-none mb-1">Verified Number</p>
+                    <p className="text-sm font-semibold text-gray-900 dark:text-white">+91 {phoneNumber}</p>
                   </div>
-                  <button type="button" onClick={handleEditNumber} className="text-xs text-primary-orange font-black underline cursor-pointer">
+                  <button type="button" onClick={handleEditNumber} className="text-xs text-[#FE5502] font-semibold hover:underline cursor-pointer">
                     Change
                   </button>
                 </div>
 
                 <div className="space-y-4">
                   <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-1 flex items-center pointer-events-none">
-                      <UserRound className="w-5 h-5 text-gray-400 group-focus-within:text-primary-orange transition-colors" />
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <UserRound className="w-5 h-5 text-gray-400 group-focus-within:text-[#FE5502] transition-colors" />
                     </div>
                     <input
                       type="text"
@@ -391,7 +430,7 @@ export default function UnifiedOTPFastLogin() {
                         setName(e.target.value)
                         if (nameError) setNameError("")
                       }}
-                      className={`block w-full pl-10 pr-4 py-3 bg-transparent text-gray-900 dark:text-white border-b-2 border-gray-100 dark:border-gray-800 focus:border-primary-orange outline-none transition-all placeholder:text-gray-300 font-bold text-lg ${nameError ? "border-red-500" : ""}`}
+                      className={`block w-full pl-10 pr-4 py-3 h-12 md:h-14 bg-white dark:bg-neutral-900 text-gray-900 dark:text-white border border-gray-300 dark:border-neutral-700 rounded-xl focus:border-[#FE5502] focus:outline-none transition-all placeholder:text-gray-400 text-lg ${nameError ? "border-red-500" : ""}`}
                       placeholder="Your full name"
                     />
                   </div>
@@ -408,16 +447,16 @@ export default function UnifiedOTPFastLogin() {
             ) : (
               <div className="space-y-6">
                 <div className="space-y-4">
-                   <div className="flex items-center gap-3 bg-gray-50 dark:bg-gray-900 p-4 rounded-2xl border border-dashed border-gray-200 dark:border-gray-800">
-                      <div className="w-10 h-10 bg-primary-orange/10 rounded-full flex items-center justify-center">
-                         <ShieldCheck className="w-5 h-5 text-primary-orange" />
-                      </div>
-                      <div className="flex-1">
-                         <p className="text-[10px] uppercase font-black text-gray-400 tracking-widest leading-none mb-1">Sent to</p>
-                         <p className="text-sm font-black text-gray-900 dark:text-white">+91 {phoneNumber}</p>
-                      </div>
-                      <button type="button" onClick={handleEditNumber} className="text-xs text-primary-orange font-black underline cursor-pointer">Edit</button>
-                   </div>
+                  <div className="flex items-center gap-3 bg-gray-50 dark:bg-gray-900 p-4 rounded-2xl border border-dashed border-gray-200 dark:border-gray-800">
+                    <div className="w-10 h-10 bg-[#FE5502]/10 rounded-full flex items-center justify-center">
+                      <ShieldCheck className="w-5 h-5 text-[#FE5502]" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-[10px] uppercase font-bold text-gray-400 tracking-widest leading-none mb-1">Sent to</p>
+                      <p className="text-sm font-semibold text-gray-900 dark:text-white">+91 {phoneNumber}</p>
+                    </div>
+                    <button type="button" onClick={handleEditNumber} className="text-xs text-[#FE5502] font-semibold hover:underline cursor-pointer">Edit</button>
+                  </div>
 
                   <div className="flex justify-center gap-3 mt-4">
                     {[0, 1, 2, 3].map((index) => (
@@ -437,7 +476,6 @@ export default function UnifiedOTPFastLogin() {
                           const combined = newOtp.join("").slice(0, 4);
                           setOtp(combined);
                           
-                          // Focus next
                           if (index < 3 && val) {
                             document.getElementById(`otp-${index + 1}`)?.focus();
                           }
@@ -461,7 +499,7 @@ export default function UnifiedOTPFastLogin() {
                             document.getElementById(`otp-${Math.min(pasteData.length, 3)}`)?.focus();
                           }
                         }}
-                        className="w-14 h-14 sm:w-16 sm:h-16 text-center text-xl sm:text-3xl font-black bg-gray-50 dark:bg-gray-900 border-2 border-gray-100 dark:border-gray-800 focus:border-primary-orange rounded-xl sm:rounded-2xl outline-none transition-all text-gray-900 dark:text-white"
+                        className="w-12 h-14 md:w-14 md:h-16 text-center text-xl md:text-2xl font-semibold bg-white dark:bg-neutral-900 border border-gray-300 dark:border-neutral-700 focus:border-[#FE5502] focus:outline-none rounded-xl transition-all text-gray-900 dark:text-white"
                         placeholder="-"
                       />
                     ))}
@@ -476,7 +514,7 @@ export default function UnifiedOTPFastLogin() {
                         type="button"
                         onClick={handleResendOTP}
                         disabled={loading}
-                        className="text-xs font-black text-primary-orange underline disabled:opacity-60 disabled:cursor-not-allowed"
+                        className="text-xs font-semibold text-[#FE5502] hover:underline disabled:opacity-60 disabled:cursor-not-allowed"
                       >
                         Resend OTP
                       </button>
@@ -489,26 +527,39 @@ export default function UnifiedOTPFastLogin() {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-4 rounded-2xl font-black text-lg transition-all relative overflow-hidden shadow-xl ${
-                loading
-                  ? "bg-gray-100 dark:bg-gray-800 cursor-not-allowed opacity-50"
-                  : "bg-primary-orange hover:bg-primary-hover text-white hover:shadow-2xl hover:shadow-[#CB202D]/30 active:scale-[0.98] hover:-translate-y-0.5"
+              className={`w-full h-12 md:h-14 mt-2 bg-[#FE5502] hover:bg-[#E04B00] text-white font-semibold text-base md:text-lg rounded-xl transition-all hover:shadow-lg active:scale-[0.98] ${
+                loading ? "opacity-70 cursor-not-allowed" : ""
               }`}
             >
               {loading ? (
-                <Loader2 className="w-7 h-7 animate-spin mx-auto text-white" />
+                <div className="flex items-center justify-center">
+                  <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                  Please wait...
+                </div>
               ) : (
-                step === 1 ? "Get Verification Code" : showNameInput ? "Save Name & Continue" : "Continue"
+                step === 1 ? "Send One Time Password" : showNameInput ? "Save Name & Continue" : "Verify Code"
               )}
             </button>
           </form>
-        </div>
 
-        <div className="mt-6 text-center space-y-2">
-           <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] leading-relaxed">
-             By continuing, you agree to our <br />
-             <Link to="/food/user/profile/terms" className="text-gray-900 dark:text-white underline cursor-pointer hover:text-primary-orange transition-colors">Terms of Service</Link> & <Link to="/food/user/profile/privacy" className="text-gray-900 dark:text-white underline cursor-pointer hover:text-primary-orange transition-colors">Privacy Policy</Link>
-           </p>
+
+
+          <div className="text-center text-[11px] md:text-xs text-gray-400 dark:text-gray-500 pt-4 pb-2 border-t border-gray-100 dark:border-neutral-800 mt-6">
+            <p className="mb-2">By continuing, you agree to our</p>
+            <div className="flex justify-center gap-1.5 flex-wrap">
+              <Link to="/profile/terms" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                Terms of Service
+              </Link>
+              <span>•</span>
+              <Link to="/profile/privacy" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                Privacy Policy
+              </Link>
+              <span>•</span>
+              <Link to="/profile/refund" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                Content Policy
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>

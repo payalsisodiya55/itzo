@@ -47,7 +47,7 @@ const RouteAwarePageLoader = () => {
 
 
 
-  if (pathname.startsWith('/admin')) {
+  if (pathname.startsWith('/ecs')) {
     return <ContentPageSkeleton hero={false} />
   }
 
@@ -136,7 +136,7 @@ const AppRoutes = () => {
     if (!isNativeLikeShell) return
 
     const route = `${location.pathname || ''}${location.search || ''}`
-    if (route.startsWith('/food/') || route.startsWith('/admin')) {
+    if (route.startsWith('/food/') || route.startsWith('/ecs')) {
       localStorage.setItem(NATIVE_LAST_ROUTE_KEY, route)
     }
   }, [location.pathname, location.search])
@@ -257,7 +257,7 @@ const AppRoutes = () => {
 
         {/* Global Admin Portal - wrap lazy router in Suspense to avoid blank/crash on direct admin URLs */}
         <Route
-          path="/admin/*"
+          path="/ecs/*"
           element={
             <Suspense fallback={<PageLoader />}>
               <AdminRouter />

@@ -9,7 +9,7 @@ const debugError = (...args) => {}
 export default function LandingPageSettings({ type = "admin" }) {
   const isAdmin = type === "admin";
 
-  // Admin Landing Page state
+  // ECS Landing Page state
   const [adminActiveTab, setAdminActiveTab] = useState("Header");
   const [adminActiveLanguage, setAdminActiveLanguage] = useState("default");
   const [adminHeaderContent, setAdminHeaderContent] = useState({
@@ -82,7 +82,7 @@ export default function LandingPageSettings({ type = "admin" }) {
     { id: "en", label: "English(EN)" },
     { id: "bn", label: "Bengali - বাংলা(BN)" },
     { id: "ar", label: "Arabic - العربية (AR)" },
-    { id: "es", label: "Spanish - espa�ol(ES)" },
+    { id: "es", label: "Spanish - espa�ol(ES)" },
   ];
 
   const handleImageUpload = (e, setter, field) => {
@@ -162,7 +162,7 @@ export default function LandingPageSettings({ type = "admin" }) {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3 w-full overflow-hidden" style={{ maxWidth: '100%' }}>
             <div className="flex items-center gap-2 min-w-0">
               <Monitor className="w-5 h-5 text-slate-700 flex-shrink-0" />
-              <h1 className="text-xl lg:text-2xl font-bold text-slate-900 truncate">Admin Landing Page</h1>
+              <h1 className="text-xl lg:text-2xl font-bold text-slate-900 truncate">ECS Landing Page</h1>
             </div>
             <a href="#" className="text-blue-600 hover:text-blue-700 text-xs sm:text-sm font-medium flex items-center gap-1 flex-shrink-0">
               See how it works!

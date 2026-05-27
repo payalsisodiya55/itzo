@@ -247,7 +247,7 @@ export default function ViewOrderDialog({ isOpen, onOpenChange, order }) {
                 <div className="space-y-1">
                   <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2">
                     <Mail className="w-4 h-4" />
-                    Email
+                    User Id
                   </p>
                   <p className="text-sm font-medium text-slate-900">{order.customerEmail}</p>
                 </div>

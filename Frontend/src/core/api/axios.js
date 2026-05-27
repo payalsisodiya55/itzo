@@ -25,7 +25,7 @@ axiosInstance.interceptors.request.use(
         // This is crucial for shared APIs like /products or /admin/categories
         if (pagePath.startsWith('/seller')) {
             token = localStorage.getItem('auth_seller');
-        } else if (pagePath.startsWith('/admin')) {
+        } else if (pagePath.startsWith('/ecs')) {
             token = localStorage.getItem('auth_admin');
         } else if (pagePath.startsWith('/delivery')) {
             token = localStorage.getItem('auth_delivery');
@@ -36,7 +36,7 @@ axiosInstance.interceptors.request.use(
         // 2. Fallback to URL-based detection
         if (!token) {
             if (url.startsWith('/seller')) token = localStorage.getItem('auth_seller');
-            else if (url.startsWith('/admin')) token = localStorage.getItem('auth_admin');
+            else if (url.startsWith('/ecs')) token = localStorage.getItem('auth_admin');
             else if (url.startsWith('/delivery')) token = localStorage.getItem('auth_delivery');
             else if (url.startsWith('/customer') || url.startsWith('/cart') || url.startsWith('/wishlist') || url.startsWith('/categories') || url.startsWith('/products')) {
                 token = getCustomerToken();
@@ -44,7 +44,7 @@ axiosInstance.interceptors.request.use(
         }
 
         // 3. Final default: if we are on a general page and STILL no token, try customer token
-        if (!token && !pagePath.startsWith('/admin') && !pagePath.startsWith('/seller') && !pagePath.startsWith('/delivery')) {
+        if (!token && !pagePath.startsWith('/ecs') && !pagePath.startsWith('/seller') && !pagePath.startsWith('/delivery')) {
             token = getCustomerToken();
         }
 
@@ -83,14 +83,14 @@ axiosInstance.interceptors.response.use(
             const requestUrl = String(originalRequest?.url || '');
             const currentModule = path.startsWith('/seller')
                 ? 'seller'
-                : path.startsWith('/admin')
+                : path.startsWith('/ecs')
                     ? 'admin'
                     : path.startsWith('/delivery')
                         ? 'delivery'
                         : 'customer';
             const requestModule = requestUrl.startsWith('/seller')
                 ? 'seller'
-                : requestUrl.startsWith('/admin')
+                : requestUrl.startsWith('/ecs')
                     ? 'admin'
                     : requestUrl.startsWith('/delivery')
                         ? 'delivery'
@@ -114,7 +114,7 @@ axiosInstance.interceptors.response.use(
             keysToClear.forEach((key) => localStorage.removeItem(key));
 
             if (currentModule === 'seller') window.location.href = '/seller/auth';
-            else if (currentModule === 'admin') window.location.href = '/admin/login';
+            else if (currentModule === 'admin') window.location.href = '/ecs/login';
             else if (currentModule === 'delivery') window.location.href = '/delivery/auth';
             else window.location.href = '/user/auth/login';
         }

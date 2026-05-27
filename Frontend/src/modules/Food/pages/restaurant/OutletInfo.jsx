@@ -630,7 +630,7 @@ export default function OutletInfo() {
               </div>
 
               <div className="p-4">
-                <p className="text-xs text-gray-400 font-medium mb-1">Owner Email</p>
+                <p className="text-xs text-gray-400 font-medium mb-1">Owner User Id</p>
                 <p className="text-sm font-bold text-gray-800">{restaurantData?.ownerEmail || "Not provided"}</p>
               </div>
             </div>

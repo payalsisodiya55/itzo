@@ -4,7 +4,7 @@ const debugError = (...args) => {}
 
 // Export utility functions for join requests
 export const exportJoinRequestsToCSV = (requests, filename = "join_requests") => {
-  const headers = ["SI", "Name", "Email", "Phone", "Zone", "Vehicle Type", "Status"]
+  const headers = ["SI", "Name", "User Id", "Phone", "Zone", "Vehicle Type", "Status"]
   const rows = requests.map((request) => [
     request.sl,
     request.name,
@@ -32,7 +32,7 @@ export const exportJoinRequestsToCSV = (requests, filename = "join_requests") =>
 }
 
 export const exportJoinRequestsToExcel = (requests, filename = "join_requests") => {
-  const headers = ["SI", "Name", "Email", "Phone", "Zone", "Vehicle Type", "Status"]
+  const headers = ["SI", "Name", "User Id", "Phone", "Zone", "Vehicle Type", "Status"]
   const rows = requests.map((request) => [
     request.sl,
     request.name,
@@ -103,7 +103,7 @@ export const exportJoinRequestsToPDF = (requests, filename = "join_requests") =>
 
         // Add table using autoTable
         autoTable(doc, {
-          head: [["SI", "Name", "Email", "Phone", "Zone", "Vehicle Type", "Status"]],
+          head: [["SI", "Name", "User Id", "Phone", "Zone", "Vehicle Type", "Status"]],
           body: tableData,
           startY: 28,
           styles: {

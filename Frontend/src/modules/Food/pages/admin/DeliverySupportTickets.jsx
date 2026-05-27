@@ -439,12 +439,12 @@ export default function DeliverySupportTickets() {
                 </div>
               </div>
 
-              {/* Admin Response Section */}
+              {/* ECS Response Section */}
               {selectedTicket.adminResponse && (
                 <div>
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-1 h-6 bg-green-500 rounded"></div>
-                    <h3 className="text-base font-semibold text-gray-900">Admin Response</h3>
+                    <h3 className="text-base font-semibold text-gray-900">ECS Response</h3>
                   </div>
                   <div className="pl-4">
                     <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">

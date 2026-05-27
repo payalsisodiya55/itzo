@@ -8,7 +8,7 @@ const adminNotifications = [
   {
     id: 1,
     topic: "Forget Password",
-    description: "Choose How Admin Will Get Notified About Sent Notification On Forget Password.",
+    description: "Choose How ECS Will Get Notified About Sent Notification On Forget Password.",
     pushNotification: "N/A",
     mail: true,
     sms: true
@@ -16,7 +16,7 @@ const adminNotifications = [
   {
     id: 2,
     topic: "Deliveryman Self Registration",
-    description: "Choose How Admin Will Get Notified About Sent Notification On Deliveryman Self Registration.",
+    description: "Choose How ECS Will Get Notified About Sent Notification On Deliveryman Self Registration.",
     pushNotification: "N/A",
     mail: true,
     sms: false
@@ -24,7 +24,7 @@ const adminNotifications = [
   {
     id: 3,
     topic: "Restaurant Self Registration",
-    description: "Choose How Admin Will Get Notified About Sent Notification On Restaurant Self Registration.",
+    description: "Choose How ECS Will Get Notified About Sent Notification On Restaurant Self Registration.",
     pushNotification: "N/A",
     mail: true,
     sms: false
@@ -32,7 +32,7 @@ const adminNotifications = [
   {
     id: 4,
     topic: "Campaign Join Request",
-    description: "Choose How Admin Will Get Notified About Sent Notification On Campaign Join Request.",
+    description: "Choose How ECS Will Get Notified About Sent Notification On Campaign Join Request.",
     pushNotification: "N/A",
     mail: true,
     sms: false
@@ -40,7 +40,7 @@ const adminNotifications = [
   {
     id: 5,
     topic: "Withdraw Request",
-    description: "Choose How Admin Will Get Notified About Sent Notification On Withdraw Request.",
+    description: "Choose How ECS Will Get Notified About Sent Notification On Withdraw Request.",
     pushNotification: "N/A",
     mail: true,
     sms: false
@@ -48,7 +48,7 @@ const adminNotifications = [
   {
     id: 6,
     topic: "Order Refund Request",
-    description: "Choose How Admin Will Get Notified About Sent Notification On Order Refund Request.",
+    description: "Choose How ECS Will Get Notified About Sent Notification On Order Refund Request.",
     pushNotification: "N/A",
     mail: true,
     sms: false
@@ -56,7 +56,7 @@ const adminNotifications = [
   {
     id: 7,
     topic: "Advertisement Add",
-    description: "Choose How Admin Will Get Notified About Sent Notification On Advertisement Add.",
+    description: "Choose How ECS Will Get Notified About Sent Notification On Advertisement Add.",
     pushNotification: "N/A",
     mail: true,
     sms: false
@@ -64,7 +64,7 @@ const adminNotifications = [
   {
     id: 8,
     topic: "Advertisement Update",
-    description: "Choose How Admin Will Get Notified About Sent Notification On Advertisement Update.",
+    description: "Choose How ECS Will Get Notified About Sent Notification On Advertisement Update.",
     pushNotification: "N/A",
     mail: true,
     sms: false
@@ -273,7 +273,7 @@ const deliverymanNotifications = [
 ]
 
 const tabs = [
-  { id: "admin", label: "Admin" },
+  { id: "admin", label: "ECS" },
   { id: "restaurant", label: "Restaurant" },
   { id: "customers", label: "Customers" },
   { id: "deliveryman", label: "Deliveryman" }

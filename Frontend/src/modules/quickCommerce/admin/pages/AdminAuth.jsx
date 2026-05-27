@@ -71,7 +71,7 @@ const AdminAuth = () => {
             login(authData);
 
             toast.success(isLogin ? 'Welcome back, Administrator.' : 'Administrator Account Created.');
-            navigate('/admin/quick-commerce');
+            navigate('/ecs/quick-commerce');
         } catch (error) {
             toast.error(error.response?.data?.message || 'Authentication failed');
         } finally {
@@ -114,7 +114,7 @@ const AdminAuth = () => {
                                 </motion.h1>
                                 <p className="text-gray-400 font-medium text-base">
                                     {isLogin
-                                        ? `Welcome to ${appName} Admin Platform`
+                                        ? `Welcome to ${appName} ECS Platform`
                                         : 'Start managing your platform today'}
                                 </p>
                             </div>

@@ -292,7 +292,7 @@ export default function SignupStep1() {
               inputMode="email"
               className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.email ? "border-red-500" : "border-gray-300"
                 }`}
-              placeholder="Enter your email"
+              placeholder="Enter your User Id"
             />
             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
           </div>

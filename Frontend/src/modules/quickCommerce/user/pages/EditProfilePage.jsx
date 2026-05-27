@@ -99,7 +99,7 @@ const EditProfilePage = () => {
                         </div>
 
                         <div>
-                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Email Address</label>
+                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">User Id</label>
                             <div className="flex items-center gap-3 bg-slate-50 px-4 py-3 rounded-xl border border-slate-200 focus-within:border-[#0c831f] focus-within:ring-4 focus-within:ring-[#0c831f]/10 transition-all">
                                 <Mail size={20} className="text-slate-400" />
                                 <input

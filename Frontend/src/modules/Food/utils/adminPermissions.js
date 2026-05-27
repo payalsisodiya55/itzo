@@ -74,11 +74,11 @@ export const resolveAdminPermissionsForUser = async (user) => {
 export const getAdminModuleConfig = (pathname = "") => {
   const normalizedPath = String(pathname || "").replace(/\/+$/, "");
 
-  if (normalizedPath.startsWith("/admin/quick-commerce")) {
+  if (normalizedPath.startsWith("/ecs/quick-commerce")) {
     return { rootKey: "quick", menu: quickAdminSidebarMenu };
   }
 
-  if (normalizedPath.startsWith("/admin/global-settings")) {
+  if (normalizedPath.startsWith("/ecs/global-settings")) {
     return { rootKey: "global", menu: commonAdminSidebarMenu };
   }
 
@@ -87,9 +87,9 @@ export const getAdminModuleConfig = (pathname = "") => {
 
 const isModuleDashboardPath = (pathname = "", rootKey = "") => {
   const normalizedPath = String(pathname || "").replace(/\/+$/, "") || "/";
-  if (rootKey === "food") return normalizedPath === "/admin/food";
-  if (rootKey === "quick") return normalizedPath === "/admin/quick-commerce";
-  if (rootKey === "global") return normalizedPath === "/admin/global-settings";
+  if (rootKey === "food") return normalizedPath === "/ecs/food";
+  if (rootKey === "quick") return normalizedPath === "/ecs/quick-commerce";
+  if (rootKey === "global") return normalizedPath === "/ecs/global-settings";
   return false;
 };
 
@@ -183,8 +183,8 @@ export const getFirstAccessibleAdminPath = (menuList, permissions, parentKey) =>
 };
 
 export const getDefaultAdminLandingPath = (user, permissions = {}) => {
-  if (!user) return "/admin/food";
-  if (user.role === "ADMIN") return "/admin/food";
+  if (!user) return "/ecs/food";
+  if (user.role === "ADMIN") return "/ecs/food";
 
   const moduleConfigs = [
     { rootKey: "food", menu: adminSidebarMenu },
@@ -204,7 +204,7 @@ export const getDefaultAdminLandingPath = (user, permissions = {}) => {
     if (accessiblePath) return accessiblePath;
   }
 
-  return "/admin/food";
+  return "/ecs/food";
 };
 
 export const inferAdminActionFromPath = (pathname, match) => {

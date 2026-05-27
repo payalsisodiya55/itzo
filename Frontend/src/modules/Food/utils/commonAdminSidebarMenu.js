@@ -8,14 +8,14 @@ export const commonAdminSidebarMenu = [
         type: "link",
         label: "App Settings",
         permissionKey: "app_settings",
-        path: "/admin/global-settings/app",
+        path: "/ecs/global-settings/app",
         icon: "Settings",
       },
       {
         type: "link",
-        label: "Admin Settings",
+        label: "ECS Settings",
         permissionKey: "admin_settings",
-        path: "/admin/global-settings/admin",
+        path: "/ecs/global-settings/admin",
         icon: "UserCog",
       },
       {
@@ -27,7 +27,7 @@ export const commonAdminSidebarMenu = [
           {
             label: "Modules",
             permissionKey: "modules",
-            path: "/admin/global-settings/modules",
+            path: "/ecs/global-settings/modules",
             icon: "LayoutGrid",
           }
         ]

@@ -48,7 +48,7 @@ export default function AdminSettings() {
           if (adminUserStr) {
             const local = JSON.parse(adminUserStr);
             setAdminInfo({
-              name: local.name || "Admin User",
+              name: local.name || "ECS User",
               email: local.email || "",
               role: local.role || "admin",
             });
@@ -170,7 +170,7 @@ export default function AdminSettings() {
             </div>
             <div className="flex items-center gap-2 text-sm">
               <Mail className="w-4 h-4 text-neutral-500" />
-              <span className="text-neutral-600">Email:</span>
+              <span className="text-neutral-600">User Id:</span>
               <span className="font-medium text-neutral-900">{adminInfo.email || "—"}</span>
             </div>
             {adminInfo.role && (

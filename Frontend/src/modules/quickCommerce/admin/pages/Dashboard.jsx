@@ -386,7 +386,7 @@ const AdminDashboard = () => {
                             </table>
                         </div>
                         <button
-                            onClick={() => navigate('/admin/quick-commerce/orders/all')}
+                            onClick={() => navigate('/ecs/quick-commerce/orders/all')}
                             className="w-full mt-6 py-3 rounded-xl bg-gray-50 text-xs font-bold text-gray-500 hover:bg-primary hover:text-white transition-all">
                             VIEW ALL ORDERS
                         </button>
@@ -421,7 +421,7 @@ const AdminDashboard = () => {
                                 <div className="py-12 text-center text-slate-300 italic text-xs">No sales data yet</div>
                             )}
                         </div>
-                        <button onClick={() => navigate('/admin/quick-commerce/products')} className="w-full mt-6 py-3 border-2 border-dashed border-gray-100 rounded-xl text-xs font-bold text-gray-400 hover:border-primary hover:text-primary transition-all">
+                        <button onClick={() => navigate('/ecs/quick-commerce/products')} className="w-full mt-6 py-3 border-2 border-dashed border-gray-100 rounded-xl text-xs font-bold text-gray-400 hover:border-primary hover:text-primary transition-all">
                             VIEW ALL PRODUCTS
                         </button>
                     </Card>

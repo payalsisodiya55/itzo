@@ -50,14 +50,14 @@ function resolveNativeInitialRoute() {
   if (pathname.startsWith('/restaurant')) return `/food${pathname}`
   if (pathname.startsWith('/delivery')) return `/food${pathname}`
   if (pathname.startsWith('/user')) return `/food${pathname}`
-  if (pathname.startsWith('/admin')) return pathname
-  if (storedRoute.startsWith('/food/') || storedRoute.startsWith('/admin')) {
+  if (pathname.startsWith('/ecs')) return pathname
+  if (storedRoute.startsWith('/food/') || storedRoute.startsWith('/ecs')) {
     return storedRoute
   }
 
   if (isModuleAuthenticated('restaurant')) return '/food/restaurant'
   if (isModuleAuthenticated('delivery')) return '/food/delivery'
-  if (isModuleAuthenticated('admin')) return '/admin'
+  if (isModuleAuthenticated('admin')) return '/ecs'
   if (isModuleAuthenticated('user')) return '/food/user'
 
   return '/food/user'

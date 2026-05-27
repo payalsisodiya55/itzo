@@ -124,7 +124,7 @@ export default function SellerPendingApproval() {
               </div>
               <div>
                 <p className="text-lg font-black text-slate-900">
-                  {isRejected ? "Admin note" : "What happens next"}
+                  {isRejected ? "ECS note" : "What happens next"}
                 </p>
                 <p className="mt-2 text-sm font-medium leading-7 text-slate-600">
                   {profile?.approvalNotes ||

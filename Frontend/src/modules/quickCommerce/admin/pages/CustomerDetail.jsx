@@ -143,7 +143,7 @@ const CustomerDetail = () => {
         return (
             <div className="h-[80vh] flex flex-col items-center justify-center space-y-4">
                 <p className="text-lg font-bold text-gray-400">Customer not found</p>
-                <button onClick={() => navigate('/admin/quick-commerce/customers')} className="text-primary font-bold">Back to Customers</button>
+                <button onClick={() => navigate('/ecs/quick-commerce/customers')} className="text-primary font-bold">Back to Customers</button>
             </div>
         );
     }
@@ -154,7 +154,7 @@ const CustomerDetail = () => {
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 px-1">
                 <div className="flex items-center gap-4">
                     <button
-                        onClick={() => navigate('/admin/quick-commerce/customers')}
+                        onClick={() => navigate('/ecs/quick-commerce/customers')}
                         className="p-2.5 bg-white ring-1 ring-slate-200 rounded-xl hover:bg-slate-50 transition-all shadow-sm group"
                     >
                         <ChevronLeft className="h-5 w-5 text-slate-500 group-hover:-translate-x-0.5 transition-transform" />
@@ -340,7 +340,7 @@ const CustomerDetail = () => {
                                     {filteredOrders.map((order, i) => (
                                         <tr
                                             key={i}
-                                            onClick={() => navigate(`/admin/orders/view/${order.id.replace('#', '')}`)}
+                                            onClick={() => navigate(`/ecs/orders/view/${order.id.replace('#', '')}`)}
                                             className="group hover:bg-slate-50/50 transition-all cursor-pointer"
                                         >
                                             <td className="px-4 py-5">

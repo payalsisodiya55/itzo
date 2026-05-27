@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import { useNavigate, Link, useSearchParams } from "react-router-dom"
-import { AlertCircle, Loader2 } from "lucide-react"
+import { AlertCircle, Loader2, Mail, ChevronDown } from "lucide-react"
 import AnimatedPage from "@food/components/user/AnimatedPage"
 import { Button } from "@food/components/ui/button"
 import { Input } from "@food/components/ui/input"
@@ -109,36 +109,36 @@ export default function SignIn() {
   }
 
   return (
-    <AnimatedPage className="min-h-screen bg-gray-50 dark:bg-[#0a0a0a] flex items-center justify-center p-4">
-      {/* Background decoration (desktop only) */}
-      <div className="fixed inset-0 z-0 hidden md:block opacity-40">
-        <img src={loginBanner} alt="" className="w-full h-full object-cover blur-sm" />
-        <div className="absolute inset-0 bg-white/60 dark:bg-black/80" />
+    <AnimatedPage className="min-h-screen bg-gray-50 dark:bg-neutral-950 flex items-center justify-center p-4">
+      {/* Subtle overlay (desktop only) */}
+      <div className="fixed inset-0 z-0 hidden md:block opacity-30">
+        <img src={loginBanner} alt="" className="w-full h-full object-cover blur-md" />
+        <div className="absolute inset-0 bg-white/70 dark:bg-black/90" />
       </div>
 
-      <div className="w-full max-w-[450px] bg-white dark:bg-[#1a1a1a] rounded-xl shadow-2xl relative z-10 overflow-hidden border border-gray-100 dark:border-gray-800">
+      <div className="w-full max-w-[420px] bg-white dark:bg-neutral-900 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.5)] relative z-10 overflow-hidden border border-gray-100 dark:border-neutral-800">
         {/* Banner (Mobile Only) */}
-        <div className="md:hidden w-full h-[180px] relative">
+        <div className="md:hidden w-full h-[140px] relative">
           <img src={loginBanner} alt="Food Banner" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-[#1a1a1a] to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-neutral-900 to-transparent" />
         </div>
 
-        <div className="p-6 sm:p-8 md:p-10 space-y-6 md:space-y-8">
-          <div className="text-center space-y-2 md:space-y-3">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white leading-tight">
-              Login or Signup
+        <div className="p-6 md:p-8 space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 tracking-tight">
+              Login
             </h2>
-            <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400">
-              Enter your phone number to continue
-            </p>
           </div>
 
-          <form id="user-signin-form" onSubmit={handleSubmit} className="space-y-5">
-            <div className="space-y-2">
-              <div className="relative flex items-center">
-                <div className="flex items-center px-4 h-12 md:h-14 border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#2a2a2a] text-gray-900 dark:text-white rounded-lg border-r-0 rounded-r-none font-medium">
+          <form id="user-signin-form" onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-1">
+              <div className="relative flex items-center group">
+                <div className="flex items-center justify-center gap-1.5 px-3 h-12 md:h-14 border border-gray-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-gray-700 dark:text-gray-300 rounded-xl rounded-r-none font-medium border-r-0 group-focus-within:border-[#FE5502]">
+                  <img src="https://flagcdn.com/w20/in.png" alt="India" className="w-5 h-auto rounded-[2px]" />
                   <span>+91</span>
+                  <ChevronDown className="w-4 h-4 text-gray-400" />
                 </div>
+                <div className="h-8 w-px bg-gray-300 dark:bg-neutral-700 absolute left-[85px] z-10 group-focus-within:bg-[#FE5502]/50 transition-colors" />
                 <Input
                   id="phone"
                   name="phone"
@@ -146,16 +146,16 @@ export default function SignIn() {
                   inputMode="numeric"
                   pattern="[0-9]*"
                   maxLength={10}
-                  placeholder="Phone number"
+                  placeholder="Phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className={`flex-1 h-12 md:h-14 text-lg bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white border-gray-300 dark:border-gray-700 rounded-lg rounded-l-none focus-visible:ring-1 focus-visible:ring-[#EB590E] focus-visible:border-[#EB590E] ${error ? "border-red-500" : ""} transition-all`}
+                  className={`flex-1 h-12 md:h-14 text-lg bg-white dark:bg-neutral-900 text-gray-900 dark:text-white border-gray-300 dark:border-neutral-700 rounded-xl rounded-l-none pl-4 focus-visible:ring-0 focus-visible:border-[#FE5502] ${error ? "border-red-500" : ""} transition-all shadow-none`}
                   aria-invalid={error ? "true" : "false"}
                 />
               </div>
 
               {error && (
-                <div className="flex items-center gap-1.5 text-xs text-red-500 pl-1">
+                <div className="flex items-center gap-1.5 text-xs text-red-500 pl-1 mt-1.5">
                   <AlertCircle className="h-3.5 w-3.5" />
                   <span>{error}</span>
                 </div>
@@ -165,7 +165,7 @@ export default function SignIn() {
             <Button
               type="submit"
               form="user-signin-form"
-              className="w-full h-12 md:h-14 bg-[#EB590E] hover:bg-[#D94F0C] text-white font-bold text-base md:text-lg rounded-lg transition-all hover:shadow-lg active:scale-[0.98]"
+              className="w-full h-12 md:h-14 bg-[#FE5502] hover:bg-[#E04B00] text-white font-semibold text-base md:text-lg rounded-xl transition-all hover:shadow-lg active:scale-[0.98]"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -174,28 +174,35 @@ export default function SignIn() {
                   Sending OTP...
                 </>
               ) : (
-                "Continue"
+                "Send One Time Password"
               )}
             </Button>
           </form>
 
           {/* Social login separator */}
-          <div className="relative">
+          <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-gray-200 dark:border-gray-800" />
+              <span className="w-full border-t border-gray-200 dark:border-neutral-800" />
             </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-white dark:bg-[#1a1a1a] px-3 text-gray-500 dark:text-gray-400 font-medium">
+            <div className="relative flex justify-center text-xs">
+              <span className="bg-white dark:bg-neutral-900 px-4 text-gray-400 dark:text-gray-500 font-medium">
                 or
               </span>
             </div>
           </div>
 
           {/* Social login buttons */}
-          <div className="grid grid-cols-1 gap-3">
+          <div className="flex flex-col gap-3">
             <button
               type="button"
-              className="flex items-center justify-center gap-3 w-full h-12 md:h-14 bg-white dark:bg-[#2a2a2a] border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-[#333] transition-colors"
+              className="flex items-center justify-center gap-3 w-full h-12 md:h-14 bg-white dark:bg-neutral-900 border border-gray-300 dark:border-neutral-700 rounded-xl hover:bg-gray-50 dark:hover:bg-neutral-800 transition-colors"
+            >
+              <Mail className="w-5 h-5 text-[#FE5502]" />
+              <span className="text-gray-700 dark:text-gray-200 font-medium text-[15px]">Continue with Email</span>
+            </button>
+            <button
+              type="button"
+              className="flex items-center justify-center gap-3 w-full h-12 md:h-14 bg-white dark:bg-neutral-900 border border-gray-300 dark:border-neutral-700 rounded-xl hover:bg-gray-50 dark:hover:bg-neutral-800 transition-colors"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path
@@ -215,22 +222,22 @@ export default function SignIn() {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.14-4.53z"
                 />
               </svg>
-              <span className="text-gray-700 dark:text-gray-200 font-medium">Continue with Google</span>
+              <span className="text-gray-700 dark:text-gray-200 font-medium text-[15px]">Continue with Google</span>
             </button>
           </div>
 
-          <div className="text-center text-xs md:text-sm text-gray-500 dark:text-gray-400 pt-2">
+          <div className="text-center text-[11px] md:text-xs text-gray-400 dark:text-gray-500 pt-4 pb-2 border-t border-gray-100 dark:border-neutral-800 mt-6">
             <p className="mb-2">By continuing, you agree to our</p>
-            <div className="flex justify-center gap-2 flex-wrap">
-              <Link to="/profile/terms" className="underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
+            <div className="flex justify-center gap-1.5 flex-wrap">
+              <Link to="/profile/terms" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
                 Terms of Service
               </Link>
-              <span className="text-gray-300 dark:text-gray-700">•</span>
-              <Link to="/profile/privacy" className="underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
+              <span>•</span>
+              <Link to="/profile/privacy" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
                 Privacy Policy
               </Link>
-              <span className="text-gray-300 dark:text-gray-700">•</span>
-              <Link to="/profile/refund" className="underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
+              <span>•</span>
+              <Link to="/profile/refund" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
                 Content Policy
               </Link>
             </div>

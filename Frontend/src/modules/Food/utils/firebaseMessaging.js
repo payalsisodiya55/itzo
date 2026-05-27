@@ -36,7 +36,7 @@ const pushDebugWarn = (prefix, message, data = {}) => {
 function normalizeModuleFromPath(pathname = window.location.pathname) {
   if (pathname.includes("/restaurant") && !pathname.includes("/restaurants")) return "restaurant";
   if (pathname.includes("/delivery")) return "delivery";
-  if (pathname.includes("/admin")) return "admin";
+  if (pathname.includes("/ecs")) return "admin";
   return "user";
 }
 

@@ -264,7 +264,7 @@ export default function SafetyEmergencyReports() {
                 </th>
                 <th className="px-6 py-4 text-left text-[10px] font-bold text-slate-700 uppercase tracking-wider">
                   <div className="flex items-center gap-2">
-                    <span>Email</span>
+                    <span>User Id</span>
                     <ArrowUpDown className="w-3 h-3 text-slate-400 cursor-pointer hover:text-slate-600" />
                   </div>
                 </th>
@@ -467,7 +467,7 @@ export default function SafetyEmergencyReports() {
                     <p className="text-base font-semibold text-slate-900 dark:text-white">{selectedReport.userName || 'NA'}</p>
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Email Address</label>
+                    <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">User Id</label>
                     <p className="text-base font-semibold text-slate-900 dark:text-white break-all">{selectedReport.userEmail || 'NA'}</p>
                   </div>
                   {selectedReport.userId?.phone && (
@@ -518,12 +518,12 @@ export default function SafetyEmergencyReports() {
                 </p>
               </div>
 
-              {/* Admin Response Section */}
+              {/* ECS Response Section */}
               {selectedReport.adminResponse && (
                 <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl p-5 border border-green-200 dark:border-green-800">
                   <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-5 flex items-center gap-3">
                     <div className="w-1 h-6 bg-gradient-to-b from-green-500 to-emerald-600 rounded-full"></div>
-                    Admin Response
+                    ECS Response
                   </h3>
                   <div className="bg-white dark:bg-slate-800 rounded-lg p-5 border border-slate-200 dark:border-slate-700 shadow-sm">
                     <p className="text-sm text-slate-700 dark:text-slate-300 whitespace-pre-wrap leading-relaxed">

@@ -401,7 +401,7 @@ export default function Help() {
                     <Mail className="h-5 w-5 text-[#FE5502]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Email Support</h3>
+                    <h3 className="font-semibold mb-1">User Id Support</h3>
                     <p className="text-sm text-muted-foreground mb-2">
                       We'll respond within 24 hours
                     </p>

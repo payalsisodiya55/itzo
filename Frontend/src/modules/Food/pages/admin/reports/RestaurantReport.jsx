@@ -102,7 +102,7 @@ export default function RestaurantReport() {
       { key: "totalOrder", label: "Total Order" },
       { key: "totalOrderAmount", label: "Total Order Amount" },
       { key: "totalDiscountGiven", label: "Total Discount Given" },
-      { key: "totalAdminCommission", label: "Total Admin Commission" },
+      { key: "totalAdminCommission", label: "Total ECS Commission" },
       { key: "totalVATTAX", label: "Total VAT/TAX" },
       { key: "averageRatings", label: "Average Ratings" },
     ]
@@ -350,7 +350,7 @@ export default function RestaurantReport() {
                   </th>
                   <th className="px-6 py-4 text-left text-[10px] font-bold text-slate-700 uppercase tracking-wider">
                     <div className="flex items-center gap-1">
-                      <span>Total Admin Commission</span>
+                      <span>Total ECS Commission</span>
                       <ArrowUpDown className="w-3 h-3 text-slate-400" />
                     </div>
                   </th>

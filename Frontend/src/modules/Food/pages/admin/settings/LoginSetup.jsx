@@ -9,7 +9,7 @@ const debugError = (...args) => {}
 const panelLoginUrls = [
   {
     id: 1,
-    panelName: "Admin Panel",
+    panelName: "ECS Panel",
     loginUrl: "https://admin.stackfood.com/login",
     status: "active"
   },

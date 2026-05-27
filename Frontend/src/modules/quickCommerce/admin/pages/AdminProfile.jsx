@@ -25,7 +25,7 @@ const AdminProfile = () => {
     const [profile, setProfile] = useState({
         name: '',
         email: '',
-        role: 'Admin'
+        role: 'ECS'
     });
 
     const [security, setSecurity] = useState({
@@ -45,7 +45,7 @@ const AdminProfile = () => {
             setProfile({
                 name: data.name,
                 email: data.email,
-                role: data.role || 'Admin'
+                role: data.role || 'ECS'
             });
         } catch (error) {
             toast.error('Failed to fetch admin profile');
@@ -200,7 +200,7 @@ const AdminProfile = () => {
                                         />
                                     </div>
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Email Address</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">User Id</label>
                                         <div className="relative group">
                                             <Mail className="absolute left-5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                                             <input

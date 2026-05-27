@@ -27,7 +27,7 @@ export default function RestaurantForgotPassword() {
     setError("")
     
     if (!email.trim()) {
-      setError("Email is required")
+      setError("User Id is required")
       return
     }
 
@@ -243,7 +243,7 @@ export default function RestaurantForgotPassword() {
               <form onSubmit={handleEmailSubmit} className="space-y-5">
                 <div className="space-y-1.5">
                   <Label htmlFor="email" className="text-sm font-medium text-gray-700">
-                    Email Address
+                    User Id
                   </Label>
                   <div className="relative">
                     <span className="absolute inset-y-0 left-3 flex items-center text-gray-400 pointer-events-none">

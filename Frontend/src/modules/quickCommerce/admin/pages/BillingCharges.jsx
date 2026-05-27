@@ -465,7 +465,7 @@ export default function BillingCharges() {
             Delivery Boy Commission Rules
           </h2>
           <p className="mt-1 text-sm text-slate-500">
-            `/admin/food/delivery-boy-commission` jaisa slab setup, but quick-commerce ke liye isolated.
+            `/ecs/food/delivery-boy-commission` jaisa slab setup, but quick-commerce ke liye isolated.
           </p>
         </div>
 

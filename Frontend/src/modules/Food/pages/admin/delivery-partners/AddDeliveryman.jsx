@@ -36,7 +36,7 @@ export default function AddDeliveryman() {
     if (!formData.firstName.trim()) errors.firstName = "First name is required"
     if (!formData.lastName.trim()) errors.lastName = "Last name is required"
     if (!formData.email.trim()) {
-      errors.email = "Email is required"
+      errors.email = "User Id is required"
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       errors.email = "Invalid email format"
     }

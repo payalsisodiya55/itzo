@@ -112,7 +112,7 @@ export default function MenuCategoriesPage() {
 
   const openEditModal = (category) => {
     if (!category?.canEdit) {
-      toast.error("Admin controls this category now")
+      toast.error("ECS controls this category now")
       return
     }
     setEditingCategory(category)
@@ -195,7 +195,7 @@ export default function MenuCategoriesPage() {
 
   const handleDeleteCategory = async (category) => {
     if (!category?.canDelete) {
-      toast.error(category?.canEdit ? "Remove foods from this category before deleting it" : "Admin controls this category now")
+      toast.error(category?.canEdit ? "Remove foods from this category before deleting it" : "ECS controls this category now")
       return
     }
     if (!window.confirm(`Delete "${category.name}"?`)) return
@@ -211,7 +211,7 @@ export default function MenuCategoriesPage() {
 
   const handleToggleActive = async (category) => {
     if (!category?.canEdit) {
-      toast.error("Admin controls this category now")
+      toast.error("ECS controls this category now")
       return
     }
     try {
@@ -312,7 +312,7 @@ export default function MenuCategoriesPage() {
                       <div className="mt-2 space-y-1 text-sm text-slate-500">
                         <p>{category?.itemCount || 0} item(s) linked</p>
                         {isGlobal ? (
-                          <p>Admin controls this category now, so you can use it but not rename or delete it.</p>
+                          <p>ECS controls this category now, so you can use it but not rename or delete it.</p>
                         ) : status === "approved" ? (
                           <p>Editing this category will send it back for admin approval.</p>
                         ) : (

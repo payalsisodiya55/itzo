@@ -150,8 +150,8 @@ const Topbar = ({ onMenuClick }) => {
                 <div className="h-8 w-px bg-gray-100 mx-1"></div>
                 <button
                     onClick={() => {
-                        if (location.pathname.startsWith('/admin')) {
-                            navigate('/admin/profile');
+                        if (location.pathname.startsWith('/ecs')) {
+                            navigate('/ecs/profile');
                         } else if (location.pathname.startsWith('/seller')) {
                             navigate('/seller/profile');
                         } else if (location.pathname.startsWith('/delivery')) {

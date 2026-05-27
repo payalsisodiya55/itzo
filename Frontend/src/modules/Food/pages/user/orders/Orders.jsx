@@ -1246,7 +1246,7 @@ Order again from this restaurant in the ${companyName} app.`
                   className="rounded-2xl border border-gray-200 px-3 py-4 text-xs font-medium text-gray-700 flex flex-col items-center gap-2 hover:bg-gray-50"
                 >
                   <Mail className="w-5 h-5 text-rose-500" />
-                  Email
+                  User Id
                 </button>
                 <button
                   type="button"

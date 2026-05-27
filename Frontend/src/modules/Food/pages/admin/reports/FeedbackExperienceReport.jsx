@@ -105,7 +105,7 @@ export default function FeedbackExperienceReport() {
     const headers = [
       { key: "sl", label: "SI" },
       { key: "userName", label: "User Name" },
-      { key: "userEmail", label: "Email" },
+      { key: "userEmail", label: "User Id" },
       { key: "userPhone", label: "Phone" },
       { key: "rating", label: "Rating" },
       { key: "experience", label: "Experience" },
@@ -516,7 +516,7 @@ export default function FeedbackExperienceReport() {
                     <p className="text-sm text-slate-900 mt-1">{selectedFeedback.userName || 'N/A'}</p>
                   </div>
                   <div>
-                    <label className="text-sm font-semibold text-slate-700 mb-1 block">Email</label>
+                    <label className="text-sm font-semibold text-slate-700 mb-1 block">User Id</label>
                     <p className="text-sm text-slate-900 mt-1 break-words">{selectedFeedback.userEmail || 'N/A'}</p>
                   </div>
                   <div>

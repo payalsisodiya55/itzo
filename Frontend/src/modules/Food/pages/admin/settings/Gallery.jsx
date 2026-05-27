@@ -31,7 +31,7 @@ export default function Gallery() {
     "Vendor": { type: "folder", items: [] },
     "Cuisine": { type: "folder", items: [] },
     "Opportunit": { type: "folder", items: [] },
-    "Admin": { type: "folder", items: [] },
+    "ECS": { type: "folder", items: [] },
     "Landing": { type: "folder", items: [] },
     "React_rest": { type: "folder", items: [] },
     "Restaurant": { type: "folder", items: [] },

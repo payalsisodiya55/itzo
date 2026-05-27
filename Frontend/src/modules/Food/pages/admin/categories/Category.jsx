@@ -552,7 +552,7 @@ export default function Category() {
                 </tr>
               ) : (
                 filteredCategories.map((category) => {
-                  const creatorName = category?.createdByRestaurant?.name || category?.restaurant?.name || "Admin"
+                  const creatorName = category?.createdByRestaurant?.name || category?.restaurant?.name || "ECS"
                   const approvalStatus = category?.approvalStatus || "pending"
                   const isRestaurantCategory = Boolean(category?.createdByRestaurantId || category?.restaurantId)
                   const zoneText = zoneLabel(category?.zoneId)

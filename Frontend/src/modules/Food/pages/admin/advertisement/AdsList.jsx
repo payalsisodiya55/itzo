@@ -111,7 +111,7 @@ export default function AdsList() {
   }
 
   const handleEditAd = (ad) => {
-    navigate("/admin/new-advertisement", { state: { editAd: ad } })
+    navigate("/ecs/new-advertisement", { state: { editAd: ad } })
   }
 
   const handleDeleteClick = (ad) => {
@@ -178,7 +178,7 @@ export default function AdsList() {
           </div>
 
           <button 
-            onClick={() => navigate("/admin/new-advertisement")}
+            onClick={() => navigate("/ecs/new-advertisement")}
             className="px-4 py-2.5 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-2 transition-all shadow-md"
           >
             <Plus className="w-4 h-4" />
@@ -505,7 +505,7 @@ export default function AdsList() {
                   <p className="text-sm text-slate-900">{selectedAd.restaurantName}</p>
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-slate-700">Restaurant Email</p>
+                  <p className="text-sm font-semibold text-slate-700">Restaurant User Id</p>
                   <p className="text-sm text-slate-900">{selectedAd.restaurantEmail}</p>
                 </div>
                 <div>

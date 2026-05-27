@@ -1379,7 +1379,7 @@ export default function RestaurantOnboarding() {
             />
           </div>
           <div>
-            <Label className="text-xs text-gray-700">Email address*</Label>
+            <Label className="text-xs text-gray-700">User Id*</Label>
             <Input
               type="email"
               value={step1.ownerEmail || ""}

@@ -529,7 +529,7 @@ export default function EditProfile() {
             {/* Email Field */}
             <div className="space-y-1.5">
               <Label htmlFor="email" className="text-sm font-medium text-gray-700 dark:text-white">
-                Email
+                User Id
               </Label>
               <div className="flex items-center gap-2">
                 <Input
@@ -538,7 +538,7 @@ export default function EditProfile() {
                   value={formData.email}
                   onChange={(e) => handleChange('email', e.target.value)}
                   className="flex-1 h-12 text-base border border-gray-300 dark:border-gray-700 focus:border-primary-orange focus:ring-1 focus:ring-primary-orange rounded-lg bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white"
-                  placeholder="Email"
+                  placeholder="User Id"
                 />
               </div>
               {fieldErrors.email && (

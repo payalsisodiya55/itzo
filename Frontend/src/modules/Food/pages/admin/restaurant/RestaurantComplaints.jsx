@@ -310,7 +310,7 @@ export default function RestaurantComplaints() {
                 )}
                 {complaint.adminResponse && (
                   <div className="bg-green-50 rounded p-3 mb-3">
-                    <p className="text-xs font-semibold text-green-700 mb-1">Admin Response:</p>
+                    <p className="text-xs font-semibold text-green-700 mb-1">ECS Response:</p>
                     <p className="text-sm text-green-800">{complaint.adminResponse}</p>
                   </div>
                 )}
@@ -384,7 +384,7 @@ export default function RestaurantComplaints() {
               </Select>
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium">Admin Response</label>
+              <label className="text-sm font-medium">ECS Response</label>
               <textarea
                 className="w-full min-h-[100px] p-3 border rounded-md"
                 placeholder="Type your response here..."

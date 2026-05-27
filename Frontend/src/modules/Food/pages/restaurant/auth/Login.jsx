@@ -4,6 +4,7 @@ import { ShieldCheck } from "lucide-react"
 import { Button } from "@food/components/ui/button"
 import { restaurantAPI } from "@food/api"
 import { useCompanyName } from "@food/hooks/useCompanyName"
+import { isModuleAuthenticated } from "@food/utils/auth"
 
 const DEFAULT_COUNTRY_CODE = "+91"
 const countryCodes = [
@@ -24,6 +25,13 @@ export default function RestaurantLogin() {
   const [error, setError] = useState("")
   const [isSending, setIsSending] = useState(false)
   const [keyboardInset, setKeyboardInset] = useState(0)
+
+  // Route Protection: if already authenticated, redirect to restaurant dashboard
+  useEffect(() => {
+    if (isModuleAuthenticated("restaurant")) {
+      navigate("/food/restaurant", { replace: true })
+    }
+  }, [navigate])
 
   useEffect(() => {
     if (typeof window === "undefined" || !window.visualViewport) return undefined

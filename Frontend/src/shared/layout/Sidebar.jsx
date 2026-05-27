@@ -207,7 +207,7 @@ const SidebarItem = ({
 const SidebarContent = ({ items, title, onClose, openMenu, handleToggle, hoveredIdx, setHoveredIdx }) => {
   const { settings } = useSettings();
   const location = useLocation();
-  const isAdminPanel = location.pathname.startsWith("/admin");
+  const isAdminPanel = location.pathname.startsWith("/ecs");
   const isSellerPanel = location.pathname.startsWith("/seller");
   const appType = isAdminPanel ? 'admin' : (isSellerPanel ? 'seller' : 'user');
 

@@ -161,7 +161,7 @@ export default function RoleList() {
         </div>
         {canCreateRole && (
           <Button 
-            onClick={() => navigate("/admin/food/employee-role/create")}
+            onClick={() => navigate("/ecs/food/employee-role/create")}
             className="bg-neutral-900 hover:bg-black text-white h-12 px-8 rounded-2xl font-black shadow-2xl shadow-neutral-900/20 transition-all active:scale-95"
           >
             <Plus className="w-5 h-5 mr-2" />
@@ -225,7 +225,7 @@ export default function RoleList() {
               </div>
               {canCreateRole && (
                 <Button 
-                  onClick={() => navigate("/admin/food/employee-role/create")}
+                  onClick={() => navigate("/ecs/food/employee-role/create")}
                   className="bg-primary hover:bg-primary/90 text-white rounded-2xl h-12 px-8 font-black shadow-xl shadow-primary/20"
                 >
                   PROVISION FIRST ROLE <ArrowRight className="w-4 h-4 ml-2" />
@@ -306,7 +306,7 @@ export default function RoleList() {
                             {canEditRole && (
                               <DropdownMenuItem 
                                 className="rounded-xl h-11 font-bold text-sm focus:bg-primary/5 focus:text-primary cursor-pointer px-3"
-                                onClick={() => navigate(`/admin/food/employee-role/edit/${role._id}`)}
+                                onClick={() => navigate(`/ecs/food/employee-role/edit/${role._id}`)}
                               >
                                 <Edit2 className="w-4 h-4 mr-3 opacity-60" /> Edit Configuration
                               </DropdownMenuItem>

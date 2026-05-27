@@ -52,7 +52,7 @@ function QuickCommerceAdminRoutesInner() {
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/profile" element={<AdminProfile />} />
-      <Route path="/categories" element={<Navigate to="/admin/quick-commerce/categories/header" replace />} />
+      <Route path="/categories" element={<Navigate to="/ecs/quick-commerce/categories/header" replace />} />
       <Route path="/categories/header" element={<HeaderCategories />} />
       <Route path="/categories/level2" element={<Level2Categories />} />
       <Route path="/categories/sub" element={<SubCategories />} />
@@ -90,7 +90,7 @@ function QuickCommerceAdminRoutesInner() {
       <Route path="/orders/:status" element={<OrdersList />} />
       <Route path="/orders/view/:orderId" element={<OrderDetail />} />
       <Route path="/billing" element={<BillingCharges />} />
-      <Route path="*" element={<Navigate to="/admin/quick-commerce" replace />} />
+      <Route path="*" element={<Navigate to="/ecs/quick-commerce" replace />} />
     </Routes>
   )
 }

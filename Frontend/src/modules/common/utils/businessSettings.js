@@ -15,7 +15,7 @@ let currentAppType = 'user'; // Default to user app
  */
 const detectAppType = () => {
   const path = window.location.pathname;
-  if (path.includes('/admin')) return 'admin';
+  if (path.includes('/ecs')) return 'admin';
   if (path.includes('/restaurant')) return 'restaurant';
   if (path.includes('/delivery')) return 'delivery';
   if (path.includes('/seller')) return 'seller';

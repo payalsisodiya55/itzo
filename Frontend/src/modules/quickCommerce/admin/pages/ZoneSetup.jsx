@@ -68,7 +68,7 @@ export default function ZoneSetup() {
           </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => navigate("/admin/quick-commerce/zone-setup/add")}
+              onClick={() => navigate("/ecs/quick-commerce/zone-setup/add")}
               className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
               <Plus className="w-5 h-5" />
@@ -106,7 +106,7 @@ export default function ZoneSetup() {
             </p>
             {!searchQuery && (
               <button
-                onClick={() => navigate("/admin/quick-commerce/zone-setup/add")}
+                onClick={() => navigate("/ecs/quick-commerce/zone-setup/add")}
                 className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
                 <Plus className="w-5 h-5" />
@@ -128,14 +128,14 @@ export default function ZoneSetup() {
                   </div>
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={() => navigate(`/admin/quick-commerce/zone-setup/view/${zone._id || zone.id}`)}
+                      onClick={() => navigate(`/ecs/quick-commerce/zone-setup/view/${zone._id || zone.id}`)}
                       className="p-2 text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                       title="View"
                     >
                       <Eye className="w-4 h-4" />
                     </button>
                     <button
-                      onClick={() => navigate(`/admin/quick-commerce/zone-setup/edit/${zone._id || zone.id}`)}
+                      onClick={() => navigate(`/ecs/quick-commerce/zone-setup/edit/${zone._id || zone.id}`)}
                       className="p-2 text-slate-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
                       title="Edit"
                     >

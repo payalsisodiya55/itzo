@@ -610,7 +610,7 @@ export default function FinanceDetailsPage() {
               className="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-2xl z-50 p-6"
             >
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-bold text-gray-900">Email Report</h2>
+                <h2 className="text-lg font-bold text-gray-900">User Id Report</h2>
                 <button
                   onClick={() => setShowEmailPopup(false)}
                   className="p-1 rounded-full hover:bg-gray-100"

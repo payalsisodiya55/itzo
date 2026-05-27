@@ -155,7 +155,7 @@ const Earnings = () => {
                     <span className="text-slate-900 font-bold">₹{Number(data?.balances?.grossSales ?? 0).toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-slate-500 font-medium">Admin Commission</span>
+                    <span className="text-slate-500 font-medium">ECS Commission</span>
                     <span className="text-rose-500 font-bold">- ₹{Number(data?.balances?.totalCommission ?? 0).toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between items-center text-sm">

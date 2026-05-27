@@ -119,7 +119,7 @@ const SellerDetail = () => {
         <div className="flex items-start gap-3">
           <button
             type="button"
-            onClick={() => navigate('/admin/quick-commerce/sellers/active')}
+            onClick={() => navigate('/ecs/quick-commerce/sellers/active')}
             className="mt-1 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-slate-600 shadow-sm ring-1 ring-slate-200 transition hover:bg-slate-50"
           >
             <HiOutlineArrowLeft className="h-5 w-5" />
@@ -156,7 +156,7 @@ const SellerDetail = () => {
             <p className="text-sm font-semibold text-slate-600">This approved seller could not be found.</p>
             <button
               type="button"
-              onClick={() => navigate('/admin/quick-commerce/sellers/active')}
+              onClick={() => navigate('/ecs/quick-commerce/sellers/active')}
               className="mt-2 rounded-xl bg-slate-900 px-4 py-2 text-[11px] font-bold text-white"
             >
               Back to active sellers
@@ -253,7 +253,7 @@ const SellerDetail = () => {
                     <HiOutlineEnvelope className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="ds-label">Email</p>
+                    <p className="ds-label">User Id</p>
                     <p className="mt-1 text-sm font-bold text-slate-900">
                       {infoValue(seller.email)}
                     </p>
@@ -312,7 +312,7 @@ const SellerDetail = () => {
                 </div>
 
                 <div className="rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-100">
-                  <p className="ds-label">Admin notes</p>
+                  <p className="ds-label">ECS notes</p>
                   <p className="mt-1 text-sm font-semibold leading-6 text-slate-700">
                     {infoValue(seller.approvalNotes, 'No approval notes added.')}
                   </p>

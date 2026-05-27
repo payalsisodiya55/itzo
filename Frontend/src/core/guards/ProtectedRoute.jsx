@@ -15,8 +15,8 @@ const ProtectedRoute = ({ children }) => {
     }
 
     if (!isAuthenticated) {
-        if (location.pathname.startsWith('/admin')) {
-            return <Navigate to="/admin/login" state={{ from: location }} replace />;
+        if (location.pathname.startsWith('/ecs')) {
+            return <Navigate to="/ecs/login" state={{ from: location }} replace />;
         }
         if (location.pathname.startsWith('/seller')) {
             return <Navigate to="/seller/auth" state={{ from: location }} replace />;

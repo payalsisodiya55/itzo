@@ -371,7 +371,7 @@ const CategoryManagement = () => {
                 <div>
                     <h1 className="ds-h1 flex items-center gap-2">
                         Manage Categories
-                        <Badge variant="primary" className="text-[9px] px-1.5 py-0 font-bold tracking-wider uppercase">Admin</Badge>
+                        <Badge variant="primary" className="text-[9px] px-1.5 py-0 font-bold tracking-wider uppercase">ECS</Badge>
                     </h1>
                     <p className="ds-description mt-0.5">Organize your store by grouping items together into folders.</p>
                 </div>

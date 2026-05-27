@@ -38,7 +38,7 @@ export default function RestaurantSignupEmail() {
     }
 
     if (!formData.email.trim()) {
-      setError("Email is required")
+      setError("User Id is required")
       return
     }
 
@@ -241,7 +241,7 @@ export default function RestaurantSignupEmail() {
           <Card className="w-full max-w-lg bg-white/80 backdrop-blur-sm border border-gray-200 shadow-xl">
             <CardHeader>
               <CardTitle className="text-2xl sm:text-3xl font-semibold text-gray-900">
-                {step === 1 ? "Create Account" : "Verify Email"}
+                {step === 1 ? "Create Account" : "Verify User Id"}
               </CardTitle>
               <CardDescription className="text-sm text-gray-500">
                 {step === 1
@@ -285,7 +285,7 @@ export default function RestaurantSignupEmail() {
 
                   <div className="space-y-1.5">
                     <Label htmlFor="email" className="text-sm font-medium text-gray-700">
-                      Email Address
+                      User Id
                     </Label>
                     <div className="relative">
                       <span className="absolute inset-y-0 left-3 flex items-center text-gray-400 pointer-events-none">

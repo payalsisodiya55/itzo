@@ -3336,7 +3336,7 @@ export default function Cart() {
                       onClick={() => openShareTarget("email")}
                     >
                       <Mail className="h-5 w-5 text-gray-700 dark:text-gray-300" />
-                      <span className="text-sm font-medium text-gray-900 dark:text-white">Email</span>
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">User Id</span>
                     </button>
                     <button
                       className="w-full flex items-center gap-3 px-3 py-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-left"

@@ -54,7 +54,7 @@ function AuditBlock({ title, performer, tone = "approved", reason, actionLabel }
           <p className={`mt-1 font-medium ${palette.value}`}>{getPerformerValue(performer, "roleName", getPerformerValue(performer, "role"))}</p>
         </div>
         <div>
-          <p className={`text-[11px] font-bold uppercase tracking-wider ${palette.label}`}>Email</p>
+          <p className={`text-[11px] font-bold uppercase tracking-wider ${palette.label}`}>User Id</p>
           <p className={`mt-1 break-all font-medium ${palette.value}`}>{getPerformerValue(performer, "email")}</p>
         </div>
         <div>

@@ -371,7 +371,7 @@ const ActiveDeliveryBoys = () => {
                                         <p className="text-sm font-bold text-slate-900">{viewingRider.phone}</p>
                                     </div>
                                     <div className="space-y-1">
-                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Email Address</p>
+                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">User Id</p>
                                         <p className="text-sm font-bold text-slate-900">{viewingRider.email}</p>
                                     </div>
                                     <div className="space-y-1">

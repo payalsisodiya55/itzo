@@ -428,7 +428,7 @@ const ProductManagement = () => {
                                         <div className="flex items-center gap-2">
                                             <div className="h-2 w-2 rounded-full bg-blue-500" />
                                             <span className="text-xs font-bold text-slate-700">
-                                                {p.seller?.shopName || p.storeName || p.restaurantName || 'Admin'}
+                                                {p.seller?.shopName || p.storeName || p.restaurantName || 'ECS'}
                                             </span>
                                         </div>
                                     </td>

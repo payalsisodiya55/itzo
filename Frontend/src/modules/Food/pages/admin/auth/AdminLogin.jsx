@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import { adminAPI } from "@food/api"
-import { setAuthData } from "@food/utils/auth"
+import { setAuthData, isModuleAuthenticated } from "@food/utils/auth"
 import { getDefaultAdminLandingPath, resolveAdminPermissionsForUser } from "@food/utils/adminPermissions"
 import { loadBusinessSettings, getCachedSettings, getAppLogo } from "@common/utils/businessSettings"
 import { Button } from "@food/components/ui/button"
@@ -51,6 +51,13 @@ export default function AdminLogin() {
       window.history.replaceState({}, document.title, location.pathname)
     }
   }, [location.state?.message, location.pathname])
+
+  // Route Protection: if already authenticated, redirect to admin dashboard
+  useEffect(() => {
+    if (isModuleAuthenticated("admin")) {
+      navigate("/ecs", { replace: true })
+    }
+  }, [navigate])
 
   useEffect(() => {
     const fetchRoles = async () => {
@@ -106,7 +113,7 @@ export default function AdminLogin() {
 
     const trimmedEmail = email.trim()
     if (!trimmedEmail) {
-      setError("Email is required")
+      setError("User Id is required")
       return
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -158,151 +165,137 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-neutral-50 via-gray-100 to-white relative">
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -left-24 -top-24 h-64 w-64 rounded-full bg-neutral-900/5 blur-3xl" />
-        <div className="absolute right-[-80px] bottom-[-80px] h-72 w-72 rounded-full bg-gray-700/5 blur-3xl" />
+    <div className="min-h-screen bg-[#f8f9fc] relative flex flex-col items-center justify-center p-4 font-sans">
+      
+      {/* Top Logo */}
+      <div className="mb-8">
+        {logoUrl ? (
+          <img
+            src={logoUrl}
+            alt={companyName || "Logo"}
+            className="h-12 md:h-16 object-contain"
+            loading="lazy"
+            onError={(e) => {
+              e.target.style.display = 'none'
+            }}
+          />
+        ) : (
+          <span className="text-2xl font-bold text-[#FE5502]">
+            {companyName || "Appzeto"}
+          </span>
+        )}
       </div>
 
-      <div className="flex min-h-screen items-center justify-center px-4 py-12">
-        <Card className="w-full max-w-lg bg-white/90 backdrop-blur border-neutral-200 shadow-2xl">
-          <CardHeader className="pb-4">
-            <div className="flex w-full items-center gap-4 sm:gap-5">
-              <div className="flex h-14 w-28 shrink-0 items-center justify-center rounded-xl bg-gray-900/5 ring-1 ring-neutral-200">
-                {logoUrl ? (
-                  <img
-                    src={logoUrl}
-                    alt={companyName || "Logo"}
-                    className="h-10 w-24 object-contain"
-                    loading="lazy"
-                    onError={(e) => {
-                      e.target.style.display = 'none'
-                    }}
-                  />
-                ) : (
-                  <span className="text-xs font-bold text-gray-900 truncate px-2">
-                    {companyName || "Appzeto"}
-                  </span>
-                )}
+      {/* Main Login Card */}
+      <Card className="w-full max-w-md bg-white border-0 shadow-lg rounded-sm py-4 px-2">
+        <CardContent className="pt-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {successMessage && (
+              <div className="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+                {successMessage}
               </div>
-              <div className="flex flex-col gap-1">
-                <CardTitle className="text-3xl leading-tight text-gray-900">Admin Login</CardTitle>
-                <CardDescription className="text-base text-gray-600">
-                  Sign in to access the admin dashboard.
-                </CardDescription>
+            )}
+            {error && (
+              <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                {error}
               </div>
-            </div>
-          </CardHeader>
+            )}
 
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {successMessage && (
-                <div className="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
-                  {successMessage}
-                </div>
-              )}
-              {error && (
-                <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                  {error}
-                </div>
-              )}
-
-              <div className="space-y-2">
-                <Label className="text-base font-medium text-gray-900">Select Role</Label>
-                <Select
-                  value={selectedRoleId}
-                  onValueChange={setSelectedRoleId}
-                  disabled={isLoading}
-                >
-                  <SelectTrigger className="h-12 text-base w-full">
-                    <SelectValue placeholder="Select a role" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="ADMIN">
-                      <div className="flex items-center gap-2">
-                        <UserCircle className="h-4 w-4 text-primary" />
-                        Admin
-                      </div>
-                    </SelectItem>
-                    {roles.map((r) => (
-                      <SelectItem key={r._id} value={r._id}>
-                        {r.roleName}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-base font-medium text-gray-900">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="admin@domain.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={isLoading}
-                  autoComplete="off"
-                  required
-                  className="h-12 text-base"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password" className="text-base font-medium text-gray-900">Password</Label>
-                <div className="relative">
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    disabled={isLoading}
-                    autoComplete="new-password"
-                    required
-                    className="h-12 pr-12 text-base [&::-ms-reveal]:hidden [&::-webkit-password-reveal-button]:hidden"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 transition-colors hover:text-gray-800"
-                    disabled={isLoading}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-5 w-5" />
-                    ) : (
-                      <Eye className="h-5 w-5" />
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-600">Use your admin credentials to continue.</span>
-                <button
-                  type="button"
-                  onClick={() => navigate("/admin/forgot-password")}
-                  className="text-black font-medium hover:underline focus:outline-none focus:underline"
-                  disabled={isLoading}
-                >
-                  Forgot Password?
-                </button>
-              </div>
-
-              <Button
-                type="submit"
-                className="h-12 w-full bg-black text-white transition-colors hover:bg-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+            {/* Role Dropdown */}
+            <div className="relative">
+              <Select
+                value={selectedRoleId}
+                onValueChange={setSelectedRoleId}
                 disabled={isLoading}
               >
-                {isLoading ? "Logging in..." : "Login"}
-              </Button>
-            </form>
-          </CardContent>
+                <SelectTrigger className="h-12 text-base w-full border-gray-300 rounded-sm focus:ring-[#FE5502] focus:border-[#FE5502] text-gray-500">
+                  <SelectValue placeholder="Select a role" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ADMIN">ECS</SelectItem>
+                  {roles.map((r) => (
+                    <SelectItem key={r._id} value={r._id}>
+                      {r.roleName}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
-          <CardFooter className="flex-col items-start gap-2 text-sm text-gray-500">
-            <span>Secure sign-in helps protect admin tools.</span>
-          </CardFooter>
-        </Card>
+            {/* User Id */}
+            <div className="relative">
+              <Input
+                id="email"
+                type="text"
+                placeholder="User Id"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isLoading}
+                autoComplete="off"
+                required
+                className="h-12 pl-4 pr-12 text-base border-gray-300 rounded-sm focus-visible:ring-1 focus-visible:ring-[#FE5502] focus-visible:border-[#FE5502] placeholder:text-gray-400"
+              />
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                <UserCircle className="h-5 w-5 text-[#FE5502]" fill="currentColor" strokeWidth={1} />
+              </div>
+            </div>
+
+            {/* Password */}
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={isLoading}
+                autoComplete="new-password"
+                required
+                className="h-12 pl-4 pr-12 text-base border-gray-300 rounded-sm focus-visible:ring-1 focus-visible:ring-[#FE5502] focus-visible:border-[#FE5502] placeholder:text-gray-400 [&::-ms-reveal]:hidden [&::-webkit-password-reveal-button]:hidden"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 transition-colors"
+                disabled={isLoading}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5 text-[#FE5502]" />
+                ) : (
+                  <Eye className="h-5 w-5 text-[#FE5502]" />
+                )}
+              </button>
+            </div>
+
+            {/* Bottom Actions */}
+            <div className="flex items-start justify-between pt-2">
+              <Button
+                type="submit"
+                className="h-10 px-8 bg-[#FE5502] hover:bg-[#E04B00] text-white rounded-sm font-medium transition-colors"
+                disabled={isLoading}
+              >
+                {isLoading ? "Wait..." : "Login"}
+              </Button>
+              
+              <div className="flex flex-col items-end space-y-2">
+                <button
+                  type="button"
+                  onClick={() => navigate("/ecs/forgot-password")}
+                  className="text-[15px] text-[#FE5502] hover:underline focus:outline-none"
+                  disabled={isLoading}
+                >
+                  Forgot Password
+                </button>
+
+              </div>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+
+      {/* Copyright */}
+      <div className="mt-12 text-gray-800 text-[15px]">
+        Copyright © {companyName || "Appzeto"} Limited
       </div>
     </div>
   )

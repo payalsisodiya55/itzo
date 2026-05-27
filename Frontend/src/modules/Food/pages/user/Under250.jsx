@@ -1519,7 +1519,7 @@ export default function Under250() {
                   { id: "whatsapp", label: "WhatsApp" },
                   { id: "telegram", label: "Telegram" },
                   { id: "sms", label: "SMS" },
-                  { id: "email", label: "Email" },
+                  { id: "email", label: "User Id" },
                   { id: "copy", label: "Copy Link" },
                 ].map((option) => (
                   <button

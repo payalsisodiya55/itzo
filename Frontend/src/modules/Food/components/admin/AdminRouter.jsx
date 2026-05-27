@@ -150,12 +150,12 @@ function FoodAdminIndex() {
 
     const resolveLandingPath = async () => {
       if (!user) {
-        if (isMounted) setLandingPath("/admin/login");
+        if (isMounted) setLandingPath("/ecs/login");
         return;
       }
 
       if (user.role === "ADMIN") {
-        if (isMounted) setLandingPath("/admin/food/dashboard");
+        if (isMounted) setLandingPath("/ecs/food/dashboard");
         return;
       }
 
@@ -163,7 +163,7 @@ function FoodAdminIndex() {
       const nextPath = getDefaultAdminLandingPath(user, resolvedPermissions);
 
       if (isMounted) {
-        setLandingPath(nextPath === "/admin/food" ? "/admin/login" : nextPath);
+        setLandingPath(nextPath === "/ecs/food" ? "/ecs/login" : nextPath);
       }
     };
 
@@ -177,7 +177,7 @@ function FoodAdminIndex() {
     return <Loader />;
   }
 
-  if (landingPath === "/admin/food/dashboard") {
+  if (landingPath === "/ecs/food/dashboard") {
     return <AdminHome />;
   }
 
@@ -374,7 +374,7 @@ export default function AdminRouter() {
         </Route>
 
         {/* Redirect unknown admin routes to food admin */}
-        <Route path="*" element={<Navigate to="/admin/food" replace />} />
+        <Route path="*" element={<Navigate to="/ecs/food" replace />} />
       </Routes>
     </Suspense>
   );

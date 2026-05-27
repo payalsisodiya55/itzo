@@ -16,6 +16,7 @@ import { Mail, ArrowLeft, Shield } from "lucide-react"
 import { adminAPI } from "@food/api"
 import { useCompanyName } from "@food/hooks/useCompanyName"
 import { loadBusinessSettings, getCachedSettings } from "@common/utils/businessSettings"
+import appLogo from "@food/assets/appzetologo.png"
 
 export default function AdminForgotPassword() {
   const companyName = useCompanyName()
@@ -71,7 +72,7 @@ export default function AdminForgotPassword() {
 
     const trimmedEmail = email.trim().toLowerCase()
     if (!trimmedEmail) {
-      setError("Email is required")
+      setError("User Id is required")
       return
     }
 
@@ -202,7 +203,7 @@ export default function AdminForgotPassword() {
     try {
       await adminAPI.resetPasswordWithOtp(email, otp.join(""), newPassword)
 
-      navigate("/admin/login", {
+      navigate("/ecs/login", {
         state: { message: "Password reset successfully. Please login with your new password." },
       })
     } catch (err) {
@@ -229,21 +230,12 @@ export default function AdminForgotPassword() {
           <CardHeader className="pb-4">
             <div className="flex w-full items-center gap-4 sm:gap-5">
               <div className="flex h-14 w-28 shrink-0 items-center justify-center rounded-xl bg-gray-900/5 ring-1 ring-neutral-200">
-                {logoUrl ? (
                   <img
-                    src={logoUrl}
+                    src={appLogo}
                     alt={displayCompanyName || "Logo"}
                     className="h-10 w-24 object-contain"
                     loading="lazy"
-                    onError={(e) => {
-                      e.target.style.display = 'none'
-                    }}
                   />
-                ) : (
-                  <span className="text-xs font-bold text-gray-900 truncate px-2">
-                    {displayCompanyName || "Appzeto"}
-                  </span>
-                )}
               </div>
               <div className="flex flex-col gap-1">
                 <CardTitle className="text-3xl leading-tight text-gray-900">
@@ -271,7 +263,7 @@ export default function AdminForgotPassword() {
               <form onSubmit={handleEmailSubmit} className="space-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-base font-medium text-gray-900">
-                    Email Address
+                    User Id
                   </Label>
                   <div className="relative">
                     <span className="absolute inset-y-0 left-3 flex items-center text-gray-400 pointer-events-none">
@@ -438,7 +430,7 @@ export default function AdminForgotPassword() {
 
           <CardFooter className="flex-col items-start gap-2 text-sm text-gray-500">
             <button
-              onClick={() => navigate("/admin/login")}
+              onClick={() => navigate("/ecs/login")}
               className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />

@@ -327,7 +327,7 @@ export default function DeliverymanReviews() {
                       )}
                       {visibleColumns.deliveryman && (
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <a href={`/admin/delivery-partners/${review.deliverymanId}`} className="text-sm font-medium text-blue-600 hover:text-blue-700">
+                          <a href={`/ecs/delivery-partners/${review.deliverymanId}`} className="text-sm font-medium text-blue-600 hover:text-blue-700">
                             {review.deliveryman}
                           </a>
                         </td>
@@ -341,7 +341,7 @@ export default function DeliverymanReviews() {
                       )}
                       {visibleColumns.customer && (
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <a href={`/admin/users/${review.customerId}`} className="text-sm font-medium text-blue-600 hover:text-blue-700">
+                          <a href={`/ecs/users/${review.customerId}`} className="text-sm font-medium text-blue-600 hover:text-blue-700">
                             {review.customer}
                           </a>
                         </td>
@@ -472,7 +472,7 @@ export default function DeliverymanReviews() {
                 <div className="bg-blue-50 rounded-lg p-4">
                   <p className="text-xs text-blue-600 mb-1">Deliveryman</p>
                   <a 
-                    href={`/admin/delivery-partners/${selectedReview.deliverymanId}`}
+                    href={`/ecs/delivery-partners/${selectedReview.deliverymanId}`}
                     className="text-sm font-semibold text-blue-700 hover:text-blue-800"
                   >
                     {selectedReview.deliveryman}
@@ -484,7 +484,7 @@ export default function DeliverymanReviews() {
                 <div className="bg-purple-50 rounded-lg p-4">
                   <p className="text-xs text-purple-600 mb-1">Customer</p>
                   <a 
-                    href={`/admin/users/${selectedReview.customerId}`}
+                    href={`/ecs/users/${selectedReview.customerId}`}
                     className="text-sm font-semibold text-purple-700 hover:text-purple-800"
                   >
                     {selectedReview.customer}

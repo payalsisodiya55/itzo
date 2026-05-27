@@ -83,7 +83,7 @@ export default function AdminSignup() {
     }
 
     if (!formData.email.trim()) {
-      setError("Email is required")
+      setError("User Id is required")
       return
     }
 
@@ -193,7 +193,7 @@ export default function AdminSignup() {
         setAuthData("admin", data.accessToken, data.admin)
 
         // Navigate to admin dashboard
-        navigate("/admin", { replace: true })
+        navigate("/ecs", { replace: true })
       } else {
         throw new Error("Registration failed. Please try again.")
       }
@@ -270,7 +270,7 @@ export default function AdminSignup() {
               </div>
               <div className="flex flex-col gap-1">
                 <CardTitle className="text-3xl leading-tight text-gray-900">
-                  {step === 1 ? "Admin Sign Up" : "Verify Email"}
+                  {step === 1 ? "ECS Sign Up" : "Verify User Id"}
                 </CardTitle>
                 <CardDescription className="text-base text-gray-600">
                   {step === 1
@@ -316,7 +316,7 @@ export default function AdminSignup() {
 
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-base font-medium text-gray-900">
-                    Email Address
+                    User Id
                   </Label>
                   <div className="relative">
                     <span className="absolute inset-y-0 left-3 flex items-center text-gray-400 pointer-events-none">
@@ -481,7 +481,7 @@ export default function AdminSignup() {
 
           <CardFooter className="flex-col items-start gap-2 text-sm text-gray-500">
             <button
-              onClick={() => navigate("/admin/login")}
+              onClick={() => navigate("/ecs/login")}
               className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -489,7 +489,7 @@ export default function AdminSignup() {
             </button>
             <span>Already have an account?{" "}
               <button
-                onClick={() => navigate("/admin/login")}
+                onClick={() => navigate("/ecs/login")}
                 className="text-black hover:underline font-medium"
               >
                 Sign in

@@ -279,7 +279,7 @@ const CustomerManagement = () => {
                                                 />
                                                 <div>
                                                     <p
-                                                        onClick={() => navigate(`/admin/quick-commerce/customers/${cust.id}`)}
+                                                        onClick={() => navigate(`/ecs/quick-commerce/customers/${cust.id}`)}
                                                         className="ds-h4 hover:text-primary cursor-pointer transition-colors"
                                                     >
                                                         {cust.name}
@@ -315,7 +315,7 @@ const CustomerManagement = () => {
                                         <td className="ds-table-cell text-right">
                                             <div className="flex items-center justify-end gap-2">
                                                 <button
-                                                    onClick={() => navigate(`/admin/quick-commerce/customers/${cust.id}`)}
+                                                    onClick={() => navigate(`/ecs/quick-commerce/customers/${cust.id}`)}
                                                     className="p-2 bg-primary/10 text-primary rounded-lg hover:bg-primary hover:text-white transition-all"
                                                 >
                                                     <Eye className="ds-icon-sm" />

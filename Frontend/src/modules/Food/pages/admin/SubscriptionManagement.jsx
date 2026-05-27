@@ -882,8 +882,8 @@ export default function SubscriptionManagement() {
                             ) : (
                                 historyData.map((item) => {
                                     const userSearchPath = item.userType === 'RESTAURANT'
-                                        ? `/admin/food/restaurants?search=${encodeURIComponent(item.userName || '')}`
-                                        : `/admin/food/delivery-partners?search=${encodeURIComponent(item.userName || '')}`;
+                                        ? `/ecs/food/restaurants?search=${encodeURIComponent(item.userName || '')}`
+                                        : `/ecs/food/delivery-partners?search=${encodeURIComponent(item.userName || '')}`;
 
                                     return (
                                         <tr key={item._id} className="hover:bg-slate-50/50 transition-colors">

@@ -75,7 +75,7 @@ export default function DeliveryLayout({
     return (
       <main className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
         <div className="max-w-md w-full text-center space-y-4 rounded-xl bg-white p-6 shadow-sm border border-gray-200">
-          <h1 className="text-xl font-semibold text-gray-900">Pending Admin Approval</h1>
+          <h1 className="text-xl font-semibold text-gray-900">Pending ECS Approval</h1>
           <p className="text-gray-600 text-sm">
             Your profile has been submitted. You will get full access once admin approves your account.
           </p>

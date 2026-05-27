@@ -89,7 +89,8 @@ export async function updateGlobalSettings(req, res, next) {
         const mediaFields = [
             'adminLogo', 'adminFavicon', 'userLogo', 'userFavicon', 
             'deliveryLogo', 'deliveryFavicon', 'restaurantLogo', 'restaurantFavicon', 
-            'sellerLogo', 'sellerFavicon'
+            'sellerLogo', 'sellerFavicon',
+            'userLoginBanner1', 'userLoginBanner2', 'userLoginBanner3', 'userLoginBanner4', 'userLoginBanner5'
         ];
         mediaFields.forEach(field => {
             const urlKey = `${field}Url`;
@@ -129,7 +130,12 @@ export async function updateGlobalSettings(req, res, next) {
                 { name: 'restaurantLogo', folder: 'business/logos/restaurant' },
                 { name: 'restaurantFavicon', folder: 'business/favicons/restaurant' },
                 { name: 'sellerLogo', folder: 'business/logos/seller' },
-                { name: 'sellerFavicon', folder: 'business/favicons/seller' }
+                { name: 'sellerFavicon', folder: 'business/favicons/seller' },
+                { name: 'userLoginBanner1', folder: 'business/banners/user' },
+                { name: 'userLoginBanner2', folder: 'business/banners/user' },
+                { name: 'userLoginBanner3', folder: 'business/banners/user' },
+                { name: 'userLoginBanner4', folder: 'business/banners/user' },
+                { name: 'userLoginBanner5', folder: 'business/banners/user' }
             ];
 
             for (const field of mediaUploadFields) {

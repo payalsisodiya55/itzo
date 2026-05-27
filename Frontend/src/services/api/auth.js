@@ -110,7 +110,7 @@ export function verifyUserOtp(
 export function adminLogin(email, password, roleId) {
   const trimmedEmail = typeof email === "string" ? email.trim() : "";
   if (!trimmedEmail) {
-    return Promise.reject(new Error("Email is required"));
+    return Promise.reject(new Error("User Id is required"));
   }
   if (!EMAIL_REGEX.test(trimmedEmail)) {
     return Promise.reject(new Error("Please enter a valid email address"));

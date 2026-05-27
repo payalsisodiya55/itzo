@@ -493,7 +493,7 @@ const OrdersList = () => {
                                 <tr
                                     key={order.id}
                                     className="group hover:bg-slate-50/30 transition-all cursor-pointer"
-                                    onClick={() => navigate(`/admin/quick-commerce/orders/view/${order.id}`)}
+                                    onClick={() => navigate(`/ecs/quick-commerce/orders/view/${order.id}`)}
                                 >
                                     <td className="px-4 py-5">
                                         <div className="flex items-center gap-4">
@@ -558,7 +558,7 @@ const OrdersList = () => {
                                             <button
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    navigate(`/admin/quick-commerce/orders/view/${order.id}`);
+                                                    navigate(`/ecs/quick-commerce/orders/view/${order.id}`);
                                                 }}
                                                 className="p-2.5 bg-slate-50 text-slate-400 hover:text-fuchsia-600 hover:bg-fuchsia-50 rounded-xl transition-all"
                                             >

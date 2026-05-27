@@ -265,7 +265,7 @@ export default function RestaurantSupport() {
                   ) : null}
                   {ticket.adminResponse ? (
                     <div className="mt-3 rounded-lg border border-blue-200 bg-blue-50 p-2.5">
-                      <p className="text-[11px] font-semibold text-blue-700 uppercase">Admin response</p>
+                      <p className="text-[11px] font-semibold text-blue-700 uppercase">ECS Response</p>
                       <p className="text-sm text-blue-900 mt-1 whitespace-pre-wrap">{ticket.adminResponse}</p>
                     </div>
                   ) : null}

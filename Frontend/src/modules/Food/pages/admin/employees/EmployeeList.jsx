@@ -175,7 +175,7 @@ export default function EmployeeList() {
     si: "Serial Number",
     name: "Employee Name",
     phone: "Phone",
-    email: "Email",
+    email: "User Id",
     createdAt: "Created At",
     actions: "Actions",
   }
@@ -197,7 +197,7 @@ export default function EmployeeList() {
             </div>
             {canCreateEmployee && (
               <button
-                onClick={() => navigate("/admin/food/employees/add")}
+                onClick={() => navigate("/ecs/food/employees/add")}
                 className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-semibold shadow-md transition-all active:scale-95"
               >
                 <Plus className="w-4 h-4" />
@@ -301,7 +301,7 @@ export default function EmployeeList() {
                   {visibleColumns.email && (
                     <th className="px-6 py-4 text-left text-[10px] font-bold text-slate-700 uppercase tracking-wider">
                       <div className="flex items-center gap-2">
-                        <span>Email</span>
+                        <span>User Id</span>
                         <ArrowUpDown className="w-3 h-3 text-slate-400 cursor-pointer hover:text-slate-600" />
                       </div>
                     </th>
@@ -385,7 +385,7 @@ export default function EmployeeList() {
                             </button>
                             {canEditEmployee && (
                               <button
-                                onClick={() => navigate(`/admin/food/employees/edit/${employee._id}`, { state: { employee } })}
+                                onClick={() => navigate(`/ecs/food/employees/edit/${employee._id}`, { state: { employee } })}
                                 className="p-1.5 rounded text-blue-600 hover:bg-blue-50 transition-colors"
                                 title="Edit"
                               >
@@ -440,7 +440,7 @@ export default function EmployeeList() {
                   <div className="text-slate-500 font-medium">Name:</div>
                   <div className="text-slate-900 font-semibold">{selectedEmployee.name}</div>
                   
-                  <div className="text-slate-500 font-medium">Email:</div>
+                  <div className="text-slate-500 font-medium">User Id:/div>
                   <div className="text-slate-900">{selectedEmployee.email}</div>
                   
                   <div className="text-slate-500 font-medium">Phone:</div>

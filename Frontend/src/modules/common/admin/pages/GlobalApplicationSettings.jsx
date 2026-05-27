@@ -123,6 +123,17 @@ const GlobalApplicationSettings = () => {
   const [sellerFaviconPreview, setSellerFaviconPreview] = useState(null);
   const [sellerFaviconFile, setSellerFaviconFile] = useState(null);
 
+  const [userLoginBanner1Preview, setUserLoginBanner1Preview] = useState(null);
+  const [userLoginBanner1File, setUserLoginBanner1File] = useState(null);
+  const [userLoginBanner2Preview, setUserLoginBanner2Preview] = useState(null);
+  const [userLoginBanner2File, setUserLoginBanner2File] = useState(null);
+  const [userLoginBanner3Preview, setUserLoginBanner3Preview] = useState(null);
+  const [userLoginBanner3File, setUserLoginBanner3File] = useState(null);
+  const [userLoginBanner4Preview, setUserLoginBanner4Preview] = useState(null);
+  const [userLoginBanner4File, setUserLoginBanner4File] = useState(null);
+  const [userLoginBanner5Preview, setUserLoginBanner5Preview] = useState(null);
+  const [userLoginBanner5File, setUserLoginBanner5File] = useState(null);
+
   const [formData, setFormData] = useState({
     companyName: "",
     themeColor: "#0a0a0a",
@@ -160,6 +171,12 @@ const GlobalApplicationSettings = () => {
 
         if (settings.sellerLogo?.url) setSellerLogoPreview(settings.sellerLogo.url);
         if (settings.sellerFavicon?.url) setSellerFaviconPreview(settings.sellerFavicon.url);
+
+        if (settings.userLoginBanner1?.url) setUserLoginBanner1Preview(settings.userLoginBanner1.url);
+        if (settings.userLoginBanner2?.url) setUserLoginBanner2Preview(settings.userLoginBanner2.url);
+        if (settings.userLoginBanner3?.url) setUserLoginBanner3Preview(settings.userLoginBanner3.url);
+        if (settings.userLoginBanner4?.url) setUserLoginBanner4Preview(settings.userLoginBanner4.url);
+        if (settings.userLoginBanner5?.url) setUserLoginBanner5Preview(settings.userLoginBanner5.url);
       }
     } catch (err) {
       console.error('Fetch error:', err);
@@ -212,6 +229,12 @@ const GlobalApplicationSettings = () => {
       if (sellerLogoFile) files.sellerLogo = sellerLogoFile;
       if (sellerFaviconFile) files.sellerFavicon = sellerFaviconFile;
 
+      if (userLoginBanner1File) files.userLoginBanner1 = userLoginBanner1File;
+      if (userLoginBanner2File) files.userLoginBanner2 = userLoginBanner2File;
+      if (userLoginBanner3File) files.userLoginBanner3 = userLoginBanner3File;
+      if (userLoginBanner4File) files.userLoginBanner4 = userLoginBanner4File;
+      if (userLoginBanner5File) files.userLoginBanner5 = userLoginBanner5File;
+
       const response = await adminAPI.updateBusinessSettings(dataToSend, files);
       const updatedSettings = response?.data?.data || response?.data;
 
@@ -261,18 +284,17 @@ const GlobalApplicationSettings = () => {
         <SectionCard title="Application Identification">
            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
               <InputField label="App Name" name="companyName" value={formData.companyName} onChange={handleChange} placeholder="AppZeto" />
-              <InputField label="Admin Theme Color" name="themeColor" value={formData.themeColor} onChange={handleChange} placeholder="#0a0a0a" />
-              <InputField label="Support Email" name="email" value={formData.email} onChange={handleChange} placeholder="admin@appzeto.com" />
+              <InputField label="Support User Id" name="email" value={formData.email} onChange={handleChange} placeholder="admin@appzeto.com" />
               <InputField label="Support Phone" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} placeholder="0000000000" />
               <InputField label="Office Address" name="address" value={formData.address} onChange={handleChange} placeholder="Main Street, NY" />
            </div>
         </SectionCard>
 
         {/* Individual App Assets */}
-        <SectionCard title="Admin Application">
+        <SectionCard title="ECS Application">
            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              <ImageUploadBox title="Admin Logo" size="200px x 50px" preview={adminLogoPreview} onUpload={(file) => handleFileUpload(file, setAdminLogoFile, setAdminLogoPreview)} onClear={() => { setAdminLogoPreview(null); setAdminLogoFile(null); }} />
-              <ImageUploadBox title="Admin Favicon" size="80px x 80px" preview={adminFaviconPreview} onUpload={(file) => handleFileUpload(file, setAdminFaviconFile, setAdminFaviconPreview)} onClear={() => { setAdminFaviconPreview(null); setAdminFaviconFile(null); }} />
+              <ImageUploadBox title="ECS Logo" size="200px x 50px" preview={adminLogoPreview} onUpload={(file) => handleFileUpload(file, setAdminLogoFile, setAdminLogoPreview)} onClear={() => { setAdminLogoPreview(null); setAdminLogoFile(null); }} />
+              <ImageUploadBox title="ECS Favicon" size="80px x 80px" preview={adminFaviconPreview} onUpload={(file) => handleFileUpload(file, setAdminFaviconFile, setAdminFaviconPreview)} onClear={() => { setAdminFaviconPreview(null); setAdminFaviconFile(null); }} />
            </div>
         </SectionCard>
 
@@ -301,6 +323,16 @@ const GlobalApplicationSettings = () => {
            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <ImageUploadBox title="Seller Logo" size="200px x 50px" preview={sellerLogoPreview} onUpload={(file) => handleFileUpload(file, setSellerLogoFile, setSellerLogoPreview)} onClear={() => { setSellerLogoPreview(null); setSellerLogoFile(null); }} />
               <ImageUploadBox title="Seller Favicon" size="80px x 80px" preview={sellerFaviconPreview} onUpload={(file) => handleFileUpload(file, setSellerFaviconFile, setSellerFaviconPreview)} onClear={() => { setSellerFaviconPreview(null); setSellerFaviconFile(null); }} />
+           </div>
+        </SectionCard>
+
+        <SectionCard title="User Login Background Banners">
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+              <ImageUploadBox title="Banner 1" size="HD" preview={userLoginBanner1Preview} onUpload={(file) => handleFileUpload(file, setUserLoginBanner1File, setUserLoginBanner1Preview)} onClear={() => { setUserLoginBanner1Preview(null); setUserLoginBanner1File(null); }} />
+              <ImageUploadBox title="Banner 2" size="HD" preview={userLoginBanner2Preview} onUpload={(file) => handleFileUpload(file, setUserLoginBanner2File, setUserLoginBanner2Preview)} onClear={() => { setUserLoginBanner2Preview(null); setUserLoginBanner2File(null); }} />
+              <ImageUploadBox title="Banner 3" size="HD" preview={userLoginBanner3Preview} onUpload={(file) => handleFileUpload(file, setUserLoginBanner3File, setUserLoginBanner3Preview)} onClear={() => { setUserLoginBanner3Preview(null); setUserLoginBanner3File(null); }} />
+              <ImageUploadBox title="Banner 4" size="HD" preview={userLoginBanner4Preview} onUpload={(file) => handleFileUpload(file, setUserLoginBanner4File, setUserLoginBanner4Preview)} onClear={() => { setUserLoginBanner4Preview(null); setUserLoginBanner4File(null); }} />
+              <ImageUploadBox title="Banner 5" size="HD" preview={userLoginBanner5Preview} onUpload={(file) => handleFileUpload(file, setUserLoginBanner5File, setUserLoginBanner5Preview)} onClear={() => { setUserLoginBanner5Preview(null); setUserLoginBanner5File(null); }} />
            </div>
         </SectionCard>
 

@@ -316,7 +316,7 @@ export default function ReportSafetyEmergency() {
                     {selectedHistoryItem?.adminResponse && (
                       <div className="rounded-lg border border-emerald-200 dark:border-emerald-900/40 bg-emerald-50/60 dark:bg-emerald-900/10 p-4">
                         <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-300 uppercase tracking-wider mb-2">
-                          Admin response
+                          ECS response
                         </p>
                         <p className="text-sm text-emerald-900 dark:text-emerald-100 whitespace-pre-wrap leading-relaxed">
                           {selectedHistoryItem.adminResponse}

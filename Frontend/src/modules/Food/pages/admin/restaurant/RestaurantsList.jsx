@@ -342,7 +342,7 @@ export default function RestaurantsList() {
           try {
             clearModuleAuth("admin")
           } catch (_) {}
-          navigate("/admin/login", { replace: true, state: { from: "/admin/food/restaurants" } })
+          navigate("/ecs/login", { replace: true, state: { from: "/ecs/food/restaurants" } })
           return
         }
         setError(serverMessage || err.message || "Failed to fetch restaurants")
@@ -1479,7 +1479,7 @@ export default function RestaurantsList() {
             <div className="flex items-center gap-3">
               {canCreate && (
                 <button
-                  onClick={() => navigate("/admin/food/restaurants/add")}
+                  onClick={() => navigate("/ecs/food/restaurants/add")}
                   className="px-4 py-2.5 text-sm font-medium rounded-lg bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2 transition-all"
                 >
                   <Plus className="w-4 h-4" />
@@ -1530,7 +1530,7 @@ export default function RestaurantsList() {
                 <p className="text-sm text-slate-500 mb-4">{error}</p>
                 <button
                   type="button"
-                  onClick={() => navigate("/admin/login", { replace: true, state: { from: "/admin/food/restaurants" } })}
+                  onClick={() => navigate("/ecs/login", { replace: true, state: { from: "/ecs/food/restaurants" } })}
                   className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   Log in as admin
@@ -1839,7 +1839,7 @@ export default function RestaurantsList() {
                       </div>
                     </div>
                     <div>
-                      <label className="block text-xs text-slate-500 mb-1">Restaurant Email</label>
+                      <label className="block text-xs text-slate-500 mb-1">Restaurant User Id</label>
                       <input type="email" value={detailsForm.email} onChange={(e) => setDetailsForm((prev) => ({ ...prev, email: e.target.value }))} className="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
                     </div>
                     <div>
@@ -1847,7 +1847,7 @@ export default function RestaurantsList() {
                       <input type="text" value={detailsForm.ownerName} onChange={(e) => setDetailsForm((prev) => ({ ...prev, ownerName: e.target.value }))} className="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
                     </div>
                     <div>
-                      <label className="block text-xs text-slate-500 mb-1">Owner Email</label>
+                      <label className="block text-xs text-slate-500 mb-1">Owner User Id</label>
                       <input type="email" value={detailsForm.ownerEmail} onChange={(e) => setDetailsForm((prev) => ({ ...prev, ownerEmail: e.target.value }))} className="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
                     </div>
                     <div>
@@ -2020,7 +2020,7 @@ export default function RestaurantsList() {
                               <Mail className="w-5 h-5 text-indigo-600" />
                             </div>
                             <div>
-                              <p className="text-[10px] text-indigo-600 font-bold uppercase tracking-wider mb-0.5">Email Address</p>
+                              <p className="text-[10px] text-indigo-600 font-bold uppercase tracking-wider mb-0.5">User Id</p>
                               <p className="text-base font-bold text-slate-800">{r.ownerEmail || r.email}</p>
                             </div>
                           </div>
@@ -2069,7 +2069,7 @@ export default function RestaurantsList() {
                           <div className="flex items-center gap-3">
                             <Mail className="w-5 h-5 text-slate-400" />
                             <div>
-                              <p className="text-xs text-slate-500">Restaurant Email</p>
+                              <p className="text-xs text-slate-500">Restaurant User Id</p>
                               <p className="text-sm font-medium text-slate-900">{r.email}</p>
                             </div>
                           </div>
@@ -2464,7 +2464,7 @@ export default function RestaurantsList() {
                         )}
                         {r.onboarding.step1.ownerEmail && (
                           <div>
-                            <p className="text-xs text-slate-500 mb-1">Owner Email (at registration)</p>
+                            <p className="text-xs text-slate-500 mb-1">Owner User Id (at registration)</p>
                             <p className="font-medium text-slate-900">{r.onboarding.step1.ownerEmail}</p>
                           </div>
                         )}

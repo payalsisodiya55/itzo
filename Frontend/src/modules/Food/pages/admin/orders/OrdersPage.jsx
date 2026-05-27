@@ -206,7 +206,7 @@ export default function OrdersPage({ statusKey = "all" }) {
         silent: false,
         vibrate: [200, 100, 200, 100, 300],
         icon: "/favicon.ico",
-        data: { targetUrl: "/admin/orders/all" },
+        data: { targetUrl: "/ecs/orders/all" },
       }
 
       if ("serviceWorker" in navigator) {

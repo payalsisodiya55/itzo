@@ -8,17 +8,17 @@ const ADMIN_MODULES = [
     key: "food",
     label: "Food",
     shortLabel: "Food",
-    path: "/admin/food",
+    path: "/ecs/food",
     icon: UtensilsCrossed,
-    active: (pathname) => pathname.startsWith("/admin/food"),
+    active: (pathname) => pathname.startsWith("/ecs/food"),
   },
   {
     key: "quick",
     label: "Quick",
     shortLabel: "Quick",
-    path: "/admin/quick-commerce",
+    path: "/ecs/quick-commerce",
     icon: ShoppingBasket,
-    active: (pathname) => pathname.startsWith("/admin/quick-commerce"),
+    active: (pathname) => pathname.startsWith("/ecs/quick-commerce"),
   },
 
 

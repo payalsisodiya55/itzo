@@ -8,13 +8,13 @@ const debugError = (...args) => {}
 const defaultFields = [
   "Restaurant Name", "Restaurant Logo", "Owner Last Name",
   "Vat/Tax", "Cuisine", "Phone Number",
-  "Delivery Address", "Zone", "Email",
+  "Delivery Address", "Zone", "User Id",
   "Min Delivery Time", "Latitude & Longitude", "Password",
   "Max Delivery Time", "Map Location",
   "Restaurant Cover", "Owner First Name"
 ]
 
-const fieldTypes = ["Text", "Date", "File Upload", "Number", "Email", "Phone"]
+const fieldTypes = ["Text", "Date", "File Upload", "Number", "User Id", "Phone"]
 
 export default function JoinUsPageSetup() {
   const [activeTab, setActiveTab] = useState("restaurant")

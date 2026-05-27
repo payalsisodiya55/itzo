@@ -91,7 +91,7 @@ export default function CreateRole() {
         const cached = getCachedSettings();
         if (!cached?.modules) {
           toast.error("Failed to load page data");
-          if (isEdit) navigate("/admin/food/employee-role");
+          if (isEdit) navigate("/ecs/food/employee-role");
         } else {
           console.warn("Failed to fetch fresh settings, using cached settings:", error);
           if (isEdit) {
@@ -109,7 +109,7 @@ export default function CreateRole() {
               }
             } catch (roleError) {
               toast.error("Failed to load role data");
-              navigate("/admin/food/employee-role");
+              navigate("/ecs/food/employee-role");
             }
           }
         }
@@ -241,7 +241,7 @@ export default function CreateRole() {
       const response = await axiosInstance[method](url, payload);
       if (response.data.success) {
         toast.success(response.data.message);
-        navigate("/admin/food/employee-role");
+        navigate("/ecs/food/employee-role");
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to save role");
@@ -377,7 +377,7 @@ export default function CreateRole() {
             type="button" 
             variant="ghost" 
             size="icon" 
-            onClick={() => navigate("/admin/food/employee-role")}
+            onClick={() => navigate("/ecs/food/employee-role")}
             className="rounded-2xl hover:bg-neutral-100 h-12 w-12 transition-all active:scale-90"
           >
             <ChevronLeft className="w-6 h-6" />
@@ -404,7 +404,7 @@ export default function CreateRole() {
           <Button 
             type="button" 
             variant="outline" 
-            onClick={() => navigate("/admin/food/employee-role")}
+            onClick={() => navigate("/ecs/food/employee-role")}
             className="rounded-2xl border-neutral-200 text-neutral-600 h-12 px-6 font-bold transition-all hover:bg-neutral-50"
           >
             Cancel

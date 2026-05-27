@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
     const getCurrentRoleFromUrl = () => {
         const path = window.location.pathname;
         if (path.startsWith('/seller')) return 'seller';
-        if (path.startsWith('/admin')) return 'admin';
+        if (path.startsWith('/ecs')) return 'admin';
         if (path.startsWith('/delivery')) return 'delivery';
         return 'customer';
     };
@@ -153,7 +153,7 @@ export const AuthProvider = ({ children }) => {
 
         // Final fallback: redirect based on current path if needed
         // (ProtectedRoute usually handles this, but explicit navigation is safer for some UI edge cases)
-        if (path.startsWith('/admin')) window.location.href = '/admin/login';
+        if (path.startsWith('/ecs')) window.location.href = '/ecs/login';
         else if (path.startsWith('/seller')) window.location.href = '/seller/auth';
         else if (path.startsWith('/delivery')) window.location.href = '/delivery/auth';
         else window.location.href = '/user/auth/login';

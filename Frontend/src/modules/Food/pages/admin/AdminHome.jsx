@@ -241,7 +241,7 @@ export default function AdminHome() {
         <div className="flex flex-col gap-4 border-b border-neutral-200 bg-linear-to-br from-white via-neutral-50 to-neutral-100 px-6 py-5 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center gap-4">
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-neutral-500">Admin Overview</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-neutral-500">ECS Overview</p>
               <h1 className="text-2xl font-semibold text-neutral-900">Operations Command</h1>
             </div>
 
@@ -283,7 +283,7 @@ export default function AdminHome() {
               helper={`${periodLabel} transaction volume`}
               icon={<ShoppingBag className="h-5 w-5 text-emerald-600" />}
               accent="bg-emerald-200/40"
-              path="/admin/food/transaction-report"
+              path="/ecs/food/transaction-report"
             />
             <MetricCard
               title="Orders processed"
@@ -291,7 +291,7 @@ export default function AdminHome() {
               helper="Orders currently being processed"
               icon={<Activity className="h-5 w-5 text-amber-600" />}
               accent="bg-amber-200/40"
-              path="/admin/food/orders/processing"
+              path="/ecs/food/orders/processing"
             />
             <MetricCard
               title="Platform fee"
@@ -299,7 +299,7 @@ export default function AdminHome() {
               helper={`Platform service fees: ${periodLabel}`}
               icon={<CreditCard className="h-5 w-5 text-purple-600" />}
               accent="bg-purple-200/40"
-              path="/admin/food/fee-settings"
+              path="/ecs/food/fee-settings"
             />
             <MetricCard
               title="Delivery fee"
@@ -307,7 +307,7 @@ export default function AdminHome() {
               helper={`Total delivery fees: ${periodLabel}`}
               icon={<Truck className="h-5 w-5 text-blue-600" />}
               accent="bg-blue-200/40"
-              path="/admin/food/transaction-report"
+              path="/ecs/food/transaction-report"
             />
             <MetricCard
               title="GST"
@@ -315,7 +315,7 @@ export default function AdminHome() {
               helper={`Total tax collected: ${periodLabel}`}
               icon={<Receipt className="h-5 w-5 text-orange-600" />}
               accent="bg-orange-200/40"
-              path="/admin/food/tax-report"
+              path="/ecs/food/tax-report"
             />
             <MetricCard
               title="Platform Total"
@@ -323,7 +323,7 @@ export default function AdminHome() {
               helper={totalRevenueHelper}
               icon={<DollarSign className="h-5 w-5 text-green-600" />}
               accent="bg-green-200/40"
-              path="/admin/food/transaction-report"
+              path="/ecs/food/transaction-report"
             />
             <MetricCard
               title="Total restaurants"
@@ -331,7 +331,7 @@ export default function AdminHome() {
               helper="Approved restaurants"
               icon={<Store className="h-5 w-5 text-blue-600" />}
               accent="bg-blue-200/40"
-              path="/admin/food/restaurants"
+              path="/ecs/food/restaurants"
             />
             <MetricCard
               title="Restaurant request pending"
@@ -339,7 +339,7 @@ export default function AdminHome() {
               helper="Awaiting approval"
               icon={<UserCheck className="h-5 w-5 text-orange-600" />}
               accent="bg-orange-200/40"
-              path="/admin/food/restaurants/joining-request"
+              path="/ecs/food/restaurants/joining-request"
             />
             <MetricCard
               title="Total delivery boy"
@@ -347,7 +347,7 @@ export default function AdminHome() {
               helper="Approved delivery partners"
               icon={<Truck className="h-5 w-5 text-indigo-600" />}
               accent="bg-indigo-200/40"
-              path="/admin/food/delivery-partners"
+              path="/ecs/food/delivery-partners"
             />
             <MetricCard
               title="Delivery boy request pending"
@@ -355,7 +355,7 @@ export default function AdminHome() {
               helper="Awaiting verification"
               icon={<Clock className="h-5 w-5 text-yellow-600" />}
               accent="bg-yellow-200/40"
-              path="/admin/food/delivery-partners/join-request"
+              path="/ecs/food/delivery-partners/join-request"
             />
             <MetricCard
               title="Total foods"
@@ -363,7 +363,7 @@ export default function AdminHome() {
               helper="Approved menu items"
               icon={<Package className="h-5 w-5 text-purple-600" />}
               accent="bg-purple-200/40"
-              path="/admin/food/foods"
+              path="/ecs/food/foods"
             />
             <MetricCard
               title="Total addons"
@@ -371,7 +371,7 @@ export default function AdminHome() {
               helper="Approved addon items"
               icon={<Plus className="h-5 w-5 text-pink-600" />}
               accent="bg-pink-200/40"
-              path="/admin/food/addons"
+              path="/ecs/food/addons"
             />
             <MetricCard
               title="Total customers"
@@ -379,7 +379,7 @@ export default function AdminHome() {
               helper="Registered users"
               icon={<UserCircle className="h-5 w-5 text-cyan-600" />}
               accent="bg-cyan-200/40"
-              path="/admin/food/customers"
+              path="/ecs/food/customers"
             />
             <MetricCard
               title="Pending orders"
@@ -387,7 +387,7 @@ export default function AdminHome() {
               helper="Orders awaiting processing"
               icon={<Clock className="h-5 w-5 text-red-600" />}
               accent="bg-red-200/40"
-              path="/admin/food/orders/pending"
+              path="/ecs/food/orders/pending"
             />
             <MetricCard
               title="Completed orders"
@@ -395,7 +395,7 @@ export default function AdminHome() {
               helper="Successfully delivered"
               icon={<CheckCircle className="h-5 w-5 text-emerald-600" />}
               accent="bg-emerald-200/40"
-              path="/admin/food/orders/delivered"
+              path="/ecs/food/orders/delivered"
             />
           </div>
 
@@ -409,7 +409,7 @@ export default function AdminHome() {
                 helper="Gross collected all-time"
                 icon={<DollarSign className="h-5 w-5 text-[#FE5502]" />}
                 accent="bg-orange-100/40"
-                path="/admin/food/subscriptions?source=revenue"
+                path="/ecs/food/subscriptions?source=revenue"
               />
               <MetricCard
                 title="Active paid users"
@@ -417,7 +417,7 @@ export default function AdminHome() {
                 helper="Active subscription plans"
                 icon={<Activity className="h-5 w-5 text-blue-600" />}
                 accent="bg-blue-100/40"
-                path="/admin/food/subscriptions?status=active"
+                path="/ecs/food/subscriptions?status=active"
               />
               <MetricCard
                 title="Daily pass count"
@@ -425,7 +425,7 @@ export default function AdminHome() {
                 helper="One day passes activated"
                 icon={<Truck className="h-5 w-5 text-purple-600" />}
                 accent="bg-purple-100/40"
-                path="/admin/food/subscriptions?type=DAILY_DEDUCTION"
+                path="/ecs/food/subscriptions?type=DAILY_DEDUCTION"
               />
               <MetricCard
                 title="Recharge revenue"
@@ -433,7 +433,7 @@ export default function AdminHome() {
                 helper="Wallet topup volume"
                 icon={<CreditCard className="h-5 w-5 text-emerald-600" />}
                 accent="bg-emerald-100/40"
-                path="/admin/food/subscriptions?type=TOPUP"
+                path="/ecs/food/subscriptions?type=TOPUP"
               />
               <MetricCard
                 title="Recurring plans"
@@ -441,7 +441,7 @@ export default function AdminHome() {
                 helper="Weekly & Monthly direct plans"
                 icon={<Package className="h-5 w-5 text-indigo-600" />}
                 accent="bg-indigo-100/40"
-                path="/admin/food/subscriptions?type=WEEKLY_SUBSCRIPTION"
+                path="/ecs/food/subscriptions?type=WEEKLY_SUBSCRIPTION"
               />
               <MetricCard
                 title="Expiring soon"
@@ -449,7 +449,7 @@ export default function AdminHome() {
                 helper="Plans expiring within 3 days"
                 icon={<Clock className="h-5 w-5 text-amber-600" />}
                 accent="bg-amber-100/40"
-                path="/admin/food/subscriptions?status=expiring"
+                path="/ecs/food/subscriptions?status=expiring"
               />
             </div>
           </div>
@@ -545,12 +545,12 @@ export default function AdminHome() {
                       key={item.label}
                     onClick={() => {
                         const routes = {
-                          'Delivered': '/admin/food/orders/delivered',
-                          'Processing': '/admin/food/orders/processing',
-                          'Cancelled': '/admin/food/orders/canceled',
-                          'Pending': '/admin/food/orders/pending'
+                          'Delivered': '/ecs/food/orders/delivered',
+                          'Processing': '/ecs/food/orders/processing',
+                          'Cancelled': '/ecs/food/orders/canceled',
+                          'Pending': '/ecs/food/orders/pending'
                         }
-                        navigate(routes[item.label] || '/admin/food/orders/all')
+                        navigate(routes[item.label] || '/ecs/food/orders/all')
                       }}
                       className="flex items-center justify-between rounded-xl border border-neutral-200 bg-white px-3 py-2 cursor-pointer hover:bg-neutral-50 hover:border-neutral-300 transition-all group"
                     >
@@ -674,12 +674,12 @@ export default function AdminHome() {
                     key={item.label}
                     onClick={() => {
                       const routes = {
-                        'Delivered': '/admin/food/orders/delivered',
-                        'Processing': '/admin/food/orders/processing',
-                        'Cancelled': '/admin/food/orders/canceled',
-                        'Pending': '/admin/food/orders/pending'
+                        'Delivered': '/ecs/food/orders/delivered',
+                        'Processing': '/ecs/food/orders/processing',
+                        'Cancelled': '/ecs/food/orders/canceled',
+                        'Pending': '/ecs/food/orders/pending'
                       }
-                      navigate(routes[item.label] || '/admin/food/orders/all')
+                      navigate(routes[item.label] || '/ecs/food/orders/all')
                     }}
                     className="flex items-center justify-between rounded-xl border border-neutral-200 bg-neutral-50 px-3 py-3 cursor-pointer hover:bg-neutral-100 transition-colors group"
                   >

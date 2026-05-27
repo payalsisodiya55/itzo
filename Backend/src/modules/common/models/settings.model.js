@@ -28,6 +28,26 @@ const globalSettingsSchema = new mongoose.Schema(
             url: { type: String, default: '' },
             publicId: { type: String, default: '' }
         },
+        userLoginBanner1: {
+            url: { type: String, default: '' },
+            publicId: { type: String, default: '' }
+        },
+        userLoginBanner2: {
+            url: { type: String, default: '' },
+            publicId: { type: String, default: '' }
+        },
+        userLoginBanner3: {
+            url: { type: String, default: '' },
+            publicId: { type: String, default: '' }
+        },
+        userLoginBanner4: {
+            url: { type: String, default: '' },
+            publicId: { type: String, default: '' }
+        },
+        userLoginBanner5: {
+            url: { type: String, default: '' },
+            publicId: { type: String, default: '' }
+        },
         deliveryLogo: {
             url: { type: String, default: '' },
             publicId: { type: String, default: '' }

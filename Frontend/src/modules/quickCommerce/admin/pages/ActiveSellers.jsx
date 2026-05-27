@@ -225,7 +225,7 @@ const ActiveSellers = () => {
                     <td className="px-6 py-4 text-right">
                       <button
                         type="button"
-                        onClick={() => navigate(`/admin/quick-commerce/sellers/active/${seller._id || seller.id}`)}
+                        onClick={() => navigate(`/ecs/quick-commerce/sellers/active/${seller._id || seller.id}`)}
                         className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-[10px] font-bold text-white shadow-lg"
                       >
                         <HiOutlineEye className="h-3.5 w-3.5" />

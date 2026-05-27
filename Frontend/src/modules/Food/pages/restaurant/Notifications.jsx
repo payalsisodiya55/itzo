@@ -182,7 +182,7 @@ export default function Notifications() {
                     <p className="text-sm font-medium text-gray-900">{item.message}</p>
                   </div>
                   {item.source === "broadcast" ? (
-                    <p className="text-xs text-gray-600 mt-0.5">{item.detail || "Admin notification"}</p>
+                    <p className="text-xs text-gray-600 mt-0.5">{item.detail || "ECS notification"}</p>
                   ) : (
                     <p className="text-xs text-gray-600 mt-0.5">Order: {item.orderId}</p>
                   )}

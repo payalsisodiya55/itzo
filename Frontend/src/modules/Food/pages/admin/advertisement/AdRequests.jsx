@@ -457,7 +457,7 @@ export default function AdRequests() {
                   <p className="text-sm text-slate-900">{selectedRequest.restaurantName}</p>
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-slate-700">Restaurant Email</p>
+                  <p className="text-sm font-semibold text-slate-700">Restaurant User Id</p>
                   <p className="text-sm text-slate-900">{selectedRequest.restaurantEmail}</p>
                 </div>
                 <div>

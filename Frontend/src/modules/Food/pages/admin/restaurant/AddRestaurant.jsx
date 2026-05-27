@@ -611,7 +611,7 @@ export default function AddRestaurant() {
         toast.success("Restaurant created successfully!")
         setShowSuccessDialog(true)
         setTimeout(() => {
-          navigate("/admin/food/restaurants")
+          navigate("/ecs/food/restaurants")
         }, 2000)
       } else {
         throw new Error(response?.data?.message || "Failed to create restaurant")
@@ -928,7 +928,7 @@ export default function AddRestaurant() {
             />
           </div>
           <div>
-            <Label className="text-xs text-gray-700">Email address*</Label>
+            <Label className="text-xs text-gray-700">User Id*</Label>
             <Input
               type="email"
               value={step1.ownerEmail || ""}

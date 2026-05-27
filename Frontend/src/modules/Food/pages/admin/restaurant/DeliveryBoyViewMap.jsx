@@ -539,7 +539,7 @@ export default function DeliveryBoyViewMap() {
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
           <button
-            onClick={() => navigate("/admin/food/zone-setup")}
+            onClick={() => navigate("/ecs/food/zone-setup")}
             className="p-2 hover:bg-slate-200 rounded-lg transition-colors"
           >
             <ArrowLeft className="w-5 h-5 text-slate-600" />

@@ -965,7 +965,7 @@ export default function JoiningRequest() {
                           <div className="flex items-center gap-3">
                             <Mail className="w-5 h-5 text-slate-400" />
                             <div>
-                              <p className="text-xs text-slate-500">Email</p>
+                              <p className="text-xs text-slate-500">User Id</p>
                               <p className="text-sm font-medium text-slate-900">{r.ownerEmail || r.email}</p>
                             </div>
                           </div>

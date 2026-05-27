@@ -53,7 +53,7 @@ const coordinatesLength = useMemo(() => zone?.coordinates?.length || 0, [zone?.c
     } catch (error) {
       debugError("Error fetching zone:", error)
       alert("Failed to load zone")
-      navigate("/admin/quick-commerce/zone-setup")
+      navigate("/ecs/quick-commerce/zone-setup")
     } finally {
       setLoading(false)
     }
@@ -329,7 +329,7 @@ const coordinatesLength = useMemo(() => zone?.coordinates?.length || 0, [zone?.c
         <div className="text-center">
           <p className="text-slate-600">Zone not found</p>
           <button
-            onClick={() => navigate("/admin/quick-commerce/zone-setup")}
+            onClick={() => navigate("/ecs/quick-commerce/zone-setup")}
             className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
             Back to Zones
@@ -345,7 +345,7 @@ const coordinatesLength = useMemo(() => zone?.coordinates?.length || 0, [zone?.c
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
           <button
-            onClick={() => navigate("/admin/quick-commerce/zone-setup")}
+            onClick={() => navigate("/ecs/quick-commerce/zone-setup")}
             className="p-2 hover:bg-slate-200 rounded-lg transition-colors"
           >
             <ArrowLeft className="w-5 h-5 text-slate-600" />

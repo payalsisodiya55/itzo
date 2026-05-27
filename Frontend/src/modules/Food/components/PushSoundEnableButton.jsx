@@ -26,7 +26,7 @@ export default function PushSoundEnableButton() {
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isMobile, setIsMobile] = useState(() => isMobileDevice());
-  const isAdminRoute = location.pathname.startsWith("/admin");
+  const isAdminRoute = location.pathname.startsWith("/ecs");
   const shouldShowPrompt = useMemo(() => {
     if (isMobile) return false;
     if (isAdminRoute) return false;
