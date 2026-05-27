@@ -440,7 +440,7 @@ export default function EmployeeList() {
                   <div className="text-slate-500 font-medium">Name:</div>
                   <div className="text-slate-900 font-semibold">{selectedEmployee.name}</div>
                   
-                  <div className="text-slate-500 font-medium">User Id:/div>
+                  <div className="text-slate-500 font-medium">User Id:</div>
                   <div className="text-slate-900">{selectedEmployee.email}</div>
                   
                   <div className="text-slate-500 font-medium">Phone:</div>
