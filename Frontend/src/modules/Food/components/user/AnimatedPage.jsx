@@ -1,7 +1,7 @@
 // CSS-only AnimatedPage - no GSAP dependency
 import { useEffect, useRef } from "react"
 
-export default function AnimatedPage({ children, className = "" }) {
+export default function AnimatedPage({ children, className = "", style = {} }) {
   const containerRef = useRef(null)
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function AnimatedPage({ children, className = "" }) {
   }, [])
 
   return (
-    <div ref={containerRef} className={`${className}  md:pb-0`}>
+    <div ref={containerRef} className={`${className}  md:pb-0`} style={style}>
       {children}
     </div>
   )

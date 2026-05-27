@@ -10,7 +10,7 @@ export default function AuthRoutes() {
     <Suspense fallback={<AuthPortalSkeleton />}>
       <Routes>
         <Route path="login" element={<Login />} />
-        <Route path="portal" element={<Portal />} />
+        <Route path="portal" element={<Navigate to="/food/user" replace />} />
         <Route path="*" element={<Navigate to="/user/auth/login" replace />} />
       </Routes>
     </Suspense>

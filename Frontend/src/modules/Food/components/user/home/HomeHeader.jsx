@@ -436,6 +436,7 @@ export default function HomeHeader({
         </div>
       </div>
 
+      {/* Hidden because there is only one tab and it is redundant as per request
       <div className="px-3 pt-1 flex items-end justify-start gap-1 relative z-10">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
@@ -480,7 +481,6 @@ export default function HomeHeader({
                   backdropFilter: isActive ? undefined : "blur(12px)",
                 }}
               >
-                {/* Continuous Curve Effect (Swiggy Style) */}
                 {isActive && (
                   <>
                     <div 
@@ -516,6 +516,7 @@ export default function HomeHeader({
           );
         })}
       </div>
+      */}
 
       <div className={cn("relative z-10 pb-0 px-3 overflow-visible", isFood ? "pt-3" : "pt-0")}>
         {isFood && (

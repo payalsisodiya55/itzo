@@ -154,14 +154,18 @@ const BannerSection = memo(({
                         </motion.div>
                       </div>
                     )}
-                    <OptimizedImage
-                      src={image}
-                      alt={`Hero Banner ${index + 1}`}
-                      className="h-full w-full object-cover"
-                      priority={index === currentBannerIndex}
-                      backendOrigin={backendOrigin}
-                      draggable={false}
-                    />
+                    {!hideOverlay ? (
+                      <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
+                    ) : (
+                      <OptimizedImage
+                        src={image}
+                        alt={`Hero Banner ${index + 1}`}
+                        className="h-full w-full object-cover"
+                        priority={index === currentBannerIndex}
+                        backendOrigin={backendOrigin}
+                        draggable={false}
+                      />
+                    )}
                   </>
                 )}
               </div>

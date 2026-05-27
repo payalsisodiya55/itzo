@@ -143,12 +143,12 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-        {/* Root now lands on the portal page */}
-        <Route path="/" element={<Navigate to={`/user/auth/portal${location.search}`} replace />} />
+        {/* Root now lands on the food user home page */}
+        <Route path="/" element={<Navigate to={`/food/user${location.search}`} replace />} />
 
         {/* Auth Module */}
         <Route path="/user/auth/*" element={<AuthApp />} />
-        <Route path="/portal" element={<Navigate to={`/user/auth/portal${location.search}`} replace />} />
+        <Route path="/portal" element={<Navigate to={`/food/user${location.search}`} replace />} />
         <Route path="/login" element={<Navigate to={`/user/auth/login${location.search}`} replace />} />
 
         {/* Shared home entry so /food/user <-> /quick doesn't remount through different app trees */}

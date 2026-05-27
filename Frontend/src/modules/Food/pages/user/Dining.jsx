@@ -458,7 +458,7 @@ export default function Dining() {
   }, [heroSearch, openSearch, setSearchValue])
 
   return (
-    <AnimatedPage className="bg-white dark:bg-[#0a0a0a]" style={{ minHeight: '100vh', paddingBottom: '80px', overflow: 'visible' }}>
+    <AnimatedPage className="bg-white dark:bg-[#0a0a0a]" style={{ minHeight: '100vh', paddingBottom: '76px', overflow: 'visible' }}>
       <style>{`
         @keyframes shimmer {
           100% {
@@ -788,7 +788,7 @@ export default function Dining() {
               return (
                 <motion.div
                   key={restaurant._id || restaurant.id}
-                  className="h-full"
+                  className="h-auto md:h-full pb-2 sm:pb-3 md:pb-0 rounded-2xl"
                   initial={{ opacity: 0, y: 30, scale: 0.95 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: true, margin: "-50px" }}
@@ -801,7 +801,7 @@ export default function Dining() {
                   style={{ perspective: 1000 }}
                 >
                   <motion.div
-                    className="h-full"
+                    className="h-auto md:h-full rounded-2xl"
                     whileHover="hover"
                     initial="rest"
                     variants={{
@@ -826,9 +826,9 @@ export default function Dining() {
                     <Link
                       to={diningDetailPath}
                       state={{ restaurant }}
-                      className="h-full flex"
+                      className="h-auto md:h-full flex"
                     >
-                      <Card className="overflow-hidden gap-0 cursor-pointer border-0 dark:border-gray-800 group bg-white dark:bg-[#1a1a1a] shadow-md transition-all duration-500 py-0 rounded-2xl h-full flex flex-col w-full relative">
+                      <Card className="overflow-hidden gap-0 cursor-pointer border-0 dark:border-gray-800 group bg-white dark:bg-[#1a1a1a] shadow-md transition-all duration-500 py-0 rounded-2xl h-auto md:h-full flex flex-col w-full relative">
                         {/* Image Section */}
                         <div className="relative h-48 sm:h-56 md:h-60 lg:h-64 xl:h-72 w-full overflow-hidden rounded-t-2xl flex-shrink-0">
                           <motion.div
@@ -1018,7 +1018,7 @@ export default function Dining() {
               return (
                 <motion.div
                   key={restaurant._id || restaurant.id}
-                  className="h-full"
+                  className="h-auto md:h-full pb-2 sm:pb-3 md:pb-0 rounded-2xl"
                   initial={{ opacity: 0, y: 30, scale: 0.95 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: true, margin: "-50px" }}
@@ -1031,7 +1031,7 @@ export default function Dining() {
                   style={{ perspective: 1000 }}
                 >
                   <motion.div
-                    className="h-full"
+                    className="h-auto md:h-full rounded-2xl"
                     whileHover="hover"
                     initial="rest"
                     variants={{
@@ -1056,9 +1056,9 @@ export default function Dining() {
                     <Link
                       to={diningDetailPath}
                       state={{ restaurant }}
-                      className="h-full flex"
+                      className="h-auto md:h-full flex"
                     >
-                      <Card className="overflow-hidden cursor-pointer border-0 dark:border-gray-800 group bg-white dark:bg-[#1a1a1a] shadow-md transition-all duration-500 py-0 rounded-2xl h-full flex flex-col w-full relative">
+                      <Card className="overflow-hidden cursor-pointer border-0 dark:border-gray-800 group bg-white dark:bg-[#1a1a1a] shadow-md transition-all duration-500 py-0 rounded-2xl h-auto md:h-full flex flex-col w-full relative">
                         {/* Image Section */}
                         <div className="relative h-48 sm:h-56 md:h-60 lg:h-64 xl:h-72 w-full overflow-hidden rounded-t-2xl flex-shrink-0">
                           <motion.div
