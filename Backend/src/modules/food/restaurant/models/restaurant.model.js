@@ -287,6 +287,31 @@ const restaurantSchema = new mongoose.Schema(
       updatedZone: { type: String },
       reVerificationReason: { type: String, trim: true }
     },
+    isDeleted: {
+      type: Boolean,
+      default: false
+    },
+    deletionRequest: {
+      status: {
+          type: String,
+          enum: ['none', 'pending', 'approved', 'rejected'],
+          default: 'none',
+          index: true
+      },
+      reason: {
+          type: String,
+          default: '',
+          trim: true
+      },
+      requestedAt: {
+          type: Date,
+          default: null
+      },
+      reviewedAt: {
+          type: Date,
+          default: null
+      }
+    }
   },
   {
     collection: 'food_restaurants',

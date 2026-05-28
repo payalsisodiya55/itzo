@@ -181,6 +181,22 @@ export const updateDeliveryPartnerProfile = async (userId, payload, files) => {
     };
 };
 
+export const deleteDeliveryPartnerAccount = async (userId) => {
+    const partner = await FoodDeliveryPartner.findById(userId);
+    if (!partner) throw new ValidationError('Delivery partner not found');
+
+    partner.isDeleted = true;
+    partner.availabilityStatus = 'offline';
+    partner.deletionRequest = {
+        status: 'approved',
+        reason: 'Delivery partner requested account deletion',
+        requestedAt: new Date(),
+        reviewedAt: new Date()
+    };
+    await partner.save();
+    return { success: true, message: 'Account deleted successfully' };
+};
+
 export const updateDeliveryPartnerDetails = async (userId, payload) => {
     const partner = await FoodDeliveryPartner.findById(userId);
     if (!partner) {

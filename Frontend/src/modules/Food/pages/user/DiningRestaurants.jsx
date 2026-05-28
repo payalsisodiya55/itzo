@@ -259,7 +259,8 @@ export default function DiningRestaurants() {
                 onFocus={handleSearchFocus}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && heroSearch.trim()) {
-                    navigate(`/user/search?q=${encodeURIComponent(heroSearch.trim())}`)
+                    e.preventDefault()
+                    navigate(`/food/user/search?q=${encodeURIComponent(heroSearch.trim())}`)
                     closeSearch()
                     setHeroSearch("")
                   }

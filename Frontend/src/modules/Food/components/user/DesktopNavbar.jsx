@@ -253,7 +253,7 @@ export default function DesktopNavbar({ showLogo = true }) {
                                                     navigate(
                                                         isQuick
                                                             ? `/quick/search?q=${encodeURIComponent(heroSearch.trim())}`
-                                                            : `/food/search?q=${encodeURIComponent(heroSearch.trim())}`
+                                                            : `/food/user/search?q=${encodeURIComponent(heroSearch.trim())}`
                                                     )
                                                 }
                                             }}

@@ -1003,6 +1003,11 @@ export const restaurantAPI = {
   getMe: () => authService.getMe("restaurant"),
   /** Restaurant dashboard: fetch current restaurant profile (deduped + short-cached). */
   getCurrentRestaurant: () => getRestaurantCurrentOnce(),
+  /** DELETE /food/restaurant/delete-account (Bearer RESTAURANT) */
+  deleteAccount: () =>
+    apiClient.delete("/food/restaurant/delete-account", {
+      contextModule: "restaurant",
+    }),
   /** Finance dashboard for `hub-finance`. */
   getFinance: (params = {}) =>
     apiClient.get("/food/restaurant/finance", {
@@ -1722,6 +1727,11 @@ export const deliveryAPI = {
     return authService.verifyDeliveryOtp(phone, otp, fcmToken, platform);
   },
   getMe: () => getDeliveryMeOnce(),
+  /** DELETE /food/delivery/delete-account (Bearer DELIVERY_PARTNER) */
+  deleteAccount: () =>
+    apiClient.delete("/food/delivery/delete-account", {
+      contextModule: "delivery",
+    }),
   /** Get delivery profile (same as getMe under the hood; maps response to profile shape). */
   getProfile: () =>
     getDeliveryMeOnce().then((res) => ({
@@ -2153,6 +2163,11 @@ export const userAPI = {
       contextModule: "user",
     });
   },
+  /** DELETE /food/user/delete-account (Bearer USER) */
+  deleteAccount: () =>
+    apiClient.delete("/food/user/delete-account", {
+      contextModule: "user",
+    }),
   /** GET /food/user/wallet (Bearer USER). Deduped + short-cached. */
   getWallet: (() => {
     let inFlight = null;

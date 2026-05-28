@@ -248,7 +248,7 @@ export default function DiningExploreNear() {
                 onFocus={handleSearchFocus}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && heroSearch.trim()) {
-                    navigate(`/user/search?q=${encodeURIComponent(heroSearch.trim())}`)
+                    navigate(`/food/user/search?q=${encodeURIComponent(heroSearch.trim())}`)
                     closeSearch()
                     setHeroSearch("")
                   }

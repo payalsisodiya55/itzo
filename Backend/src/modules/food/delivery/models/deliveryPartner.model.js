@@ -123,7 +123,32 @@ const deliveryPartnerSchema = new mongoose.Schema(
             max: 5,
             set: normalizeRatingValue
         },
-        totalRatings: { type: Number, default: 0, min: 0 }
+        totalRatings: { type: Number, default: 0, min: 0 },
+        isDeleted: {
+            type: Boolean,
+            default: false
+        },
+        deletionRequest: {
+            status: {
+                type: String,
+                enum: ['none', 'pending', 'approved', 'rejected'],
+                default: 'none',
+                index: true
+            },
+            reason: {
+                type: String,
+                default: '',
+                trim: true
+            },
+            requestedAt: {
+                type: Date,
+                default: null
+            },
+            reviewedAt: {
+                type: Date,
+                default: null
+            }
+        }
     },
     {
         collection: 'food_delivery_partners',

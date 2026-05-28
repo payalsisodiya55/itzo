@@ -3,7 +3,8 @@ import { validateUserProfileUpdateDto } from '../../../../dtos/food/userProfileU
 import {
     getCurrentUserProfile,
     updateCurrentUserProfile,
-    uploadCurrentUserProfileImage
+    uploadCurrentUserProfileImage,
+    deleteCurrentUserAccount
 } from '../services/userProfile.service.js';
 
 export const getCurrentUserProfileController = async (req, res, next) => {
@@ -37,3 +38,12 @@ export const uploadCurrentUserProfileImageController = async (req, res, next) =>
     }
 };
 
+export const deleteCurrentUserAccountController = async (req, res, next) => {
+    try {
+        const userId = req.user?.userId;
+        const result = await deleteCurrentUserAccount(userId);
+        return sendResponse(res, 200, 'Account deleted successfully', result);
+    } catch (error) {
+        next(error);
+    }
+};

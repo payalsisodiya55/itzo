@@ -7,6 +7,7 @@ import {
   Edit,
   LogOut,
   ShieldCheck,
+  AlertTriangle,
 } from "lucide-react"
 import { restaurantAPI } from "@food/api"
 import { clearModuleAuth, clearAuthData, getCurrentUser } from "@food/utils/auth"
@@ -18,6 +19,8 @@ const debugError = (...args) => {}
 export default function RestaurantProfile({ isOpen, onClose }) {
   const navigate = useNavigate()
   const [isLoggingOut, setIsLoggingOut] = useState(false)
+  const [isDeletingAccount, setIsDeletingAccount] = useState(false)
+  const [deleteAccountConfirmOpen, setDeleteAccountConfirmOpen] = useState(false)
   const [restaurantData, setRestaurantData] = useState(null)
   const [loadingRestaurant, setLoadingRestaurant] = useState(true)
 
@@ -192,6 +195,44 @@ export default function RestaurantProfile({ isOpen, onClose }) {
     }
   }
 
+  const handleDeleteAccount = async () => {
+    if (isDeletingAccount) return
+    setIsDeletingAccount(true)
+
+    try {
+      await restaurantAPI.deleteAccount()
+      
+      try {
+        const { signOut } = await import("firebase/auth")
+        ensureFirebaseInitialized({ enableAuth: true, enableRealtimeDb: false })
+        const currentUser = firebaseAuth.currentUser
+        if (currentUser) {
+          await signOut(firebaseAuth)
+        }
+      } catch (firebaseError) {
+        debugWarn("Firebase logout failed, continuing with local cleanup:", firebaseError)
+      }
+
+      clearModuleAuth("restaurant")
+      localStorage.removeItem("restaurant_onboarding")
+      localStorage.removeItem("restaurant_accessToken")
+      localStorage.removeItem("restaurant_authenticated")
+      localStorage.removeItem("restaurant_user")
+      sessionStorage.removeItem("restaurantAuthData")
+      window.dispatchEvent(new Event("restaurantAuthChanged"))
+
+      setTimeout(() => {
+        setDeleteAccountConfirmOpen(false)
+        onClose()
+        navigate("/food/restaurant/login", { replace: true })
+      }, 300)
+    } catch (error) {
+      debugError("Error during account deletion:", error)
+    } finally {
+      setIsDeletingAccount(false)
+    }
+  }
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -306,6 +347,14 @@ export default function RestaurantProfile({ isOpen, onClose }) {
               >
                 Logout from all devices
               </button>
+
+              <button
+                onClick={() => setDeleteAccountConfirmOpen(true)}
+                disabled={isLoggingOut || isDeletingAccount}
+                className="w-full bg-white border-2 border-red-900 text-red-900 hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed font-bold py-4 px-4 rounded-2xl transition-all active:scale-[0.98] mt-4 flex items-center justify-center gap-2"
+              >
+                <AlertTriangle className="w-5 h-5" /> Delete Account
+              </button>
             </div>
 
             {/* Footer Links */}
@@ -317,6 +366,43 @@ export default function RestaurantProfile({ isOpen, onClose }) {
               </div>
             </div>
           </motion.div>
+
+          {/* Delete Account Confirmation Popup */}
+          {deleteAccountConfirmOpen && (
+            <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/40 px-4">
+              <div className="w-full max-w-sm rounded-2xl bg-white p-5 shadow-2xl border border-red-200">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="bg-red-100 p-2 rounded-full text-red-600">
+                    <AlertTriangle className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900">
+                    Delete Account?
+                  </h3>
+                </div>
+                <p className="mt-1 text-sm text-gray-500">
+                  Are you sure you want to delete your restaurant account? You will lose access to all your orders and settings.
+                </p>
+                <div className="mt-5 flex items-center gap-3">
+                  <button
+                    type="button"
+                    className="flex-1 py-3 border border-gray-200 rounded-xl font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                    onClick={() => setDeleteAccountConfirmOpen(false)}
+                    disabled={isDeletingAccount}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    className="flex-1 py-3 bg-red-600 hover:bg-red-700 rounded-xl font-medium text-white transition-colors disabled:opacity-50"
+                    onClick={handleDeleteAccount}
+                    disabled={isDeletingAccount}
+                  >
+                    {isDeletingAccount ? "Deleting..." : "Delete"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </>
       )}
     </AnimatePresence>

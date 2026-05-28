@@ -1663,9 +1663,16 @@ export const deleteRestaurantAccount = async (restaurantId) => {
         // Delete associated data
         await FoodRestaurantOutletTimings.deleteMany({ restaurantId }).session(session);
         // Note: You might want to delete foods, categories, etc. as well depending on business rules.
-        // For now, we'll stick to the core profile and timings.
-        
-        await FoodRestaurant.findByIdAndDelete(restaurantId).session(session);
+        // For soft delete, we just update the flags
+        restaurant.isDeleted = true;
+        restaurant.isAcceptingOrders = false;
+        restaurant.deletionRequest = {
+            status: 'approved',
+            reason: 'Restaurant requested account deletion',
+            requestedAt: new Date(),
+            reviewedAt: new Date()
+        };
+        await restaurant.save({ session });
 
         await session.commitTransaction();
 

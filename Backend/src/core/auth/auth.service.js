@@ -142,6 +142,13 @@ export const verifyUserOtpAndLogin = async (
     );
   }
 
+  // Block login for deleted users
+  if (userDoc.isDeleted) {
+    throw new AuthError(
+      "Your account has been deleted.",
+    );
+  }
+
   // Update FCM token if provided
   if (fcmToken) {
     let isModified = false;
@@ -390,6 +397,13 @@ export const verifyRestaurantOtpAndLogin = async (phone, otp, fcmToken, platform
     }
   }
 
+  // Block login for deleted restaurants
+  if (restaurant.isDeleted) {
+    throw new AuthError(
+      "Your account has been deleted.",
+    );
+  }
+
   // If restaurant approval status is used, only allow login for approved restaurants.
   if (restaurant.status && restaurant.status !== "approved") {
     throw new AuthError(
@@ -481,6 +495,12 @@ export const verifyDeliveryOtpAndLogin = async (phone, otp, fcmToken, platform) 
   if (deliveryPartner.isActive === false) {
     throw new AuthError(
       "Your delivery account has been deactivated by admin. Please contact support.",
+    );
+  }
+
+  if (deliveryPartner.isDeleted) {
+    throw new AuthError(
+      "Your account has been deleted.",
     );
   }
 

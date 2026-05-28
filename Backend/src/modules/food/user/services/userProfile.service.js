@@ -63,3 +63,18 @@ export const uploadCurrentUserProfileImage = async (userId, file) => {
     return { profileImage: user.profileImage, user: user.toObject() };
 };
 
+export const deleteCurrentUserAccount = async (userId) => {
+    const user = await FoodUser.findById(userId);
+    if (!user) throw new AuthError('Profile not found');
+
+    user.isDeleted = true;
+    user.isActive = false;
+    user.deletionRequest = {
+        status: 'approved',
+        reason: 'User requested account deletion',
+        requestedAt: new Date(),
+        reviewedAt: new Date()
+    };
+    await user.save();
+    return { success: true, message: 'Account deleted successfully' };
+};

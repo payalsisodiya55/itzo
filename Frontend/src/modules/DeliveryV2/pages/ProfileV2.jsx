@@ -10,7 +10,8 @@ import {
   LogOut,
   X,
   Loader2,
-  Briefcase
+  Briefcase,
+  AlertTriangle
 } from "lucide-react"
 import { deliveryAPI } from "@food/api"
 import { toast } from "sonner"
@@ -28,6 +29,8 @@ export const ProfileV2 = () => {
   const [referralReward, setReferralReward] = useState(0)
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
   const [logoutSubmitting, setLogoutSubmitting] = useState(false)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [deleteSubmitting, setDeleteSubmitting] = useState(false)
 
   // Fetch profile data
   useEffect(() => {
@@ -83,6 +86,23 @@ export const ProfileV2 = () => {
     toast.success("Logged out successfully")
     navigate("/food/delivery/login", { replace: true })
     setLogoutSubmitting(false)
+  }
+
+  const handleDeleteAccount = async () => {
+    if (deleteSubmitting) return
+    setShowDeleteConfirm(false)
+    try {
+      setDeleteSubmitting(true)
+      await deliveryAPI.deleteAccount()
+      toast.success("Account deleted successfully")
+      clearModuleAuth("delivery")
+      localStorage.removeItem("app:isOnline")
+      navigate("/food/delivery/login", { replace: true })
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Failed to delete account")
+    } finally {
+      setDeleteSubmitting(false)
+    }
   }
 
   if (loading) {
@@ -197,7 +217,7 @@ export const ProfileV2 = () => {
 
           {/* Partner options Section */}
           {/* Logout Section */}
-          <div className="pt-4">
+          <div className="pt-4 space-y-3">
             <div 
               onClick={() => setShowLogoutConfirm(true)}
               className="bg-white rounded-xl p-4 flex items-center justify-between cursor-pointer border border-red-50 hover:bg-red-50/30 active:bg-red-50 transition-colors"
@@ -207,6 +227,17 @@ export const ProfileV2 = () => {
                 <span className="text-sm font-bold text-red-600">Log out</span>
               </div>
               <ArrowRight className="w-5 h-5 text-red-100" />
+            </div>
+
+            <div 
+              onClick={() => setShowDeleteConfirm(true)}
+              className="bg-white rounded-xl p-4 flex items-center justify-between cursor-pointer border border-red-200 hover:bg-red-50 active:bg-red-50 transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <AlertTriangle className="w-5 h-5 text-red-700" />
+                <span className="text-sm font-bold text-red-700">Delete Account</span>
+              </div>
+              <ArrowRight className="w-5 h-5 text-red-200" />
             </div>
           </div>
         </div>
@@ -237,6 +268,43 @@ export const ProfileV2 = () => {
                 className="flex-1 h-11 rounded-xl bg-red-600 text-white font-bold disabled:opacity-60"
               >
                 {logoutSubmitting ? "Logging out..." : "Yes"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Account Confirm Popup */}
+      {showDeleteConfirm && (
+        <div 
+          className="fixed inset-0 bg-black/60 z-[1000] flex items-center justify-center px-4"
+          onClick={() => setShowDeleteConfirm(false)}
+        >
+          <div 
+            className="bg-white w-full max-w-sm rounded-2xl shadow-2xl p-5 border border-red-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="bg-red-100 p-2 rounded-full text-red-600">
+                <AlertTriangle className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-black text-gray-900">Delete Account?</h3>
+            </div>
+            <p className="text-sm text-gray-500 mb-5">Are you sure you want to delete your delivery account? You will lose access to all your trips and wallet.</p>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setShowDeleteConfirm(false)}
+                disabled={deleteSubmitting}
+                className="flex-1 h-11 rounded-xl border border-gray-200 text-gray-700 font-bold"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDeleteAccount}
+                disabled={deleteSubmitting}
+                className="flex-1 h-11 rounded-xl bg-red-600 text-white font-bold disabled:opacity-60"
+              >
+                {deleteSubmitting ? "Deleting..." : "Delete"}
               </button>
             </div>
           </div>
