@@ -998,7 +998,7 @@ export default function PageNavbar({
         )}
 
         {/* Center: Location Selector (Centered) */}
-        <div className="flex-1 flex items-center justify-center min-w-0 absolute left-1/2 -translate-x-1/2">
+        <div className="flex-1 flex items-center justify-center min-w-0 px-2 sm:px-4">
           <Button
             variant="ghost"
             onClick={handleLocationClick}
