@@ -262,6 +262,8 @@ export default function AdminSidebar({ isOpen = false, onClose, onCollapseChange
             food: settings.modules.food !== undefined ? !!settings.modules.food : true,
             quickCommerce: settings.modules.quickCommerce !== undefined ? !!settings.modules.quickCommerce : true,
           });
+        } else {
+          setEnabledModules({ food: true, quickCommerce: true });
         }
       }
     }
@@ -404,6 +406,7 @@ export default function AdminSidebar({ isOpen = false, onClose, onCollapseChange
     // Special case for the "Module Switcher" or shared links if they exist
     // But since we are filtering the WHOLE menu based on the active admin context:
 
+    if (isQuickAdmin && !enabledModules.quickCommerce) return []
     if (!isQuickAdmin && !isCommonAdmin && !enabledModules.food) return []
 
     // Filter by permissions if employee
@@ -645,7 +648,7 @@ export default function AdminSidebar({ isOpen = false, onClose, onCollapseChange
             isInSection ? "text-sm font-semibold" : "text-sm",
             isActive(item.path)
               ? "bg-orange-50 text-[#FE5502] font-semibold"
-              : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
+              : "text-black hover:bg-gray-50",
             isCollapsed && "justify-center px-2"
           )}
           style={{ animationDelay: `${index * 0.05}s` }}
@@ -654,7 +657,7 @@ export default function AdminSidebar({ isOpen = false, onClose, onCollapseChange
           <Icon className={cn(
             "shrink-0 transition-all duration-300 text-left",
             isInSection ? "w-4 h-4" : "w-4 h-4",
-            isActive(item.path) ? "text-[#FE5502] scale-110" : "text-gray-400"
+            isActive(item.path) ? "text-[#FE5502] scale-110" : "text-black"
           )} />
           {!isCollapsed && (
             <div className="flex-1 flex items-center justify-between overflow-hidden">
@@ -687,12 +690,12 @@ export default function AdminSidebar({ isOpen = false, onClose, onCollapseChange
               onClick={() => toggleSection(sectionKey)}
               className={cn(
                 "w-full flex items-center justify-center px-2 py-2 rounded-lg transition-all duration-300 ease-out text-sm font-medium",
-                "text-gray-600 hover:bg-gray-50"
+                "text-black hover:bg-gray-50"
               )}
               title={item.label}
             >
               <div className="relative">
-                <Icon className="w-4 h-4 shrink-0 text-gray-400 transition-transform duration-300" />
+                <Icon className="w-4 h-4 shrink-0 text-black transition-transform duration-300" />
                 {getBadgeCount(item.label, item.path) > 0 && (
                   <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-600 rounded-full border-2 border-neutral-950" />
                 )}
@@ -708,11 +711,11 @@ export default function AdminSidebar({ isOpen = false, onClose, onCollapseChange
             onClick={() => toggleSection(sectionKey)}
             className={cn(
               "w-full flex items-center justify-between gap-2 px-3 py-2 rounded-lg transition-all duration-300 ease-out text-sm font-medium text-left",
-              isExpanded ? "text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+              "text-black hover:bg-gray-50"
             )}
           >
             <div className="flex items-center gap-2.5 text-left flex-1 min-w-0">
-              <Icon className={cn("w-4 h-4 shrink-0 transition-transform duration-300", isExpanded ? "text-[#FE5502]" : "text-gray-400")} />
+              <Icon className={cn("w-4 h-4 shrink-0 transition-transform duration-300", isExpanded ? "text-[#FE5502]" : "text-black")} />
               <span className="font-medium text-left truncate">{item.label}</span>
               {getBadgeCount(item.label, item.path) > 0 && (
                 <span className="shrink-0 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1 min-w-[18px] text-center">
@@ -721,7 +724,7 @@ export default function AdminSidebar({ isOpen = false, onClose, onCollapseChange
               )}
             </div>
             <div className="transition-transform duration-300 shrink-0" style={{ transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)' }}>
-              <ChevronDown className={cn("w-4 h-4 shrink-0", isExpanded ? "text-gray-600" : "text-gray-400")} />
+              <ChevronDown className={cn("w-4 h-4 shrink-0 text-black")} />
             </div>
           </button>
           {isExpanded && item.subItems && (
@@ -741,7 +744,7 @@ export default function AdminSidebar({ isOpen = false, onClose, onCollapseChange
                       "flex items-center gap-2 px-3 py-1.5 rounded-md transition-all duration-300 ease-out text-sm font-normal text-left",
                       isActive(subItem.path, allSubPaths)
                         ? "bg-orange-50 text-[#FE5502] font-semibold"
-                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                        : "text-black hover:bg-gray-50"
                     )}
                     style={{ animationDelay: `${subIndex * 0.03}s` }}
                   >
@@ -917,7 +920,7 @@ export default function AdminSidebar({ isOpen = false, onClose, onCollapseChange
           {/* Admin Panel Label */}
           {!isCollapsed && (
             <div className="mb-3 animate-[slideIn_0.4s_ease-out_0.1s_both]">
-              <h2 className="text-xs font-bold text-gray-700 uppercase tracking-wider text-left">
+              <h2 className="text-xs font-bold text-black uppercase tracking-wider text-left">
                 ECS PANEL
               </h2>
               <div className="mt-2 rounded-xl border border-gray-100 bg-white shadow-sm p-1">
@@ -937,7 +940,7 @@ export default function AdminSidebar({ isOpen = false, onClose, onCollapseChange
                       Food
                     </button>
                   )}
-                  {canAccessQuickModule && (
+                  {enabledModules.quickCommerce && canAccessQuickModule && (
                     <button
                       key="quick-module-btn"
                       type="button"
@@ -1025,7 +1028,7 @@ export default function AdminSidebar({ isOpen = false, onClose, onCollapseChange
                   >
                     {!isCollapsed && (
                       <div className="px-3 py-2 mb-2">
-                        <span className="text-gray-500 font-bold text-xs uppercase tracking-wider text-left">
+                        <span className="text-black font-bold text-xs uppercase tracking-wider text-left">
                           {item.label}
                         </span>
                       </div>

@@ -188,6 +188,7 @@ export default function AdminLogin() {
 
       {/* Main Login Card */}
       <Card className="w-full max-w-md bg-white border-0 shadow-lg rounded-sm py-4 px-2">
+        <h2 className="text-black text-center text-2xl font-bold mt-2">ECS Portal Login</h2>
         <CardContent className="pt-6">
           <form onSubmit={handleSubmit} className="space-y-6">
             {successMessage && (

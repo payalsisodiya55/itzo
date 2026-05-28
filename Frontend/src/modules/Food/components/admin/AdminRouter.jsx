@@ -140,6 +140,33 @@ const QuickCommerceAdminRoutes = lazy(() => import("@/modules/quickCommerce/admi
 const GlobalApplicationSettings = lazy(() => import("@/modules/common/admin/pages/GlobalApplicationSettings"));
 const ModuleManagement = lazy(() => import("@/modules/common/admin/pages/ModuleManagement"));
 
+const ModuleProtectedRoute = ({ moduleName, children }) => {
+  const [enabled, setEnabled] = useState(() => {
+    try {
+      const settings = JSON.parse(localStorage.getItem('global_business_settings') || '{}');
+      return settings?.modules?.[moduleName] !== undefined ? !!settings.modules[moduleName] : true;
+    } catch { return true; }
+  });
+  
+  useEffect(() => {
+    const handleUpdate = (e) => {
+      const settings = e?.detail || JSON.parse(localStorage.getItem('global_business_settings') || '{}');
+      if (settings?.modules && settings.modules[moduleName] !== undefined) {
+        setEnabled(!!settings.modules[moduleName]);
+      } else {
+        setEnabled(true);
+      }
+    };
+    window.addEventListener('businessSettingsUpdated', handleUpdate);
+    return () => window.removeEventListener('businessSettingsUpdated', handleUpdate);
+  }, [moduleName]);
+
+  if (!enabled) {
+    return <Navigate to="/ecs/food" replace />;
+  }
+  return children;
+};
+
 function FoodAdminIndex() {
   const { user: authUser } = useAuth();
   const user = useMemo(() => authUser || getCurrentUser("admin"), [authUser]);
@@ -208,7 +235,11 @@ export default function AdminRouter() {
           <Route path="/" element={<Navigate to="food" replace />} />
 
           {/* Quick Commerce Admin Routes */}
-          <Route path="quick-commerce/*" element={<QuickCommerceAdminRoutes />} />
+          <Route path="quick-commerce/*" element={
+            <ModuleProtectedRoute moduleName="quickCommerce">
+              <QuickCommerceAdminRoutes />
+            </ModuleProtectedRoute>
+          } />
 
 
 

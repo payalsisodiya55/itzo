@@ -107,7 +107,9 @@ const ModuleManagement = () => {
       const updatedSettings = response?.data?.data || response?.data;
 
       if (updatedSettings) {
-        setCachedSettings(updatedSettings);
+        const existing = getCachedSettings() || {};
+        const finalSettings = { ...existing, ...(updatedSettings || {}), modules };
+        setCachedSettings(finalSettings);
         toast.success('Module configuration updated!');
       }
     } catch (err) {
