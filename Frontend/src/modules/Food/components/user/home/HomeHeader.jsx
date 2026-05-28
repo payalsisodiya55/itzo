@@ -563,7 +563,7 @@ export default function HomeHeader({
               </div>
               <div className="scale-[0.80]">
                 <Switch
-                  checked={vegMode}
+                  checked={Boolean(vegMode)}
                   onCheckedChange={(checked) => onVegModeChange?.(checked)}
                   className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-gray-400"
                 />

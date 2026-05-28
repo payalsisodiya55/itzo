@@ -30,12 +30,12 @@ import {
     createSupportTicketController,
     listMySupportTicketsController
 } from '../controllers/supportTicket.controller.js';
-import {
-    importContactsController,
-    updatePermissionStatusController
-} from '../controllers/userContact.controller.js';
+import { importContactsController, updatePermissionStatusController } from '../controllers/userContact.controller.js';
+import { requireRoles } from '../../../../core/roles/role.middleware.js';
 
 const router = express.Router();
+
+router.use(requireRoles('USER'));
 
 router.get('/profile', getCurrentUserProfileController);
 router.patch('/profile', updateCurrentUserProfileController);

@@ -13,7 +13,7 @@ const ROLE_STORAGE_KEYS = {
 };
 
 const LEGACY_ROLE_STORAGE_KEYS = {
-    customer: ['user_accessToken', 'accessToken'],
+    customer: ['user_accessToken'],
     seller: ['seller_accessToken'],
     admin: ['admin_accessToken'],
     delivery: ['delivery_accessToken']
