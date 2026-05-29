@@ -126,6 +126,15 @@ export const initSubscriptionSchedules = async () => {
     if (!queue) return;
 
     try {
+        // Clean up any existing repeatable jobs for check_subscription_expiry to avoid duplicates
+        const repeatableJobs = await queue.getRepeatableJobs();
+        for (const job of repeatableJobs) {
+            if (job.name === 'check_subscription_expiry') {
+                await queue.removeRepeatableByKey(job.key);
+                logger.info(`Subscription Schedule: Removed old repeatable job with key ${job.key}`);
+            }
+        }
+
         // Schedule check every 5 minutes
         await queue.add(
             'check_subscription_expiry',

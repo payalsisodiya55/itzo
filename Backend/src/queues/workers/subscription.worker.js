@@ -33,7 +33,7 @@ const startSubscriptionWorker = async () => {
         defaultJobOptions
     });
     
-    worker.on('completed', (job) => logger.debug(`Subscription job ${job.id} completed`));
+    worker.on('completed', (job) => logger.info(`Subscription job ${job.id} completed`));
     worker.on('failed', (job, err) => logger.error(`Subscription job ${job?.id} failed: ${err.message}`));
     worker.on('error', (err) => logger.error(`Subscription worker error: ${err.message}`));
     
