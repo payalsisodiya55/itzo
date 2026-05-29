@@ -128,6 +128,18 @@ export async function deletePlan(id) {
 export async function processSubscriptionExpiry() {
     const now = new Date();
 
+    // Query delivery partner subscriptions about to expire (both Active-to-Expired and Grace-to-Expired)
+    const expiringRiderSubs = await UserSubscription.find({
+        $or: [
+            { status: 'active', cancelAtCycleEnd: true, expiryDate: { $lt: now } },
+            { status: 'grace', gracePeriodUntil: { $lt: now } }
+        ],
+        userType: 'DELIVERY_PARTNER',
+        deliveryBoyId: { $ne: null }
+    }).select('deliveryBoyId').lean();
+
+    const expiredRiderIds = expiringRiderSubs.map(sub => sub.deliveryBoyId).filter(Boolean);
+
     // 0. Cleanup stale PENDING (older than 30 mins) to avoid infinite pending records.
     // Webhook activation can still re-activate the doc if payment succeeds later.
     const pendingCutoff = dayjs(now).subtract(30, 'minutes').toDate();
@@ -195,6 +207,20 @@ export async function processSubscriptionExpiry() {
     );
     if (toExpired.modifiedCount > 0) {
         logger.info(`Subscription Lifecycle: Marked ${toExpired.modifiedCount} as EXPIRED`);
+    }
+
+    // 4. Automatically set delivery partners offline if their subscription has expired
+    if (expiredRiderIds.length > 0) {
+        try {
+            const { FoodDeliveryPartner } = await import('../../delivery/models/deliveryPartner.model.js');
+            const riderUpdateResult = await FoodDeliveryPartner.updateMany(
+                { _id: { $in: expiredRiderIds } },
+                { $set: { availabilityStatus: 'offline' } }
+            );
+            logger.info(`Subscription Lifecycle: Marked ${riderUpdateResult.modifiedCount} expired delivery partners as OFFLINE`);
+        } catch (err) {
+            logger.error(`Subscription Lifecycle: Failed to set expired delivery partners offline: ${err.message}`);
+        }
     }
 
     return { 
