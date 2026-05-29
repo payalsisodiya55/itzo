@@ -186,6 +186,7 @@ export function clearModuleAuth(module) {
   }
   // Also clear any sessionStorage data
   sessionStorage.removeItem(`${module}AuthData`);
+  window.dispatchEvent(new Event('userAuthChanged'));
 }
 
 /**
@@ -351,6 +352,7 @@ export function setAuthData(module, token, user, refreshToken = null) {
       throw new Error(`Authentication flag storage failed for module: ${module}`);
     }
 
+    window.dispatchEvent(new Event('userAuthChanged'));
     console.log(`[setAuthData] Successfully stored auth data for ${module}`);
   } catch (error) {
     // If quota exceeded, try to clear some space
@@ -393,6 +395,7 @@ export function setAuthData(module, token, user, refreshToken = null) {
         if (storedToken !== token) {
           throw new Error('Token storage failed even after clearing space');
         }
+        window.dispatchEvent(new Event('userAuthChanged'));
       } catch (retryError) {
         console.error('Failed to store auth data after clearing space:', retryError);
         throw new Error('Unable to store authentication data. Please clear browser storage and try again.');

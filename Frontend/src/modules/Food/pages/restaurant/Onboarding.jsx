@@ -792,9 +792,13 @@ export default function RestaurantOnboarding() {
     const fetchData = async () => {
       try {
         setLoading(true)
-        // Use restaurantAPI.getCurrentRestaurant() to fetch real data
-        const res = await restaurantAPI.getCurrentRestaurant()
-        const data = res?.data?.data?.restaurant || res?.data?.restaurant
+        const hasRestaurantToken = !!localStorage.getItem("restaurant_token")
+        
+        let data = null;
+        if (hasRestaurantToken) {
+          const res = await restaurantAPI.getCurrentRestaurant()
+          data = res?.data?.data?.restaurant || res?.data?.restaurant
+        }
         
         if (data) {
           setIsEditing(false)
@@ -875,8 +879,9 @@ export default function RestaurantOnboarding() {
         }
       } catch (err) {
         setIsEditing(true)
-        if (err?.response?.status === 401) {
-          debugError("Authentication error fetching onboarding:", err)
+        if (err?.response?.status === 401 || err?.response?.status === 403) {
+          // Normal during onboarding, user is not a restaurant yet
+          debugLog("User not yet registered as a restaurant, starting fresh onboarding.")
         } else {
           debugError("Error fetching onboarding data:", err)
         }
@@ -1406,18 +1411,7 @@ export default function RestaurantOnboarding() {
                 const val = e.target.value.replace(/\D/g, "").slice(0, 12)
                 setStep1({ ...step1, ownerPhone: val })
               }}
-              onKeyDown={(e) => {
-                const allowed = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab", "Enter"]
-                if (!allowed.includes(e.key) && !/^\d$/.test(e.key)) e.preventDefault()
-                if (/^\d$/.test(e.key) && (step1.ownerPhone || "").length >= 12) e.preventDefault()
-              }}
-              onPaste={(e) => {
-                e.preventDefault()
-                const pasted = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 12)
-                setStep1({ ...step1, ownerPhone: pasted })
-              }}
               maxLength={12}
-              readOnly={Boolean(verifiedPhoneNumber)}
               className="mt-1 bg-white text-sm text-black placeholder-black"
               placeholder="Owner phone number (10-12 digits)"
               disabled={!isEditing}
@@ -1436,16 +1430,6 @@ export default function RestaurantOnboarding() {
             onChange={(e) => {
               const val = e.target.value.replace(/\D/g, "").slice(0, 10)
               setStep1({ ...step1, primaryContactNumber: val })
-            }}
-            onKeyDown={(e) => {
-              const allowed = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab", "Enter"]
-              if (!allowed.includes(e.key) && !/^\d$/.test(e.key)) e.preventDefault()
-              if (/^\d$/.test(e.key) && (step1.primaryContactNumber || "").length >= 10) e.preventDefault()
-            }}
-            onPaste={(e) => {
-              e.preventDefault()
-              const pasted = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 10)
-              setStep1({ ...step1, primaryContactNumber: pasted })
             }}
             maxLength={10}
             inputMode="numeric"

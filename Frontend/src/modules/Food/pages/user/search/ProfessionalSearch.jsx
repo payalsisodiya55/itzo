@@ -163,7 +163,10 @@ export default function ProfessionalSearch() {
             <ArrowLeft className="w-5 h-5" />
           </button>
           
-          <div className="flex-1 relative">
+          <form 
+            onSubmit={(e) => e.preventDefault()}
+            className="flex-1 relative"
+          >
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <Input 
               autoFocus
@@ -173,17 +176,18 @@ export default function ProfessionalSearch() {
               className="pl-10 pr-10 h-11 bg-slate-100 dark:bg-zinc-800 border-none focus:ring-2 focus:ring-[#FE5502] rounded-xl"
             />
             {query && (
-              <button onClick={handleClear} className="absolute right-10 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600">
+              <button type="button" onClick={handleClear} className="absolute right-10 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600">
                 <X className="w-4 h-4" />
               </button>
             )}
             <button 
+              type="button"
               onClick={handleVoiceSearch}
               className={`absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full transition-all ${isListening ? 'text-[#FE5502] scale-125 animate-pulse' : 'text-slate-400'}`}
             >
               <Mic className="w-5 h-5" />
             </button>
-          </div>
+          </form>
         </div>
       </div>
 

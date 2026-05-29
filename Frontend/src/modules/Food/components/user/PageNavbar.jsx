@@ -983,14 +983,14 @@ export default function PageNavbar({
               <img
                 src={logoUrl}
                 alt={companyName || "Logo"}
-                className="h-10 w-auto sm:h-12 md:h-14 object-contain scale-[1.8] sm:scale-[2] origin-left"
+                className="h-10 w-auto sm:h-12 md:h-14 object-contain"
                 crossOrigin="anonymous"
                 onError={(e) => {
                   e.target.style.display = 'none'
                 }}
               />
             ) : (
-              <span className={`text-lg font-bold text-${textColor} scale-[1.8] sm:scale-[2] origin-left inline-block`}>
+              <span className={`text-2xl sm:text-3xl font-bold text-${textColor} inline-block`}>
                 {companyName || "Appzeto"}
               </span>
             )}

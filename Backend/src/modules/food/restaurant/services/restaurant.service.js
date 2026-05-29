@@ -329,25 +329,43 @@ export const registerRestaurant = async (payload, files) => {
 
     const images = {};
 
+    const uploadTasks = [];
+
     if (files?.profileImage?.[0]) {
-        images.profileImage = await uploadImageBuffer(files.profileImage[0].buffer, 'food/restaurants/profile');
+        uploadTasks.push(
+            uploadImageBuffer(files.profileImage[0].buffer, 'food/restaurants/profile')
+                .then(url => images.profileImage = url)
+        );
     }
     if (files?.panImage?.[0]) {
-        images.panImage = await uploadImageBuffer(files.panImage[0].buffer, 'food/restaurants/pan');
+        uploadTasks.push(
+            uploadImageBuffer(files.panImage[0].buffer, 'food/restaurants/pan')
+                .then(url => images.panImage = url)
+        );
     }
     if (files?.gstImage?.[0]) {
-        images.gstImage = await uploadImageBuffer(files.gstImage[0].buffer, 'food/restaurants/gst');
+        uploadTasks.push(
+            uploadImageBuffer(files.gstImage[0].buffer, 'food/restaurants/gst')
+                .then(url => images.gstImage = url)
+        );
     }
     if (files?.fssaiImage?.[0]) {
-        images.fssaiImage = await uploadImageBuffer(files.fssaiImage[0].buffer, 'food/restaurants/fssai');
+        uploadTasks.push(
+            uploadImageBuffer(files.fssaiImage[0].buffer, 'food/restaurants/fssai')
+                .then(url => images.fssaiImage = url)
+        );
     }
 
     let menuImages = [];
     if (files?.menuImages?.length) {
-        menuImages = await Promise.all(
-            files.menuImages.map((file) => uploadImageBuffer(file.buffer, 'food/restaurants/menu'))
+        uploadTasks.push(
+            Promise.all(
+                files.menuImages.map((file) => uploadImageBuffer(file.buffer, 'food/restaurants/menu'))
+            ).then(urls => menuImages = urls)
         );
     }
+
+    await Promise.all(uploadTasks);
 
     const normalizedOpeningTime = normalizeRestaurantTime(openingTime);
     const normalizedClosingTime = normalizeRestaurantTime(closingTime);

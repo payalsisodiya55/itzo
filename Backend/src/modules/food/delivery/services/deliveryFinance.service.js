@@ -319,14 +319,21 @@ export const createDeliveryCashDepositOrder = async (
   deliveryPartnerId,
   amountInr,
 ) => {
-  const amount = Number(amountInr);
-  if (!Number.isFinite(amount) || amount < 1) {
-    throw new ValidationError("Amount must be at least ₹1");
+  const wallet = await getDeliveryPartnerWalletEnhanced(deliveryPartnerId);
+  const amount = Math.max(0, wallet.cashInHand);
+  
+  if (amount < 1) {
+    throw new ValidationError("No cash in hand available to deposit");
   }
 
-  const wallet = await getDeliveryPartnerWalletEnhanced(deliveryPartnerId);
-  if (amount > wallet.cashInHand) {
-    throw new ValidationError("Deposit amount cannot exceed cash in hand");
+  // Prevent multiple pending manual deposits to avoid confusion
+  const pendingManual = await FoodDeliveryCashDeposit.findOne({
+    deliveryPartnerId,
+    status: "Pending"
+  }).lean();
+  
+  if (pendingManual) {
+    throw new ValidationError("You already have a pending manual deposit. Please wait for admin approval.");
   }
 
   const amountPaise = Math.round(amount * 100);
@@ -340,6 +347,7 @@ export const createDeliveryCashDepositOrder = async (
         amount: amountPaise,
         currency: "INR",
       },
+      amount
     };
   }
 
@@ -351,7 +359,48 @@ export const createDeliveryCashDepositOrder = async (
       amount: Number(order.amount) || amountPaise,
       currency: order.currency || "INR",
     },
+    amount
   };
+};
+
+/**
+ * Submits a manual cash deposit (e.g. Bank Transfer, UPI) with proof image.
+ */
+export const submitManualCashDeposit = async (deliveryPartnerId, payload) => {
+  const wallet = await getDeliveryPartnerWalletEnhanced(deliveryPartnerId);
+  const amount = Math.max(0, wallet.cashInHand);
+
+  if (amount < 1) {
+    throw new ValidationError("No cash in hand available to deposit");
+  }
+
+  if (!payload.proofImageUrl) {
+    throw new ValidationError("Payment proof image is required");
+  }
+
+  const paymentMethod = payload.paymentMethod || "upi";
+  if (!["upi", "bank_transfer", "cash"].includes(paymentMethod)) {
+    throw new ValidationError("Invalid payment method");
+  }
+
+  const pendingManual = await FoodDeliveryCashDeposit.findOne({
+    deliveryPartnerId,
+    status: "Pending"
+  }).lean();
+  
+  if (pendingManual) {
+    throw new ValidationError("You already have a pending manual deposit. Please wait for admin approval.");
+  }
+
+  const deposit = await FoodDeliveryCashDeposit.create({
+    deliveryPartnerId,
+    amount,
+    paymentMethod,
+    proofImageUrl: payload.proofImageUrl,
+    status: "Pending"
+  });
+
+  return deposit;
 };
 
 /**

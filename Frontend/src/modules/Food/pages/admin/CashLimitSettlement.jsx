@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { Search, Receipt, Loader2, Package } from "lucide-react"
 import { adminAPI } from "@food/api"
 import { toast } from "sonner"
@@ -64,6 +64,21 @@ export default function CashLimitSettlement() {
     }
   }
 
+  const handleUpdateStatus = async (id, status) => {
+    try {
+      const adminNote = status === 'Rejected' ? window.prompt("Reason for rejection?") || "" : "";
+      const res = await adminAPI.updateDeliveryCashDepositStatus(id, status, adminNote);
+      if (res?.data?.success) {
+        toast.success(`Deposit ${status} successfully`);
+        fetchData();
+      } else {
+        toast.error(res?.data?.message || "Failed to update status");
+      }
+    } catch (err) {
+      toast.error(err?.response?.data?.message || "Failed to update status");
+    }
+  }
+
   useEffect(() => {
     fetchData()
   }, [page])
@@ -122,16 +137,17 @@ export default function CashLimitSettlement() {
                     <th className="px-6 py-4 text-left text-[10px] font-bold text-slate-700 uppercase tracking-wider">#</th>
                     <th className="px-6 py-4 text-left text-[10px] font-bold text-slate-700 uppercase tracking-wider">Date</th>
                     <th className="px-6 py-4 text-left text-[10px] font-bold text-slate-700 uppercase tracking-wider">Delivery</th>
-                    <th className="px-6 py-4 text-left text-[10px] font-bold text-slate-700 uppercase tracking-wider">ID</th>
                     <th className="px-6 py-4 text-left text-[10px] font-bold text-slate-700 uppercase tracking-wider">Amount</th>
+                    <th className="px-6 py-4 text-left text-[10px] font-bold text-slate-700 uppercase tracking-wider">Method</th>
                     <th className="px-6 py-4 text-left text-[10px] font-bold text-slate-700 uppercase tracking-wider">Status</th>
-                    <th className="px-6 py-4 text-left text-[10px] font-bold text-slate-700 uppercase tracking-wider">Razorpay</th>
+                    <th className="px-6 py-4 text-left text-[10px] font-bold text-slate-700 uppercase tracking-wider">Proof / Razorpay</th>
+                    <th className="px-6 py-4 text-right text-[10px] font-bold text-slate-700 uppercase tracking-wider">Action</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-slate-100">
                   {transactions.length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="px-6 py-20 text-center">
+                      <td colSpan={8} className="px-6 py-20 text-center">
                         <div className="flex flex-col items-center justify-center">
                           <Package className="w-16 h-16 text-slate-400 mb-4" />
                           <p className="text-lg font-semibold text-slate-700">No transactions</p>
@@ -141,7 +157,7 @@ export default function CashLimitSettlement() {
                     </tr>
                   ) : (
                     transactions.map((tx, i) => (
-                      <tr key={tx.id || i} className="hover:bg-slate-50 transition-colors">
+                      <tr key={tx.id || tx._id || i} className="hover:bg-slate-50 transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-700">
                           {(page - 1) * limit + i + 1}
                         </td>
@@ -149,27 +165,48 @@ export default function CashLimitSettlement() {
                           {formatDate(tx.createdAt)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-700">
-                          {tx.deliveryName || "—"}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700">
-                          {tx.deliveryIdString || "—"}
+                          <div className="flex flex-col">
+                            <span>{tx.deliveryName || "—"}</span>
+                            <span className="text-xs text-slate-400 font-mono">{tx.deliveryIdString || "—"}</span>
+                          </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-700">
                           {formatCurrency(tx.amount)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-700 capitalize">
+                            {tx.paymentMethod || "Razorpay"}
+                          </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span
                             className={`px-2 py-0.5 rounded text-xs font-semibold ${
                               tx.status === "Completed"
                                 ? "bg-green-100 text-green-700"
-                                : "bg-slate-100 text-slate-700"
+                                : tx.status === "Rejected"
+                                ? "bg-red-100 text-red-700"
+                                : "bg-yellow-100 text-yellow-700"
                             }`}
                           >
                             {tx.status || "—"}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-xs text-slate-500 font-mono">
-                          {tx.razorpayPaymentId ? tx.razorpayPaymentId.slice(0, 12) + "…" : "—"}
+                          {tx.proofImageUrl ? (
+                            <a href={tx.proofImageUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">View Proof</a>
+                          ) : tx.razorpayPaymentId ? (
+                            tx.razorpayPaymentId.slice(0, 12) + "…"
+                          ) : "—"}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-right">
+                          {tx.status === 'Pending' && tx.paymentMethod !== 'razorpay' ? (
+                            <div className="flex items-center justify-end gap-2">
+                              <button onClick={() => handleUpdateStatus(tx.id || tx._id, 'Completed')} className="px-3 py-1 bg-green-600 text-white rounded text-xs font-medium hover:bg-green-700">Approve</button>
+                              <button onClick={() => handleUpdateStatus(tx.id || tx._id, 'Rejected')} className="px-3 py-1 bg-red-600 text-white rounded text-xs font-medium hover:bg-red-700">Reject</button>
+                            </div>
+                          ) : (
+                            <span className="text-xs text-slate-400">—</span>
+                          )}
                         </td>
                       </tr>
                     ))

@@ -177,7 +177,7 @@ const AppRoutes = () => {
           <Route
             path="/profile"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requiredRole="user">
                 <SharedProfilePage />
               </ProtectedRoute>
             }
@@ -185,7 +185,7 @@ const AppRoutes = () => {
           <Route
             path="/profile/edit"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requiredRole="user">
                 <SharedProfileEditPage />
               </ProtectedRoute>
             }
@@ -193,7 +193,7 @@ const AppRoutes = () => {
           <Route
             path="/profile/support"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requiredRole="user">
                 <SharedProfileSupportPage />
               </ProtectedRoute>
             }
@@ -201,7 +201,7 @@ const AppRoutes = () => {
           <Route
             path="/profile/coupons"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requiredRole="user">
                 <SharedProfileCouponsPage />
               </ProtectedRoute>
             }
@@ -209,7 +209,7 @@ const AppRoutes = () => {
           <Route
             path="/profile/about"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requiredRole="user">
                 <SharedProfileAboutPage />
               </ProtectedRoute>
             }

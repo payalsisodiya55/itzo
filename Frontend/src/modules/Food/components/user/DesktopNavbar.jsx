@@ -238,7 +238,19 @@ export default function DesktopNavbar({ showLogo = true }) {
                         <div className="flex-1 max-w-3xl mx-4 flex items-center gap-4">
                             {/* Search Bar */}
                             <div className="relative flex-1">
-                                <div className="relative bg-gray-100 dark:bg-[#2a2a2a] rounded-lg transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FE5502] focus-within:bg-white dark:focus-within:bg-[#1a1a1a] border border-transparent focus-within:border-[#FE5502]/20">
+                                <form 
+                                    onSubmit={(e) => {
+                                        e.preventDefault();
+                                        if (heroSearch.trim()) {
+                                            navigate(
+                                                isQuick
+                                                    ? `/quick/search?q=${encodeURIComponent(heroSearch.trim())}`
+                                                    : `/food/user/search?q=${encodeURIComponent(heroSearch.trim())}`
+                                            )
+                                        }
+                                    }}
+                                    className="relative bg-gray-100 dark:bg-[#2a2a2a] rounded-lg transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FE5502] focus-within:bg-white dark:focus-within:bg-[#1a1a1a] border border-transparent focus-within:border-[#FE5502]/20"
+                                >
                                     <div className="flex items-center px-3 py-2">
                                         <Search className="h-4 w-4 text-gray-500 flex-shrink-0 mr-3" />
                                         <Input
@@ -248,31 +260,23 @@ export default function DesktopNavbar({ showLogo = true }) {
                                                 setHeroSearch(nextValue)
                                                 setSearchValue(nextValue)
                                             }}
-                                            onKeyDown={(e) => {
-                                                if (e.key === "Enter" && heroSearch.trim()) {
-                                                    navigate(
-                                                        isQuick
-                                                            ? `/quick/search?q=${encodeURIComponent(heroSearch.trim())}`
-                                                            : `/food/user/search?q=${encodeURIComponent(heroSearch.trim())}`
-                                                    )
-                                                }
-                                            }}
                                             className="h-6 p-0 border-0 bg-transparent text-sm font-medium placeholder:text-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0"
                                             placeholder={searchPlaceholder}
                                         />
                                         {heroSearch && (
                                             <Button
+                                                type="button"
                                                 variant="ghost"
                                                 size="sm"
                                                 className="h-5 w-5 p-0 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full ml-1"
                                                 onClick={() => setHeroSearch("")}
                                             >
                                                 <span className="sr-only">Clear</span>
-                                                <span aria-hidden="true">�</span>
+                                                <span aria-hidden="true">×</span>
                                             </Button>
                                         )}
                                     </div>
-                                </div>
+                                </form>
                             </div>
 
                             {/* VEG MODE Toggle - Moved here */}

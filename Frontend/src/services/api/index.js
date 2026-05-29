@@ -843,6 +843,11 @@ export const adminAPI = {
       params,
       contextModule: "admin",
     }),
+  getCashPayRequests: (params = {}) =>
+    apiClient.get("/food/admin/delivery-cash-pay-requests", {
+      params,
+      contextModule: "admin",
+    }),
 
   /** Backward-compatible alias used in UI */
   getApprovedRestaurants: (params = {}) =>
@@ -923,6 +928,10 @@ export const adminAPI = {
     }),
   updateDeliveryCashLimit: (body) =>
     apiClient.patch("/food/admin/delivery-cash-limit", body ?? {}, {
+      contextModule: "admin",
+    }),
+  updateDeliveryCashDepositStatus: (id, status, adminNote) =>
+    apiClient.patch(`/food/admin/delivery-cash-deposit/${id}/status`, { status, adminNote }, {
       contextModule: "admin",
     }),
 
@@ -1456,7 +1465,7 @@ export const restaurantAPI = {
     if (!formData || !(formData instanceof FormData)) {
       return Promise.reject(new Error("FormData is required"));
     }
-    return apiClient.post("/food/restaurant/register", formData);
+    return apiClient.post("/food/restaurant/register", formData, { timeout: 120000 });
   },
   /** Public: list approved restaurants for user app */
   getRestaurants: (params = {}, config = {}) =>
@@ -2107,9 +2116,21 @@ export const deliveryAPI = {
       contextModule: "delivery"
     }),
   createDepositOrder: (amount) =>
-    apiClient.post("/food/delivery/wallet/deposit/order", { amount }, {
-      contextModule: "delivery"
-    }),
+    apiClient.post(
+      "/food/delivery/wallet/deposit/order",
+      { amount },
+      {
+        contextModule: "delivery",
+      },
+    ),
+  submitManualDeposit: (data) =>
+    apiClient.post(
+      "/food/delivery/wallet/deposit/manual",
+      data,
+      {
+        contextModule: "delivery",
+      },
+    ),
   verifyDepositPayment: (body) =>
     apiClient.post("/food/delivery/wallet/deposit/verify", body ?? {}, {
       contextModule: "delivery"

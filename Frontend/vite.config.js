@@ -51,4 +51,15 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-ui': ['@mui/material', '@emotion/react', '@emotion/styled', 'framer-motion', 'lucide-react'],
+          'vendor-maps': ['leaflet', 'react-leaflet']
+        }
+      }
+    }
+  }
 })

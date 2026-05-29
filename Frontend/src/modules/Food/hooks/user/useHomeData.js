@@ -2,6 +2,9 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
 import { restaurantAPI } from "@food/api";
 import { normalizeImageUrl, extractImages, calculateDistance, slugify } from "@food/utils/common";
 
+// Global cache to avoid refetching identical restaurant menus across navigation
+const menuMetaCache = new Map();
+
 export const useHomeData = (location, zoneId) => {
   const [loadingConfig, setLoadingConfig] = useState(true);
   const [landingCategories, setLandingCategories] = useState([]);
@@ -82,50 +85,91 @@ export const useHomeData = (location, zoneId) => {
     }
   }, [location, zoneId]);
 
-  const fetchMenuMeta = useCallback(async () => {
-    if (!restaurantsData.length) return;
+  const fetchMenuMeta = useCallback(() => {
+    if (!restaurantsData.length) return () => {};
+    
+    // Use controlled concurrency (CHUNK_SIZE = 5)
+    const CHUNK_SIZE = 5;
+    const restaurantsToProcess = restaurantsData.slice(0, 50);
+    
     setLoadingMenuCategories(true);
-    try {
-      const categoryMap = new Map();
-      const dietMeta = {};
+    let isCancelled = false;
 
-      const menuResponses = await Promise.all(
-        restaurantsData.slice(0, 50).map(async (r) => {
-          try {
-            const res = await restaurantAPI.getMenuByRestaurantId(r.id);
-            return { id: r.id, menu: res?.data?.data?.menu };
-          } catch {
-            return { id: r.id, menu: null };
-          }
-        })
-      );
+    const executeProgressiveFetch = async () => {
+      for (let i = 0; i < restaurantsToProcess.length; i += CHUNK_SIZE) {
+        if (isCancelled) break;
+        
+        const chunk = restaurantsToProcess.slice(i, i + CHUNK_SIZE);
+        
+        const chunkResponses = await Promise.all(
+          chunk.map(async (r) => {
+            if (menuMetaCache.has(r.id)) {
+              return { id: r.id, menu: menuMetaCache.get(r.id) };
+            }
+            try {
+              const res = await restaurantAPI.getMenuByRestaurantId(r.id);
+              const menu = res?.data?.data?.menu;
+              if (menu) {
+                menuMetaCache.set(r.id, menu);
+              }
+              return { id: r.id, menu };
+            } catch {
+              return { id: r.id, menu: null };
+            }
+          })
+        );
+        
+        if (isCancelled) break;
 
-      menuResponses.forEach(({ id, menu }) => {
-        let hasVeg = false, hasNonVeg = false;
-        const sections = menu?.sections || [];
-        sections.forEach(s => {
-          const items = s.items || [];
-          items.forEach(i => {
-            const type = String(i.foodType || "").toLowerCase();
-            if (type === "veg") hasVeg = true;
-            if (type.includes("non")) hasNonVeg = true;
-          });
-          const slug = slugify(s.name);
-          if (slug && !categoryMap.has(slug)) {
-            categoryMap.set(slug, {
-              id: slug, name: s.name, slug, label: s.name,
-              image: items[0]?.image ? normalizeImageUrl(items[0].image) : ""
+        const newDietMeta = {};
+        const newCategories = [];
+        
+        chunkResponses.forEach(({ id, menu }) => {
+          let hasVeg = false, hasNonVeg = false;
+          const sections = menu?.sections || [];
+          sections.forEach(s => {
+            const items = s.items || [];
+            items.forEach(item => {
+              const type = String(item.foodType || "").toLowerCase();
+              if (type === "veg") hasVeg = true;
+              if (type.includes("non")) hasNonVeg = true;
             });
-          }
+            const slug = slugify(s.name);
+            if (slug) {
+              newCategories.push({
+                id: slug, name: s.name, slug, label: s.name,
+                image: items[0]?.image ? normalizeImageUrl(items[0].image) : ""
+              });
+            }
+          });
+          newDietMeta[id] = { hasVeg, hasNonVeg, isPureVeg: hasVeg && !hasNonVeg };
         });
-        dietMeta[id] = { hasVeg, hasNonVeg, isPureVeg: hasVeg && !hasNonVeg };
-      });
 
-      setMenuCategories(Array.from(categoryMap.values()));
-      setRestaurantDietMeta(dietMeta);
-    } finally {
-      setLoadingMenuCategories(false);
-    }
+        // Progressively update state for immediate perceived performance
+        setRestaurantDietMeta(prev => ({ ...prev, ...newDietMeta }));
+
+        setMenuCategories(prev => {
+          const prevMap = new Map(prev.map(c => [c.slug, c]));
+          newCategories.forEach(c => {
+            if (!prevMap.has(c.slug)) {
+              prevMap.set(c.slug, c);
+            }
+          });
+          return Array.from(prevMap.values());
+        });
+      }
+
+      if (!isCancelled) {
+        setLoadingMenuCategories(false);
+      }
+    };
+
+    executeProgressiveFetch();
+
+    // Cancellation safety on unmount
+    return () => {
+      isCancelled = true;
+    };
   }, [restaurantsData]);
 
   useEffect(() => {
@@ -138,7 +182,8 @@ export const useHomeData = (location, zoneId) => {
   }, [fetchRestaurants]);
 
   useEffect(() => {
-    fetchMenuMeta();
+    const cleanup = fetchMenuMeta();
+    return cleanup;
   }, [fetchMenuMeta]);
 
   return {

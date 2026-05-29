@@ -2021,6 +2021,120 @@ export async function getContactMessages(query = {}) {
 }
 
 // ----- Delivery Cash Limit (admin) -----
+export async function updateDeliveryCashDepositStatus(depositId, status, adminNote, adminUser) {
+    if (!depositId || !mongoose.Types.ObjectId.isValid(depositId)) {
+        throw new ValidationError("Invalid deposit id");
+    }
+    
+    if (!['Completed', 'Rejected'].includes(status)) {
+        throw new ValidationError("Invalid status. Must be Completed or Rejected");
+    }
+
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    let updatedDeposit;
+    try {
+        const deposit = await FoodDeliveryCashDeposit.findById(depositId).session(session);
+        if (!deposit) {
+            throw new ValidationError("Deposit record not found");
+        }
+
+        if (deposit.status !== 'Pending') {
+            throw new ValidationError(`Deposit is already ${deposit.status}`);
+        }
+
+        deposit.status = status;
+        deposit.adminNote = adminNote || '';
+        if (adminUser) {
+            deposit.adminId = adminUser.userId || adminUser._id;
+        }
+        deposit.resolvedAt = new Date();
+
+        await deposit.save({ session });
+
+        // Update Wallet if Approved/Completed
+        if (status === 'Completed') {
+            const wallet = await FoodDeliveryWallet.findOne({ deliveryPartnerId: deposit.deliveryPartnerId }).session(session);
+            if (!wallet) {
+                throw new Error("Delivery partner wallet not found");
+            }
+            wallet.cashInHand = Math.max(0, wallet.cashInHand - deposit.amount);
+            wallet.availableCashLimit = wallet.availableCashLimit + deposit.amount;
+            await wallet.save({ session });
+        }
+
+        await session.commitTransaction();
+        updatedDeposit = deposit;
+    } catch (error) {
+        await session.abortTransaction();
+        throw error;
+    } finally {
+        session.endSession();
+    }
+
+    return updatedDeposit;
+}
+
+export async function getCashPayRequests(query = {}) {
+    const limit = parseInt(query.limit, 10) || 20;
+    const page = parseInt(query.page, 10) || 1;
+    const skip = (page - 1) * limit;
+
+    const filter = { paymentMethod: { $ne: 'razorpay' } };
+    
+    if (query.status) {
+        filter.status = query.status;
+    }
+    if (query.method) {
+        filter.paymentMethod = query.method;
+    }
+    
+    if (query.search) {
+        // search logic can be expanded if needed (e.g. searching partner details via aggregation)
+    }
+
+    if (query.startDate && query.endDate) {
+        filter.createdAt = {
+            $gte: new Date(query.startDate),
+            $lte: new Date(query.endDate)
+        };
+    }
+
+    const [deposits, total] = await Promise.all([
+        FoodDeliveryCashDeposit.find(filter)
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit)
+            .populate('deliveryPartnerId', 'name phone')
+            .lean(),
+        FoodDeliveryCashDeposit.countDocuments(filter)
+    ]);
+
+    const requests = deposits.map((d) => ({
+        id: d._id,
+        createdAt: d.createdAt,
+        deliveryId: d.deliveryPartnerId?._id,
+        deliveryName: d.deliveryPartnerId?.name || 'N/A',
+        deliveryIdString: d.deliveryPartnerId?.phone || 'N/A',
+        amount: Number(d.amount || 0),
+        status: d.status,
+        paymentMethod: d.paymentMethod,
+        proofImageUrl: d.proofImageUrl || null,
+        adminNote: d.adminNote || '',
+        resolvedAt: d.resolvedAt || null
+    }));
+
+    return { 
+        requests, 
+        pagination: { 
+            total, 
+            page, 
+            limit, 
+            pages: Math.ceil(total / limit) || 1 
+        } 
+    };
+}
+
 export async function getDeliveryCashLimitSettings() {
     const doc = await FoodDeliveryCashLimit.findOne({ isActive: true }).sort({ createdAt: -1 }).lean();
     const settings = doc || { deliveryCashLimit: 0, deliveryWithdrawalLimit: 100, isActive: true };
@@ -3049,9 +3163,6 @@ const resolveAdminFoodCategory = async ({ categoryId, categoryName, foodType, pu
     }
 
     if (categoryDoc?.foodTypeScope) {
-        if (pureVegRestaurant && String(categoryDoc.foodTypeScope || '') !== 'Veg') {
-            throw new ValidationError('Pure veg restaurants can only use veg categories');
-        }
         if (!categoryAllowsFoodType(categoryDoc.foodTypeScope, foodType)) {
             throw new ValidationError(`This ${categoryDoc.foodTypeScope} category cannot accept ${foodType} food`);
         }
@@ -4413,6 +4524,8 @@ export async function checkEarningAddonCompletions(deliveryPartnerId, _force = f
 }
 
 export async function getDeliveryPartnerById(id) {
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) return null;
+    console.log("TRACE: getDeliveryPartnerById called with id:", id);
     const partner = await FoodDeliveryPartner.findById(id).lean();
     if (!partner) return null;
 
