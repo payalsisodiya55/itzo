@@ -91,7 +91,11 @@ const FoodRestaurantCard = memo(function FoodRestaurantCard({
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={(event) => onFavoriteToggle(event, restaurant, restaurantSlug, favorite)}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    onFavoriteToggle(event, restaurant, restaurantSlug, favorite);
+                  }}
                   aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
                   className={`flex h-11 w-11 items-center justify-center rounded-[20px] shadow-xl transition-all duration-300 ${
                     favorite

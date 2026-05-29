@@ -131,9 +131,13 @@ router.get('/subscription/history', subscriptionPlanController.getSubscriptionHi
 router.get('/subscription/analytics', subscriptionPlanController.getSubscriptionAnalyticsController);
 
 
+// ----- Delivery Cash Pay Requests -----
+router.get('/delivery-cash-pay-requests', checkPermission('food::deliveryman_management::settlement', 'view'), adminController.getCashPayRequests);
+
 // ----- Delivery Cash Limit -----
 router.get('/delivery-cash-limit', checkPermission('food::deliveryman_management::cash_limit', 'view'), adminController.getDeliveryCashLimit);
 router.patch('/delivery-cash-limit', checkPermission('food::deliveryman_management::cash_limit', 'edit'), adminController.updateDeliveryCashLimit);
+router.patch('/delivery-cash-deposit/:id/status', checkPermission('food::deliveryman_management::cash_limit', 'edit'), adminController.updateDeliveryCashDepositStatus);
 
 // ----- Delivery Emergency Help -----
 router.get('/delivery-emergency-help', adminController.getEmergencyHelp);
@@ -145,6 +149,7 @@ router.patch('/withdrawals/:id', checkPermission('food::transaction_management::
 router.get('/delivery/withdrawals', checkPermission('food::deliveryman_management::withdrawal', 'view'), adminController.getDeliveryWithdrawals);
 router.patch('/delivery/withdrawals/:id', checkPermission('food::deliveryman_management::withdrawal', 'edit'), adminController.updateDeliveryWithdrawalStatus);
 router.get('/delivery/cash-limit-settlements', checkPermission('food::deliveryman_management::settlement', 'view'), adminController.getCashLimitSettlements);
+
 
 // ----- Delivery partners & general -----
 router.get('/delivery/join-requests', checkPermission('food::deliveryman_management::deliveryman::join_request', 'view'), adminController.getDeliveryJoinRequests);

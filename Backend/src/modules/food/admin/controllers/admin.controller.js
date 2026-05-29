@@ -948,6 +948,17 @@ export async function updateDeliveryCashLimit(req, res, next) {
     }
 }
 
+export async function updateDeliveryCashDepositStatus(req, res, next) {
+    try {
+        const { id } = req.params;
+        const { status, adminNote } = req.body;
+        const data = await adminService.updateDeliveryCashDepositStatus(id, status, adminNote, req.user);
+        res.status(200).json({ success: true, message: `Deposit marked as ${status}`, data });
+    } catch (error) {
+        next(error);
+    }
+}
+
 // ----- Delivery Emergency Help (admin) -----
 export async function getEmergencyHelp(req, res, next) {
     try {
@@ -1392,6 +1403,16 @@ export async function getCashLimitSettlements(req, res, next) {
         next(error);
     }
 }
+
+export async function getCashPayRequests(req, res, next) {
+    try {
+        const data = await adminService.getCashPayRequests(req.query || {});
+        res.status(200).json({ success: true, message: 'Cash pay requests fetched successfully', data });
+    } catch (error) {
+        next(error);
+    }
+}
+
 
 export async function getSidebarBadges(req, res, next) {
     try {

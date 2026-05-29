@@ -63,6 +63,26 @@ export const AuthProvider = ({ children }) => {
         delivery: getSafeToken('delivery'),
     });
 
+    useEffect(() => {
+        const handleAuthChange = () => {
+            setAuthData({
+                customer: getSafeToken('customer'),
+                seller: getSafeToken('seller'),
+                admin: getSafeToken('admin'),
+                delivery: getSafeToken('delivery'),
+            });
+        };
+
+        window.addEventListener('userAuthChanged', handleAuthChange);
+        // Also listen to storage events to sync across tabs if needed
+        window.addEventListener('storage', handleAuthChange);
+
+        return () => {
+            window.removeEventListener('userAuthChanged', handleAuthChange);
+            window.removeEventListener('storage', handleAuthChange);
+        };
+    }, []);
+
     const currentRole = getCurrentRoleFromUrl();
     const [user, setUser] = useState(null);
     const token = authData[currentRole];

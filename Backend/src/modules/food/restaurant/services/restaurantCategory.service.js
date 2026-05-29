@@ -219,8 +219,8 @@ export async function createRestaurantCategory(restaurantId, body = {}) {
     if (!foodTypeScope) {
         throw new ValidationError('Invalid category diet type');
     }
-    if (context.pureVegRestaurant && foodTypeScope !== 'Veg') {
-        throw new ValidationError('Pure veg restaurants can only create veg categories');
+    if (context.pureVegRestaurant && foodTypeScope === 'Non-Veg') {
+        throw new ValidationError('Pure veg restaurants cannot create non-veg categories');
     }
 
     const doc = new FoodCategory({
@@ -259,8 +259,8 @@ export async function updateRestaurantCategory(restaurantId, id, body = {}) {
     if (body.foodTypeScope !== undefined && !nextFoodTypeScope) {
         throw new ValidationError('Invalid category diet type');
     }
-    if (context.pureVegRestaurant && nextFoodTypeScope !== 'Veg') {
-        throw new ValidationError('Pure veg restaurants can only keep veg categories');
+    if (context.pureVegRestaurant && nextFoodTypeScope === 'Non-Veg') {
+        throw new ValidationError('Pure veg restaurants cannot keep non-veg categories');
     }
 
     if (body.name !== undefined) {

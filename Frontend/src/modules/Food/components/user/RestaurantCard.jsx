@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { motion } from "framer-motion";
+
 import { Star, Clock, IndianRupee, Heart } from "lucide-react";
 import OptimizedImage from "@food/components/OptimizedImage";
 
@@ -180,7 +180,7 @@ const RestaurantCard = ({
   backendOrigin 
 }) => {
   return (
-    <motion.div
+    <div
       onClick={onClick}
       className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-[0_4px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-all duration-300 group relative cursor-pointer transform hover:-translate-y-1 active:scale-95"
     >
@@ -227,7 +227,7 @@ const RestaurantCard = ({
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

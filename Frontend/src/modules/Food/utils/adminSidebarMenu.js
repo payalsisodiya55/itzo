@@ -163,6 +163,7 @@ export const adminSidebarMenu = [
       { type: "link", label: "Delivery Cash Limit", permissionKey: "cash_limit", path: "/ecs/food/delivery-cash-limit", icon: "IndianRupee" },
       { type: "link", label: "Delivery & Platform Fee", permissionKey: "fee_settings", path: "/ecs/food/fee-settings", icon: "DollarSign" },
       { type: "link", label: "Cash limit settlement", permissionKey: "settlement", path: "/ecs/food/cash-limit-settlement", icon: "Receipt" },
+      { type: "link", label: "Cash Pay Requests", permissionKey: "settlement", path: "/ecs/food/cash-pay-requests", icon: "FileImage" },
       { type: "link", label: "Delivery Withdrawal", permissionKey: "withdrawal", path: "/ecs/food/delivery-withdrawal", icon: "Wallet" },
       { type: "link", label: "Delivery boy Wallet", permissionKey: "wallet", path: "/ecs/food/delivery-boy-wallet", icon: "PiggyBank" },
       { type: "link", label: "Delivery Boy Commission", permissionKey: "commission", path: "/ecs/food/delivery-boy-commission", icon: "DollarSign" },

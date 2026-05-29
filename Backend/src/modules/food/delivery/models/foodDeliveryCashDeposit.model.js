@@ -19,7 +19,7 @@ const foodDeliveryCashDepositSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['Pending', 'Completed', 'Failed'],
+        enum: ['Pending', 'Completed', 'Failed', 'Rejected'],
         default: 'Pending',
         index: true
     },
@@ -28,11 +28,13 @@ const foodDeliveryCashDepositSchema = new mongoose.Schema({
         default: ''
     },
     razorpayPaymentId: String,
+    proofImageUrl: String,
     adminId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    adminNote: String
+    adminNote: String,
+    resolvedAt: Date
 }, { 
     collection: 'food_delivery_cash_deposits', 
     timestamps: true 

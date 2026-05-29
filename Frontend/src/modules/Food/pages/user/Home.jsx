@@ -414,7 +414,7 @@ export default function Home() {
                 onFavoriteToggle={(e, restaurant, slug, favorite) => {
                   if (favorite) removeFavorite(slug);
                   else {
-                    addFavorite(restaurant);
+                    addFavorite({ ...restaurant, slug });
                     setShowToast(true);
                     setTimeout(() => setShowToast(false), 2000);
                   }
