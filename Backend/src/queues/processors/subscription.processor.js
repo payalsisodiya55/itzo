@@ -1,5 +1,5 @@
 import { logger } from '../../utils/logger.js';
-import * as subscriptionService from '../../../modules/food/admin/services/subscriptionPlan.service.js';
+import * as subscriptionService from '../../modules/food/admin/services/subscriptionPlan.service.js';
 
 /**
  * BullMQ processor for Subscription lifecycle management.
