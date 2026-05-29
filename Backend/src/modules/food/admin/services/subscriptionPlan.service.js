@@ -215,7 +215,7 @@ export async function processSubscriptionExpiry() {
             const { FoodDeliveryPartner } = await import('../../delivery/models/deliveryPartner.model.js');
             const riderUpdateResult = await FoodDeliveryPartner.updateMany(
                 { _id: { $in: expiredRiderIds } },
-                { $set: { availabilityStatus: 'offline' } }
+                { $set: { availabilityStatus: 'offline', isActive: false } }
             );
             logger.info(`Subscription Lifecycle: Marked ${riderUpdateResult.modifiedCount} expired delivery partners as OFFLINE`);
         } catch (err) {

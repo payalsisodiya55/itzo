@@ -42,12 +42,62 @@ export async function filterEligiblePartners(partners) {
     UserSubscription.find({
       deliveryBoyId: { $in: partnerIds },
       status: { $in: ["active", "grace"] }
-    }).select("deliveryBoyId").lean()
+    }).select("deliveryBoyId status expiryDate gracePeriodUntil cancelAtCycleEnd").lean()
   ]);
+
+  const now = new Date();
+  const validSubPartnerIds = [];
+  const expiredSubIds = [];
+  const expiredPartnerIds = [];
+
+  for (const sub of activeSubs) {
+    let isValid = true;
+    if (sub.status === 'active' || sub.status === 'grace') {
+      if (sub.cancelAtCycleEnd) {
+        if (sub.expiryDate && new Date(sub.expiryDate) < now) {
+          isValid = false;
+        }
+      } else {
+        if (sub.expiryDate && new Date(sub.expiryDate) < now) {
+          const graceUntil = sub.gracePeriodUntil 
+            ? new Date(sub.gracePeriodUntil) 
+            : dayjs(sub.expiryDate).add(24, 'hours').toDate();
+          if (graceUntil < now) {
+            isValid = false;
+          }
+        }
+      }
+    }
+
+    if (isValid) {
+      validSubPartnerIds.push(sub.deliveryBoyId.toString());
+    } else {
+      expiredSubIds.push(sub._id);
+      expiredPartnerIds.push(sub.deliveryBoyId);
+    }
+  }
+
+  // Self-heal expired subscription records and set partners offline
+  if (expiredSubIds.length > 0) {
+    logger.warn(`Dispatch Eligibility: Found ${expiredSubIds.length} expired rider subscriptions. Self-healing database records.`);
+    UserSubscription.updateMany(
+      { _id: { $in: expiredSubIds } },
+      { $set: { status: 'expired' } }
+    ).catch(err => logger.error(`Failed to self-heal expired subscriptions in dispatcher: ${err.message}`));
+
+    if (expiredPartnerIds.length > 0) {
+      FoodDeliveryPartner.updateMany(
+        { _id: { $in: expiredPartnerIds } },
+        { $set: { availabilityStatus: 'offline', isActive: false } }
+      )
+      .then(res => logger.info(`Dispatch Eligibility: Forced ${res.modifiedCount} expired delivery partners offline.`))
+      .catch(err => logger.error(`Failed to force expired delivery partners offline in dispatcher: ${err.message}`));
+    }
+  }
 
   const eligibleIds = new Set([
     ...activePasses.map(p => p.userId.toString()),
-    ...activeSubs.map(s => s.deliveryBoyId.toString())
+    ...validSubPartnerIds
   ]);
 
   return partners.filter(p => eligibleIds.has(p.partnerId.toString()));

@@ -126,18 +126,18 @@ export const initSubscriptionSchedules = async () => {
     if (!queue) return;
 
     try {
-        // Schedule hourly check
+        // Schedule check every 5 minutes
         await queue.add(
             'check_subscription_expiry',
             { action: 'CHECK_EXPIRY' },
             {
-                repeat: { pattern: '0 * * * *' }, // Every hour at minute 0
+                repeat: { pattern: '*/5 * * * *' }, // Every 5 minutes
                 jobId: 'hourly_subscription_check', // Unique ID to prevent duplicates
                 removeOnComplete: true,
                 removeOnFail: true
             }
         );
-        logger.info('Subscription Schedule: Hourly expiry check initialized');
+        logger.info('Subscription Schedule: 5-minute expiry check initialized');
     } catch (err) {
         logger.error(`Subscription Schedule Failed: ${err.message}`);
     }

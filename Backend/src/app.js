@@ -6,7 +6,12 @@ import mongoSanitize from 'mongo-sanitize';
 import xssClean from 'xss-clean';
 import routes from './routes/index.js';
 import errorHandler from './middleware/errorHandler.js';
-import { apiRateLimiter } from './middleware/rateLimit.js';
+import {
+    generalApiRateLimiter,
+    riderRateLimiter,
+    adminRateLimiter,
+    webhookRateLimiter
+} from './middleware/rateLimit.js';
 import { responseTimeLogger } from './middleware/responseTimeLogger.js';
 import { requestIdMiddleware } from './middleware/requestId.js';
 import { healthCheck } from './config/health.js';
@@ -63,8 +68,11 @@ app.use((req, _res, next) => {
 });
 app.use(xssClean());
 
-// Global rate limiting for API routes
-app.use('/api', apiRateLimiter);
+// Granular rate limiting for API sub-routes
+app.use('/api/v1/payments/webhook', webhookRateLimiter);
+app.use('/api/v1/food/delivery', riderRateLimiter);
+app.use('/api/v1/food/admin', adminRateLimiter);
+app.use('/api', generalApiRateLimiter);
 
 // Optional: log API response time (method, path, status, duration) - no sensitive data
 app.use('/api', responseTimeLogger);

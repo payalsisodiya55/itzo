@@ -5,6 +5,7 @@ import { ValidationError, NotFoundError } from '../../../../core/auth/errors.js'
 import mongoose from 'mongoose';
 import dayjs from 'dayjs';
 import crypto from 'crypto';
+import { logger } from '../../../../utils/logger.js';
 
 export async function initiatePurchase(userId, userType, { planId }) {
     const plan = await SubscriptionPlan.findOne({ _id: planId, isDeleted: false, isActive: true });
@@ -294,7 +295,64 @@ export async function getActiveSubscription(userId, userType) {
         query.deliveryBoyId = userId;
     }
 
-    return UserSubscription.findOne(query).populate('planId').lean();
+    const sub = await UserSubscription.findOne(query).populate('planId');
+    if (!sub) return null;
+
+    const now = new Date();
+    if (sub.status === 'active' || sub.status === 'grace') {
+        let isExpired = false;
+        let shouldTransitionToGrace = false;
+        let graceUntil = sub.gracePeriodUntil;
+
+        if (sub.cancelAtCycleEnd) {
+            // Cancelled subscriptions expire immediately at expiryDate
+            if (sub.expiryDate && new Date(sub.expiryDate) < now) {
+                isExpired = true;
+            }
+        } else {
+            // Non-cancelled recurring subscriptions
+            if (sub.expiryDate && new Date(sub.expiryDate) < now) {
+                graceUntil = sub.gracePeriodUntil 
+                    ? new Date(sub.gracePeriodUntil) 
+                    : dayjs(sub.expiryDate).add(24, 'hours').toDate();
+                
+                if (graceUntil < now) {
+                    isExpired = true;
+                } else if (sub.status !== 'grace') {
+                    shouldTransitionToGrace = true;
+                }
+            }
+        }
+
+        if (isExpired) {
+            logger.info(`Subscription Self-Healing: Subscription ${sub._id} (${userType}) has expired. Updating status.`);
+            sub.status = 'expired';
+            await sub.save();
+
+            if (userType === 'DELIVERY_PARTNER' && sub.deliveryBoyId) {
+                try {
+                    const { FoodDeliveryPartner } = await import('../../delivery/models/deliveryPartner.model.js');
+                    await FoodDeliveryPartner.updateOne(
+                        { _id: sub.deliveryBoyId },
+                        { $set: { availabilityStatus: 'offline', isActive: false } }
+                    );
+                    logger.info(`Subscription Self-Healing: Delivery partner ${sub.deliveryBoyId} forced OFFLINE due to expiry`);
+                } catch (err) {
+                    logger.error(`Subscription Self-Healing Error: Failed to set delivery partner offline: ${err.message}`);
+                }
+            }
+            return null;
+        }
+
+        if (shouldTransitionToGrace) {
+            logger.info(`Subscription Self-Healing: Subscription ${sub._id} (${userType}) transitioned to grace period until ${graceUntil}`);
+            sub.status = 'grace';
+            sub.gracePeriodUntil = graceUntil;
+            await sub.save();
+        }
+    }
+
+    return sub.toObject ? sub.toObject() : sub;
 }
 
 export async function cancelAutoRenew(userId, userType) {
