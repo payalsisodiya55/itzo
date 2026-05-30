@@ -91,6 +91,10 @@ export function ProfileProvider({ children }) {
     return saved ? JSON.parse(saved) : []
   })
 
+  // Food Wishlist state - fetched from backend
+  const [foodWishlist, setFoodWishlist] = useState([])
+
+
   // VegMode state - stored in localStorage for persistence
   const [vegMode, setVegMode] = useState(() => {
     if (!hasUserSession) return false
@@ -153,6 +157,7 @@ export function ProfileProvider({ children }) {
         setPaymentMethods([])
         setFavorites([])
         setDishFavorites([])
+        setFoodWishlist([])
         setVegMode(false)
         clearUserSession()
         USER_SESSION_PREFERENCE_KEYS.forEach((key) => {
@@ -194,6 +199,15 @@ export function ProfileProvider({ children }) {
               debugError("Error parsing saved addresses:", e)
             }
           }
+        }
+
+        // Fetch food wishlist
+        try {
+          const wishlistResponse = await userAPI.getFoodWishlist();
+          const wishlistData = wishlistResponse?.data?.data?.wishlist || [];
+          setFoodWishlist(wishlistData);
+        } catch (wishlistError) {
+          debugError("Error fetching food wishlist:", wishlistError);
         }
       } catch (error) {
         // Silently handle error - use existing profile from localStorage
@@ -401,6 +415,24 @@ export function ProfileProvider({ children }) {
     return dishFavorites
   }, [dishFavorites])
 
+  // Food Wishlist functions - memoized with useCallback
+  const toggleFoodWishlistItem = useCallback(async (dishData) => {
+    try {
+      const response = await userAPI.toggleFoodWishlist(dishData);
+      const isAdded = response?.data?.data?.isAdded;
+      const updatedWishlist = response?.data?.data?.wishlist || [];
+      setFoodWishlist(updatedWishlist);
+      return isAdded;
+    } catch (error) {
+      debugError("Error toggling food wishlist:", error);
+      throw error;
+    }
+  }, []);
+
+  const isFoodWishlisted = useCallback((restaurantId, dishName) => {
+    return foodWishlist.some(fav => String(fav.restaurantId) === String(restaurantId) && fav.dishName === dishName);
+  }, [foodWishlist]);
+
   // User profile functions - memoized with useCallback
   const updateUserProfile = useCallback((updatedProfile) => {
     setUserProfile((prev) => ({ ...prev, ...updatedProfile }))
@@ -438,6 +470,9 @@ export function ProfileProvider({ children }) {
       removeDishFavorite,
       isDishFavorite,
       getDishFavorites,
+      foodWishlist,
+      toggleFoodWishlistItem,
+      isFoodWishlisted,
     }),
     [
       userProfile,
@@ -469,6 +504,9 @@ export function ProfileProvider({ children }) {
       removeDishFavorite,
       isDishFavorite,
       getDishFavorites,
+      foodWishlist,
+      toggleFoodWishlistItem,
+      isFoodWishlisted,
     ]
   )
 
@@ -509,6 +547,9 @@ export function useProfile() {
       removeDishFavorite: () => debugWarn("ProfileProvider not available"),
       isDishFavorite: () => false,
       getDishFavorites: () => [],
+      foodWishlist: [],
+      toggleFoodWishlistItem: () => debugWarn("ProfileProvider not available"),
+      isFoodWishlisted: () => false,
       vegMode: false,
       setVegMode: () => debugWarn("ProfileProvider not available")
     }

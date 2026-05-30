@@ -31,6 +31,7 @@ import {
     listMySupportTicketsController
 } from '../controllers/supportTicket.controller.js';
 import { importContactsController, updatePermissionStatusController } from '../controllers/userContact.controller.js';
+import { getWishlistController, toggleWishlistController } from '../controllers/foodWishlist.controller.js';
 import { requireRoles } from '../../../../core/roles/role.middleware.js';
 
 const router = express.Router();
@@ -68,5 +69,9 @@ router.patch('/addresses/:addressId/default', setDefaultAddressController);
 // Contacts Sync & Permission Status routes (Bearer USER)
 router.post('/contacts/import', importContactsController);
 router.patch('/contacts/permission-status', updatePermissionStatusController);
+
+// Food Wishlist routes (Bearer USER)
+router.get('/wishlist', getWishlistController);
+router.post('/wishlist/toggle', toggleWishlistController);
 
 export default router;

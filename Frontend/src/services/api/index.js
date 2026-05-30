@@ -2343,6 +2343,8 @@ export const userAPI = {
     const platform = options?.platform === "mobile" ? "mobile" : "web";
     return apiClient.post("/fcm-tokens/test", { platform }, { contextModule: "user" });
   },
+  getFoodWishlist: () => apiClient.get("/food/user/wishlist", { contextModule: "user" }),
+  toggleFoodWishlist: (body) => apiClient.post("/food/user/wishlist/toggle", body ?? {}, { contextModule: "user" }),
 };
 export const locationAPI = createStubAPI();
 export const zoneAPI = {

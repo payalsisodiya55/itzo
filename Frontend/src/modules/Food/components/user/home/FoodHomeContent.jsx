@@ -7,6 +7,7 @@ import {
   Bookmark,
   Clock,
   Flame,
+  Heart,
   MapPin,
   SlidersHorizontal,
   Star,
@@ -22,6 +23,8 @@ import {
   RestaurantGridSkeleton,
 } from "@food/components/ui/loading-skeletons";
 import { getRestaurantAvailabilityStatus } from "@food/utils/restaurantAvailability";
+import { useProfile } from "@food/context/ProfileContext";
+import { toast } from "sonner";
 import foodPattern from "@food/assets/food_pattern_background.png";
 import discoveryBg from "@food/assets/food_discovery_bg.png";
 
@@ -42,6 +45,8 @@ const FoodRestaurantCard = memo(function FoodRestaurantCard({
   RestaurantImageCarousel,
   backendOrigin,
 }) {
+  const { isFoodWishlisted, toggleFoodWishlistItem } = useProfile();
+
   const nameStr = typeof restaurant?.name === "string" ? restaurant.name.trim() : "";
   const fallbackSlugSource =
     nameStr ||
@@ -82,30 +87,44 @@ const FoodRestaurantCard = memo(function FoodRestaurantCard({
               />
 
               <div className="absolute left-4 top-4 z-10 flex items-center transform transition-transform duration-300 group-hover:scale-105">
-                <div className="flex items-center rounded-full border border-white/20 bg-black/70 px-4 py-1.5 text-[11px] font-medium tracking-tight text-white shadow-2xl backdrop-blur-lg">
-                  {restaurant.featuredDish} • ₹{restaurant.featuredPrice}
+                <div className="flex items-center rounded-full border border-white/20 bg-black/70 px-1 py-1 text-[11px] font-medium tracking-tight text-white shadow-2xl backdrop-blur-lg">
+                  <span className="px-3 py-0.5">{restaurant.featuredDish} • ₹{restaurant.featuredPrice}</span>
+                  {restaurant.featuredDish && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={async (event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        
+                        const token = localStorage.getItem("user_accessToken") || localStorage.getItem("auth_customer") || localStorage.getItem("accessToken");
+                        if (!token) {
+                          toast.error("Please login to save dishes to your wishlist");
+                          return;
+                        }
+
+                        try {
+                          const isAdded = await toggleFoodWishlistItem({
+                            restaurantId: restaurant.id || restaurant._id,
+                            restaurantName: restaurant.name || restaurant.restaurantName,
+                            restaurantSlug: restaurantSlug,
+                            dishName: restaurant.featuredDish,
+                            price: restaurant.featuredPrice
+                          });
+                          if (isAdded) toast.success("Dish added to wishlist");
+                          else toast.success("Dish removed from wishlist");
+                        } catch (err) {
+                          toast.error("Failed to update wishlist");
+                        }
+                      }}
+                      className="flex h-6 w-6 items-center justify-center rounded-full hover:bg-white/20"
+                    >
+                      <Heart className={`h-3 w-3 ${isFoodWishlisted(restaurant.id || restaurant._id, restaurant.featuredDish) ? "fill-[#FE5502] text-[#FE5502]" : "text-white"}`} />
+                    </Button>
+                  )}
                 </div>
               </div>
 
-              <div className="absolute right-4 top-4 z-10 transform transition-transform duration-300 group-hover:scale-110">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    onFavoriteToggle(event, restaurant, restaurantSlug, favorite);
-                  }}
-                  aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
-                  className={`flex h-11 w-11 items-center justify-center rounded-[20px] shadow-xl transition-all duration-300 ${
-                    favorite
-                      ? "bg-red-500 text-white"
-                      : "bg-white/90 text-gray-800 backdrop-blur-sm hover:bg-white"
-                  }`}
-                >
-                  <Bookmark className={`h-5 w-5 transition-all duration-300 ${favorite ? "fill-white" : ""}`} />
-                </Button>
-              </div>
             </div>
 
             <div className="transform transition-transform duration-300 group-hover:-translate-y-1">
