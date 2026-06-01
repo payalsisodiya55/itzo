@@ -426,7 +426,7 @@ function OrderTrackingCardInner({ hasBottomNav = true }) {
           
           <button 
              onClick={(e) => { e.stopPropagation(); setDismissedKey(currentOrderKey); }}
-             className={`absolute top-2 right-2 p-1.5 rounded-full ${isQuickOrder ? 'bg-blue-50/80 text-blue-400 hover:text-blue-600 hover:bg-blue-100/80' : 'bg-red-50/80 text-red-400 hover:text-red-600 hover:bg-red-100/80'} transition-colors z-20 shadow-sm`}
+             className={`absolute top-2 right-2 p-1.5 rounded-full ${isQuickOrder ? 'bg-blue-50/80 text-blue-400 hover:text-primary hover:bg-blue-100/80' : 'bg-red-50/80 text-red-400 hover:text-red-600 hover:bg-red-100/80'} transition-colors z-20 shadow-sm`}
           >
             <X className="w-3.5 h-3.5 pointer-events-none" />
           </button>

@@ -28,7 +28,7 @@ const FlashDeals = ({ products }) => {
                         </div>
                     </div>
 
-                    <button className="flex items-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold hover:bg-black transition-all hover:shadow-xl active:scale-95 group">
+                    <button className="flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-2xl font-bold hover:bg-primary/90 transition-all hover:shadow-xl hover:shadow-primary/20 active:scale-95 group">
                         View All Deals <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                     </button>
                 </div>

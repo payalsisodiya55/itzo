@@ -176,7 +176,7 @@ const CashCollection = () => {
                         <Download className="h-4 w-4" />
                         EXPORT LEDGER
                     </button>
-                    <button className="flex items-center gap-2 px-5 py-3 bg-emerald-600 text-white rounded-2xl text-xs font-bold hover:bg-emerald-700 transition-all shadow-lg active:scale-95 shadow-emerald-200">
+                    <button className="flex items-center gap-2 px-5 py-3 bg-primary text-primary-foreground rounded-2xl text-xs font-bold hover:bg-primary/90 transition-all shadow-lg active:scale-95 shadow-primary/20">
                         <CheckCircle2 className="h-4 w-4" />
                         BULK SETTLE ALL
                     </button>
@@ -186,7 +186,7 @@ const CashCollection = () => {
             {/* Insight Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
-                    { label: 'Total Cash in Hand', value: `₹${stats.totalInHand.toLocaleString()}`, icon: Wallet, color: 'blue', bg: 'bg-blue-50', iconColor: 'text-blue-600' },
+                    { label: 'Total Cash in Hand', value: `₹${stats.totalInHand.toLocaleString()}`, icon: Wallet, color: 'blue', bg: 'bg-blue-50', iconColor: 'text-primary' },
                     { label: 'Critical Over-Limit', value: stats.overLimitCount, icon: AlertTriangle, color: 'rose', bg: 'bg-rose-50', iconColor: 'text-rose-600', sub: 'Action required' },
                     { label: 'Collected Today', value: `₹${stats.todaySettled.toLocaleString()}`, icon: ArrowDownLeft, color: 'emerald', bg: 'bg-emerald-50', iconColor: 'text-emerald-600' },
                     { label: 'Avg. Rider Load', value: `₹${stats.avgBalance.toFixed(0)}`, icon: Percent, color: 'amber', bg: 'bg-amber-50', iconColor: 'text-amber-600' },

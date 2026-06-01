@@ -107,7 +107,7 @@ const SubscriptionConfirmationModal = ({ isOpen, onClose, onConfirm, loading, da
           <Button 
             onClick={onConfirm}
             disabled={loading}
-            className="w-full h-15 bg-slate-900 hover:bg-black text-white rounded-[24px] font-black text-base shadow-xl shadow-slate-200 active:scale-95 transition-all flex items-center justify-center gap-2"
+            className="w-full h-15 bg-primary hover:bg-primary/90 text-primary-foreground rounded-[24px] font-black text-base shadow-xl shadow-primary/20 active:scale-95 transition-all flex items-center justify-center gap-2"
           >
             {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : <ShieldCheck className="w-6 h-6" />}
             Go Online
@@ -164,7 +164,7 @@ const LowBalanceBlockingModal = ({ isOpen, onClose, onRecharge, data }) => {
         <div className="space-y-3">
           <Button 
             onClick={onRecharge}
-            className="w-full h-15 bg-slate-900 hover:bg-black text-white rounded-[24px] font-black text-base shadow-xl shadow-slate-200 active:scale-95 transition-all flex items-center justify-center gap-2"
+            className="w-full h-15 bg-primary hover:bg-primary/90 text-primary-foreground rounded-[24px] font-black text-base shadow-xl shadow-primary/20 active:scale-95 transition-all flex items-center justify-center gap-2"
           >
             <Wallet className="w-5 h-5" />
             Recharge Wallet
@@ -403,7 +403,7 @@ export default function DeliveryHomeV2({ tab = 'feed' }) {
   const emergencyOptions = [
     { title: "Medical Emergency", subtitle: "Call an ambulance", icon: <AlertTriangle className="text-red-600" />, phone: emergencyNumbers.medicalEmergency },
     { title: "Accident Helpline", subtitle: "Report an accident", icon: <AlertTriangle className="text-orange-600" />, phone: emergencyNumbers.accidentHelpline },
-    { title: "Contact Police", subtitle: "Nearest police support", icon: <AlertTriangle className="text-blue-600" />, phone: emergencyNumbers.contactPolice },
+    { title: "Contact Police", subtitle: "Nearest police support", icon: <AlertTriangle className="text-primary" />, phone: emergencyNumbers.contactPolice },
     { title: "Insurance", subtitle: "Policy & claim help", icon: <AlertTriangle className="text-green-600" />, phone: emergencyNumbers.insurance },
   ];
 
@@ -822,7 +822,7 @@ export default function DeliveryHomeV2({ tab = 'feed' }) {
           </div>
           <div className="flex items-center gap-3">
              <button onClick={() => setShowEmergencyPopup(true)} className="w-9 h-9 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 border border-red-500/20 active:scale-95 transition-all shadow-lg"><AlertTriangle className="w-4 h-4" /></button>
-             <button onClick={() => navigate('/food/delivery/help/id-card')} className="w-9 h-9 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500 border border-blue-500/20 active:scale-95 transition-all shadow-lg"><Contact className="w-4 h-4" /></button>
+             <button onClick={() => navigate('/food/delivery/help/id-card')} className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary border border-primary/20 active:scale-95 transition-all shadow-lg"><Contact className="w-4 h-4" /></button>
              <button onClick={() => navigate('/food/delivery/notifications')} className="relative w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white border border-white/10 active:scale-95 transition-all shadow-lg"><Bell className="w-4 h-4" />{notificationUnreadCount > 0 && <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-orange-400 border border-[#1f1f1f]" />}</button>
           </div>
         </div>
@@ -981,17 +981,17 @@ export default function DeliveryHomeV2({ tab = 'feed' }) {
                       }
                     }
                   }}
-                  className={`w-14 h-14 rounded-full shadow-2xl flex items-center justify-center border border-gray-100 transition-all ${isSimMode ? 'bg-orange-500 text-white' : 'bg-white text-green-500'}`}
+                  className={`w-14 h-14 rounded-full shadow-2xl flex items-center justify-center border border-gray-100 transition-all ${isSimMode ? 'bg-orange-500 text-white' : 'bg-white text-orange-500'}`}
                 >
-                  <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center ${isSimMode ? 'border-white' : 'border-green-500'}`}>
+                  <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center ${isSimMode ? 'border-white' : 'border-orange-500'}`}>
                     <Play className={`w-4 h-4 fill-current ml-0.5 ${isSimMode ? 'animate-pulse' : ''}`} />
                   </div>
                 </button>
                 <button 
                    onClick={() => mapRef.current?.setOptions({ gestureHandling: 'greedy' })} 
-                   className="w-14 h-14 bg-white rounded-full shadow-2xl flex items-center justify-center text-blue-600 border border-gray-100 active:scale-90 transition-all"
+                   className="w-14 h-14 bg-white rounded-full shadow-2xl flex items-center justify-center text-orange-500 border border-gray-100 active:scale-90 transition-all"
                 >
-                  <div className="w-8 h-8 rounded-full border-2 border-blue-600 flex items-center justify-center"><Navigation2 className="w-4 h-4" /></div>
+                  <div className="w-8 h-8 rounded-full border-2 border-orange-500 flex items-center justify-center"><Navigation2 className="w-4 h-4" /></div>
                 </button>
                 <button 
                   onClick={handleCenterMap}
@@ -1085,12 +1085,12 @@ export default function DeliveryHomeV2({ tab = 'feed' }) {
                              </div>
                           </div>
                         )}
-                        <ActionSlider label="Slide to Arrive" successLabel="Arrived ✓" disabled={!isWithinRange} onConfirm={reachDrop} color="bg-blue-600" />
+                        <ActionSlider label="Slide to Arrive" successLabel="Arrived ✓" disabled={!isWithinRange} onConfirm={reachDrop}  />
                       </div>
                     ) : (
                       <button 
                         onClick={() => setShowVerification(true)} 
-                        className="w-full bg-green-500 hover:bg-green-600 text-white shadow-xl shadow-green-500/30 rounded-2xl py-5 font-bold text-sm tracking-[0.2em] transform transition-all active:scale-95 flex items-center justify-center gap-3"
+                        className="w-full bg-orange-500 hover:bg-orange-500/90 text-white shadow-xl shadow-orange-500/30 rounded-2xl py-5 font-bold text-sm tracking-[0.2em] transform transition-all active:scale-95 flex items-center justify-center gap-3"
                       >
                         <CheckCircle2 className="w-6 h-6" /> VERIFY & COMPLETE
                       </button>
@@ -1147,13 +1147,13 @@ export default function DeliveryHomeV2({ tab = 'feed' }) {
         >
            <button 
              onClick={() => setIsModalMinimized(false)}
-             className="w-full bg-gray-900/90 text-white rounded-2xl py-4 flex items-center justify-between px-6 shadow-2xl backdrop-blur-md border border-white/10"
+             className="w-full bg-orange-500/95 text-white rounded-2xl py-4 flex items-center justify-between px-6 shadow-2xl backdrop-blur-md border border-orange-500/20"
            >
-              <div className="flex flex-col items-start gap-0.5">
-                 <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Order Action Pending</span>
+              <div className="flex flex-col items-start gap-0.5 text-left">
+                 <span className="text-[10px] font-bold uppercase tracking-widest text-white/70">Order Action Pending</span>
                  <span className="text-xs font-bold uppercase tracking-wider">Tap to open delivery panel</span>
               </div>
-              <div className="bg-orange-500 p-2 rounded-xl text-white">
+              <div className="bg-white p-2 rounded-xl text-orange-500">
                  <Plus className="w-5 h-5" />
               </div>
            </button>

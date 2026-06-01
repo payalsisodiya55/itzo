@@ -170,7 +170,7 @@ export default function BasicCampaign() {
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
               <Megaphone className="w-5 h-5 text-white" />
             </div>
             <div className="flex items-center gap-2">
@@ -183,7 +183,7 @@ export default function BasicCampaign() {
 
           <button 
             onClick={handleAdd}
-            className="px-4 py-2.5 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-2 transition-all shadow-md"
+            className="px-4 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary/90 flex items-center gap-2 transition-all shadow-md"
           >
             <Plus className="w-4 h-4" />
             Add New Campaign
@@ -197,7 +197,7 @@ export default function BasicCampaign() {
               placeholder="Ex: Search by name..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 pr-4 py-2.5 w-full text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="pl-10 pr-4 py-2.5 w-full text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
             />
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           </div>
@@ -330,7 +330,7 @@ export default function BasicCampaign() {
                     )}
                     {visibleColumns.title && (
                       <td className="px-6 py-4">
-                        <a href="#" className="text-sm font-medium text-blue-600 hover:text-blue-700">
+                        <a href="#" className="text-sm font-medium text-primary hover:text-blue-700">
                           {campaign.title}
                         </a>
                       </td>
@@ -349,8 +349,8 @@ export default function BasicCampaign() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <button
                           onClick={() => handleToggleStatus(campaign.sl)}
-                          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                            campaign.status ? "bg-blue-600" : "bg-slate-300"
+                          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
+                            campaign.status ? "bg-primary" : "bg-slate-300"
                           }`}
                         >
                           <span
@@ -366,7 +366,7 @@ export default function BasicCampaign() {
                         <div className="flex items-center justify-center gap-2">
                           <button
                             onClick={() => handleEdit(campaign)}
-                            className="p-1.5 rounded text-blue-600 hover:bg-blue-50 transition-colors"
+                            className="p-1.5 rounded text-primary hover:bg-blue-50 transition-colors"
                             title="Edit"
                           >
                             <Edit className="w-4 h-4" />

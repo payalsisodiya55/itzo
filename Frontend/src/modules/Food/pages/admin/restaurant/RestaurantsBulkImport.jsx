@@ -68,7 +68,7 @@ export default function RestaurantsBulkImport() {
         <div className="flex items-start gap-6">
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-lg">
+              <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg">
                 2
               </div>
               <h2 className="text-xl font-bold text-slate-900">Match Spread Sheet Data According To Instruction</h2>
@@ -83,11 +83,11 @@ export default function RestaurantsBulkImport() {
             <div className="ml-14">
               <h3 className="text-sm font-semibold text-slate-700 mb-3">Download Spreadsheet Template</h3>
               <div className="flex gap-3">
-                <button className="px-4 py-2 text-sm font-medium rounded-lg border border-blue-500 text-blue-600 bg-white hover:bg-blue-50 transition-all flex items-center gap-2">
+                <button className="px-4 py-2 text-sm font-medium rounded-lg border border-primary text-primary bg-white hover:bg-primary/5 transition-all flex items-center gap-2">
                   <Download className="w-4 h-4" />
                   With Current Data
                 </button>
-                <button className="px-4 py-2 text-sm font-medium rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-all flex items-center gap-2">
+                <button className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all flex items-center gap-2">
                   <Download className="w-4 h-4" />
                   Without Any Data
                 </button>
@@ -96,9 +96,9 @@ export default function RestaurantsBulkImport() {
           </div>
           <div className="p-6 bg-blue-50 rounded-lg">
             <div className="flex items-center gap-2">
-              <FileSpreadsheet className="w-12 h-12 text-blue-600" />
-              <ArrowRight className="w-8 h-8 text-blue-600" />
-              <FileCheck className="w-12 h-12 text-blue-600" />
+              <FileSpreadsheet className="w-12 h-12 text-primary" />
+              <ArrowRight className="w-8 h-8 text-primary" />
+              <FileCheck className="w-12 h-12 text-primary" />
             </div>
           </div>
         </div>
@@ -183,7 +183,7 @@ export default function RestaurantsBulkImport() {
           </button>
           <button
             onClick={handleImport}
-            className="px-6 py-2.5 text-sm font-medium rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-all flex items-center gap-2 shadow-md"
+            className="px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary transition-all flex items-center gap-2 shadow-md"
           >
             <Upload className="w-4 h-4" />
             Import

@@ -1997,7 +1997,7 @@ export default function OrderTracking() {
     scheduled: {
       title: "Order Scheduled",
       subtitle: isQuickOrder ? "Your order is scheduled. Please wait for the store to respond." : "Your order is scheduled. Please wait for the restaurant to respond.",
-      color: "bg-blue-600",
+      color: "bg-primary",
       iconType: 'food'
     },
     placed: {
@@ -2431,7 +2431,7 @@ export default function OrderTracking() {
                   onClick={(e) => handleCallRider(partner?.phone, e)}
                   whileTap={{ scale: 0.9 }}
                 >
-                  <Phone className="w-5 h-5 text-blue-600" />
+                  <Phone className="w-5 h-5 text-primary" />
                 </motion.button>
               </div>
             ))}
@@ -2439,7 +2439,7 @@ export default function OrderTracking() {
               <div className="bg-blue-50/50 p-3 mx-4 mb-4 rounded-lg flex items-start gap-2 border border-blue-100">
                 <MessageSquare className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
                 <div className="flex-1">
-                  <p className="text-[10px] font-bold text-blue-600 uppercase tracking-wider mb-0.5">Instruction for Rider</p>
+                  <p className="text-[10px] font-bold text-primary uppercase tracking-wider mb-0.5">Instruction for Rider</p>
                   <p className="text-xs text-gray-700 leading-relaxed font-medium">"{order.note}"</p>
                 </div>
               </div>

@@ -146,8 +146,8 @@ export const NewOrderModal = ({ order, onAccept, onReject, onMinimize }) => {
           </button>
         </div>
 
-        {/* Header Ribbon (Old Green Style) */}
-        <div className="bg-green-500 p-5 flex justify-between items-center text-white border-b border-green-600/20">
+        {/* Header Ribbon */}
+        <div className="bg-[#FE5502] p-5 flex justify-between items-center text-white border-b border-[#FE5502]/20">
           <div>
             <p className="text-white/80 text-[10px] font-bold uppercase tracking-widest mb-0.5">Incoming Request</p>
             {mixedOrder && (
@@ -168,7 +168,7 @@ export const NewOrderModal = ({ order, onAccept, onReject, onMinimize }) => {
             <div className="flex flex-col items-center gap-1 mt-1.5 py-0.5">
               <div className="w-4 h-4 rounded-full bg-green-500 border-[3px] border-green-50 shadow-lg shadow-green-500/20" />
               <div className={`w-0.5 ${pickupStops.length > 1 ? 'h-24' : 'h-14'} bg-dashed border-l-2 border-gray-100`} />
-              <div className="w-4 h-4 rounded-full bg-blue-500 border-[3px] border-blue-50 shadow-lg shadow-blue-500/20" />
+              <div className="w-4 h-4 rounded-full bg-primary border-[3px] border-orange-50 shadow-lg shadow-primary/20" />
             </div>
             <div className="flex-1 space-y-6">
               <div className="space-y-4">
@@ -190,7 +190,7 @@ export const NewOrderModal = ({ order, onAccept, onReject, onMinimize }) => {
                 })}
               </div>
               <div>
-                <div className="flex items-center gap-2 mb-1.5 font-bold text-[9px] uppercase tracking-widest text-blue-600">
+                <div className="flex items-center gap-2 mb-1.5 font-bold text-[9px] uppercase tracking-widest text-primary">
                   <MapPin className="w-3.5 h-3.5" />
                   <span>Customer Drop</span>
                 </div>
@@ -201,7 +201,7 @@ export const NewOrderModal = ({ order, onAccept, onReject, onMinimize }) => {
                     href={mapsLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex mt-1 text-[9px] font-bold uppercase tracking-widest text-blue-600 hover:text-blue-700"
+                    className="inline-flex mt-1 text-[9px] font-bold uppercase tracking-widest text-primary hover:text-primary/80"
                   >
                     Open in Google Maps
                   </a>
@@ -232,7 +232,7 @@ export const NewOrderModal = ({ order, onAccept, onReject, onMinimize }) => {
             <ActionSlider 
               label="Slide to Accept" 
               onConfirm={() => onAccept(order)} 
-              color="bg-green-600"
+              color="bg-primary"
               successLabel="Order Accepted ✓"
             />
 

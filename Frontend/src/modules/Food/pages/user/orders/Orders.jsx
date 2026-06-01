@@ -969,7 +969,7 @@ Order again from this restaurant in the ${companyName} app.`
                     )}
                     {order.status === 'scheduled' && (
                       <div className="flex items-center gap-1.5 mt-1.5 p-2 bg-blue-50 border border-blue-100 rounded-lg w-fit">
-                        <Calendar className="w-3.5 h-3.5 text-blue-600" />
+                        <Calendar className="w-3.5 h-3.5 text-primary" />
                         <span className="text-[10px] font-bold text-blue-700 uppercase tracking-tight">
                           Scheduled for {new Date(order.scheduledAt).toLocaleString("en-US", {
                             day: "numeric",
@@ -1022,7 +1022,7 @@ Order again from this restaurant in the ${companyName} app.`
                           R {order.restaurantRating}<Star className="w-2 h-2 fill-current" />
                         </div>
                         {order.deliveryPartnerId && (
-                          <div className="flex bg-blue-500 text-white px-1 rounded text-[10px] items-center gap-0.5 h-4">
+                          <div className="flex bg-primary text-white px-1 rounded text-[10px] items-center gap-0.5 h-4">
                             D {order.deliveryPartnerRating}<Star className="w-2 h-2 fill-current" />
                           </div>
                         )}
@@ -1261,7 +1261,7 @@ Order again from this restaurant in the ${companyName} app.`
                   onClick={() => openShareTarget("facebook")}
                   className="rounded-2xl border border-gray-200 px-3 py-4 text-xs font-medium text-gray-700 flex flex-col items-center gap-2 hover:bg-gray-50"
                 >
-                  <Share2 className="w-5 h-5 text-blue-600" />
+                  <Share2 className="w-5 h-5 text-primary" />
                   Facebook
                 </button>
                 <button

@@ -281,7 +281,7 @@ export default function DeliveryCashLimit() {
                 value={adminBankDetails.bankName}
                 onChange={handleBankDetailChange}
                 placeholder="e.g. State Bank of India"
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
             <div>
@@ -292,7 +292,7 @@ export default function DeliveryCashLimit() {
                 value={adminBankDetails.accountHolderName}
                 onChange={handleBankDetailChange}
                 placeholder="e.g. John Doe"
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
             <div>
@@ -303,7 +303,7 @@ export default function DeliveryCashLimit() {
                 value={adminBankDetails.accountNumber}
                 onChange={handleBankDetailChange}
                 placeholder="Account Number"
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
             <div>
@@ -314,7 +314,7 @@ export default function DeliveryCashLimit() {
                 value={adminBankDetails.ifscCode}
                 onChange={handleBankDetailChange}
                 placeholder="IFSC Code"
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
             <div>
@@ -325,7 +325,7 @@ export default function DeliveryCashLimit() {
                 value={adminBankDetails.upiId}
                 onChange={handleBankDetailChange}
                 placeholder="e.g. admin@upi"
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
             
@@ -370,7 +370,7 @@ export default function DeliveryCashLimit() {
             <button
               onClick={saveBankDetails}
               disabled={loading || savingBankDetails}
-              className="px-6 py-2.5 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary/90 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               {savingBankDetails && <Loader2 className="w-4 h-4 animate-spin" />}
               Save Payment Details

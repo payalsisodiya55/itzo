@@ -68,7 +68,7 @@ export const LimitSettlementV2 = () => {
       case 'pending':
         return {
           icon: Clock,
-          color: 'text-blue-600',
+          color: 'text-primary',
           bgColor: 'bg-blue-50',
           borderColor: 'border-blue-200'
         };

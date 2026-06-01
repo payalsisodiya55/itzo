@@ -190,10 +190,10 @@ export default function WalletPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-slate-900 rounded-2xl p-6 shadow-lg border-l-8 border-blue-500"
+            className="bg-slate-900 rounded-2xl p-6 shadow-lg border-l-8 border-primary"
           >
             <div className="flex items-center justify-between mb-4">
-              <div className="bg-blue-500/10 p-3 rounded-xl">
+              <div className="bg-primary/10 p-3 rounded-xl">
                 <Wallet className="w-6 h-6 text-blue-400" />
               </div>
               <div className="text-right">
@@ -214,7 +214,7 @@ export default function WalletPage() {
 
             <div className="flex gap-3">
               <Button 
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-6 rounded-xl shadow-lg shadow-blue-900/20"
+                className="flex-1 bg-primary hover:bg-primary/90 text-white font-bold py-6 rounded-xl shadow-lg shadow-blue-900/20"
                 onClick={() => {
                   if (isLowBalance) setRechargeAmount(requiredRecharge.toString())
                   setShowRechargeModal(true)
@@ -273,7 +273,7 @@ export default function WalletPage() {
               {/* Recurring Plan Row */}
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100">
                 <div className="flex items-center gap-3">
-                  <div className={`p-2 rounded-lg ${subStatus === 'active' ? 'bg-blue-100 text-blue-600' : 'bg-gray-200 text-gray-400'}`}>
+                  <div className={`p-2 rounded-lg ${subStatus === 'active' ? 'bg-blue-100 text-primary' : 'bg-gray-200 text-gray-400'}`}>
                     <Calendar className="w-4 h-4" />
                   </div>
                   <div>
@@ -285,7 +285,7 @@ export default function WalletPage() {
                 </div>
                 <div className="text-right">
                   <span className={`text-[10px] font-black px-2 py-1 rounded-md uppercase ${
-                    subStatus === 'active' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'
+                    subStatus === 'active' ? 'bg-primary text-white' : 'bg-gray-200 text-gray-500'
                   }`}>
                     {subStatus === 'active' ? 'Active' : 'None'}
                   </span>
@@ -328,7 +328,7 @@ export default function WalletPage() {
                     <div className={`p-3 rounded-full ${
                       tx.type === 'TOPUP' ? 'bg-green-50 text-green-600' : 
                       tx.type === 'DAILY_DEDUCTION' ? 'bg-red-50 text-red-600' : 
-                      'bg-blue-50 text-blue-600'
+                      'bg-blue-50 text-primary'
                     }`}>
                       {tx.type === 'TOPUP' ? <TrendingUp className="w-5 h-5" /> : <DollarSign className="w-5 h-5" />}
                     </div>
@@ -417,7 +417,7 @@ export default function WalletPage() {
                       type="number"
                       value={rechargeAmount}
                       onChange={(e) => setRechargeAmount(e.target.value)}
-                      className="pl-8 h-14 text-xl font-black border-2 border-gray-100 focus:border-blue-600 rounded-2xl"
+                      className="pl-8 h-14 text-xl font-black border-2 border-gray-100 focus:border-primary rounded-2xl"
                       placeholder={isLowBalance ? `Min ₹${requiredRecharge}` : "Min ₹100"}
                     />
                   </div>
@@ -434,7 +434,7 @@ export default function WalletPage() {
                     <button
                       key={amt}
                       onClick={() => setRechargeAmount(amt.toString())}
-                      className="py-3 rounded-xl text-sm font-bold border-2 border-gray-100 hover:border-blue-600 hover:text-blue-600 transition-all"
+                      className="py-3 rounded-xl text-sm font-bold border-2 border-gray-100 hover:border-primary hover:text-primary transition-all"
                     >
                       ₹{amt}
                     </button>
@@ -443,7 +443,7 @@ export default function WalletPage() {
 
                 <Button
                   disabled={submittingRecharge || (isLowBalance && parseFloat(rechargeAmount) < requiredRecharge)}
-                  className="w-full h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-black text-lg shadow-xl disabled:opacity-50"
+                  className="w-full h-14 bg-primary hover:bg-primary/90 text-white rounded-2xl font-black text-lg shadow-xl disabled:opacity-50"
                   onClick={handleRecharge}
                 >
                   {submittingRecharge ? <Loader2 className="animate-spin mr-2" /> : 'Proceed to Payment'}

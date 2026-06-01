@@ -129,7 +129,7 @@ const DeliveryTracking = () => {
         label: "On the Way",
         value: deliveries.filter((d) => d.status === "On the Way").length,
         icon: HiOutlineTruck,
-        color: "text-blue-600",
+        color: "text-primary",
         bg: "bg-blue-50",
       },
       {
@@ -197,7 +197,7 @@ const DeliveryTracking = () => {
                 <MagicCard
                   className="border-none shadow-sm ring-1 ring-slate-100 p-0 overflow-hidden group bg-white"
                   gradientColor={
-                    stat.color === "text-blue-600"
+                    stat.color === "text-primary"
                       ? "#e0f2fe"
                       : stat.color === "text-amber-600"
                         ? "#fef3c7"
@@ -375,7 +375,7 @@ const DeliveryTracking = () => {
 
                         {/* Action Button Section */}
                         <div className="lg:w-16 flex items-center justify-center p-2 sm:p-3 shrink-0">
-                          <button className="h-10 w-10 lg:h-full lg:w-full bg-slate-900 group-hover:bg-primary rounded-lg lg:rounded-r-lg lg:rounded-l-none flex items-center justify-center text-white transition-all duration-500 shadow-xl shadow-slate-900/10 hover:shadow-primary/30">
+                          <button className="h-10 w-10 lg:h-full lg:w-full bg-primary hover:bg-primary/90 rounded-lg lg:rounded-r-lg lg:rounded-l-none flex items-center justify-center text-primary-foreground transition-all duration-500 shadow-xl shadow-primary/20 hover:shadow-primary/30">
                             <HiOutlineTruck className="h-5 w-5 group-hover:scale-125 transition-transform" />
                           </button>
                         </div>

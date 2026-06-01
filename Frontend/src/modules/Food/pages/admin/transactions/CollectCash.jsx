@@ -152,7 +152,7 @@ export default function CollectCash() {
         {/* Cash Collection Form */}
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
           <div className="flex items-center gap-3 mb-6">
-            <Wallet className="w-5 h-5 text-blue-600" />
+            <Wallet className="w-5 h-5 text-primary" />
             <h1 className="text-2xl font-bold text-slate-900">Cash Collection</h1>
           </div>
 
@@ -165,7 +165,7 @@ export default function CollectCash() {
                 <select
                   value={formData.type}
                   onChange={(e) => handleInputChange("type", e.target.value)}
-                  className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                 >
                   <option value="Deliveryman">Deliveryman</option>
                   <option value="Restaurant">Restaurant</option>
@@ -181,7 +181,7 @@ export default function CollectCash() {
                   value={formData.method}
                   onChange={(e) => handleInputChange("method", e.target.value)}
                   placeholder="Ex: Cash"
-                  className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                  className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm ${
                     formErrors.method ? "border-red-500" : "border-slate-300"
                   }`}
                 />
@@ -196,7 +196,7 @@ export default function CollectCash() {
                   <select
                     value={formData.restaurant}
                     onChange={(e) => handleInputChange("restaurant", e.target.value)}
-                    className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                    className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm ${
                       formErrors.restaurant ? "border-red-500" : "border-slate-300"
                     }`}
                   >
@@ -215,7 +215,7 @@ export default function CollectCash() {
                   <select
                     value={formData.deliveryman}
                     onChange={(e) => handleInputChange("deliveryman", e.target.value)}
-                    className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                    className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm ${
                       formErrors.deliveryman ? "border-red-500" : "border-slate-300"
                     }`}
                   >
@@ -237,7 +237,7 @@ export default function CollectCash() {
                   value={formData.amount}
                   onChange={(e) => handleInputChange("amount", e.target.value)}
                   placeholder="Ex: 100"
-                  className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                  className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm ${
                     formErrors.amount ? "border-red-500" : "border-slate-300"
                   }`}
                 />
@@ -253,7 +253,7 @@ export default function CollectCash() {
                   value={formData.reference}
                   onChange={(e) => handleInputChange("reference", e.target.value)}
                   placeholder="Ex: Collect Cash"
-                  className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                 />
               </div>
             </div>
@@ -269,7 +269,7 @@ export default function CollectCash() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-6 py-2.5 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary/90 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? "Collecting..." : "Collect Cash"}
               </button>
@@ -421,7 +421,7 @@ export default function CollectCash() {
                       )}
                       {visibleColumns.collectedFrom && (
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm text-blue-600 font-medium cursor-pointer hover:underline">
+                          <span className="text-sm text-primary font-medium cursor-pointer hover:underline">
                             {transaction.collectedFrom}
                           </span>
                         </td>
@@ -498,7 +498,7 @@ export default function CollectCash() {
                       id={`toggle-${key}`}
                       checked={isVisible}
                       onChange={() => toggleColumn(key)}
-                      className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                      className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary"
                     />
                     <label htmlFor={`toggle-${key}`} className="ml-2 text-sm text-slate-700 capitalize">
                       {key.replace(/([A-Z])/g, ' $1').trim()}
@@ -590,7 +590,7 @@ export default function CollectCash() {
           <DialogFooterComponent className="px-6 pb-6">
             <button
               onClick={() => setIsViewOpen(false)}
-              className="px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-md"
+              className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary/90 transition-all shadow-md"
             >
               Close
             </button>

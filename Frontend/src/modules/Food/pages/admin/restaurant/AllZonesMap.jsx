@@ -380,7 +380,7 @@ export default function AllZonesMap() {
             <ArrowLeft className="w-5 h-5 text-slate-600" />
           </button>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-blue-500 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
               <MapPin className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -400,7 +400,7 @@ export default function AllZonesMap() {
               placeholder="Search location on map..."
               value={locationSearch}
               onChange={(e) => setLocationSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
         </div>
@@ -413,7 +413,7 @@ export default function AllZonesMap() {
             {mapLoading && (
               <div className="absolute inset-0 flex items-center justify-center bg-slate-100 rounded-lg">
                 <div className="text-center">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
                   <p className="text-slate-600">Loading map...</p>
                 </div>
               </div>
@@ -422,7 +422,7 @@ export default function AllZonesMap() {
             {loading && !mapLoading && (
               <div className="absolute inset-0 flex items-center justify-center bg-slate-100 rounded-lg">
                 <div className="text-center">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
                   <p className="text-slate-600">Loading zones...</p>
                 </div>
               </div>
@@ -454,7 +454,7 @@ export default function AllZonesMap() {
               <div className="text-xs text-slate-600 space-y-1">
                 {zones.length > 0 && (
                   <p>
-                    Click on any <span className="font-semibold text-blue-600">zone</span> on the map to view details. Total zones: <strong>{zones.length}</strong>
+                    Click on any <span className="font-semibold text-primary">zone</span> on the map to view details. Total zones: <strong>{zones.length}</strong>
                   </p>
                 )}
                 {restaurants.length > 0 && (

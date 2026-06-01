@@ -210,7 +210,7 @@ export default function DeliverySupportTickets() {
               </div>
               <div className="bg-blue-50 rounded-lg p-4 text-center">
                 <p className="text-2xl font-bold text-blue-700">{stats.inProgress}</p>
-                <p className="text-xs text-blue-600 mt-1">In Progress</p>
+                <p className="text-xs text-primary mt-1">In Progress</p>
               </div>
               <div className="bg-green-50 rounded-lg p-4 text-center">
                 <p className="text-2xl font-bold text-green-700">{stats.resolved}</p>
@@ -234,14 +234,14 @@ export default function DeliverySupportTickets() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                   placeholder="Search by subject, description, ticket ID, or delivery partner..."
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
             </div>
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="">All Status</option>
               <option value="open">Open</option>
@@ -252,7 +252,7 @@ export default function DeliverySupportTickets() {
             <select
               value={priorityFilter}
               onChange={(e) => setPriorityFilter(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="">All Priority</option>
               <option value="low">Low</option>
@@ -319,13 +319,13 @@ export default function DeliverySupportTickets() {
                           className="p-2 hover:bg-blue-50 rounded-lg transition-colors"
                           title={ticket.adminResponse ? "Edit Response" : "Send Response"}
                         >
-                          <Edit className="w-4 h-4 text-blue-600" />
+                          <Edit className="w-4 h-4 text-primary" />
                         </button>
                         {ticket.status !== 'closed' && (
                           <select
                             value={ticket.status}
                             onChange={(e) => handleStatusChange(ticket._id, e.target.value)}
-                            className="text-xs px-2 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                            className="text-xs px-2 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white"
                             onClick={(e) => e.stopPropagation()}
                           >
                             <option value="open">Open</option>
@@ -357,7 +357,7 @@ export default function DeliverySupportTickets() {
               {/* Ticket Information Section */}
               <div>
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-1 h-6 bg-blue-500 rounded"></div>
+                  <div className="w-1 h-6 bg-primary rounded"></div>
                   <h3 className="text-base font-semibold text-gray-900">Ticket Information</h3>
                 </div>
                 <div className="pl-4 space-y-4">
@@ -464,7 +464,7 @@ export default function DeliverySupportTickets() {
                 <div className="flex flex-col sm:flex-row gap-3 pt-5 border-t border-gray-200">
                   <button
                     onClick={() => handleRespond(selectedTicket)}
-                    className="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors shadow-sm"
+                    className="px-5 py-2.5 bg-primary text-white rounded-lg hover:bg-primary/90 font-medium transition-colors shadow-sm"
                   >
                     {selectedTicket.adminResponse ? "Edit Response" : "Send Response"}
                   </button>
@@ -524,7 +524,7 @@ export default function DeliverySupportTickets() {
                 onChange={(e) => setResponseText(e.target.value)}
                 placeholder="Enter your response..."
                 rows={6}
-                className="min-h-[180px] resize-y rounded-xl border-slate-300 bg-white px-4 py-3 text-sm leading-6 text-slate-800 shadow-sm focus-visible:border-blue-500 focus-visible:ring-4 focus-visible:ring-blue-100"
+                className="min-h-[180px] resize-y rounded-xl border-slate-300 bg-white px-4 py-3 text-sm leading-6 text-slate-800 shadow-sm focus-visible:border-primary focus-visible:ring-4 focus-visible:ring-blue-100"
               />
               <p className="mt-2 text-xs text-slate-500">
                 This message will be visible to the delivery partner in their support ticket.
@@ -541,7 +541,7 @@ export default function DeliverySupportTickets() {
             <button
               onClick={handleUpdateTicket}
               disabled={updating || !responseText.trim()}
-              className="flex min-w-[140px] items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex min-w-[140px] items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {updating ? (
                 <>

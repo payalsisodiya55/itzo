@@ -132,7 +132,7 @@ export default function SubscriberList() {
         </h1>
 
         <div className="relative">
-          <select className="pl-3 pr-8 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none">
+          <select className="pl-3 pr-8 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary appearance-none">
             <option value="all-zones">{zoneFilter}</option>
           </select>
           <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 pointer-events-none">
@@ -218,7 +218,7 @@ export default function SubscriberList() {
 
           <div className="flex flex-col md:flex-row md:items-center gap-2">
             <div className="relative">
-              <select className="pl-3 pr-8 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none">
+              <select className="pl-3 pr-8 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary appearance-none">
                 <option>All</option>
               </select>
               <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 pointer-events-none">
@@ -232,7 +232,7 @@ export default function SubscriberList() {
                 placeholder="Ex: Search by name & pack"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-8 pr-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full pl-8 pr-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
               <Search className="w-4 h-4 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
             </div>
@@ -430,7 +430,7 @@ export default function SubscriberList() {
                     )}
                     {visibleColumns.actions && (
                       <td className="px-6 py-4 whitespace-nowrap text-center">
-                        <button className="p-1.5 rounded text-blue-600 hover:bg-blue-50 transition-colors" title="View">
+                        <button className="p-1.5 rounded text-primary hover:bg-primary/10 transition-colors" title="View">
                           <Eye className="w-4 h-4" />
                         </button>
                       </td>

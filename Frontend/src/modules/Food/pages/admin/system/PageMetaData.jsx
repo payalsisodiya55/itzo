@@ -136,7 +136,7 @@ export default function PageMetaDataPageMetaData() {
         {/* Page Title */}
         <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-3 mb-3">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-blue-500 flex items-center justify-center">
+            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
               <Settings className="w-3.5 h-3.5 text-white" />
             </div>
             <h1 className="text-lg font-bold text-slate-900">Manage Page SEO</h1>
@@ -152,7 +152,7 @@ export default function PageMetaDataPageMetaData() {
                 placeholder="Search by page name..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-7 pr-2 py-1.5 w-full text-xs rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="pl-7 pr-2 py-1.5 w-full text-xs rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
               <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
             </div>
@@ -256,7 +256,7 @@ export default function PageMetaDataPageMetaData() {
                           <button
                             type="button"
                             onClick={() => handleEdit(page.id)}
-                            className="px-3 py-1.5 text-xs font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-1 mx-auto"
+                            className="px-3 py-1.5 text-xs font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-1 mx-auto"
                           >
                             <Pencil className="w-3 h-3" />
                             <span>Edit Content</span>
@@ -448,7 +448,7 @@ export default function PageMetaDataPageMetaData() {
               </button>
               <button
                 onClick={handleSaveSEO}
-                className="px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all"
+                className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary/90 transition-all"
               >
                 Save Changes
               </button>

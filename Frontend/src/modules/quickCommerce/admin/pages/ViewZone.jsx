@@ -316,7 +316,7 @@ const coordinatesLength = useMemo(() => zone?.coordinates?.length || 0, [zone?.c
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
           <p className="text-slate-600">Loading zone...</p>
         </div>
       </div>
@@ -330,7 +330,7 @@ const coordinatesLength = useMemo(() => zone?.coordinates?.length || 0, [zone?.c
           <p className="text-slate-600">Zone not found</p>
           <button
             onClick={() => navigate("/ecs/quick-commerce/zone-setup")}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            className="mt-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90"
           >
             Back to Zones
           </button>
@@ -423,7 +423,7 @@ const coordinatesLength = useMemo(() => zone?.coordinates?.length || 0, [zone?.c
                 {mapLoading && (
                   <div className="absolute inset-0 flex items-center justify-center bg-slate-100 rounded-lg" style={{ zIndex: 10, pointerEvents: "none" }}>
                     <div className="text-center">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
                       <p className="text-slate-600">Loading map...</p>
                     </div>
                   </div>

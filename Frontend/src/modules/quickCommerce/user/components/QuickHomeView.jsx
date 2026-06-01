@@ -228,7 +228,7 @@ export default function QuickHomeView({
         <section className="mb-32 overflow-hidden rounded-[60px] bg-[#111] p-12 lg:p-20 relative text-white">
            {/* Abstract blurs */}
            <div className="absolute top-0 right-0 w-96 h-96 bg-[#0c831f] rounded-full blur-[140px] opacity-30" />
-           <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-500 rounded-full blur-[120px] opacity-20" />
+           <div className="absolute bottom-0 left-0 w-80 h-80 bg-primary rounded-full blur-[120px] opacity-20" />
            
            <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto">
               <div className="mb-8 flex items-center gap-3 rounded-full bg-white/10 px-6 py-2 backdrop-blur-xl border border-white/20">

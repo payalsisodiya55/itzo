@@ -157,7 +157,7 @@ export default function DeliveryWelcome() {
                // Navigate directly to delivery home page (map with hotspots)
                navigate("/food/delivery", { replace: true })
              }}
-             className="w-full bg-[#00B761] hover:bg-[#00A055] text-white font-bold py-4 rounded-lg mt-4 flex items-center justify-center gap-2 transition-colors"
+             className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 rounded-lg mt-4 flex items-center justify-center gap-2 transition-colors"
            >
             <span>Start earning</span>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -172,7 +172,7 @@ export default function DeliveryWelcome() {
         <div className="flex items-center gap-4 max-w-2xl mx-auto">
           <button
             onClick={toggleAudio}
-            className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center hover:bg-gray-800 transition-colors"
+            className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 transition-colors"
           >
             {isPlaying ? (
               <Pause className="w-5 h-5" />
@@ -424,7 +424,7 @@ export default function DeliveryWelcome() {
           {/* Proceed Button */}
           <motion.button
             onClick={handleProceed}
-            className="w-full bg-black text-white font-bold py-4 rounded-lg hover:bg-gray-800 transition-colors z-10 relative"
+            className="w-full bg-primary text-primary-foreground font-bold py-4 rounded-lg hover:bg-primary/90 transition-colors z-10 relative"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.5 }}

@@ -402,7 +402,7 @@ export default function OrdersTable({
                       </button>
                       <button 
                         onClick={() => onPrintOrder(order)}
-                        className="p-1.5 rounded text-blue-600 hover:bg-blue-50 transition-colors"
+                        className="p-1.5 rounded text-primary hover:bg-blue-50 transition-colors"
                         title="Print Order"
                       >
                         <Printer className="w-4 h-4" />
@@ -462,7 +462,7 @@ export default function OrdersTable({
                               className={`px-3 py-1.5 rounded-md text-white text-xs font-medium hover:opacity-90 transition-colors shadow-sm flex items-center gap-1.5 ${
                                 order.paymentType === "Wallet" || order.payment?.method === "wallet"
                                   ? "bg-purple-600 hover:bg-purple-700"
-                                  : "bg-blue-600 hover:bg-blue-700"
+                                  : "bg-primary hover:bg-primary/90"
                               }`}
                               title={order.paymentType === "Wallet" || order.payment?.method === "wallet"
                                 ? "Process Wallet Refund (Add to user wallet)"

@@ -207,7 +207,7 @@ export default function CleanDatabase() {
                     checked={selectedTables.has(table.name)}
                     onChange={() => handleToggleTable(table.name)}
                     onClick={(e) => e.stopPropagation()}
-                    className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500 cursor-pointer"
+                    className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary cursor-pointer"
                   />
                   <span className="text-xs text-slate-700 flex-1">{table.name}</span>
                   <span className="px-2 py-0.5 text-[10px] font-medium bg-slate-200 text-slate-700 rounded-full">
@@ -230,7 +230,7 @@ export default function CleanDatabase() {
                     checked={selectedTables.has(table.name)}
                     onChange={() => handleToggleTable(table.name)}
                     onClick={(e) => e.stopPropagation()}
-                    className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500 cursor-pointer"
+                    className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary cursor-pointer"
                   />
                   <span className="text-xs text-slate-700 flex-1">{table.name}</span>
                   <span className="px-2 py-0.5 text-[10px] font-medium bg-slate-200 text-slate-700 rounded-full">
@@ -253,7 +253,7 @@ export default function CleanDatabase() {
                     checked={selectedTables.has(table.name)}
                     onChange={() => handleToggleTable(table.name)}
                     onClick={(e) => e.stopPropagation()}
-                    className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500 cursor-pointer"
+                    className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary cursor-pointer"
                   />
                   <span className="text-xs text-slate-700 flex-1">{table.name}</span>
                   <span className="px-2 py-0.5 text-[10px] font-medium bg-slate-200 text-slate-700 rounded-full">
@@ -269,7 +269,7 @@ export default function CleanDatabase() {
         <div className="flex justify-end">
           <button
             onClick={handleClear}
-            className="px-6 py-2.5 text-xs font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-6 py-2.5 text-xs font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
           >
             Clear
           </button>

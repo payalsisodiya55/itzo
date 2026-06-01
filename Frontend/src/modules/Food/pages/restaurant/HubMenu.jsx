@@ -1263,7 +1263,7 @@ export default function HubMenu() {
                         <div className="flex flex-col gap-2">
                           <button
                             onClick={() => handleEditAddon(addon)}
-                            className="p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition-colors"
+                            className="p-2 bg-blue-100 text-primary rounded-lg hover:bg-blue-200 transition-colors"
                             title="Edit add-on"
                           >
                             <Edit className="h-4 w-4" />
@@ -1868,7 +1868,7 @@ export default function HubMenu() {
                       value={editCategoryName}
                       onChange={(e) => setEditCategoryName(e.target.value)}
                       placeholder="Enter category name"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                       autoFocus
                     />
                   </div>
@@ -1954,7 +1954,7 @@ export default function HubMenu() {
                         }
                       }}
                       placeholder="Enter sub-category name"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                       autoFocus
                     />
                     {selectedGroupForSubCategory && (
@@ -2031,7 +2031,7 @@ export default function HubMenu() {
                         }
                       }}
                       placeholder="Enter category name"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                       autoFocus
                     />
                   </div>
@@ -2095,7 +2095,7 @@ export default function HubMenu() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search for food items..."
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     autoFocus
                   />
                   {searchQuery && (

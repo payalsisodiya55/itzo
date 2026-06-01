@@ -24,7 +24,7 @@ const debugError = (...args) => {}
 
 const statusMeta = {
   Scheduled: { label: "Scheduled Orders", color: "text-amber-600", bg: "bg-amber-50", icon: scheduledIcon },
-  Pending: { label: "Pending Orders", color: "text-blue-600", bg: "bg-blue-50", icon: pendingIcon },
+  Pending: { label: "Pending Orders", color: "text-primary", bg: "bg-blue-50", icon: pendingIcon },
   Accepted: { label: "Accepted Orders", color: "text-sky-600", bg: "bg-sky-50", icon: acceptedIcon },
   Processing: { label: "Processing Orders", color: "text-indigo-600", bg: "bg-indigo-50", icon: processingIcon },
   "Food On The Way": { label: "Food On The Way", color: "text-cyan-600", bg: "bg-cyan-50", icon: onTheWayIcon },
@@ -358,7 +358,7 @@ export default function RegularOrderReport() {
           <p className="text-red-600 mb-2">Error: {error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90"
           >
             Retry
           </button>
@@ -373,7 +373,7 @@ export default function RegularOrderReport() {
         {/* Page Header */}
         <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-3 mb-3">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center">
+            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
               <BarChart3 className="w-3.5 h-3.5 text-white" />
             </div>
             <h1 className="text-lg font-bold text-slate-900">Order Report</h1>
@@ -387,7 +387,7 @@ export default function RegularOrderReport() {
               <select
                 value={filters.zone}
                 onChange={(e) => handleFilterChange("zone", e.target.value)}
-                className="w-full px-2.5 py-1.5 pr-5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs appearance-none cursor-pointer"
+                className="w-full px-2.5 py-1.5 pr-5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-xs appearance-none cursor-pointer"
               >
                 <option value="All Zones">All Zones</option>
                 {zones.map((zone) => (
@@ -403,7 +403,7 @@ export default function RegularOrderReport() {
               <select
                 value={filters.restaurant}
                 onChange={(e) => handleFilterChange("restaurant", e.target.value)}
-                className="w-full px-2.5 py-1.5 pr-5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs appearance-none cursor-pointer"
+                className="w-full px-2.5 py-1.5 pr-5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-xs appearance-none cursor-pointer"
               >
                 <option value="All restaurants">All restaurants</option>
                 {restaurants.map((restaurant) => (
@@ -419,7 +419,7 @@ export default function RegularOrderReport() {
               <select
                 value={filters.customer}
                 onChange={(e) => handleFilterChange("customer", e.target.value)}
-                className="w-full px-2.5 py-1.5 pr-5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs appearance-none cursor-pointer"
+                className="w-full px-2.5 py-1.5 pr-5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-xs appearance-none cursor-pointer"
               >
                 <option value="All customers">All customers</option>
                 {customers.map((customer) => (
@@ -435,7 +435,7 @@ export default function RegularOrderReport() {
               <select
                 value={filters.time}
                 onChange={(e) => handleFilterChange("time", e.target.value)}
-                className="w-full px-2.5 py-1.5 pr-5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs appearance-none cursor-pointer"
+                className="w-full px-2.5 py-1.5 pr-5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-xs appearance-none cursor-pointer"
               >
                 <option key="all-time" value="All Time">All Time</option>
                 <option key="today" value="Today">Today</option>
@@ -453,7 +453,7 @@ export default function RegularOrderReport() {
             </button>
             <button 
               onClick={handleFilterApply}
-              className={`px-3 py-1.5 text-xs font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all whitespace-nowrap relative ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-lg bg-primary text-white hover:bg-primary/90 transition-all whitespace-nowrap relative ${
                 activeFiltersCount > 0 ? "ring-2 ring-blue-300" : ""
               }`}
             >
@@ -484,7 +484,7 @@ export default function RegularOrderReport() {
         <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-3">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
             <h2 className="text-base font-bold text-slate-900">
-              Total Orders <span className="text-blue-600">{statusCounts.total}</span>
+              Total Orders <span className="text-primary">{statusCounts.total}</span>
             </h2>
 
             <div className="flex items-center gap-2">
@@ -497,14 +497,14 @@ export default function RegularOrderReport() {
                     setSearchQuery(e.target.value)
                     setCurrentPage(1)
                   }}
-                  className="pl-7 pr-2 py-1.5 w-full text-[11px] rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="pl-7 pr-2 py-1.5 w-full text-[11px] rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                 />
                 <img src={searchIcon} alt="Search" className="absolute left-2 top-1/2 -translate-y-1/2 w-3 h-3" />
               </div>
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="px-2.5 py-1.5 text-[11px] font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-1 transition-all">
+                  <button className="px-2.5 py-1.5 text-[11px] font-medium rounded-lg bg-primary text-white hover:bg-primary/90 flex items-center gap-1 transition-all">
                     <img src={exportIcon} alt="Export" className="w-3 h-3" />
                     <span>Export</span>
                     <ChevronDown className="w-2.5 h-2.5" />
@@ -599,7 +599,7 @@ export default function RegularOrderReport() {
                         </span>
                       </td>
                       <td className="px-1.5 py-1">
-                        <span className="text-[10px] text-blue-600 hover:underline cursor-pointer">{order.orderId}</span>
+                        <span className="text-[10px] text-primary hover:underline cursor-pointer">{order.orderId}</span>
                       </td>
                       <td className="px-1.5 py-1">
                         <span className="text-[10px] text-slate-700 truncate block">{order.restaurant}</span>
@@ -662,7 +662,7 @@ export default function RegularOrderReport() {
                   onClick={() => handlePageChange(idx + 1)}
                   className={`w-6 h-6 text-[10px] rounded border ${
                     currentPage === idx + 1
-                      ? "bg-blue-600 border-blue-600 text-white"
+                      ? "bg-primary border-primary text-primary-foreground"
                       : "border-slate-300 text-slate-700 hover:bg-slate-50"
                   }`}
                 >

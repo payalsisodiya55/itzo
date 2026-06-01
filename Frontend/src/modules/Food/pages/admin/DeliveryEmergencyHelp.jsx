@@ -215,7 +215,7 @@ export default function DeliveryEmergencyHelp() {
           {/* Info Card */}
           <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
             <div className="flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" />
+              <AlertCircle className="w-5 h-5 text-primary mt-0.5 shrink-0" />
               <div className="text-sm text-blue-800">
                 <p className="font-semibold mb-1">Important Information</p>
                 <p>
@@ -250,7 +250,7 @@ export default function DeliveryEmergencyHelp() {
                           ? "border-red-300 focus:ring-red-400 bg-red-50/40"
                           : formData[field.id] && !validateField(field.id, formData[field.id])
                           ? "border-green-300 focus:ring-green-400"
-                          : "border-slate-300 focus:ring-blue-500"
+                          : "border-slate-300 focus:ring-primary"
                       }`}
                     />
                     {/* Green tick for valid filled field */}
@@ -273,7 +273,7 @@ export default function DeliveryEmergencyHelp() {
               <button
                 type="submit"
                 disabled={saving || !isFormValid}
-                className="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {saving ? (
                   <>

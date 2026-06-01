@@ -305,7 +305,7 @@ export default function AdminHome() {
               title="Delivery fee"
               value={formatCurrency(deliveryFeeTotal)}
               helper={`Total delivery fees: ${periodLabel}`}
-              icon={<Truck className="h-5 w-5 text-blue-600" />}
+              icon={<Truck className="h-5 w-5 text-primary" />}
               accent="bg-blue-200/40"
               path="/ecs/food/transaction-report"
             />
@@ -329,7 +329,7 @@ export default function AdminHome() {
               title="Total restaurants"
               value={totalRestaurants.toLocaleString("en-IN")}
               helper="Approved restaurants"
-              icon={<Store className="h-5 w-5 text-blue-600" />}
+              icon={<Store className="h-5 w-5 text-primary" />}
               accent="bg-blue-200/40"
               path="/ecs/food/restaurants"
             />
@@ -415,7 +415,7 @@ export default function AdminHome() {
                 title="Active paid users"
                 value={`${subOverview?.activeSubscribers?.total || 0} (${subOverview?.activeSubscribers?.restaurants || 0} R / ${subOverview?.activeSubscribers?.deliveryPartners || 0} D)`}
                 helper="Active subscription plans"
-                icon={<Activity className="h-5 w-5 text-blue-600" />}
+                icon={<Activity className="h-5 w-5 text-primary" />}
                 accent="bg-blue-100/40"
                 path="/ecs/food/subscriptions?status=active"
               />
@@ -614,7 +614,7 @@ export default function AdminHome() {
                         case "order_cancelled":
                           return <XCircle className="h-4 w-4 text-red-600" />
                         case "restaurant":
-                          return <Store className="h-4 w-4 text-blue-600" />
+                          return <Store className="h-4 w-4 text-primary" />
                         case "delivery":
                           return <Truck className="h-4 w-4 text-purple-600" />
                         case "customer":

@@ -141,7 +141,7 @@ export default function FssaiUpdate() {
   if (fetching) {
     return (
       <div className="min-h-screen bg-white flex flex-col items-center justify-center">
-        <Loader2 className="w-8 h-8 text-blue-600 animate-spin mb-2" />
+        <Loader2 className="w-8 h-8 text-primary animate-spin mb-2" />
         <p className="text-sm text-gray-500">Loading current details...</p>
       </div>
     )
@@ -211,7 +211,7 @@ export default function FssaiUpdate() {
               <div className="space-y-2">
                 <img src={existingImageUrl} alt="Current FSSAI" className="h-20 w-auto mx-auto object-contain rounded-lg border" />
                 <p className="text-xs text-gray-500">Current license document</p>
-                <p className="text-[10px] text-blue-600 font-medium">Click to upload new</p>
+                <p className="text-[10px] text-primary font-medium">Click to upload new</p>
               </div>
             ) : (
               <>

@@ -173,7 +173,7 @@ export function DateRangeCalendar({ startDate, endDate, onDateRangeChange, onClo
                   ? 'bg-green-100 text-green-700'
                   : 'hover:bg-gray-100'
                 }
-                ${isToday && !isStart && !isEnd && !inRange ? 'bg-blue-50 text-blue-600 font-medium' : ''}
+                ${isToday && !isStart && !isEnd && !inRange ? 'bg-blue-50 text-primary font-medium' : ''}
               `}
             >
               {date.getDate()}

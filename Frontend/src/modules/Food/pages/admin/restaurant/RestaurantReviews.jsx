@@ -254,7 +254,7 @@ export default function RestaurantReviews() {
                       {visibleColumns.si && <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700">{review.sl}</td>}
                       {visibleColumns.orderId && <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-slate-700">{review.orderId}</td>}
                       {visibleColumns.restaurant && <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-emerald-600">{review.restaurant}</td>}
-                      {visibleColumns.customer && <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600">{review.customer}</td>}
+                      {visibleColumns.customer && <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-primary">{review.customer}</td>}
                       {visibleColumns.review && (
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-2">
@@ -317,7 +317,7 @@ export default function RestaurantReviews() {
           <DialogHeader className="px-6 pt-6 pb-4 border-b border-slate-100 bg-slate-50/50">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
-                <Columns className="w-5 h-5 text-blue-600" />
+                <Columns className="w-5 h-5 text-primary" />
               </div>
               <div>
                 <DialogTitle className="text-xl font-bold text-slate-900">Column Settings</DialogTitle>
@@ -338,7 +338,7 @@ export default function RestaurantReviews() {
                   onClick={() => toggleColumn(key)}
                   className={`group relative flex items-center justify-between px-4 py-3 rounded-xl border-2 transition-all duration-200 ${
                     visibleColumns[key]
-                      ? "bg-blue-50 border-blue-600 text-blue-700 shadow-sm"
+                      ? "bg-blue-50 border-primary text-blue-700 shadow-sm"
                       : "bg-white border-slate-100 text-slate-500 hover:border-slate-200 hover:bg-slate-50"
                   }`}
                 >
@@ -346,7 +346,7 @@ export default function RestaurantReviews() {
                     {label}
                   </span>
                   <div className={`shrink-0 w-5 h-5 rounded-full flex items-center justify-center transition-all ${
-                    visibleColumns[key] ? "bg-blue-600 text-white scale-110" : "bg-slate-100 text-transparent"
+                    visibleColumns[key] ? "bg-primary text-white scale-110" : "bg-slate-100 text-transparent"
                   }`}>
                     <Check className="w-3 h-3" strokeWidth={3} />
                   </div>
@@ -358,7 +358,7 @@ export default function RestaurantReviews() {
           <DialogFooter className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex flex-row items-center justify-between gap-3">
             <button
               onClick={resetColumns}
-              className="px-4 py-2 text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors flex items-center gap-2"
+              className="px-4 py-2 text-sm font-bold text-slate-500 hover:text-primary transition-colors flex items-center gap-2"
             >
               Reset to Default
             </button>

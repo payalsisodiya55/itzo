@@ -412,7 +412,7 @@ const DeliveryFunds = () => {
                                 </div>
 
                                 <div className="mt-10 flex gap-4">
-                                    <button className="flex-1 py-4.5 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-xl active:scale-95 transition-all">
+                                    <button className="flex-1 py-4.5 bg-primary text-primary-foreground rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-xl hover:bg-primary/90 hover:shadow-primary/20 active:scale-95 transition-all">
                                         Download Receipt
                                     </button>
                                     <button className="p-4.5 bg-slate-100 text-slate-600 rounded-2xl hover:bg-slate-200 transition-all">

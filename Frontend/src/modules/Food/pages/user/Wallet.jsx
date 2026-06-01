@@ -125,7 +125,7 @@ export default function Wallet() {
       case "deduction":
         return <ArrowUpCircle className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-red-600 dark:text-red-400" />
       case "refund":
-        return <RefreshCw className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-blue-600 dark:text-blue-400" />
+        return <RefreshCw className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-primary dark:text-blue-400" />
       default:
         return null
     }
@@ -138,7 +138,7 @@ export default function Wallet() {
       case "deduction":
         return "text-red-600 dark:text-red-400"
       case "refund":
-        return "text-blue-600 dark:text-blue-400"
+        return "text-primary dark:text-blue-400"
       default:
         return "text-gray-600 dark:text-gray-400"
     }
@@ -213,7 +213,7 @@ export default function Wallet() {
 
               <div className="flex-shrink-0 w-full md:w-auto">
                 <Button
-                  className="w-full md:w-auto md:min-w-[200px] lg:min-w-[240px] h-12 md:h-14 lg:h-16 bg-green-600 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700 text-white font-semibold text-sm md:text-base lg:text-lg rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
+                  className="w-full md:w-auto md:min-w-[200px] lg:min-w-[240px] h-12 md:h-14 lg:h-16 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm md:text-base lg:text-lg rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
                   onClick={() => setAddMoneyModalOpen(true)}
                 >
                   <Plus className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6" />

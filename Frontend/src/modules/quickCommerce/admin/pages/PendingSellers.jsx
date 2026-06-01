@@ -136,7 +136,7 @@ const PendingSellers = () => {
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {[
-          { label: 'Pending requests', val: stats.total, icon: HiOutlineDocumentText, color: 'text-blue-600', bg: 'bg-blue-50' },
+          { label: 'Pending requests', val: stats.total, icon: HiOutlineDocumentText, color: 'text-primary', bg: 'bg-blue-50' },
           { label: 'Received today', val: stats.today, icon: HiOutlineCalendarDays, color: 'text-emerald-600', bg: 'bg-emerald-50' },
           { label: 'Doc-ready', val: stats.complete, icon: HiOutlineShieldCheck, color: 'text-amber-600', bg: 'bg-amber-50' },
         ].map((stat) => (
@@ -201,7 +201,7 @@ const PendingSellers = () => {
                     <td className="px-6 py-4">
                       <div className="flex flex-wrap gap-1.5">
                         {docs.length ? docs.map((doc) => (
-                          <span key={doc} className="px-2 py-0.5 bg-blue-50 text-blue-600 text-[8px] font-bold rounded-full ring-1 ring-blue-100 uppercase">{doc}</span>
+                          <span key={doc} className="px-2 py-0.5 bg-blue-50 text-primary text-[8px] font-bold rounded-full ring-1 ring-blue-100 uppercase">{doc}</span>
                         )) : <span className="text-xs font-medium text-slate-400">No docs yet</span>}
                       </div>
                     </td>
@@ -407,7 +407,7 @@ const PendingSellers = () => {
                         <button type="button" disabled={isProcessing} onClick={() => handleReject(viewingSeller._id)} className="flex-1 rounded-2xl bg-slate-100 py-4 text-[11px] font-black uppercase tracking-[0.22em] text-slate-700 transition hover:bg-rose-50 hover:text-rose-600 disabled:opacity-60">
                           <span className="inline-flex items-center gap-2"><HiOutlineXCircle className="h-4 w-4" />Reject request</span>
                         </button>
-                        <button type="button" disabled={isProcessing} onClick={() => handleApprove(viewingSeller._id)} className="flex-[1.35] rounded-2xl bg-slate-900 py-4 text-[11px] font-black uppercase tracking-[0.22em] text-white transition hover:bg-black disabled:opacity-60">
+                        <button type="button" disabled={isProcessing} onClick={() => handleApprove(viewingSeller._id)} className="flex-[1.35] rounded-2xl bg-primary py-4 text-[11px] font-black uppercase tracking-[0.22em] text-primary-foreground transition hover:bg-primary/90 shadow-lg shadow-primary/20 disabled:opacity-60">
                           <span className="inline-flex items-center gap-2 justify-center">{isProcessing ? <HiOutlineArrowPath className="h-4 w-4 animate-spin" /> : <HiOutlineCheckCircle className="h-4 w-4" />}Approve seller</span>
                         </button>
                       </div>

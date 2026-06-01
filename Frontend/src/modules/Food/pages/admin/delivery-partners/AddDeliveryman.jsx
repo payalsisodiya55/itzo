@@ -108,7 +108,7 @@ export default function AddDeliveryman() {
                     value={formData.firstName}
                     onChange={(e) => handleInputChange("firstName", e.target.value)}
                     placeholder="Ex: Jhone"
-                    className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm ${
+                    className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-sm ${
                       formErrors.firstName ? "border-red-500" : "border-slate-300"
                     }`}
                   />
@@ -124,7 +124,7 @@ export default function AddDeliveryman() {
                     value={formData.lastName}
                     onChange={(e) => handleInputChange("lastName", e.target.value)}
                     placeholder="Ex: Joe"
-                    className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm ${
+                    className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-sm ${
                       formErrors.lastName ? "border-red-500" : "border-slate-300"
                     }`}
                   />
@@ -140,7 +140,7 @@ export default function AddDeliveryman() {
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
                     placeholder="Ex: ex@example.com"
-                    className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm ${
+                    className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-sm ${
                       formErrors.email ? "border-red-500" : "border-slate-300"
                     }`}
                   />
@@ -154,7 +154,7 @@ export default function AddDeliveryman() {
                   <select
                     value={formData.deliverymanType}
                     onChange={(e) => handleInputChange("deliverymanType", e.target.value)}
-                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                   >
                     <option value="">Delivery man type</option>
                     <option value="full-time">Full Time</option>
@@ -169,7 +169,7 @@ export default function AddDeliveryman() {
                   <select
                     value={formData.zone}
                     onChange={(e) => handleInputChange("zone", e.target.value)}
-                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                   >
                     <option value="">Select Zone</option>
                     <option value="asia">Asia</option>
@@ -181,9 +181,9 @@ export default function AddDeliveryman() {
                   <label className="block text-sm font-semibold text-slate-700 mb-2">
                     Image <span className="text-red-500">*</span>
                   </label>
-                  <div className="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center hover:border-blue-500 transition-colors cursor-pointer">
+                  <div className="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center hover:border-primary transition-colors cursor-pointer">
                     <Upload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                    <p className="text-sm font-medium text-blue-600 mb-1">Click to upload Or drag and drop</p>
+                    <p className="text-sm font-medium text-primary mb-1">Click to upload Or drag and drop</p>
                     <p className="text-xs text-slate-500">JPG, JPEG, PNG, Gif Image size: Max 2 MB (1:1)</p>
                   </div>
                 </div>
@@ -201,7 +201,7 @@ export default function AddDeliveryman() {
                   <select
                     value={formData.vehicle}
                     onChange={(e) => handleInputChange("vehicle", e.target.value)}
-                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                   >
                     <option value="">Select Vehicle</option>
                     <option value="car">Car</option>
@@ -216,7 +216,7 @@ export default function AddDeliveryman() {
                   <select
                     value={formData.identityType}
                     onChange={(e) => handleInputChange("identityType", e.target.value)}
-                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                   >
                     <option value="Passport">Passport</option>
                     <option value="Driving License">Driving License</option>
@@ -233,7 +233,7 @@ export default function AddDeliveryman() {
                     value={formData.identityNumber}
                     onChange={(e) => handleInputChange("identityNumber", e.target.value)}
                     placeholder="Ex: DH-23434-LS"
-                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                   />
                 </div>
 
@@ -241,9 +241,9 @@ export default function AddDeliveryman() {
                   <label className="block text-sm font-semibold text-slate-700 mb-2">
                     Identity Image
                   </label>
-                  <div className="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center hover:border-blue-500 transition-colors cursor-pointer">
+                  <div className="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center hover:border-primary transition-colors cursor-pointer">
                     <Upload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                    <p className="text-sm font-medium text-blue-600 mb-1">Select a file or Drag & Drop here</p>
+                    <p className="text-sm font-medium text-primary mb-1">Select a file or Drag & Drop here</p>
                     <p className="text-xs text-slate-500">Pdf, doc, jpg. File size: max 2 MB</p>
                   </div>
                 </div>
@@ -263,7 +263,7 @@ export default function AddDeliveryman() {
                     value={formData.age}
                     onChange={(e) => handleInputChange("age", e.target.value)}
                     placeholder="Enter Age"
-                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                   />
                 </div>
 
@@ -276,7 +276,7 @@ export default function AddDeliveryman() {
                       type="date"
                       value={formData.birthdate}
                       onChange={(e) => handleInputChange("birthdate", e.target.value)}
-                      className="w-full px-4 py-2.5 pr-10 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                      className="w-full px-4 py-2.5 pr-10 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                     />
                     <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                   </div>
@@ -290,7 +290,7 @@ export default function AddDeliveryman() {
                     <div className="relative flex-1">
                       <input
                         type="file"
-                        className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                        className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                       />
                     </div>
                   </div>
@@ -315,7 +315,7 @@ export default function AddDeliveryman() {
                       value={formData.phone.replace("+1", "")}
                       onChange={(e) => handleInputChange("phone", "+1" + e.target.value)}
                       placeholder="Enter phone number"
-                      className="flex-1 px-4 py-2.5 border border-slate-300 border-l-0 rounded-r-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                      className="flex-1 px-4 py-2.5 border border-slate-300 border-l-0 rounded-r-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                     />
                   </div>
                 </div>
@@ -330,7 +330,7 @@ export default function AddDeliveryman() {
                       value={formData.password}
                       onChange={(e) => handleInputChange("password", e.target.value)}
                       placeholder="Ex: 8+ Character"
-                      className="w-full px-4 py-2.5 pr-10 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                      className="w-full px-4 py-2.5 pr-10 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                     />
                     <button
                       type="button"
@@ -352,7 +352,7 @@ export default function AddDeliveryman() {
                       value={formData.confirmPassword}
                       onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
                       placeholder="Ex: 8+ Character"
-                      className="w-full px-4 py-2.5 pr-10 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                      className="w-full px-4 py-2.5 pr-10 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                     />
                     <button
                       type="button"
@@ -377,7 +377,7 @@ export default function AddDeliveryman() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-6 py-2.5 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary/90 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? "Submitting..." : "Submit"}
               </button>

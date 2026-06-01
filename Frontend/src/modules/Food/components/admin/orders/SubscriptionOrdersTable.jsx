@@ -176,7 +176,7 @@ export default function SubscriptionOrdersTable({ orders, visibleColumns, onView
                       </button>
                       <button 
                         onClick={() => onPrintOrder(order)}
-                        className="p-1.5 rounded text-blue-600 hover:bg-blue-50 transition-colors"
+                        className="p-1.5 rounded text-primary hover:bg-blue-50 transition-colors"
                         title="Print Order"
                       >
                         <Printer className="w-4 h-4" />

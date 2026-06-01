@@ -80,7 +80,7 @@ export default function ReactRegistration() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   activeTab === tab.id
-                    ? "bg-blue-600 text-white"
+                    ? "bg-primary text-white"
                     : "text-slate-600 hover:bg-slate-100"
                 }`}
               >
@@ -113,7 +113,7 @@ export default function ReactRegistration() {
                   </button>
                 </div>
               ) : (
-                <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-slate-300 rounded-lg cursor-pointer hover:border-blue-500 transition-colors bg-slate-50">
+                <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-slate-300 rounded-lg cursor-pointer hover:border-primary transition-colors bg-slate-50">
                   <div className="flex flex-col items-center justify-center pt-5 pb-6">
                     <Upload className="w-10 h-10 text-slate-400 mb-3" />
                     <p className="text-sm font-medium text-slate-700 mb-1">Upload Image</p>
@@ -163,7 +163,7 @@ export default function ReactRegistration() {
                           setSteeperSteps(updated)
                         }}
                         placeholder={`Enter step ${step.id} title`}
-                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                       />
                     </div>
                     <div>
@@ -180,7 +180,7 @@ export default function ReactRegistration() {
                           setSteeperSteps(updated)
                         }}
                         placeholder={`Enter step ${step.id} description`}
-                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                       />
                     </div>
                   </div>
@@ -217,7 +217,7 @@ export default function ReactRegistration() {
                           setOpportunities(updated)
                         }}
                         placeholder="Enter opportunity title"
-                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                       />
                     </div>
                     <div>
@@ -234,7 +234,7 @@ export default function ReactRegistration() {
                           setOpportunities(updated)
                         }}
                         placeholder="Enter opportunity description"
-                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                       />
                     </div>
                     <div>
@@ -263,7 +263,7 @@ export default function ReactRegistration() {
                           </div>
                         ) : (
                           <label className="cursor-pointer">
-                            <div className="w-24 h-24 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center hover:border-blue-500 transition-colors">
+                            <div className="w-24 h-24 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center hover:border-primary transition-colors">
                               <Upload className="w-6 h-6 text-slate-400" />
                             </div>
                             <input
@@ -295,7 +295,7 @@ export default function ReactRegistration() {
                 onClick={() => {
                   setOpportunities([...opportunities, { id: opportunities.length + 1, title: "", description: "", icon: null }])
                 }}
-                className="w-full py-2 border-2 border-dashed border-slate-300 rounded-lg text-slate-600 hover:border-blue-500 hover:text-blue-600 transition-colors flex items-center justify-center gap-2"
+                className="w-full py-2 border-2 border-dashed border-slate-300 rounded-lg text-slate-600 hover:border-primary hover:text-primary transition-colors flex items-center justify-center gap-2"
               >
                 <Plus className="w-4 h-4" />
                 Add New Opportunity
@@ -331,7 +331,7 @@ export default function ReactRegistration() {
                           setFaqs(updated)
                         }}
                         placeholder="Enter question"
-                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                       />
                     </div>
                     <div>
@@ -348,7 +348,7 @@ export default function ReactRegistration() {
                           setFaqs(updated)
                         }}
                         placeholder="Enter answer"
-                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                       />
                     </div>
                   </div>
@@ -359,7 +359,7 @@ export default function ReactRegistration() {
                 onClick={() => {
                   setFaqs([...faqs, { id: faqs.length + 1, question: "", answer: "" }])
                 }}
-                className="w-full py-2 border-2 border-dashed border-slate-300 rounded-lg text-slate-600 hover:border-blue-500 hover:text-blue-600 transition-colors flex items-center justify-center gap-2"
+                className="w-full py-2 border-2 border-dashed border-slate-300 rounded-lg text-slate-600 hover:border-primary hover:text-primary transition-colors flex items-center justify-center gap-2"
               >
                 <Plus className="w-4 h-4" />
                 Add New FAQ
@@ -381,7 +381,7 @@ export default function ReactRegistration() {
           <button
             type="button"
             onClick={handleSubmit}
-            className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center gap-2"
+            className="px-6 py-2.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium flex items-center gap-2"
           >
             <Save className="w-4 h-4" />
             Save

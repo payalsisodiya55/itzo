@@ -511,7 +511,7 @@ export default function Category() {
             {canCreate && (
               <button
                 onClick={handleAddNew}
-                className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-medium text-white"
+                className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-white"
               >
                 <Plus className="h-4 w-4" />
                 Add Category
@@ -539,7 +539,7 @@ export default function Category() {
               {loading ? (
                 <tr>
                   <td colSpan={7} className="px-6 py-20 text-center">
-                    <Loader2 className="mx-auto h-8 w-8 animate-spin text-blue-600" />
+                    <Loader2 className="mx-auto h-8 w-8 animate-spin text-primary" />
                     <p className="mt-2 text-sm text-slate-500">Loading categories...</p>
                   </td>
                 </tr>
@@ -610,7 +610,7 @@ export default function Category() {
                         <button
                           onClick={() => handleToggleStatus(category.id)}
                           disabled={!canEdit}
-                          className={`relative inline-flex h-6 w-11 items-center rounded-full ${category?.status ? "bg-blue-600" : "bg-slate-300"} ${!canEdit ? "opacity-50 cursor-not-allowed" : ""}`}
+                          className={`relative inline-flex h-6 w-11 items-center rounded-full ${category?.status ? "bg-primary" : "bg-slate-300"} ${!canEdit ? "opacity-50 cursor-not-allowed" : ""}`}
                           title={category?.status ? "Deactivate" : "Activate"}
                         >
                           <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${category?.status ? "translate-x-6" : "translate-x-1"}`} />
@@ -659,7 +659,7 @@ export default function Category() {
                             {canEdit && (
                               <button
                                 onClick={() => handleEdit(category)}
-                                className="rounded-lg p-2 text-blue-600 hover:bg-blue-50"
+                                className="rounded-lg p-2 text-primary hover:bg-blue-50"
                                 title="Edit"
                               >
                                 <Pencil className="h-4 w-4" />
@@ -798,7 +798,7 @@ export default function Category() {
                                 <Upload className="h-4 w-4" />
                                 {imagePreview ? "Change Image" : "Upload Image"}
                               </label>
-                              {uploadingImage && <Loader2 className="h-5 w-5 animate-spin text-blue-600" />}
+                              {uploadingImage && <Loader2 className="h-5 w-5 animate-spin text-primary" />}
                             </div>
                           </div>
                         </div>
@@ -824,7 +824,7 @@ export default function Category() {
                         </button>
                         <button
                           type="submit"
-                          className="flex-1 rounded-xl bg-blue-600 px-4 py-3 text-white"
+                          className="flex-1 rounded-xl bg-primary px-4 py-3 text-white"
                         >
                           {editingCategory ? "Update" : "Create"}
                         </button>

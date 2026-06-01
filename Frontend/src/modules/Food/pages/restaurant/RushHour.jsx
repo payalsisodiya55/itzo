@@ -121,7 +121,7 @@ export default function RushHour() {
       <div className="px-4 pb-6 pt-4 bg-white border-t border-gray-200">
         <button
           onClick={handleConfirm}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+          className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
         >
           Confirm
         </button>

@@ -326,7 +326,7 @@ function TimePickerWheel({
           <div className="border-t border-gray-200 px-4 py-4 flex justify-center">
             <button
               onClick={handleConfirm}
-              className="text-blue-600 hover:text-blue-700 font-medium text-base transition-colors"
+              className="text-primary hover:text-blue-700 font-medium text-base transition-colors"
             >
               Okay
             </button>
@@ -1116,7 +1116,7 @@ export default function ExploreMore() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     autoFocus
-                    className="w-full px-4 py-2 pr-10 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-500"
+                    className="w-full px-4 py-2 pr-10 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 placeholder-gray-500"
                   />
                   {searchQuery && (
                     <button

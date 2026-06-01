@@ -9,7 +9,7 @@ export const ActionSlider = ({
   label = "Slide to Confirm", 
   onConfirm, 
   disabled = false,
-  color = "bg-green-600",
+  color = "bg-primary",
   successLabel = "Confirmed ✓"
 }) => {
   const [progress, setProgress] = useState(0);
@@ -60,20 +60,18 @@ export const ActionSlider = ({
   return (
     <div 
       ref={containerRef}
-      className={`relative w-full h-[68px] rounded-full p-1.5 overflow-hidden transition-all duration-300 ${
-        'bg-gray-950 shadow-lg shadow-black/10'
-      }`}
+      className={`relative w-full h-[68px] rounded-full p-1.5 overflow-hidden transition-all duration-300 bg-[#FE5502] shadow-lg shadow-[#FE5502]/20`}
     >
       {/* Background Track */}
       <div className={`absolute inset-y-0 left-[76px] right-5 flex items-center justify-center text-center font-bold text-[11px] uppercase tracking-[0.14em] leading-none whitespace-nowrap transition-opacity duration-300 ${
-        isSuccess ? 'opacity-0' : disabled ? 'text-white/70' : 'text-white/88'
+        isSuccess ? 'opacity-0' : disabled ? 'text-primary-foreground/70' : 'text-primary-foreground/90'
       }`}>
         {disabled ? 'Action Locked' : label}
       </div>
 
       {/* Dynamic Progress Fill */}
       <motion.div 
-        className={`absolute inset-0 ${color} rounded-full`}
+        className={`absolute inset-0 bg-black/10 rounded-full`}
         initial={{ width: 0 }}
         animate={{ 
           width: isSuccess ? '100%' : `${progress * 100}%`,
@@ -106,7 +104,7 @@ export const ActionSlider = ({
         animate={controls}
         className={`relative w-14 h-14 rounded-full flex items-center justify-center z-20 cursor-grab active:cursor-grabbing shadow-xl transition-colors ${
           disabled ? 'bg-gray-200 text-gray-400' : 
-          isSuccess ? 'bg-white text-green-600' : 'bg-white text-gray-950'
+          isSuccess ? 'bg-white text-[#FE5502]' : 'bg-white text-[#FE5502]'
         }`}
       >
         <ChevronRight className={`w-8 h-8 transition-transform duration-300 ${isSuccess ? 'scale-110' : ''}`} />

@@ -113,7 +113,7 @@ const Dashboard = () => {
       changeType: "increase",
       icon: ShoppingBag,
       iconBg: "bg-blue-50",
-      iconColor: "text-blue-600",
+      iconColor: "text-primary",
       description: "vs last month",
     },
     {

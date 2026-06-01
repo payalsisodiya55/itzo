@@ -103,7 +103,7 @@ export default function TermsAndCondition() {
                 onClick={() => setRole(r.id)}
                 className={`px-4 py-2 text-sm font-bold rounded-lg transition-all ${
                   role === r.id 
-                    ? "bg-white text-blue-600 shadow-sm" 
+                    ? "bg-white text-primary shadow-sm" 
                     : "text-slate-600 hover:text-slate-900"
                 }`}
               >
@@ -115,7 +115,7 @@ export default function TermsAndCondition() {
 
         {loading ? (
           <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-20 flex flex-col items-center justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             <p className="mt-4 text-slate-600 font-medium">Loading {role} terms...</p>
           </div>
         ) : (
@@ -124,7 +124,7 @@ export default function TermsAndCondition() {
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
               <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
                 <div className="text-sm text-slate-500 italic">
-                  Editing terms for <span className="font-bold text-blue-600 capitalize">{role}</span>
+                  Editing terms for <span className="font-bold text-primary capitalize">{role}</span>
                 </div>
                 <div className="inline-flex rounded-xl bg-slate-100 p-1">
                   <button

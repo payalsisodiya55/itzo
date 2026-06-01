@@ -132,7 +132,7 @@ export default function JoinUsPageSetup() {
               onClick={() => setActiveTab("restaurant")}
               className={`px-4 py-2 rounded-lg text-xs font-medium transition-colors border-b-2 ${
                 activeTab === "restaurant"
-                  ? "border-blue-600 text-blue-600"
+                  ? "border-primary text-primary"
                   : "border-transparent text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -142,7 +142,7 @@ export default function JoinUsPageSetup() {
               onClick={() => setActiveTab("deliveryman")}
               className={`px-4 py-2 rounded-lg text-xs font-medium transition-colors border-b-2 ${
                 activeTab === "deliveryman"
-                  ? "border-blue-600 text-blue-600"
+                  ? "border-primary text-primary"
                   : "border-transparent text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -175,7 +175,7 @@ export default function JoinUsPageSetup() {
               <button
                 type="button"
                 onClick={handleAddField}
-                className="px-3 py-1.5 text-xs font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-1"
+                className="px-3 py-1.5 text-xs font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-1"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Add New Field</span>
@@ -198,7 +198,7 @@ export default function JoinUsPageSetup() {
                         <select
                           value={field.type}
                           onChange={(e) => handleFieldChange(field.id, "type", e.target.value)}
-                          className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none cursor-pointer"
+                          className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary appearance-none cursor-pointer"
                         >
                           {fieldTypes.map((type) => (
                             <option key={type} value={type}>{type}</option>
@@ -218,7 +218,7 @@ export default function JoinUsPageSetup() {
                         value={field.title}
                         onChange={(e) => handleFieldChange(field.id, "title", e.target.value)}
                         placeholder="Enter field title"
-                        className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                       />
                     </div>
 
@@ -233,7 +233,7 @@ export default function JoinUsPageSetup() {
                           value={field.placeholder}
                           onChange={(e) => handleFieldChange(field.id, "placeholder", e.target.value)}
                           placeholder="Enter placeholder"
-                          className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                         />
                       </div>
                     )}
@@ -247,7 +247,7 @@ export default function JoinUsPageSetup() {
                           type="checkbox"
                           checked={field.uploadMultiple}
                           onChange={(e) => handleFieldChange(field.id, "uploadMultiple", e.target.checked)}
-                          className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                          className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary"
                         />
                         <label className="text-xs text-slate-700">Upload Multiple Files</label>
                       </div>
@@ -261,7 +261,7 @@ export default function JoinUsPageSetup() {
                               type="checkbox"
                               checked={field.fileFormats.jpg}
                               onChange={() => handleFileFormatChange(field.id, "jpg")}
-                              className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                              className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary"
                             />
                             <label className="text-xs text-slate-700">JPG JPEG or PNG</label>
                           </div>
@@ -270,7 +270,7 @@ export default function JoinUsPageSetup() {
                               type="checkbox"
                               checked={field.fileFormats.pdf}
                               onChange={() => handleFileFormatChange(field.id, "pdf")}
-                              className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                              className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary"
                             />
                             <label className="text-xs text-slate-700">PDF</label>
                           </div>
@@ -279,7 +279,7 @@ export default function JoinUsPageSetup() {
                               type="checkbox"
                               checked={field.fileFormats.docs}
                               onChange={() => handleFileFormatChange(field.id, "docs")}
-                              className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                              className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary"
                             />
                             <label className="text-xs text-slate-700">DOCS</label>
                           </div>
@@ -295,7 +295,7 @@ export default function JoinUsPageSetup() {
                         type="checkbox"
                         checked={field.isRequired}
                         onChange={(e) => handleFieldChange(field.id, "isRequired", e.target.checked)}
-                        className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                        className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary"
                       />
                       <label className="text-xs text-slate-700">Is Required ?</label>
                     </div>
@@ -323,7 +323,7 @@ export default function JoinUsPageSetup() {
             </button>
             <button
               type="submit"
-              className="px-4 py-2 text-xs font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-4 py-2 text-xs font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
             >
               Submit
             </button>

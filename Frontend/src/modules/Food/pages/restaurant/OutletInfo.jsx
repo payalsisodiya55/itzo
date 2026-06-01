@@ -749,7 +749,7 @@ export default function OutletInfo() {
             <Button 
               onClick={handleSavePhone} 
               disabled={!editPhoneValue.trim() || editPhoneValue.length !== 10} 
-              className="bg-blue-600 text-white"
+              className="bg-primary text-white"
             >
               Save
             </Button>

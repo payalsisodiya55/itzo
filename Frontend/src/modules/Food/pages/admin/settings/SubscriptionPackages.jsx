@@ -109,7 +109,7 @@ export default function SubscriptionPackages() {
                   onClick={() => setActiveFilter(label)}
                   className={`px-3 py-1 rounded-full font-semibold border text-xs transition-all ${
                     active
-                      ? "bg-blue-600 text-white border-blue-600"
+                      ? "bg-primary text-white border-primary"
                       : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
                   }`}
                 >
@@ -152,7 +152,7 @@ export default function SubscriptionPackages() {
                 placeholder="Search by name"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-8 pr-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full pl-8 pr-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
               <Search className="w-4 h-4 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
             </div>
@@ -194,7 +194,7 @@ export default function SubscriptionPackages() {
             >
               <Settings className="w-5 h-5" />
             </button>
-            <button className="inline-flex items-center gap-1 px-4 py-2.5 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-md">
+            <button className="inline-flex items-center gap-1 px-4 py-2.5 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-md">
               <Plus className="w-4 h-4" />
               <span>Add Subscription Package</span>
             </button>
@@ -305,10 +305,10 @@ export default function SubscriptionPackages() {
                     {visibleColumns.actions && (
                       <td className="px-6 py-4 whitespace-nowrap text-center">
                         <div className="flex items-center justify-center gap-2">
-                          <button className="p-1.5 rounded text-blue-600 hover:bg-blue-50 transition-colors" title="View">
+                          <button className="p-1.5 rounded text-primary hover:bg-primary/10 transition-colors" title="View">
                             <Eye className="w-4 h-4" />
                           </button>
-                          <button className="p-1.5 rounded text-blue-600 hover:bg-blue-50 transition-colors" title="Edit">
+                          <button className="p-1.5 rounded text-primary hover:bg-primary/10 transition-colors" title="Edit">
                             <Edit3 className="w-4 h-4" />
                           </button>
                         </div>
@@ -402,7 +402,7 @@ function ToggleSwitch({ enabled, onToggle }) {
       onClick={onToggle}
       className={`inline-flex items-center w-11 h-6 rounded-full border transition-all ${
         enabled
-          ? "bg-blue-600 border-blue-600 justify-end"
+          ? "bg-primary border-primary justify-end"
           : "bg-slate-200 border-slate-300 justify-start"
       }`}
     >

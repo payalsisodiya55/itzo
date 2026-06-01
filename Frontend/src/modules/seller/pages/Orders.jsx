@@ -338,7 +338,7 @@ const Orders = () => {
         value: safeOrders.filter((o) => o.status.toLowerCase() === "confirmed")
           .length,
         icon: HiOutlineCheck,
-        color: "text-blue-600",
+        color: "text-primary",
         bg: "bg-blue-50",
       },
       {
@@ -808,7 +808,7 @@ const Orders = () => {
                               {canResendDispatch(order) && (
                                 <button
                                   onClick={() => handleResendDispatch(order.id)}
-                                  className="px-2.5 py-1.5 rounded-lg bg-blue-50 text-blue-700 text-[10px] font-black uppercase tracking-wider">
+                                  className="px-2.5 py-1.5 rounded-lg bg-primary text-primary-foreground shadow-lg shadow-primary/20 text-[10px] font-black uppercase tracking-wider">
                                   Resend Rider
                                 </button>
                               )}
@@ -946,7 +946,7 @@ const Orders = () => {
                                     onClick={() =>
                                       handleResendDispatch(order.id)
                                     }
-                                    className="px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-all text-[10px] font-black uppercase tracking-wider">
+                                    className="px-3 py-1.5 rounded-lg bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all text-[10px] font-black uppercase tracking-wider">
                                     Resend Rider
                                   </button>
                                 )}
@@ -965,7 +965,7 @@ const Orders = () => {
                                           "Processing",
                                         );
                                       }}
-                                      className="p-1.5 hover:bg-emerald-50 hover:text-emerald-600 rounded-lg transition-all text-slate-600 shadow-sm ring-1 ring-slate-100">
+                                      className="p-1.5 hover:bg-primary/10 hover:text-primary rounded-lg transition-all text-slate-600 shadow-sm ring-1 ring-slate-100">
                                       <HiOutlineCheck className="h-4 w-4" />
                                     </button>
                                     <button
@@ -1364,7 +1364,7 @@ const Orders = () => {
                       {canResendDispatch(selectedOrder) && (
                         <button
                           onClick={() => handleResendDispatch(selectedOrder.id)}
-                          className="px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider text-blue-700 bg-blue-50 hover:bg-blue-100 transition-all">
+                          className="px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider text-primary-foreground bg-primary shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
                           Resend Rider
                         </button>
                       )}

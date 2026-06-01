@@ -163,7 +163,7 @@ export default function Report() {
                   type="date"
                   value={filters.startDate}
                   onChange={(e) => handleFilterChange("startDate", e.target.value)}
-                  className="w-full px-4 py-2.5 pr-10 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  className="w-full px-4 py-2.5 pr-10 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                 />
                 <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
               </div>
@@ -178,7 +178,7 @@ export default function Report() {
                   type="date"
                   value={filters.endDate}
                   onChange={(e) => handleFilterChange("endDate", e.target.value)}
-                  className="w-full px-4 py-2.5 pr-10 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  className="w-full px-4 py-2.5 pr-10 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                 />
                 <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
               </div>
@@ -191,7 +191,7 @@ export default function Report() {
               <select
                 value={filters.customer}
                 onChange={(e) => handleFilterChange("customer", e.target.value)}
-                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
               >
                 <option value="All">All</option>
                 <option value="jane-doe">Jane Doe</option>
@@ -208,7 +208,7 @@ export default function Report() {
               </button>
               <button 
                 onClick={() => {}} 
-                className={`px-6 py-2.5 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all flex items-center gap-2 relative ${activeFiltersCount > 0 ? "ring-2 ring-blue-300" : ""}`}
+                className={`px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary/90 transition-all flex items-center gap-2 relative ${activeFiltersCount > 0 ? "ring-2 ring-blue-300" : ""}`}
               >
                 <Filter className="w-4 h-4" />
                 Filter

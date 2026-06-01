@@ -197,7 +197,7 @@ export default function DeliverySignIn() {
         </div>
 
         {/* DELIVERY Badge */}
-        <div className="bg-black px-6 py-2 rounded mt-2">
+        <div className="bg-primary px-6 py-2 rounded mt-2">
           <span className="text-white font-semibold text-sm uppercase tracking-wide">
             DELIVERY
           </span>
@@ -262,7 +262,7 @@ export default function DeliverySignIn() {
             onClick={handleSendOTP}
             disabled={!isValid || isSending}
             className={`w-full py-4 rounded-lg font-bold text-base transition-colors ${isValid && !isSending
-              ? "bg-[#00B761] hover:bg-[#00A055] active:bg-[#009049] text-white"
+              ? "bg-primary hover:bg-primary/90 active:bg-primary/80 text-primary-foreground"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
               }`}
           >
@@ -272,7 +272,7 @@ export default function DeliverySignIn() {
           {/* Terms and Conditions */}
           <p className="text-xs text-center text-gray-600 px-4">
             By continuing, you agree to our{" "}
-            <Link to="/food/delivery/terms" className="text-blue-600 hover:underline">
+            <Link to="/food/delivery/terms" className="text-primary hover:underline">
               Terms and Conditions
             </Link>
           </p>

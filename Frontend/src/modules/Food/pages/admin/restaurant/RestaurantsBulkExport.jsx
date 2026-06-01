@@ -56,7 +56,7 @@ export default function RestaurantsBulkExport() {
         </button>
         <button
           onClick={handleExport}
-          className="px-6 py-2.5 text-sm font-medium rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-all flex items-center gap-2 shadow-md"
+          className="px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary transition-all flex items-center gap-2 shadow-md"
         >
           <Download className="w-4 h-4" />
           Export

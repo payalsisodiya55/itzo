@@ -1216,7 +1216,7 @@ export default function ItemDetailsPage() {
                 value={itemName}
                 onChange={(e) => setItemName(e.target.value)}
                 maxLength={maxNameLength}
-                className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 placeholder="Enter item name"
               />
               <button className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-gray-100">
@@ -1243,7 +1243,7 @@ export default function ItemDetailsPage() {
                 maxLength={maxDescriptionLength}
                 rows={4}
                 placeholder="Eg: Yummy veg paneer burger with a soft patty, veggies, cheese, and special sauce"
-                className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
               />
               <button className="absolute right-3 top-3 p-1 rounded-full hover:bg-gray-100">
                 <EditIcon className="w-4 h-4 text-gray-500" />
@@ -1312,7 +1312,7 @@ export default function ItemDetailsPage() {
                           }
                         }}
                         placeholder="Enter price"
-                        className="w-full pl-8 pr-12 py-3 border border-gray-300 rounded-lg text-sm text-gray-900 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full pl-8 pr-12 py-3 border border-gray-300 rounded-lg text-sm text-gray-900 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                       />
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-600">{"\u20B9"}</span>
                       <button className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-gray-100">
@@ -1336,7 +1336,7 @@ export default function ItemDetailsPage() {
                           setOtherPrice(cleanedValue)
                         }}
                         placeholder="Enter other platform price"
-                        className="w-full pl-8 pr-12 py-3 border border-gray-300 rounded-lg text-sm text-gray-900 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full pl-8 pr-12 py-3 border border-gray-300 rounded-lg text-sm text-gray-900 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                       />
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-600">{"\u20B9"}</span>
                     </div>
@@ -1376,7 +1376,7 @@ export default function ItemDetailsPage() {
                               value={variant.name}
                               onChange={(e) => handleVariantChange(variant.localId, "name", e.target.value)}
                               placeholder={index === 0 ? "Full" : "Half"}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                             />
                           </div>
                           <div>
@@ -1394,7 +1394,7 @@ export default function ItemDetailsPage() {
                                   handleVariantChange(variant.localId, "price", cleanedValue)
                                 }}
                                 placeholder="Price"
-                                className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                               />
                               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-600">{"\u20B9"}</span>
                             </div>
@@ -1414,7 +1414,7 @@ export default function ItemDetailsPage() {
                                   handleVariantChange(variant.localId, "otherPrice", cleanedValue)
                                 }}
                                 placeholder="Other"
-                                className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                               />
                               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-600">{"\u20B9"}</span>
                             </div>
@@ -1443,7 +1443,7 @@ export default function ItemDetailsPage() {
                   <select
                     value={preparationTime}
                     onChange={(e) => setPreparationTime(e.target.value)}
-                    className="w-full pl-4 pr-10 py-3 border border-gray-300 rounded-lg text-sm text-gray-900 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
+                    className="w-full pl-4 pr-10 py-3 border border-gray-300 rounded-lg text-sm text-gray-900 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent appearance-none"
                   >
                     <option value="">Select timing</option>
                     <option value="10-20 mins">10-20 mins</option>

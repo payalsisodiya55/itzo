@@ -261,7 +261,7 @@ export default function RoleList() {
                             </p>
                             {role.isDefault && (
                               <div className="flex items-center gap-1.5 mt-1.5">
-                                 <div className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
+                                 <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
                                  <span className="text-[9px] font-black text-blue-500 uppercase tracking-widest">SYSTEM CORE</span>
                               </div>
                             )}

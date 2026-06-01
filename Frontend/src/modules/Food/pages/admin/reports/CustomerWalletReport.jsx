@@ -126,7 +126,7 @@ export default function CustomerWalletReport() {
     return (
       <div className="p-4 lg:p-6 bg-slate-50 min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+          <Loader2 className="w-8 h-8 text-primary animate-spin" />
           <p className="text-gray-600">Loading customer wallet report...</p>
         </div>
       </div>
@@ -139,7 +139,7 @@ export default function CustomerWalletReport() {
         {/* Page Header */}
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
               <Wallet className="w-5 h-5 text-white" />
             </div>
             <h1 className="text-2xl font-bold text-slate-900">Customer Wallet Report</h1>
@@ -171,7 +171,7 @@ export default function CustomerWalletReport() {
                       type="date"
                       value={filters.fromDate}
                       onChange={(e) => setFilters(prev => ({ ...prev, fromDate: e.target.value }))}
-                      className="w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                       placeholder="dd-mm-yyyy"
                     />
                   </div>
@@ -187,7 +187,7 @@ export default function CustomerWalletReport() {
                       type="date"
                       value={filters.toDate}
                       onChange={(e) => setFilters(prev => ({ ...prev, toDate: e.target.value }))}
-                      className="w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                       placeholder="dd-mm-yyyy"
                     />
                   </div>
@@ -202,7 +202,7 @@ export default function CustomerWalletReport() {
                   <select
                     value={filters.all}
                     onChange={(e) => setFilters(prev => ({ ...prev, all: e.target.value }))}
-                    className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
                   >
                     <option value="All">All</option>
                     <option value="Credit">Credit</option>
@@ -218,7 +218,7 @@ export default function CustomerWalletReport() {
                   <select
                     value={filters.customer}
                     onChange={(e) => setFilters(prev => ({ ...prev, customer: e.target.value }))}
-                    className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
                   >
                     <option value="Select Customer">Select Customer</option>
                     {customers.map(customer => (
@@ -232,14 +232,14 @@ export default function CustomerWalletReport() {
               <div className="flex items-center justify-end gap-3">
                 <button
                   onClick={handleReset}
-                  className="px-6 py-2.5 text-sm font-medium rounded-lg border border-blue-500 text-blue-600 bg-white hover:bg-blue-50 transition-all flex items-center gap-2"
+                  className="px-6 py-2.5 text-sm font-medium rounded-lg border border-primary text-primary bg-white hover:bg-blue-50 transition-all flex items-center gap-2"
                 >
                   <RefreshCw className="w-4 h-4" />
                   Reset
                 </button>
                 <button 
                   onClick={handleFilterApply}
-                  className={`px-6 py-2.5 text-sm font-medium rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-all flex items-center gap-2 relative ${
+                  className={`px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary transition-all flex items-center gap-2 relative ${
                     activeFiltersCount > 0 ? "ring-2 ring-blue-300" : ""
                   }`}
                 >
@@ -396,7 +396,7 @@ export default function CustomerWalletReport() {
                       <td className="px-4 py-3 whitespace-nowrap">
                         <a
                           href={`#customer-${transaction.customer}`}
-                          className="text-xs text-blue-600 hover:text-blue-800 hover:underline"
+                          className="text-xs text-primary hover:text-blue-800 hover:underline"
                         >
                           {transaction.customer}
                         </a>

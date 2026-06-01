@@ -301,7 +301,7 @@ export default function RestaurantProfile({ isOpen, onClose }) {
                     }}
                     className="absolute -bottom-1 -right-1 p-1.5 bg-white rounded-full shadow-md border border-gray-100 hover:bg-gray-50 transition-colors"
                   >
-                    <Edit className="w-4 h-4 text-blue-600" />
+                    <Edit className="w-4 h-4 text-primary" />
                   </button>
                 </div>
 

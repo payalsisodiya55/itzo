@@ -2196,7 +2196,7 @@ export default function OrdersMain() {
                   <button
                     onClick={handleReverify}
                     disabled={isReverifying}
-                    className="w-full px-6 py-2.5 bg-blue-600 text-white rounded-lg font-semibold text-sm hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                    className="w-full px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-semibold text-sm hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                     {isReverifying ? (
                       <>
                         <Loader2 className="w-4 h-4 animate-spin" />
@@ -2512,9 +2512,9 @@ export default function OrdersMain() {
                   <div className="space-y-3">
                     <div
                       ref={acceptSliderRef}
-                      className="relative h-14 rounded-2xl bg-gray-900 overflow-hidden select-none touch-pan-y">
+                      className="relative h-14 rounded-2xl bg-gray-900 overflow-hidden select-none touch-pan-y shadow-inner">
                       <motion.div
-                        className="absolute inset-y-0 left-0 bg-blue-600"
+                        className="absolute inset-y-0 left-0 bg-[#FE5502]"
                         initial={{ width: "100%" }}
                         animate={{ width: `${(countdown / 240) * 100}%` }}
                         transition={{ duration: 1, ease: "linear" }}
@@ -2610,7 +2610,7 @@ export default function OrdersMain() {
                         onClick={() => setRejectReason(reason)}
                         className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
                           rejectReason === reason
-                            ? "border-black bg-black/5"
+                            ? "border-primary bg-primary/5"
                             : "border-gray-200 bg-white hover:border-gray-300"
                         }`}>
                         <div className="flex items-center justify-between">
@@ -2623,7 +2623,7 @@ export default function OrdersMain() {
                             {reason}
                           </span>
                           {rejectReason === reason && (
-                            <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center">
+                            <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
                               <svg
                                 className="w-3 h-3 text-white"
                                 fill="none"
@@ -2656,7 +2656,7 @@ export default function OrdersMain() {
                     disabled={!rejectReason}
                     className={`flex-1 py-3 rounded-lg font-semibold text-sm transition-colors ${
                       rejectReason
-                        ? "!bg-black !text-white"
+                        ? "!bg-primary !text-primary-foreground"
                         : "bg-gray-200 text-gray-400 cursor-not-allowed"
                     }`}>
                     Confirm Rejection
@@ -2875,7 +2875,7 @@ export default function OrdersMain() {
               </div>
 
               <button
-                className="w-full bg-black text-white py-2.5 rounded-xl text-sm font-medium"
+                className="w-full bg-primary text-primary-foreground py-2.5 rounded-xl text-sm font-medium"
                 onClick={() => setIsSheetOpen(false)}>
                 Close
               </button>
@@ -3804,7 +3804,7 @@ function EmptyState({ message = "Temporarily closed" }) {
       </h2>
 
       {/* View Status Button */}
-      <button className="bg-black text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors">
+      <button className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors">
         View status
       </button>
     </div>

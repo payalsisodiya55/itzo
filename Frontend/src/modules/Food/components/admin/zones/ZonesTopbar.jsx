@@ -37,7 +37,7 @@ export default function ZonesTopbar({
               placeholder="Search by name"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-7 pr-2 py-1.5 w-full text-[11px] rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="pl-7 pr-2 py-1.5 w-full text-[11px] rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
             />
             <button className="absolute left-2 top-1/2 -translate-y-1/2 p-1 rounded-md hover:bg-slate-100">
               <Search className="w-3 h-3 text-slate-400" />
@@ -45,7 +45,7 @@ export default function ZonesTopbar({
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="px-2.5 py-1.5 text-[11px] font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-1 transition-all">
+              <button className="px-2.5 py-1.5 text-[11px] font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-1 transition-all">
                 <Download className="w-3 h-3" />
                 <span>Export</span>
                 <ChevronDown className="w-2.5 h-2.5" />

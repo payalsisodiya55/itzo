@@ -439,7 +439,7 @@ export default function OrderDetectDelivery() {
               <p className="text-2xl font-bold text-slate-900">{stats.total}</p>
             </div>
             <div className="p-3 bg-blue-50 rounded-lg">
-              <Package className="w-6 h-6 text-blue-600" />
+              <Package className="w-6 h-6 text-primary" />
             </div>
           </div>
         </div>
@@ -447,10 +447,10 @@ export default function OrderDetectDelivery() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-slate-500 mb-1">Ordered</p>
-              <p className="text-2xl font-bold text-blue-600">{stats.ordered}</p>
+              <p className="text-2xl font-bold text-primary">{stats.ordered}</p>
             </div>
             <div className="p-3 bg-blue-50 rounded-lg">
-              <Clock className="w-6 h-6 text-blue-600" />
+              <Clock className="w-6 h-6 text-primary" />
             </div>
           </div>
         </div>

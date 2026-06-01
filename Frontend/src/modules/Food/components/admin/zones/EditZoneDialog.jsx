@@ -13,7 +13,7 @@ const languageTabs = [
   { key: "en", label: "English(EN)" },
   { key: "bn", label: "Bengali - ?????(BN)" },
   { key: "ar", label: "Arabic - ??????? (AR)" },
-  { key: "es", label: "Spanish - español(ES)" }
+  { key: "es", label: "Spanish - espaï¿½ol(ES)" }
 ]
 
 export default function EditZoneDialog({ isOpen, onOpenChange, zone, onSave }) {
@@ -53,7 +53,7 @@ export default function EditZoneDialog({ isOpen, onOpenChange, zone, onSave }) {
       <DialogContent className="max-w-2xl bg-white p-0 opacity-0 data-[state=open]:opacity-100 data-[state=closed]:opacity-0 transition-opacity duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0 data-[state=open]:scale-100 data-[state=closed]:scale-100">
         <DialogHeader className="px-6 pt-6 pb-4 border-b border-slate-200">
           <DialogTitle className="flex items-center gap-2">
-            <Pencil className="w-5 h-5 text-blue-600" />
+            <Pencil className="w-5 h-5 text-primary" />
             Edit Zone
           </DialogTitle>
           <DialogDescription>
@@ -73,7 +73,7 @@ export default function EditZoneDialog({ isOpen, onOpenChange, zone, onSave }) {
                     onClick={() => setActiveLanguage(tab.key)}
                     className={`px-3 py-1.5 text-xs font-medium border-b-2 transition-colors whitespace-nowrap ${
                       activeLanguage === tab.key
-                        ? "border-blue-600 text-blue-600"
+                        ? "border-primary text-primary"
                         : "border-transparent text-slate-600 hover:text-slate-900"
                     }`}
                   >
@@ -92,7 +92,7 @@ export default function EditZoneDialog({ isOpen, onOpenChange, zone, onSave }) {
                     value={zoneName}
                     onChange={(e) => setZoneName(e.target.value)}
                     placeholder="Type zone name here"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                     required
                   />
                 </div>
@@ -106,7 +106,7 @@ export default function EditZoneDialog({ isOpen, onOpenChange, zone, onSave }) {
                     value={zoneDisplayName}
                     onChange={(e) => setZoneDisplayName(e.target.value)}
                     placeholder="Write display zone name"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                     required
                   />
                 </div>
@@ -147,7 +147,7 @@ export default function EditZoneDialog({ isOpen, onOpenChange, zone, onSave }) {
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 text-xs font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="px-4 py-2 text-xs font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
               >
                 Save Changes
               </button>

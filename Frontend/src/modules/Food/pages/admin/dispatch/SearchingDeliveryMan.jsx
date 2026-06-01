@@ -144,7 +144,7 @@ export default function SearchingDeliveryMan() {
     return (
       <div className="p-4 lg:p-6 bg-slate-50 min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+          <Loader2 className="w-8 h-8 text-primary animate-spin" />
           <p className="text-gray-600">Loading orders...</p>
         </div>
       </div>
@@ -163,7 +163,7 @@ export default function SearchingDeliveryMan() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-600 border border-blue-100">
+          <span className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-primary border border-blue-100">
             Unassigned Orders: {count}
           </span>
         </div>

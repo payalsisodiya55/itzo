@@ -125,7 +125,7 @@ export default function CreateTaxes() {
             <Settings className="w-5 h-5" />
           </button>
 
-          <button className="inline-flex items-center gap-1 px-4 py-2.5 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-md">
+          <button className="inline-flex items-center gap-1 px-4 py-2.5 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-md">
             <Plus className="w-4 h-4" />
             <span>Create Tax</span>
           </button>
@@ -218,7 +218,7 @@ export default function CreateTaxes() {
                     )}
                     {visibleColumns.actions && (
                       <td className="px-6 py-4 whitespace-nowrap text-center">
-                        <button className="p-1.5 rounded text-blue-600 hover:bg-blue-50 transition-colors" title="Edit">
+                        <button className="p-1.5 rounded text-primary hover:bg-primary/10 transition-colors" title="Edit">
                           <Edit3 className="w-4 h-4" />
                         </button>
                       </td>
@@ -294,7 +294,7 @@ function ToggleSwitch({ enabled, onToggle }) {
       onClick={onToggle}
       className={`inline-flex items-center w-11 h-6 rounded-full border transition-all ${
         enabled
-          ? "bg-blue-600 border-blue-600 justify-end"
+          ? "bg-primary border-primary justify-end"
           : "bg-slate-200 border-slate-300 justify-start"
       }`}
     >

@@ -107,7 +107,7 @@ export default function AddFund() {
                 <select
                   value={formData.customer}
                   onChange={(e) => handleInputChange("customer", e.target.value)}
-                  className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                 >
                   <option value="">Select Customer</option>
                   <option value="jane-doe">Jane Doe</option>
@@ -124,7 +124,7 @@ export default function AddFund() {
                   value={formData.amount}
                   onChange={(e) => handleInputChange("amount", e.target.value)}
                   placeholder="Enter amount"
-                  className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                 />
               </div>
 
@@ -137,7 +137,7 @@ export default function AddFund() {
                   onChange={(e) => handleInputChange("reference", e.target.value)}
                   placeholder="Enter reference"
                   rows={4}
-                  className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm resize-none"
+                  className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm resize-none"
                 />
               </div>
 
@@ -152,7 +152,7 @@ export default function AddFund() {
                  <button
                   type="submit"
                   disabled={!canCreate}
-                  className="px-6 py-2.5 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary/90 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Submit
                 </button>

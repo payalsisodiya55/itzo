@@ -348,7 +348,7 @@ export default function EditOwner() {
             <button
               onClick={handlePhotoClick}
               disabled={loading || saving}
-              className="text-blue-600 text-sm font-normal hover:text-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="text-primary text-sm font-normal hover:text-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Edit photo
             </button>
@@ -376,7 +376,7 @@ export default function EditOwner() {
                   className="w-full pr-10"
                   disabled={loading || saving}
                 />
-                <Edit className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-600" />
+                <Edit className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-primary" />
               </div>
             </div>
 
@@ -405,7 +405,7 @@ export default function EditOwner() {
                   className="w-full pr-10 focus-visible:border-black focus-visible:ring-0"
                   disabled={loading || saving}
                 />
-                <Edit className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-600" />
+                <Edit className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-primary" />
               </div>
             </div>
           </div>

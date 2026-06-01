@@ -90,7 +90,7 @@ export default function RestaurantVATReport() {
                     value={filters.dateRange}
                     onChange={(e) => setFilters(prev => ({ ...prev, dateRange: e.target.value }))}
                     placeholder="11/27/2025 - 12/03/2025"
-                    className="w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   />
                 </div>
               </div>
@@ -102,10 +102,10 @@ export default function RestaurantVATReport() {
                 <select
                   value={filters.restaurant}
                   onChange={(e) => setFilters(prev => ({ ...prev, restaurant: e.target.value }))}
-                  className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="All Restaurants">All Restaurants</option>
-                  <option value="Café Monarch">Café Monarch</option>
+                  <option value="Cafï¿½ Monarch">Cafï¿½ Monarch</option>
                   <option value="Hungry Puppets">Hungry Puppets</option>
                   <option value="Cheesy Restaurant">Cheesy Restaurant</option>
                   <option value="Cheese Burger">Cheese Burger</option>
@@ -124,7 +124,7 @@ export default function RestaurantVATReport() {
               </button>
               <button 
                 onClick={handleFilterApply}
-                className={`px-6 py-2.5 text-sm font-medium rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-all flex items-center gap-2 relative ${
+                className={`px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary transition-all flex items-center gap-2 relative ${
                   activeFiltersCount > 0 ? "ring-2 ring-blue-300" : ""
                 }`}
               >
@@ -148,11 +148,11 @@ export default function RestaurantVATReport() {
               <div className="flex-1">
                 <p className="text-sm font-bold text-slate-900 mb-1">Total Orders</p>
                 <p className="text-xs text-slate-600 mb-2">Total Orders</p>
-                <p className="text-3xl font-bold text-blue-600">{emptyRestaurantVATStats.totalOrders}</p>
-                <p className="text-lg font-semibold text-blue-600 mt-1">{emptyRestaurantVATStats.totalOrders}</p>
+                <p className="text-3xl font-bold text-primary">{emptyRestaurantVATStats.totalOrders}</p>
+                <p className="text-lg font-semibold text-primary mt-1">{emptyRestaurantVATStats.totalOrders}</p>
               </div>
               <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-                <ClipboardList className="w-7 h-7 text-blue-600" />
+                <ClipboardList className="w-7 h-7 text-primary" />
               </div>
             </div>
           </div>
@@ -200,7 +200,7 @@ export default function RestaurantVATReport() {
                   placeholder="Ex: Name"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-4 pr-10 py-2.5 w-full text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="pl-4 pr-10 py-2.5 w-full text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                 />
                 <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               </div>
@@ -302,7 +302,7 @@ export default function RestaurantVATReport() {
                         <span className="text-sm font-medium text-slate-900">{report.taxAmount}</span>
                       </td>
                       <td className="px-4 py-3 text-center">
-                        <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                        <button className="text-primary hover:text-blue-800 text-sm font-medium">
                           View
                         </button>
                       </td>

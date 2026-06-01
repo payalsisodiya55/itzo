@@ -167,7 +167,7 @@ const NotificationComposer = () => {
                     {/* Tips Card */}
                     <Card className="ds-card-compact bg-blue-50 border-blue-100">
                         <div className="flex gap-3">
-                            <HiOutlineExclamationCircle className="ds-icon-lg text-blue-600 flex-shrink-0" />
+                            <HiOutlineExclamationCircle className="ds-icon-lg text-primary flex-shrink-0" />
                             <div>
                                 <h4 className="ds-h4 text-blue-900 mb-1">Best Practices</h4>
                                 <ul className="ds-body text-blue-700 space-y-1">

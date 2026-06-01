@@ -39,7 +39,7 @@ const RadioGroupItem = React.forwardRef<
       onClick={() => onValueChange?.(value)}
       className={cn(
         "aspect-square h-4 w-4 rounded-full border-2 border-gray-300 transition-colors",
-        isSelected && "border-blue-600 bg-blue-600",
+        isSelected && "border-primary bg-primary",
         className
       )}
       {...props}

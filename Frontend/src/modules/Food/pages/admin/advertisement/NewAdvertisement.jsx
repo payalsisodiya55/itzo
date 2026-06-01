@@ -36,7 +36,7 @@ export default function NewAdvertisement() {
     { key: "en", label: "English(EN)" },
     { key: "bn", label: "Bengali - বাংলা(BN)" },
     { key: "ar", label: "Arabic - العربية (AR)" },
-    { key: "es", label: "Spanish - espa�ol(ES)" },
+    { key: "es", label: "Spanish - espa�ol(ES)" },
   ]
 
   const handleInputChange = (field, value) => {
@@ -208,7 +208,7 @@ export default function NewAdvertisement() {
                     onClick={() => setActiveLanguage(tab.key)}
                     className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
                       activeLanguage === tab.key
-                        ? "border-blue-600 text-blue-600"
+                        ? "border-primary text-primary"
                         : "border-transparent text-slate-600 hover:text-slate-900"
                     }`}
                   >
@@ -228,7 +228,7 @@ export default function NewAdvertisement() {
                       value={formData.title}
                       onChange={(e) => handleInputChange("title", e.target.value)}
                       placeholder="Exclusive Offer"
-                      className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                      className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm ${
                         formErrors.title ? "border-red-500" : "border-slate-300"
                       }`}
                     />
@@ -246,7 +246,7 @@ export default function NewAdvertisement() {
                       value={formData.shortDescription}
                       onChange={(e) => handleInputChange("shortDescription", e.target.value)}
                       placeholder="Get Discount"
-                      className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                      className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                     />
                   </div>
 
@@ -258,12 +258,12 @@ export default function NewAdvertisement() {
                       <select
                         value={formData.restaurant}
                         onChange={(e) => handleInputChange("restaurant", e.target.value)}
-                        className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                        className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm ${
                           formErrors.restaurant ? "border-red-500" : "border-slate-300"
                         }`}
                       >
                         <option value="">Select Restaurant</option>
-                        <option value="cafe-monarch">Caf� Monarch</option>
+                        <option value="cafe-monarch">Caf� Monarch</option>
                         <option value="hungry-puppets">Hungry Puppets</option>
                       </select>
                       {formErrors.restaurant && (
@@ -278,7 +278,7 @@ export default function NewAdvertisement() {
                       <select
                         value={formData.priority}
                         onChange={(e) => handleInputChange("priority", e.target.value)}
-                        className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                        className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                       >
                         <option value="Priority">Priority</option>
                         <option value="High">High</option>
@@ -295,7 +295,7 @@ export default function NewAdvertisement() {
                     <select
                       value={formData.advertisementType}
                       onChange={(e) => handleInputChange("advertisementType", e.target.value)}
-                      className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                      className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                     >
                       <option value="Restaurant Promotion">Restaurant Promotion</option>
                       <option value="Video promotion">Video promotion</option>
@@ -311,7 +311,7 @@ export default function NewAdvertisement() {
                         type="date"
                         value={formData.validity}
                         onChange={(e) => handleInputChange("validity", e.target.value)}
-                        className={`w-full px-4 py-2.5 pr-10 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                        className={`w-full px-4 py-2.5 pr-10 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm ${
                           formErrors.validity ? "border-red-500" : "border-slate-300"
                         }`}
                       />
@@ -332,7 +332,7 @@ export default function NewAdvertisement() {
                           type="checkbox"
                           checked={formData.showReview}
                           onChange={(e) => handleInputChange("showReview", e.target.checked)}
-                          className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                          className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary"
                         />
                         <span className="text-sm text-slate-700">Review</span>
                       </label>
@@ -341,7 +341,7 @@ export default function NewAdvertisement() {
                           type="checkbox"
                           checked={formData.showRatings}
                           onChange={(e) => handleInputChange("showRatings", e.target.checked)}
-                          className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                          className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary"
                         />
                         <span className="text-sm text-slate-700">Rating</span>
                       </label>
@@ -387,12 +387,12 @@ export default function NewAdvertisement() {
                         ) : (
                           <div
                             onClick={() => profileInputRef.current?.click()}
-                            className={`border-2 border-dashed rounded-lg p-6 text-center hover:border-blue-500 transition-colors cursor-pointer ${
+                            className={`border-2 border-dashed rounded-lg p-6 text-center hover:border-primary transition-colors cursor-pointer ${
                               formErrors.profileImage ? "border-red-500" : "border-slate-300"
                             }`}
                           >
                             <Upload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                            <p className="text-sm font-medium text-blue-600 mb-1">Click to Upload Profile Image</p>
+                            <p className="text-sm font-medium text-primary mb-1">Click to Upload Profile Image</p>
                             <p className="text-xs text-slate-500">Supports: PNG, JPG, JPEG, WEBP Maximum 2 MB</p>
                           </div>
                         )}
@@ -434,12 +434,12 @@ export default function NewAdvertisement() {
                         ) : (
                           <div
                             onClick={() => coverInputRef.current?.click()}
-                            className={`border-2 border-dashed rounded-lg p-6 text-center hover:border-blue-500 transition-colors cursor-pointer ${
+                            className={`border-2 border-dashed rounded-lg p-6 text-center hover:border-primary transition-colors cursor-pointer ${
                               formErrors.coverImage ? "border-red-500" : "border-slate-300"
                             }`}
                           >
                             <Upload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                            <p className="text-sm font-medium text-blue-600 mb-1">Click to Upload Cover Image</p>
+                            <p className="text-sm font-medium text-primary mb-1">Click to Upload Cover Image</p>
                             <p className="text-xs text-slate-500">Supports: PNG, JPG, JPEG, WEBP Maximum 2 MB</p>
                           </div>
                         )}
@@ -465,7 +465,7 @@ export default function NewAdvertisement() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="px-6 py-2.5 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                      className="px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary/90 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                     >
                       {isSubmitting ? (
                         <>

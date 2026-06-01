@@ -182,7 +182,7 @@ export default function RestaurantComplaints() {
       case 'pending':
         return <Clock className="w-4 h-4 text-yellow-600" />
       case 'in_progress':
-        return <AlertCircle className="w-4 h-4 text-blue-600" />
+        return <AlertCircle className="w-4 h-4 text-primary" />
       case 'resolved':
         return <CheckCircle className="w-4 h-4 text-green-600" />
       case 'rejected':
@@ -223,7 +223,7 @@ export default function RestaurantComplaints() {
               placeholder="Search by order, customer, restaurant..."
               value={filters.search}
               onChange={(e) => setFilters({ ...filters, search: e.target.value.replace(/\s/g, ''), page: 1 })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </div>
           <div className="flex flex-col sm:flex-row gap-2 min-w-fit">
@@ -399,7 +399,7 @@ export default function RestaurantComplaints() {
             <button
               onClick={handleUpdateComplaint}
               disabled={!canEdit}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Save Changes
             </button>

@@ -32,7 +32,7 @@ export default function ReactSite() {
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4 flex items-start justify-between gap-3">
             <p className="text-xs text-slate-700 flex-1">
               Please check if your domain is register or not at 6amTech Store .{" "}
-              <a href="#" className="text-blue-600 hover:underline">
+              <a href="#" className="text-primary hover:underline">
                 Click here
               </a>{" "}
               To login in Store.
@@ -60,7 +60,7 @@ export default function ReactSite() {
                   value={reactLicenseCode}
                   onChange={(e) => setReactLicenseCode(e.target.value)}
                   placeholder="React license code"
-                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                 />
               </div>
 
@@ -73,7 +73,7 @@ export default function ReactSite() {
                   value={reactDomain}
                   onChange={(e) => setReactDomain(e.target.value)}
                   placeholder="React Domain"
-                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                 />
               </div>
             </div>
@@ -82,7 +82,7 @@ export default function ReactSite() {
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="px-6 py-2.5 text-xs font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="px-6 py-2.5 text-xs font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
               >
                 Save
               </button>

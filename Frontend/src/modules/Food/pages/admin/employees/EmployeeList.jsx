@@ -187,7 +187,7 @@ export default function EmployeeList() {
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-600/20">
+              <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center shadow-lg shadow-blue-600/20">
                 <Users className="w-5 h-5 text-white" />
               </div>
               <div>
@@ -198,7 +198,7 @@ export default function EmployeeList() {
             {canCreateEmployee && (
               <button
                 onClick={() => navigate("/ecs/food/employees/add")}
-                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-semibold shadow-md transition-all active:scale-95"
+                className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-lg font-semibold shadow-md transition-all active:scale-95"
               >
                 <Plus className="w-4 h-4" />
                 ADD NEW EMPLOYEE
@@ -386,7 +386,7 @@ export default function EmployeeList() {
                             {canEditEmployee && (
                               <button
                                 onClick={() => navigate(`/ecs/food/employees/edit/${employee._id}`, { state: { employee } })}
-                                className="p-1.5 rounded text-blue-600 hover:bg-blue-50 transition-colors"
+                                className="p-1.5 rounded text-primary hover:bg-blue-50 transition-colors"
                                 title="Edit"
                               >
                                 <Edit className="w-4 h-4" />

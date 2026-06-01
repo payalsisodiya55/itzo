@@ -163,7 +163,7 @@ export const PickupActionModal = ({
             )}
             <button 
               onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(primaryAddress)}`, '_blank')}
-              className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-white shadow-lg"
+              className="w-10 h-10 rounded-full bg-[#FE5502] flex items-center justify-center text-white shadow-lg hover:bg-[#FE5502]/90"
             >
               <Navigation className="w-5 h-5" />
             </button>
@@ -209,7 +209,7 @@ export const PickupActionModal = ({
                 successLabel="Reached!"
                 disabled={!isWithinRange}
                 onConfirm={onReachedPickup}
-                color="bg-green-600"
+                color="bg-primary"
               />
             </div>
           ) : (
@@ -219,7 +219,7 @@ export const PickupActionModal = ({
                    <>
                       <button
                         onClick={handleTakeCameraPhoto}
-                        className="flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl bg-gray-900 text-white font-bold text-xs uppercase tracking-widest shadow-lg active:scale-95 transition-all"
+                        className="flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl bg-[#FE5502] text-white font-bold text-xs uppercase tracking-widest shadow-lg active:scale-95 transition-all hover:bg-[#FE5502]/90"
                       >
                         <Camera className="w-5 h-5" />
                         <span>Camera</span>
@@ -267,7 +267,7 @@ export const PickupActionModal = ({
                   successLabel="Picked Up!"
                   disabled={!billImageUploaded}
                   onConfirm={() => onPickedUp(billImageUrl)}
-                  color="bg-orange-500"
+                  color="bg-primary"
                 />
               </div>
             </div>

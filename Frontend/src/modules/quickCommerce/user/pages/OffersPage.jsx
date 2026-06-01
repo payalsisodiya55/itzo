@@ -28,7 +28,7 @@ const OffersPage = () => {
   }, []);
 
   const styleToBg = {
-    blue: "bg-blue-600",
+    blue: "bg-primary",
     green: "bg-[#0c831f]",
     red: "bg-red-500",
   };

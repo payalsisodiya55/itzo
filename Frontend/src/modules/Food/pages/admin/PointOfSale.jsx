@@ -443,7 +443,7 @@ export default function PointOfSale() {
               <div className="bg-white rounded-lg shadow-sm border border-[#e3e6ef] p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="p-3 bg-blue-100 rounded-lg">
-                    <ShoppingCart className="w-6 h-6 text-blue-600" />
+                    <ShoppingCart className="w-6 h-6 text-primary" />
                   </div>
                   <TrendingUp className="w-5 h-5 text-green-500" />
                 </div>
@@ -515,7 +515,7 @@ export default function PointOfSale() {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <div className="p-3 bg-blue-100 rounded-lg">
-                      <BarChart3 className="w-6 h-6 text-blue-600" />
+                      <BarChart3 className="w-6 h-6 text-primary" />
                     </div>
                     <div>
                       <h3 className="text-base font-semibold text-[#334257]">Yearly Profit</h3>
@@ -698,7 +698,7 @@ export default function PointOfSale() {
               <h3 className="text-lg font-semibold text-[#334257] mb-4">Order Statistics Summary</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="text-center p-4 bg-blue-50 rounded-lg">
-                  <p className="text-2xl font-bold text-blue-600">{formatNumber(analyticsData.totalOrders)}</p>
+                  <p className="text-2xl font-bold text-primary">{formatNumber(analyticsData.totalOrders)}</p>
                   <p className="text-xs text-[#8a94aa] mt-1">Total Orders</p>
                 </div>
                 <div className="text-center p-4 bg-green-50 rounded-lg">

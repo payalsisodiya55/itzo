@@ -742,7 +742,7 @@ export default function AddZone() {
                     <select
                       value={formData.country}
                       onChange={(e) => handleInputChange("country", e.target.value)}
-                      className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                       required
                     >
                       <option value="India">India</option>
@@ -759,7 +759,7 @@ export default function AddZone() {
                       value={formData.zoneName}
                       onChange={(e) => handleInputChange("zoneName", e.target.value)}
                       placeholder="Enter zone name"
-                      className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                       required
                     />
                   </div>
@@ -772,7 +772,7 @@ export default function AddZone() {
                     <select
                       value={formData.unit}
                       onChange={(e) => handleInputChange("unit", e.target.value)}
-                      className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                       required
                     >
                       <option value="kilometer">Kilometers (km)</option>
@@ -794,7 +794,7 @@ export default function AddZone() {
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                       isDrawing
                         ? "bg-red-600 text-white hover:bg-red-700"
-                        : "bg-blue-600 text-white hover:bg-blue-700"
+                        : "bg-primary text-white hover:bg-primary/90"
                     }`}
                   >
                     <Shapes className="w-4 h-4" />
@@ -822,7 +822,7 @@ export default function AddZone() {
                     placeholder="Search location on map..."
                     value={locationSearch}
                     onChange={(e) => setLocationSearch(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
                 {coordinates.length > 0 && (
@@ -841,7 +841,7 @@ export default function AddZone() {
                 {mapLoading && (
                   <div className="absolute inset-0 flex items-center justify-center bg-slate-100 rounded-lg">
                     <div className="text-center">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
                       <p className="text-slate-600">Loading map...</p>
                     </div>
                   </div>
@@ -871,7 +871,7 @@ export default function AddZone() {
             <button
               type="submit"
               disabled={loading || coordinates.length < 3 || !formData.zoneName || !formData.country}
-              className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <>

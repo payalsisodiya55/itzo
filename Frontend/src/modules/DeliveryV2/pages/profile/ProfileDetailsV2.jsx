@@ -818,7 +818,7 @@ export const ProfileDetailsV2 = () => {
                      await refreshProfile()
                    } catch (e) { toast.error("Cloud storage sync failed") }
                }}
-               className="w-full bg-black text-white py-5 rounded-[1.5rem] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-gray-900 transition-all active:scale-95"
+               className="w-full bg-primary text-primary-foreground py-5 rounded-[1.5rem] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-primary/90 transition-all active:scale-95"
             >
                Save Changes
             </button>
@@ -910,7 +910,7 @@ export const ProfileDetailsV2 = () => {
           <button 
             onClick={submitBankDetails} 
             disabled={isUpdatingBankDetails} 
-            className="w-full bg-black text-white py-5 rounded-[1.5rem] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-gray-900 transition-all active:scale-95 flex items-center justify-center gap-3 disabled:opacity-50"
+            className="w-full bg-primary text-primary-foreground py-5 rounded-[1.5rem] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-primary/90 transition-all active:scale-95 flex items-center justify-center gap-3 disabled:opacity-50"
           >
             {isUpdatingBankDetails ? <><Loader2 className="w-5 h-5 animate-spin" /> saving...</> : "Update Systems"}
           </button>

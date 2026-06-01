@@ -222,7 +222,7 @@ export default function DiningList() {
 
                     {loading ? (
                         <div className="flex items-center justify-center py-20">
-                            <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+                            <Loader2 className="w-8 h-8 animate-spin text-primary" />
                             <span className="ml-3 text-slate-600">Loading dining list...</span>
                         </div>
                     ) : restaurants.length === 0 ? (
@@ -247,7 +247,7 @@ export default function DiningList() {
                                             placeholder="Search dining restaurants..."
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
-                                            className="pl-10 pr-4 py-2.5 w-full text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            className="pl-10 pr-4 py-2.5 w-full text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                                         />
                                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                                     </div>
@@ -259,7 +259,7 @@ export default function DiningList() {
                                 <button
                                     onClick={() => setSelectedCategory("All")}
                                     className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap ${selectedCategory === "All"
-                                        ? "bg-blue-600 text-white shadow-md"
+                                        ? "bg-primary text-white shadow-md"
                                         : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                                         }`}
                                 >
@@ -272,7 +272,7 @@ export default function DiningList() {
                                             key={cat._id}
                                             onClick={() => setSelectedCategory(cat.slug)}
                                             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap ${selectedCategory === cat.slug
-                                                ? "bg-blue-600 text-white shadow-md"
+                                                ? "bg-primary text-white shadow-md"
                                                 : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                                                 }`}
                                         >
@@ -402,7 +402,7 @@ export default function DiningList() {
                                                                     setEditingRestaurant({ ...restaurant })
                                                                     setIsEditModalOpen(true)
                                                                 }}
-                                                                className="p-2 text-slate-400 hover:text-blue-600 transition-colors"
+                                                                className="p-2 text-slate-400 hover:text-primary transition-colors"
                                                             >
                                                                 <Settings className="w-4 h-4" />
                                                             </button>
@@ -451,7 +451,7 @@ export default function DiningList() {
                                         primaryCategoryId: !prev.diningSettings.isEnabled ? (prev.primaryCategoryId || prev.categoryIds?.[0] || null) : null,
                                         categories: !prev.diningSettings.isEnabled ? (prev.categories || []) : [],
                                     }))}
-                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${editingRestaurant.diningSettings?.isEnabled ? 'bg-blue-600' : 'bg-slate-200'}`}
+                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${editingRestaurant.diningSettings?.isEnabled ? 'bg-primary' : 'bg-slate-200'}`}
                                 >
                                     <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition duration-200 ease-in-out ${editingRestaurant.diningSettings?.isEnabled ? 'translate-x-6' : 'translate-x-1'}`} />
                                 </button>
@@ -475,7 +475,7 @@ export default function DiningList() {
                                         }
                                     }))}
                                     disabled={!editingRestaurant.diningSettings?.isEnabled}
-                                    className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                                 />
                             </div>
 
@@ -545,7 +545,7 @@ export default function DiningList() {
                                         setLoading(false)
                                     }
                                 }}
-                                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-sm"
+                                className="px-4 py-2 text-sm font-medium text-white bg-primary hover:bg-primary/90 rounded-lg transition-colors shadow-sm"
                             >
                                 Save Changes
                             </button>

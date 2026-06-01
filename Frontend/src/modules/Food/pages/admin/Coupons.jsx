@@ -296,7 +296,7 @@ export default function Coupons() {
                 setSubmitError("")
                 setSubmitSuccess("")
               }}
-              className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-colors"
+              className="px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary/90 transition-colors"
             >
               {isAddOpen ? "Close" : "Add Coupon"}
             </button>
@@ -317,7 +317,7 @@ export default function Coupons() {
                     value={formData.couponCode}
                     onChange={(e) => handleFormChange("couponCode", e.target.value)}
                     placeholder="e.g. NEWUSER50"
-                    className="w-full px-3 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   />
                 </div>
 
@@ -326,7 +326,7 @@ export default function Coupons() {
                   <select
                     value={formData.discountType}
                     onChange={(e) => handleFormChange("discountType", e.target.value)}
-                    className="w-full px-3 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   >
                     <option value="percentage">Percentage</option>
                     <option value="flat-price">Flat Amount</option>
@@ -344,7 +344,7 @@ export default function Coupons() {
                     value={formData.discountValue}
                     onChange={(e) => handleFormChange("discountValue", e.target.value)}
                     placeholder={formData.discountType === "percentage" ? "e.g. 20" : "e.g. 100"}
-                    className={`w-full px-3 py-2.5 text-sm rounded-lg border ${errors.discountValue ? "border-red-500" : "border-slate-300"} bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
+                    className={`w-full px-3 py-2.5 text-sm rounded-lg border ${errors.discountValue ? "border-red-500" : "border-slate-300"} bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary`}
                   />
                   {errors.discountValue && <p className="mt-1 text-xs text-red-600">{errors.discountValue}</p>}
                 </div>
@@ -354,7 +354,7 @@ export default function Coupons() {
                   <select
                     value={formData.customerScope}
                     onChange={(e) => handleFormChange("customerScope", e.target.value)}
-                    className="w-full px-3 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   >
                     <option value="all">All Users</option>
                     <option value="first-time">First-time Users</option>
@@ -366,7 +366,7 @@ export default function Coupons() {
                   <select
                     value={formData.restaurantScope}
                     onChange={(e) => handleFormChange("restaurantScope", e.target.value)}
-                    className="w-full px-3 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   >
                     <option value="all">All Restaurants</option>
                     <option value="selected">Selected Restaurant</option>
@@ -380,7 +380,7 @@ export default function Coupons() {
                     value={formData.endDate}
                     onChange={(e) => handleFormChange("endDate", e.target.value)}
                   min={formData.startDate || todayYMD()}
-                  className={`w-full px-3 py-2.5 text-sm rounded-lg border ${errors.endDate ? "border-red-500" : "border-slate-300"} bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
+                  className={`w-full px-3 py-2.5 text-sm rounded-lg border ${errors.endDate ? "border-red-500" : "border-slate-300"} bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary`}
                   />
                 {errors.endDate && <p className="mt-1 text-xs text-red-600">{errors.endDate}</p>}
                 </div>
@@ -392,7 +392,7 @@ export default function Coupons() {
                   value={formData.startDate}
                   onChange={(e) => handleFormChange("startDate", e.target.value)}
                   min={todayYMD()}
-                  className={`w-full px-3 py-2.5 text-sm rounded-lg border ${errors.startDate ? "border-red-500" : "border-slate-300"} bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
+                  className={`w-full px-3 py-2.5 text-sm rounded-lg border ${errors.startDate ? "border-red-500" : "border-slate-300"} bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary`}
                 />
                 {errors.startDate && <p className="mt-1 text-xs text-red-600">{errors.startDate}</p>}
               </div>
@@ -406,7 +406,7 @@ export default function Coupons() {
                   value={formData.minOrderValue}
                   onChange={(e) => handleFormChange("minOrderValue", e.target.value)}
                   placeholder="e.g. 199"
-                  className={`w-full px-3 py-2.5 text-sm rounded-lg border ${errors.minOrderValue ? "border-red-500" : "border-slate-300"} bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
+                  className={`w-full px-3 py-2.5 text-sm rounded-lg border ${errors.minOrderValue ? "border-red-500" : "border-slate-300"} bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary`}
                 />
                 {errors.minOrderValue && <p className="mt-1 text-xs text-red-600">{errors.minOrderValue}</p>}
               </div>
@@ -421,7 +421,7 @@ export default function Coupons() {
                     onChange={(e) => handleFormChange("maxDiscount", e.target.value)}
                   placeholder="e.g. 100"
                     disabled={formData.discountType === "flat-price"}
-                    className={`w-full px-3 py-2.5 text-sm rounded-lg border ${errors.maxDiscount ? "border-red-500" : "border-slate-300"} bg-white disabled:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
+                    className={`w-full px-3 py-2.5 text-sm rounded-lg border ${errors.maxDiscount ? "border-red-500" : "border-slate-300"} bg-white disabled:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary`}
                 />
                   {formData.discountType === "percentage" && errors.maxDiscount && <p className="mt-1 text-xs text-red-600">{errors.maxDiscount}</p>}
               </div>
@@ -435,7 +435,7 @@ export default function Coupons() {
                   value={formData.usageLimit}
                   onChange={(e) => handleFormChange("usageLimit", e.target.value)}
                   placeholder="e.g. 1000"
-                  className={`w-full px-3 py-2.5 text-sm rounded-lg border ${errors.usageLimit ? "border-red-500" : "border-slate-300"} bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
+                  className={`w-full px-3 py-2.5 text-sm rounded-lg border ${errors.usageLimit ? "border-red-500" : "border-slate-300"} bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary`}
                 />
                 {errors.usageLimit && <p className="mt-1 text-xs text-red-600">{errors.usageLimit}</p>}
               </div>
@@ -449,7 +449,7 @@ export default function Coupons() {
                   value={formData.perUserLimit}
                   onChange={(e) => handleFormChange("perUserLimit", e.target.value)}
                   placeholder="e.g. 1"
-                  className={`w-full px-3 py-2.5 text-sm rounded-lg border ${errors.perUserLimit ? "border-red-500" : "border-slate-300"} bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
+                  className={`w-full px-3 py-2.5 text-sm rounded-lg border ${errors.perUserLimit ? "border-red-500" : "border-slate-300"} bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary`}
                 />
                 {errors.perUserLimit && <p className="mt-1 text-xs text-red-600">{errors.perUserLimit}</p>}
               </div>
@@ -471,7 +471,7 @@ export default function Coupons() {
                     <select
                       value={formData.restaurantId}
                       onChange={(e) => handleFormChange("restaurantId", e.target.value)}
-                      className="w-full px-3 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                     >
                       <option value="">Choose a restaurant</option>
                       {restaurants.map((restaurant) => (
@@ -510,7 +510,7 @@ export default function Coupons() {
               placeholder="Search by restaurant name, dish name, or coupon code..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
             />
           </div>
         </div>
@@ -528,7 +528,7 @@ export default function Coupons() {
 
           {loading ? (
             <div className="text-center py-20">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
               <p className="text-sm text-slate-500 mt-4">Loading offers...</p>
             </div>
           ) : error ? (
@@ -580,7 +580,7 @@ export default function Coupons() {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm font-mono font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded whitespace-nowrap">
+                        <span className="text-sm font-mono font-semibold text-primary bg-blue-50 px-2 py-1 rounded whitespace-nowrap">
                           {offer.couponCode}
                         </span>
                       </td>

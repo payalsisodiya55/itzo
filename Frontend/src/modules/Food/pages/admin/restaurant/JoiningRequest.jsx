@@ -459,7 +459,7 @@ export default function JoiningRequest() {
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
               <UtensilsCrossed className="w-5 h-5 text-white" />
             </div>
             <h1 className="text-2xl font-bold text-slate-900">New Restaurant Join Request</h1>
@@ -471,7 +471,7 @@ export default function JoiningRequest() {
               onClick={() => setActiveTab("pending")}
               className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === "pending"
-                  ? "border-blue-600 text-blue-600"
+                  ? "border-primary text-primary"
                   : "border-transparent text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -481,7 +481,7 @@ export default function JoiningRequest() {
               onClick={() => setActiveTab("rejected")}
               className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === "rejected"
-                  ? "border-blue-600 text-blue-600"
+                  ? "border-primary text-primary"
                   : "border-transparent text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -497,7 +497,7 @@ export default function JoiningRequest() {
                   placeholder="Search by restaurant name, owner name or phone"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 pr-4 py-2.5 w-full text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="pl-10 pr-4 py-2.5 w-full text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                 />
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               </div>
@@ -508,14 +508,14 @@ export default function JoiningRequest() {
                 onClick={() => setShowFilterDialog(true)}
                 className={`px-4 py-2.5 text-sm font-medium rounded-lg border transition-all flex items-center gap-2 ${
                   hasActiveFilters 
-                    ? "border-blue-500 bg-blue-50 text-blue-700 hover:bg-blue-100" 
+                    ? "border-primary bg-blue-50 text-blue-700 hover:bg-blue-100" 
                     : "border-slate-300 bg-white hover:bg-slate-50 text-slate-700"
                 }`}
               >
                 <Filter className="w-4 h-4" />
                 Filter
                 {hasActiveFilters && (
-                  <span className="ml-1 px-1.5 py-0.5 bg-blue-600 text-white text-xs rounded-full">
+                  <span className="ml-1 px-1.5 py-0.5 bg-primary text-white text-xs rounded-full">
                     {[filters.zone, filters.dateFrom, filters.dateTo].filter(Boolean).length}
                   </span>
                 )}
@@ -539,7 +539,7 @@ export default function JoiningRequest() {
                   >
                     <div className="flex items-center gap-1">
                       <span>Restaurant Info</span>
-                      <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === "restaurantName" ? "text-blue-600" : "text-slate-400"}`} />
+                      <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === "restaurantName" ? "text-primary" : "text-slate-400"}`} />
                     </div>
                   </th>
                   <th 
@@ -548,7 +548,7 @@ export default function JoiningRequest() {
                   >
                     <div className="flex items-center gap-1">
                       <span>Owner Info</span>
-                      <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === "ownerName" ? "text-blue-600" : "text-slate-400"}`} />
+                      <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === "ownerName" ? "text-primary" : "text-slate-400"}`} />
                     </div>
                   </th>
                   <th 
@@ -557,7 +557,7 @@ export default function JoiningRequest() {
                   >
                     <div className="flex items-center gap-1">
                       <span>Zone</span>
-                      <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === "zone" ? "text-blue-600" : "text-slate-400"}`} />
+                      <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === "zone" ? "text-primary" : "text-slate-400"}`} />
                     </div>
                   </th>
                   <th 
@@ -566,7 +566,7 @@ export default function JoiningRequest() {
                   >
                     <div className="flex items-center gap-1">
                       <span>Status</span>
-                      <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === "status" ? "text-blue-600" : "text-slate-400"}`} />
+                      <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === "status" ? "text-primary" : "text-slate-400"}`} />
                     </div>
                   </th>
                   <th className="px-6 py-4 text-center text-[10px] font-bold text-slate-700 uppercase tracking-wider">Action</th>
@@ -576,7 +576,7 @@ export default function JoiningRequest() {
                 {loading ? (
                   <tr>
                     <td colSpan={6} className="px-6 py-20 text-center">
-                      <Loader2 className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-3" />
+                      <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto mb-3" />
                       <p className="text-lg font-semibold text-slate-700">Loading restaurant requests...</p>
                     </td>
                   </tr>
@@ -624,7 +624,7 @@ export default function JoiningRequest() {
                             />
                           </div>
                           <span 
-                            className="text-sm font-medium text-slate-900 cursor-pointer hover:text-blue-600 transition-colors"
+                            className="text-sm font-medium text-slate-900 cursor-pointer hover:text-primary transition-colors"
                             onClick={() => handleViewDetails(request)}
                           >
                             {request.restaurantName}
@@ -653,7 +653,7 @@ export default function JoiningRequest() {
                         <div className="flex items-center justify-center gap-2">
                           <button
                             onClick={() => handleViewDetails(request)}
-                            className="p-1.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors"
+                            className="p-1.5 rounded-full bg-blue-50 text-primary hover:bg-blue-100 transition-colors"
                             title="View Details"
                           >
                             <Eye className="w-4 h-4" />
@@ -697,7 +697,7 @@ export default function JoiningRequest() {
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
-                    <Filter className="w-5 h-5 text-blue-600" />
+                    <Filter className="w-5 h-5 text-primary" />
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-slate-900">Filter Requests</h3>
@@ -721,7 +721,7 @@ export default function JoiningRequest() {
                   <select
                     value={filters.zone}
                     onChange={(e) => setFilters({ ...filters, zone: e.target.value })}
-                    className="w-full px-4 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-4 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   >
                     <option value="">All Zones</option>
                     {filterOptions.zones.map((z) => (
@@ -740,7 +740,7 @@ export default function JoiningRequest() {
                       type="date"
                       value={filters.dateFrom}
                       onChange={(e) => setFilters({ ...filters, dateFrom: e.target.value })}
-                      className="w-full px-4 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-4 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                     />
                   </div>
                   <div>
@@ -752,7 +752,7 @@ export default function JoiningRequest() {
                       value={filters.dateTo}
                       onChange={(e) => setFilters({ ...filters, dateTo: e.target.value })}
                       min={filters.dateFrom}
-                      className="w-full px-4 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-4 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                     />
                   </div>
                 </div>
@@ -768,7 +768,7 @@ export default function JoiningRequest() {
                 </button>
                 <button
                   onClick={() => setShowFilterDialog(false)}
-                  className="flex-1 px-4 py-2.5 text-sm font-medium rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+                  className="flex-1 px-4 py-2.5 text-sm font-medium rounded-lg bg-primary hover:bg-primary/90 text-white transition-colors"
                 >
                   Apply Filters
                 </button>
@@ -856,7 +856,7 @@ export default function JoiningRequest() {
             <div className="sticky top-0 bg-white border-b border-slate-100 px-6 py-5 flex items-center justify-between z-10">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
-                  <UtensilsCrossed className="w-5 h-5 text-blue-600" />
+                  <UtensilsCrossed className="w-5 h-5 text-primary" />
                 </div>
                 <h2 className="text-xl font-bold text-slate-900">Restaurant Details - {selectedRequest.restaurantName || "N/A"}</h2>
               </div>
@@ -872,7 +872,7 @@ export default function JoiningRequest() {
             <div className="p-6">
               {loadingDetails && (
                 <div className="flex items-center justify-center py-20">
-                  <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+                  <Loader2 className="w-8 h-8 animate-spin text-primary" />
                   <span className="ml-3 text-slate-600">Loading details...</span>
                 </div>
               )}
@@ -1180,7 +1180,7 @@ export default function JoiningRequest() {
                               href={imgUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="rounded-lg overflow-hidden border border-slate-200 hover:border-blue-500 transition-colors"
+                              className="rounded-lg overflow-hidden border border-slate-200 hover:border-primary transition-colors"
                             >
                               <img
                                 src={imgUrl}
@@ -1228,7 +1228,7 @@ export default function JoiningRequest() {
                                     href={typeof r.panImage === "string" ? r.panImage : (r.panImage?.url || r.onboarding?.step3?.pan?.image?.url)}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700"
+                                    className="inline-flex items-center gap-2 text-primary hover:text-blue-700"
                                   >
                                     <ImageIcon className="w-4 h-4" />
                                     <span>View PAN Document</span>
@@ -1279,7 +1279,7 @@ export default function JoiningRequest() {
                                     href={typeof r.gstImage === "string" ? r.gstImage : (r.gstImage?.url || r.onboarding?.step3?.gst?.image?.url)}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700"
+                                    className="inline-flex items-center gap-2 text-primary hover:text-blue-700"
                                   >
                                     <ImageIcon className="w-4 h-4" />
                                     <span>View GST Document</span>
@@ -1324,7 +1324,7 @@ export default function JoiningRequest() {
                                     href={typeof r.fssaiImage === "string" ? r.fssaiImage : (r.fssaiImage?.url || r.onboarding?.step3?.fssai?.image?.url)}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700"
+                                    className="inline-flex items-center gap-2 text-primary hover:text-blue-700"
                                   >
                                     <ImageIcon className="w-4 h-4" />
                                     <span>View FSSAI Document</span>
@@ -1388,7 +1388,7 @@ export default function JoiningRequest() {
                               href={imgUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="rounded-lg overflow-hidden border border-slate-200 hover:border-blue-500 transition-colors"
+                              className="rounded-lg overflow-hidden border border-slate-200 hover:border-primary transition-colors"
                             >
                               <img
                                 src={imgUrl}

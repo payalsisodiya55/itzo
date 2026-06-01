@@ -3429,6 +3429,8 @@ export async function resendDeliveryNotificationRestaurant(orderId, restaurantId
     order.dispatch.deliveryPartnerId = null;
     // Clear previously offered partners to give everyone a fresh chance when resending manually.
     order.dispatch.offeredTo = [];
+    // Clear any stuck dispatching lock so tryAutoAssign can pick it up immediately
+    order.dispatch.dispatchingAt = undefined;
     
     await order.save();
 

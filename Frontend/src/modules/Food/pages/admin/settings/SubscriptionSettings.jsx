@@ -56,7 +56,7 @@ export default function SubscriptionSettings() {
                 min={0}
                 value={freeTrialPeriod}
                 onChange={(e) => setFreeTrialPeriod(e.target.value)}
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
 
@@ -68,7 +68,7 @@ export default function SubscriptionSettings() {
                 <select
                   value={freeTrialUnit}
                   onChange={(e) => setFreeTrialUnit(e.target.value)}
-                  className="w-full pl-3 pr-8 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none"
+                  className="w-full pl-3 pr-8 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary appearance-none"
                 >
                   <option>Day</option>
                   <option>Month</option>
@@ -82,7 +82,7 @@ export default function SubscriptionSettings() {
             <div className="w-full md:w-auto md:self-end flex justify-end">
               <button
                 type="button"
-                className="px-4 py-2 text-xs font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                className="px-4 py-2 text-xs font-semibold rounded-lg bg-primary text-white hover:bg-primary/90 transition-colors"
               >
                 Submit
               </button>
@@ -112,7 +112,7 @@ export default function SubscriptionSettings() {
                 min={0}
                 value={warningDays}
                 onChange={(e) => setWarningDays(e.target.value)}
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
 
@@ -124,14 +124,14 @@ export default function SubscriptionSettings() {
                 type="text"
                 value={warningMessage}
                 onChange={(e) => setWarningMessage(e.target.value)}
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
 
             <div className="w-full lg:w-auto lg:self-end flex justify-end">
               <button
                 type="button"
-                className="px-4 py-2 text-xs font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                className="px-4 py-2 text-xs font-semibold rounded-lg bg-primary text-white hover:bg-primary/90 transition-colors"
               >
                 Submit
               </button>
@@ -162,14 +162,14 @@ export default function SubscriptionSettings() {
                 max={100}
                 value={returnUsage}
                 onChange={(e) => setReturnUsage(e.target.value)}
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
 
             <div className="w-full lg:w-auto lg:self-end flex justify-end">
               <button
                 type="button"
-                className="px-4 py-2 text-xs font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                className="px-4 py-2 text-xs font-semibold rounded-lg bg-primary text-white hover:bg-primary/90 transition-colors"
               >
                 Submit
               </button>
@@ -188,7 +188,7 @@ function ToggleSwitch({ enabled, onToggle }) {
       onClick={onToggle}
       className={`inline-flex items-center w-11 h-6 rounded-full border transition-all ${
         enabled
-          ? "bg-blue-600 border-blue-600 justify-end"
+          ? "bg-primary border-primary justify-end"
           : "bg-slate-200 border-slate-300 justify-start"
       }`}
     >

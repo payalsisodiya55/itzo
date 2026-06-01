@@ -22,7 +22,7 @@ const colorMap = {
   rose: "text-rose-600 bg-rose-50 border-rose-100 group-hover:bg-rose-100/50",
   amber:
     "text-amber-600 bg-amber-50 border-amber-100 group-hover:bg-amber-100/50",
-  blue: "text-blue-600 bg-blue-50 border-blue-100 group-hover:bg-blue-100/50",
+  blue: "text-primary bg-blue-50 border-blue-100 group-hover:bg-blue-100/50",
   emerald:
     "text-emerald-600 bg-emerald-50 border-emerald-100 group-hover:bg-emerald-100/50",
   violet:

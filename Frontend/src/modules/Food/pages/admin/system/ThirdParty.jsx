@@ -101,7 +101,7 @@ function ToggleSwitch({ enabled, onToggle }) {
       onClick={onToggle}
       className={`inline-flex items-center w-11 h-6 rounded-full border transition-all ${
         enabled
-          ? "bg-blue-600 border-blue-600 justify-end"
+          ? "bg-primary border-primary justify-end"
           : "bg-slate-200 border-slate-300 justify-start"
       }`}
     >
@@ -185,7 +185,7 @@ export default function ThirdParty() {
         {/* Page Title */}
         <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-3 mb-3">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-blue-500 flex items-center justify-center">
+            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
               <Settings className="w-3.5 h-3.5 text-white" />
             </div>
             <h1 className="text-lg font-bold text-slate-900">3rd Party Configuration</h1>
@@ -233,7 +233,7 @@ export default function ThirdParty() {
                           <button
                             type="button"
                             onClick={() => setExpandedService(expandedService === service.id ? null : service.id)}
-                            className="text-xs text-blue-600 hover:text-blue-700 font-medium"
+                            className="text-xs text-primary hover:text-blue-700 font-medium"
                           >
                             {expandedService === service.id ? "Hide" : "Configure"}
                           </button>
@@ -260,7 +260,7 @@ export default function ThirdParty() {
                                     value={value}
                                     onChange={(e) => handleFieldChange(service.id, field.key, e.target.value)}
                                     placeholder={`Enter ${field.label.toLowerCase()}`}
-                                    className="w-full px-3 py-2 pr-10 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    className="w-full px-3 py-2 pr-10 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                                   />
                                   {isPassword && (
                                     <button
@@ -290,7 +290,7 @@ export default function ThirdParty() {
                             <button
                               type="button"
                               onClick={() => handleSave(service.id)}
-                              className="px-3 py-1.5 text-xs font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                              className="px-3 py-1.5 text-xs font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
                             >
                               Save
                             </button>

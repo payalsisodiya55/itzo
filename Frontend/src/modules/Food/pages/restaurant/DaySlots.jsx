@@ -368,7 +368,7 @@ function TimePickerWheel({
           <div className="border-t border-gray-200 px-4 py-4 flex justify-center">
             <button
               onClick={handleConfirm}
-              className="text-blue-600 hover:text-blue-700 font-medium text-base transition-colors"
+              className="text-primary hover:text-blue-700 font-medium text-base transition-colors"
             >
               Okay
             </button>
@@ -714,7 +714,7 @@ export default function DaySlots() {
         {dayData.slots.length < 3 && (
           <button
             onClick={addSlot}
-            className="w-full text-blue-600 hover:text-blue-700 text-sm font-medium py-3 transition-colors"
+            className="w-full text-primary hover:text-blue-700 text-sm font-medium py-3 transition-colors"
           >
             + Add time slot
           </button>
@@ -730,7 +730,7 @@ export default function DaySlots() {
               id="copy-to-all"
               checked={copyToAllDays}
               onCheckedChange={setCopyToAllDays}
-              className="w-5 h-5 border-2 border-gray-300 rounded data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
+              className="w-5 h-5 border-2 border-gray-300 rounded data-[state=checked]:bg-primary data-[state=checked]:border-primary"
             />
             <label
               htmlFor="copy-to-all"

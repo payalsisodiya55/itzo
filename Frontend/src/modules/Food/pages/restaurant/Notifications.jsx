@@ -178,7 +178,7 @@ export default function Notifications() {
               >
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    {item.source === "broadcast" && <Bell className="w-4 h-4 text-blue-600" />}
+                    {item.source === "broadcast" && <Bell className="w-4 h-4 text-primary" />}
                     <p className="text-sm font-medium text-gray-900">{item.message}</p>
                   </div>
                   {item.source === "broadcast" ? (

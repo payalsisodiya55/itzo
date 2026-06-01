@@ -324,7 +324,7 @@ export const HistoryV2 = () => {
                       )}
                    </div>
                    
-                   <button onClick={() => setShowBonusModal(false)} className="w-full py-5 bg-black text-white rounded-2xl font-bold text-base mt-8 shrink-0 active:scale-95 transition-all">Okay, Got it</button>
+                   <button onClick={() => setShowBonusModal(false)} className="w-full py-5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl font-bold text-base mt-8 shrink-0 active:scale-95 transition-all">Okay, Got it</button>
                 </motion.div>
              </div>
           )}
