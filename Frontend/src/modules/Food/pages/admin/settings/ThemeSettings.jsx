@@ -34,7 +34,7 @@ export default function ThemeSettings() {
                 />
               </div>
               {selectedTheme === "theme1" && (
-                <div className="mt-2 px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded-full">
+                <div className="mt-2 px-3 py-1 bg-primary text-white text-xs font-medium rounded-full">
                   Selected
                 </div>
               )}
@@ -54,7 +54,7 @@ export default function ThemeSettings() {
                 />
               </div>
               {selectedTheme === "theme2" && (
-                <div className="mt-2 px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded-full">
+                <div className="mt-2 px-3 py-1 bg-primary text-white text-xs font-medium rounded-full">
                   Selected
                 </div>
               )}
@@ -63,7 +63,7 @@ export default function ThemeSettings() {
 
           {/* Apply Button */}
           <div className="flex justify-end mt-6">
-            <button className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+            <button className="px-6 py-2.5 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium">
               Apply
             </button>
           </div>

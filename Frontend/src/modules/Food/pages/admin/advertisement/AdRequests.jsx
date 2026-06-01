@@ -169,7 +169,7 @@ export default function AdRequests() {
               onClick={() => setActiveTab(tab.key)}
               className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === tab.key
-                  ? "border-blue-600 text-blue-600"
+                  ? "border-primary text-primary"
                   : "border-transparent text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -384,7 +384,7 @@ export default function AdRequests() {
               <select
                 value={filters.adsType}
                 onChange={(e) => setFilters(prev => ({ ...prev, adsType: e.target.value }))}
-                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
               >
                 <option value="">All Types</option>
                 {adsTypes.map(type => (
@@ -399,7 +399,7 @@ export default function AdRequests() {
               <select
                 value={filters.restaurant}
                 onChange={(e) => setFilters(prev => ({ ...prev, restaurant: e.target.value }))}
-                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
               >
                 <option value="">All Restaurants</option>
                 {restaurants.map(restaurant => (
@@ -416,7 +416,7 @@ export default function AdRequests() {
               </button>
               <button
                 onClick={handleApplyFilters}
-                className="px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-md"
+                className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary/90 transition-all shadow-md"
               >
                 Apply
               </button>

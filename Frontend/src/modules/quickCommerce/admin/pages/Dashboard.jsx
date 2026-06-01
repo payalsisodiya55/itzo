@@ -86,7 +86,7 @@ const AdminDashboard = () => {
             label: 'Total Users',
             value: overview.totalUsers?.toLocaleString() || '0',
             icon: Users,
-            color: 'text-blue-600',
+            color: 'text-primary',
             bg: 'bg-blue-50',
             trend: usersGrowth,
             description: 'Active this month'

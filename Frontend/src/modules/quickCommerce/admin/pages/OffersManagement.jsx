@@ -17,7 +17,7 @@ import { cn } from '@/lib/utils';
 import { adminApi } from '../services/adminApi';
 
 const STYLE_OPTIONS = [
-    { id: 'blue', label: 'Blue', className: 'bg-blue-600' },
+    { id: 'blue', label: 'Blue', className: 'bg-primary' },
     { id: 'green', label: 'Green', className: 'bg-[#0c831f]' },
     { id: 'orange', label: 'Orange', className: 'bg-orange-500' },
 ];

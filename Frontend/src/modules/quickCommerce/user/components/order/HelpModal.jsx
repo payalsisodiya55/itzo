@@ -43,7 +43,7 @@ const HelpModal = ({ isOpen, onClose }) => {
 
                                 <div className="space-y-3 mb-8">
                                     {issues.map((item, idx) => (
-                                        <button key={idx} className="w-full flex items-center justify-between p-4 rounded-2xl border border-slate-100 hover:border-green-200 hover:bg-green-50/50 transition-all group">
+                                        <button key={idx} className="w-full flex items-center justify-between p-4 rounded-2xl border border-slate-100 hover:border-primary/20 hover:bg-primary/5 transition-all group">
                                             <div className="flex items-center gap-4">
                                                 <div className="h-10 w-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 group-hover:bg-white group-hover:text-[#0c831f] transition-colors">
                                                     <item.icon size={20} />

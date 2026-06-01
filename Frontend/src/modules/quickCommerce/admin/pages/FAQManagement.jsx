@@ -532,7 +532,7 @@ const FAQManagement = () => {
                             className="w-full pl-11 pr-4 py-4 bg-white ring-1 ring-slate-200 rounded-2xl text-[10px] font-black uppercase tracking-widest outline-none focus:ring-2 focus:ring-sky-500/10 transition-all"
                         />
                     </div>
-                    <button onClick={handleAddCategory} className="w-full py-4 bg-slate-900 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-slate-800 transition-all">GENERATE NEW CATEGORY</button>
+                    <button onClick={handleAddCategory} className="w-full py-4 bg-primary text-primary-foreground rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-primary/90 hover:shadow-primary/20 transition-all">GENERATE NEW CATEGORY</button>
                 </div>
             </Modal>
         </div>

@@ -215,7 +215,7 @@ export default function SellerCommission() {
             </div>
             <button 
               onClick={handleAdd}
-              className="px-4 py-2.5 text-sm font-medium rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 flex items-center gap-2 transition-all shadow-md"
+              className="px-4 py-2.5 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2 transition-all shadow-md"
             >
               <Plus className="w-4 h-4" />
               Add Commission
@@ -280,7 +280,7 @@ export default function SellerCommission() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-center">
                           <div className="flex items-center justify-center gap-2">
-                            <button onClick={() => handleEdit(commission)} className="p-1.5 rounded text-blue-600 hover:bg-blue-50 transition-colors"><Edit className="w-4 h-4" /></button>
+                            <button onClick={() => handleEdit(commission)} className="p-1.5 rounded text-primary hover:bg-blue-50 transition-colors"><Edit className="w-4 h-4" /></button>
                             <button onClick={() => handleDelete(commission)} className="p-1.5 rounded text-red-600 hover:bg-red-50 transition-colors"><Trash2 className="w-4 h-4" /></button>
                           </div>
                         </td>
@@ -385,7 +385,7 @@ export default function SellerCommission() {
             <button 
               onClick={handleSave} 
               disabled={saving}
-              className="px-6 py-2 text-sm font-medium rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 disabled:opacity-50 flex items-center gap-2"
+              className="px-6 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 flex items-center gap-2"
             >
               {saving && <Loader2 className="w-4 h-4 animate-spin" />}
               {selectedCommission ? "Update Commission" : "Create Commission"}

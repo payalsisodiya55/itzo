@@ -309,7 +309,7 @@ export default function FeeSettings() {
 
               <div className="border border-slate-200 rounded-xl p-5 mb-8">
                 <div className="flex items-center gap-2 mb-2">
-                  <Store className="w-5 h-5 text-blue-600" />
+                  <Store className="w-5 h-5 text-primary" />
                   <h3 className="text-lg font-semibold text-slate-900">Dynamic Delivery Sponsor Rules</h3>
                 </div>
                 <p className="text-sm text-slate-500 mb-4">
@@ -345,7 +345,7 @@ export default function FeeSettings() {
                               <div className="flex items-center justify-center gap-2">
                                 <button
                                   onClick={() => handleEditRule(index)}
-                                  className="p-1.5 text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                                  className="p-1.5 text-primary hover:bg-blue-50 rounded transition-colors"
                                   title="Edit"
                                 >
                                   <Edit className="w-4 h-4" />

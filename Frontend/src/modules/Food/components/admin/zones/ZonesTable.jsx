@@ -8,7 +8,7 @@ function ToggleSwitch({ enabled, onToggle }) {
       onClick={onToggle}
       className={`inline-flex items-center w-11 h-6 rounded-full border transition-all ${
         enabled
-          ? "bg-blue-600 border-blue-600 justify-end"
+          ? "bg-primary border-primary justify-end"
           : "bg-slate-200 border-slate-300 justify-start"
       }`}
     >
@@ -164,7 +164,7 @@ export default function ZonesTable({
                           <button
                             type="button"
                             onClick={() => onEditZone(zone)}
-                            className="p-1.5 text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                            className="p-1.5 text-primary hover:bg-blue-50 rounded transition-colors"
                             title="Edit Zone"
                           >
                             <Pencil className="w-3.5 h-3.5" />
@@ -209,7 +209,7 @@ export default function ZonesTable({
                   onClick={() => handlePageChange(page)}
                   className={`px-2.5 py-1 text-[11px] font-medium rounded-lg transition-colors ${
                     currentPage === page
-                      ? "bg-blue-600 text-white"
+                      ? "bg-primary text-white"
                       : "bg-white text-slate-700 border border-slate-300 hover:bg-slate-50"
                   }`}
                 >

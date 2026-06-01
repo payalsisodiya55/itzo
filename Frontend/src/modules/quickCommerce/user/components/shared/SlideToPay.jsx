@@ -63,7 +63,7 @@ const SlideToPay = ({
 
     return (
         <div
-            className="relative h-16 w-full rounded-full overflow-hidden select-none touch-none bg-linear-to-r from-[#0c831f] via-[#16a34a] to-[#0c831f] shadow-[0_18px_45px_rgba(4,120,87,0.35)] border border-white/10"
+            className="relative h-16 w-full rounded-full overflow-hidden select-none touch-none bg-linear-to-r from-primary via-[#ff7029] to-primary shadow-lg shadow-primary/30 border border-white/10"
             ref={(el) => el && setContainerWidth(el.offsetWidth)}
         >
             {/* Progress Fill */}
@@ -91,7 +91,7 @@ const SlideToPay = ({
                 style={{ opacity: textOpacity }}
             >
                 <span className="text-white font-black text-sm md:text-[13px] tracking-[0.25em] uppercase flex items-center gap-2">
-                    {text} <span className="text-white/40">|</span> <span className="text-emerald-50 font-extrabold">₹{amount}</span>
+                    {text} <span className="text-white/40">|</span> <span className="text-orange-50 font-extrabold">₹{amount}</span>
                 </span>
 
                 <div className="absolute right-4 animate-pulse text-white/70">
@@ -112,7 +112,7 @@ const SlideToPay = ({
 
             {/* Draggable Circle */}
             <motion.div
-                className="absolute left-1 top-1 bottom-1 w-14 h-14 bg-white rounded-full flex items-center justify-center cursor-grab active:cursor-grabbing z-20 shadow-[0_6px_18px_rgba(15,118,110,0.35)] border border-emerald-100"
+                className="absolute left-1 top-1 bottom-1 w-14 h-14 bg-white rounded-full flex items-center justify-center cursor-grab active:cursor-grabbing z-20 shadow-md border border-orange-100"
                 drag={!isCompleted && !isLoading ? "x" : false}
                 dragConstraints={{ left: 0, right: maxDrag }}
                 dragElastic={0.05}
@@ -132,11 +132,11 @@ const SlideToPay = ({
                         className="relative w-full h-full flex items-center justify-center"
                         style={{ rotate }}
                     >
-                        <motion.div className="text-[#0c831f]" style={{ opacity: arrowsOpacity }}>
+                        <motion.div className="text-primary" style={{ opacity: arrowsOpacity }}>
                             <ChevronRight size={28} strokeWidth={3} />
                         </motion.div>
                         <motion.div
-                            className="absolute inset-0 flex items-center justify-center text-[#0c831f]"
+                            className="absolute inset-0 flex items-center justify-center text-primary"
                             style={{ opacity: checkOpacity }}
                         >
                             <Check size={24} strokeWidth={3} />

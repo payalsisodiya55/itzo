@@ -248,9 +248,9 @@ export default function Gallery() {
                     >
                       <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-2">
                         {file.type?.startsWith("image/") ? (
-                          <Image className="w-8 h-8 text-blue-600" />
+                          <Image className="w-8 h-8 text-primary" />
                         ) : (
-                          <File className="w-8 h-8 text-blue-600" />
+                          <File className="w-8 h-8 text-primary" />
                         )}
                       </div>
                       <span className="text-xs text-slate-700 text-center max-w-full truncate">

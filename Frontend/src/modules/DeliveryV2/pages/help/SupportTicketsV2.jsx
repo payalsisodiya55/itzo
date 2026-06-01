@@ -37,7 +37,7 @@ export const SupportTicketsV2 = () => {
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
       case "open": return "bg-orange-50 text-orange-600 border-orange-100";
-      case "in_progress": return "bg-blue-50 text-blue-600 border-blue-100";
+      case "in_progress": return "bg-blue-50 text-primary border-blue-100";
       case "resolved": return "bg-green-50 text-green-600 border-green-100";
       default: return "bg-gray-50 text-gray-600 border-gray-100";
     }
@@ -55,10 +55,10 @@ export const SupportTicketsV2 = () => {
 
       <div className="pt-24 px-4 space-y-6">
         {/* Create Action */}
-        <button 
-          onClick={() => navigate("/food/delivery/help/tickets/create")}
-          className="w-full bg-black text-white p-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl flex items-center justify-center gap-3 active:scale-95 transition-all"
-        >
+         <button 
+           onClick={() => navigate("/food/delivery/help/tickets/create")}
+           className="w-full bg-primary hover:bg-primary/90 text-primary-foreground p-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl flex items-center justify-center gap-3 active:scale-95 transition-all"
+         >
           <Plus className="w-5 h-5" />
           Raise New Ticket
         </button>
@@ -88,7 +88,7 @@ export const SupportTicketsV2 = () => {
                 <div className="flex justify-between items-start mb-3">
                    <div className="flex-1 pr-4">
                       <div className="flex items-center gap-2 mb-1">
-                         <h4 className="text-sm font-black text-gray-950 group-hover:text-blue-600 transition-colors uppercase tracking-tight line-clamp-1">{ticket.subject}</h4>
+                         <h4 className="text-sm font-black text-gray-950 group-hover:text-primary transition-colors uppercase tracking-tight line-clamp-1">{ticket.subject}</h4>
                          {ticket.ticketId && <span className="text-[9px] font-mono font-bold bg-gray-100 px-2 py-0.5 rounded">#{ticket.ticketId}</span>}
                       </div>
                       <p className="text-xs text-gray-500 font-medium line-clamp-1">{ticket.description}</p>

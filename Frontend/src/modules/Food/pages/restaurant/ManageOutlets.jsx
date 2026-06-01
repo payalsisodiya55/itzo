@@ -115,7 +115,7 @@ export default function ManageOutlets() {
           >
             <div className="bg-white border border-gray-200 px-4 py-4 rounded-lg shadow-2xl">
               <div className="flex items-start gap-3">
-                <Info className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
+                <Info className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                 <div className="flex-1 space-y-2">
                   <p className="text-sm font-semibold text-gray-900">
                     You can not modify the delivery areas of your restaurant

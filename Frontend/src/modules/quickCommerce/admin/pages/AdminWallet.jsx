@@ -563,7 +563,7 @@ const AdminWallet = () => {
                     {/* Quick Links */}
                     <div className="space-y-4">
                         <div className="flex items-center gap-3">
-                            <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
+                            <div className="p-2 bg-blue-50 text-primary rounded-lg">
                                 <BarChart3 className="h-5 w-5" />
                             </div>
                             <h2 className="text-xl font-black text-slate-900">Analytics</h2>

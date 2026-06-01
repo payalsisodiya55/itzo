@@ -126,7 +126,7 @@ export default function Notifications() {
         : "Just now",
       timestamp: item.createdAt || Date.now(),
       icon: "Bell",
-      iconColor: "text-blue-600",
+      iconColor: "text-primary",
     }))
 
     return [...broadcastItems, ...localItems].sort(

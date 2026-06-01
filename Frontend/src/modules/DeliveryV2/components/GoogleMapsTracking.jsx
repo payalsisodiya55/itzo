@@ -541,7 +541,7 @@ export default function GoogleMapsTracking({
               <span className="text-sm text-gray-500 mb-0.5">({routeInfo.distance})</span>
             </div>
             {destinationName && (
-              <div className="text-xs text-blue-600 mt-1 font-medium truncate">
+              <div className="text-xs text-primary mt-1 font-medium truncate">
                 to {destinationName}
               </div>
             )}

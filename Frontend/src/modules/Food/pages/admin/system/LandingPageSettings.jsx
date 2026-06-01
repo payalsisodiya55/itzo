@@ -164,7 +164,7 @@ export default function LandingPageSettings({ type = "admin" }) {
               <Monitor className="w-5 h-5 text-slate-700 flex-shrink-0" />
               <h1 className="text-xl lg:text-2xl font-bold text-slate-900 truncate">ECS Landing Page</h1>
             </div>
-            <a href="#" className="text-blue-600 hover:text-blue-700 text-xs sm:text-sm font-medium flex items-center gap-1 flex-shrink-0">
+            <a href="#" className="text-primary hover:text-primary/90 text-xs sm:text-sm font-medium flex items-center gap-1 flex-shrink-0">
               See how it works!
               <Info className="w-3 h-3 sm:w-4 sm:h-4" />
             </a>
@@ -182,7 +182,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                     onClick={() => setAdminActiveTab(tab)}
                     className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium whitespace-nowrap transition-all flex-shrink-0 ${
                       isActive
-                        ? "bg-blue-600 text-white"
+                        ? "bg-primary text-primary-foreground"
                         : "text-slate-700 hover:bg-slate-100"
                     }`}
                   >
@@ -206,7 +206,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                     onClick={() => setAdminActiveLanguage(lang.id)}
                     className={`text-xs sm:text-sm font-medium transition-all pb-1 whitespace-nowrap flex-shrink-0 ${
                       isActive
-                        ? "text-blue-600 border-b-2 border-blue-600"
+                        ? "text-primary border-b-2 border-primary"
                         : "text-slate-600 hover:text-slate-900"
                     }`}
                   >
@@ -230,7 +230,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                     onChange={(e) =>
                       setAdminHeaderContent((prev) => ({ ...prev, enabled: e.target.checked }))
                     }
-                    className="w-4 h-4 text-blue-600 rounded border-slate-300"
+                    className="w-4 h-4 text-primary rounded border-slate-300"
                   />
                   <label htmlFor="header-content" className="text-xs sm:text-sm font-semibold text-slate-900">
                     Header Content Section
@@ -249,7 +249,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                       onChange={(e) =>
                         setAdminHeaderContent((prev) => ({ ...prev, title: e.target.value }))
                       }
-                      className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                     />
                   </div>
 
@@ -264,7 +264,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                       onChange={(e) =>
                         setAdminHeaderContent((prev) => ({ ...prev, subtitle: e.target.value }))
                       }
-                      className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                     />
                   </div>
 
@@ -279,7 +279,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                       onChange={(e) =>
                         setAdminHeaderContent((prev) => ({ ...prev, tagline: e.target.value }))
                       }
-                      className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                     />
                   </div>
 
@@ -295,7 +295,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                         onChange={(e) =>
                           setAdminHeaderContent((prev) => ({ ...prev, buttonName: e.target.value }))
                         }
-                        className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                       />
                     </div>
 
@@ -311,7 +311,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                           onChange={(e) =>
                             setAdminHeaderContent((prev) => ({ ...prev, redirectLink: e.target.value }))
                           }
-                          className="flex-1 min-w-0 px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          className="flex-1 min-w-0 px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                         />
                         <button
                           type="button"
@@ -323,7 +323,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                           }
                           className={`px-3 py-1.5 text-xs sm:text-sm rounded-lg transition-all whitespace-nowrap ${
                             adminHeaderContent.redirectLinkEnabled
-                              ? "bg-blue-600 text-white"
+                              ? "bg-primary text-primary-foreground"
                               : "bg-slate-200 text-slate-600"
                           }`}
                         >
@@ -346,7 +346,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <button
                     type="button"
                     onClick={handleSave}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
+                    className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
                   >
                     <Save className="w-3 h-3" />
                     Save
@@ -364,7 +364,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                     onChange={(e) =>
                       setAdminImageContent((prev) => ({ ...prev, enabled: e.target.checked }))
                     }
-                    className="w-4 h-4 text-blue-600 rounded border-slate-300"
+                    className="w-4 h-4 text-primary rounded border-slate-300"
                   />
                   <label htmlFor="image-content" className="text-xs sm:text-sm font-semibold text-slate-900">
                     Image Content
@@ -394,7 +394,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                         </div>
                       ) : (
                         <label className="cursor-pointer">
-                          <div className="w-24 h-24 sm:w-32 sm:h-32 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center hover:border-blue-500 transition-colors">
+                          <div className="w-24 h-24 sm:w-32 sm:h-32 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center hover:border-primary transition-colors">
                             <span className="text-xs text-slate-500">Upload</span>
                           </div>
                           <input
@@ -430,7 +430,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                         </div>
                       ) : (
                         <label className="cursor-pointer">
-                          <div className="w-24 h-24 sm:w-32 sm:h-32 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center hover:border-blue-500 transition-colors">
+                          <div className="w-24 h-24 sm:w-32 sm:h-32 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center hover:border-primary transition-colors">
                             <span className="text-xs text-slate-500">Upload</span>
                           </div>
                           <input
@@ -457,7 +457,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <button
                     type="button"
                     onClick={handleSave}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
+                    className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
                   >
                     <Save className="w-3 h-3" />
                     Save
@@ -475,7 +475,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                     onChange={(e) =>
                       setAdminFloatingIcon((prev) => ({ ...prev, enabled: e.target.checked }))
                     }
-                    className="w-4 h-4 text-blue-600 rounded border-slate-300"
+                    className="w-4 h-4 text-primary rounded border-slate-300"
                   />
                   <label htmlFor="floating-icon" className="text-xs sm:text-sm font-semibold text-slate-900">
                     Floating Icon Content
@@ -494,7 +494,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                       onChange={(e) =>
                         setAdminFloatingIcon((prev) => ({ ...prev, totalOrder: e.target.value }))
                       }
-                      className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                     />
                   </div>
 
@@ -509,7 +509,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                       onChange={(e) =>
                         setAdminFloatingIcon((prev) => ({ ...prev, totalUser: e.target.value }))
                       }
-                      className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                     />
                   </div>
 
@@ -524,7 +524,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                       onChange={(e) =>
                         setAdminFloatingIcon((prev) => ({ ...prev, totalReviews: e.target.value }))
                       }
-                      className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                     />
                   </div>
                 </div>
@@ -541,7 +541,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <button
                     type="button"
                     onClick={handleSave}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
+                    className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
                   >
                     <Save className="w-3 h-3" />
                     Save
@@ -555,7 +555,7 @@ export default function LandingPageSettings({ type = "admin" }) {
           {adminActiveTab === "About us" && (
             <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-3 sm:p-4 w-full overflow-hidden" style={{ maxWidth: '100%', boxSizing: 'border-box' }}>
               <div className="flex items-center gap-2 mb-4">
-                <input type="checkbox" className="w-4 h-4 text-blue-600 rounded border-slate-300" defaultChecked />
+                <input type="checkbox" className="w-4 h-4 text-primary rounded border-slate-300" defaultChecked />
                 <label className="text-xs sm:text-sm font-semibold text-slate-900">About us Section</label>
               </div>
               <div className="space-y-3">
@@ -567,7 +567,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <input
                     type="text"
                     placeholder="Enter about us title"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
                 <div>
@@ -578,7 +578,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <textarea
                     rows={4}
                     placeholder="Enter about us description"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
               </div>
@@ -586,7 +586,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <button type="button" onClick={handleReset} className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <RotateCcw className="w-3 h-3" /> Reset
                 </button>
-                <button type="button" onClick={handleSave} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
+                <button type="button" onClick={handleSave} className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <Save className="w-3 h-3" /> Save
                 </button>
               </div>
@@ -597,7 +597,7 @@ export default function LandingPageSettings({ type = "admin" }) {
           {adminActiveTab === "Features" && (
             <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-3 sm:p-4 w-full overflow-hidden" style={{ maxWidth: '100%', boxSizing: 'border-box' }}>
               <div className="flex items-center gap-2 mb-4">
-                <input type="checkbox" className="w-4 h-4 text-blue-600 rounded border-slate-300" defaultChecked />
+                <input type="checkbox" className="w-4 h-4 text-primary rounded border-slate-300" defaultChecked />
                 <label className="text-xs sm:text-sm font-semibold text-slate-900">Features Section</label>
               </div>
               <div className="space-y-3">
@@ -609,7 +609,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <input
                     type="text"
                     placeholder="Enter features section title"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
                 <div>
@@ -620,7 +620,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <input
                     type="number"
                     placeholder="Enter number"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
               </div>
@@ -628,7 +628,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <button type="button" onClick={handleReset} className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <RotateCcw className="w-3 h-3" /> Reset
                 </button>
-                <button type="button" onClick={handleSave} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
+                <button type="button" onClick={handleSave} className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <Save className="w-3 h-3" /> Save
                 </button>
               </div>
@@ -639,7 +639,7 @@ export default function LandingPageSettings({ type = "admin" }) {
           {adminActiveTab === "Services" && (
             <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-3 sm:p-4 w-full overflow-hidden" style={{ maxWidth: '100%', boxSizing: 'border-box' }}>
               <div className="flex items-center gap-2 mb-4">
-                <input type="checkbox" className="w-4 h-4 text-blue-600 rounded border-slate-300" defaultChecked />
+                <input type="checkbox" className="w-4 h-4 text-primary rounded border-slate-300" defaultChecked />
                 <label className="text-xs sm:text-sm font-semibold text-slate-900">Services Section</label>
               </div>
               <div className="space-y-3">
@@ -651,7 +651,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <input
                     type="text"
                     placeholder="Enter services section title"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
                 <div>
@@ -662,7 +662,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <textarea
                     rows={3}
                     placeholder="Enter services description"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
               </div>
@@ -670,7 +670,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <button type="button" onClick={handleReset} className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <RotateCcw className="w-3 h-3" /> Reset
                 </button>
-                <button type="button" onClick={handleSave} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
+                <button type="button" onClick={handleSave} className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <Save className="w-3 h-3" /> Save
                 </button>
               </div>
@@ -681,7 +681,7 @@ export default function LandingPageSettings({ type = "admin" }) {
           {adminActiveTab === "Earn money" && (
             <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-3 sm:p-4 w-full overflow-hidden" style={{ maxWidth: '100%', boxSizing: 'border-box' }}>
               <div className="flex items-center gap-2 mb-4">
-                <input type="checkbox" className="w-4 h-4 text-blue-600 rounded border-slate-300" defaultChecked />
+                <input type="checkbox" className="w-4 h-4 text-primary rounded border-slate-300" defaultChecked />
                 <label className="text-xs sm:text-sm font-semibold text-slate-900">Earn money Section</label>
               </div>
               <div className="space-y-3">
@@ -693,7 +693,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <input
                     type="text"
                     placeholder="Enter earn money section title"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
                 <div>
@@ -704,7 +704,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <input
                     type="text"
                     placeholder="Enter button text"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
               </div>
@@ -712,7 +712,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <button type="button" onClick={handleReset} className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <RotateCcw className="w-3 h-3" /> Reset
                 </button>
-                <button type="button" onClick={handleSave} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
+                <button type="button" onClick={handleSave} className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <Save className="w-3 h-3" /> Save
                 </button>
               </div>
@@ -723,7 +723,7 @@ export default function LandingPageSettings({ type = "admin" }) {
           {adminActiveTab === "Why choose us" && (
             <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-3 sm:p-4 w-full overflow-hidden" style={{ maxWidth: '100%', boxSizing: 'border-box' }}>
               <div className="flex items-center gap-2 mb-4">
-                <input type="checkbox" className="w-4 h-4 text-blue-600 rounded border-slate-300" defaultChecked />
+                <input type="checkbox" className="w-4 h-4 text-primary rounded border-slate-300" defaultChecked />
                 <label className="text-xs sm:text-sm font-semibold text-slate-900">Why choose us Section</label>
               </div>
               <div className="space-y-3">
@@ -735,7 +735,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <input
                     type="text"
                     placeholder="Enter why choose us title"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
                 <div>
@@ -746,7 +746,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <input
                     type="number"
                     placeholder="Enter number"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
               </div>
@@ -754,7 +754,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <button type="button" onClick={handleReset} className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <RotateCcw className="w-3 h-3" /> Reset
                 </button>
-                <button type="button" onClick={handleSave} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
+                <button type="button" onClick={handleSave} className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <Save className="w-3 h-3" /> Save
                 </button>
               </div>
@@ -765,7 +765,7 @@ export default function LandingPageSettings({ type = "admin" }) {
           {adminActiveTab === "Testimonials" && (
             <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-3 sm:p-4 w-full overflow-hidden" style={{ maxWidth: '100%', boxSizing: 'border-box' }}>
               <div className="flex items-center gap-2 mb-4">
-                <input type="checkbox" className="w-4 h-4 text-blue-600 rounded border-slate-300" defaultChecked />
+                <input type="checkbox" className="w-4 h-4 text-primary rounded border-slate-300" defaultChecked />
                 <label className="text-xs sm:text-sm font-semibold text-slate-900">Testimonials Section</label>
               </div>
               <div className="space-y-3">
@@ -777,7 +777,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <input
                     type="text"
                     placeholder="Enter testimonials section title"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
                 <div>
@@ -788,7 +788,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <input
                     type="number"
                     placeholder="Enter number"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
               </div>
@@ -796,7 +796,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <button type="button" onClick={handleReset} className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <RotateCcw className="w-3 h-3" /> Reset
                 </button>
-                <button type="button" onClick={handleSave} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
+                <button type="button" onClick={handleSave} className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <Save className="w-3 h-3" /> Save
                 </button>
               </div>
@@ -807,7 +807,7 @@ export default function LandingPageSettings({ type = "admin" }) {
           {adminActiveTab === "Available zone" && (
             <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-3 sm:p-4 w-full overflow-hidden" style={{ maxWidth: '100%', boxSizing: 'border-box' }}>
               <div className="flex items-center gap-2 mb-4">
-                <input type="checkbox" className="w-4 h-4 text-blue-600 rounded border-slate-300" defaultChecked />
+                <input type="checkbox" className="w-4 h-4 text-primary rounded border-slate-300" defaultChecked />
                 <label className="text-xs sm:text-sm font-semibold text-slate-900">Available zone Section</label>
               </div>
               <div className="space-y-3">
@@ -819,7 +819,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <input
                     type="text"
                     placeholder="Enter available zone section title"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
                 <div>
@@ -828,7 +828,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                     <Info className="w-3 h-3 text-slate-400" />
                   </label>
                   <div className="flex items-center gap-2">
-                    <input type="checkbox" className="w-4 h-4 text-blue-600 rounded border-slate-300" defaultChecked />
+                    <input type="checkbox" className="w-4 h-4 text-primary rounded border-slate-300" defaultChecked />
                     <span className="text-xs sm:text-sm text-slate-700">Show available zones</span>
                   </div>
                 </div>
@@ -837,7 +837,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <button type="button" onClick={handleReset} className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <RotateCcw className="w-3 h-3" /> Reset
                 </button>
-                <button type="button" onClick={handleSave} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
+                <button type="button" onClick={handleSave} className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <Save className="w-3 h-3" /> Save
                 </button>
               </div>
@@ -848,7 +848,7 @@ export default function LandingPageSettings({ type = "admin" }) {
           {adminActiveTab === "Fixed data" && (
             <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-3 sm:p-4 w-full overflow-hidden" style={{ maxWidth: '100%', boxSizing: 'border-box' }}>
               <div className="flex items-center gap-2 mb-4">
-                <input type="checkbox" className="w-4 h-4 text-blue-600 rounded border-slate-300" defaultChecked />
+                <input type="checkbox" className="w-4 h-4 text-primary rounded border-slate-300" defaultChecked />
                 <label className="text-xs sm:text-sm font-semibold text-slate-900">Fixed data Section</label>
               </div>
               <div className="space-y-3">
@@ -860,7 +860,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <input
                     type="text"
                     placeholder="Enter company name"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
                 <div>
@@ -871,7 +871,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <input
                     type="email"
                     placeholder="Enter contact email"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
                 <div>
@@ -882,7 +882,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <input
                     type="tel"
                     placeholder="Enter contact phone"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
               </div>
@@ -890,7 +890,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <button type="button" onClick={handleReset} className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <RotateCcw className="w-3 h-3" /> Reset
                 </button>
-                <button type="button" onClick={handleSave} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
+                <button type="button" onClick={handleSave} className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <Save className="w-3 h-3" /> Save
                 </button>
               </div>
@@ -901,7 +901,7 @@ export default function LandingPageSettings({ type = "admin" }) {
           {adminActiveTab === "Button & links" && (
             <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-3 sm:p-4 w-full overflow-hidden" style={{ maxWidth: '100%', boxSizing: 'border-box' }}>
               <div className="flex items-center gap-2 mb-4">
-                <input type="checkbox" className="w-4 h-4 text-blue-600 rounded border-slate-300" defaultChecked />
+                <input type="checkbox" className="w-4 h-4 text-primary rounded border-slate-300" defaultChecked />
                 <label className="text-xs sm:text-sm font-semibold text-slate-900">Button & links Section</label>
               </div>
               <div className="space-y-3">
@@ -913,7 +913,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <input
                     type="text"
                     placeholder="Enter primary button text"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
                 <div>
@@ -924,7 +924,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <input
                     type="url"
                     placeholder="Enter button link URL"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
                 <div>
@@ -935,7 +935,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <input
                     type="text"
                     placeholder="Enter secondary button text"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
                 <div>
@@ -946,7 +946,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   <input
                     type="url"
                     placeholder="Enter button link URL"
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
               </div>
@@ -954,7 +954,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <button type="button" onClick={handleReset} className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <RotateCcw className="w-3 h-3" /> Reset
                 </button>
-                <button type="button" onClick={handleSave} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
+                <button type="button" onClick={handleSave} className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <Save className="w-3 h-3" /> Save
                 </button>
               </div>
@@ -965,7 +965,7 @@ export default function LandingPageSettings({ type = "admin" }) {
           {adminActiveTab === "Background color" && (
             <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-3 sm:p-4 w-full overflow-hidden" style={{ maxWidth: '100%', boxSizing: 'border-box' }}>
               <div className="flex items-center gap-2 mb-4">
-                <input type="checkbox" className="w-4 h-4 text-blue-600 rounded border-slate-300" defaultChecked />
+                <input type="checkbox" className="w-4 h-4 text-primary rounded border-slate-300" defaultChecked />
                 <label className="text-xs sm:text-sm font-semibold text-slate-900">Background color Section</label>
               </div>
               <div className="space-y-3">
@@ -983,7 +983,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                     <input
                       type="text"
                       placeholder="#ffffff"
-                      className="flex-1 px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="flex-1 px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                     />
                   </div>
                 </div>
@@ -1001,7 +1001,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                     <input
                       type="text"
                       placeholder="#f8f9fa"
-                      className="flex-1 px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="flex-1 px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                     />
                   </div>
                 </div>
@@ -1019,7 +1019,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                     <input
                       type="text"
                       placeholder="#006fbd"
-                      className="flex-1 px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="flex-1 px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                     />
                   </div>
                 </div>
@@ -1028,7 +1028,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <button type="button" onClick={handleReset} className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <RotateCcw className="w-3 h-3" /> Reset
                 </button>
-                <button type="button" onClick={handleSave} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
+                <button type="button" onClick={handleSave} className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5">
                   <Save className="w-3 h-3" /> Save
                 </button>
               </div>
@@ -1073,7 +1073,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   onClick={() => setReactActiveTab(tab)}
                   className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium whitespace-nowrap transition-all ${
                     isActive
-                      ? "bg-blue-600 text-white"
+                      ? "bg-primary text-primary-foreground"
                       : "text-slate-700 hover:bg-slate-100"
                   }`}
                 >
@@ -1108,7 +1108,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                         onClick={() => setReactActiveLanguage(lang.id)}
                         className={`text-xs sm:text-sm font-medium transition-all pb-1 whitespace-nowrap ${
                           isActive
-                            ? "text-blue-600 border-b-2 border-blue-600"
+                            ? "text-primary border-b-2 border-primary"
                             : "text-slate-600 hover:text-slate-900"
                         }`}
                       >
@@ -1131,7 +1131,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                       setReactHeaderContent((prev) => ({ ...prev, title: e.target.value }))
                     }
                     maxLength={50}
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
 
@@ -1146,7 +1146,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                       setReactHeaderContent((prev) => ({ ...prev, subtitle: e.target.value }))
                     }
                     maxLength={100}
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
 
@@ -1178,7 +1178,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                       </div>
                     ) : (
                       <label className="cursor-pointer">
-                        <div className="w-40 h-24 sm:w-48 sm:h-32 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center hover:border-blue-500 transition-colors">
+                        <div className="w-40 h-24 sm:w-48 sm:h-32 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center hover:border-primary transition-colors">
                           <span className="text-xs text-slate-500">Upload Image</span>
                         </div>
                         <input
@@ -1205,7 +1205,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <button
                   type="button"
                   onClick={handleSave}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
+                  className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
                 >
                   <Save className="w-3 h-3" />
                   Save
@@ -1234,7 +1234,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                         onClick={() => setReactActiveLanguage(lang.id)}
                         className={`text-xs sm:text-sm font-medium transition-all pb-1 whitespace-nowrap ${
                           isActive
-                            ? "text-blue-600 border-b-2 border-blue-600"
+                            ? "text-primary border-b-2 border-primary"
                             : "text-slate-600 hover:text-slate-900"
                         }`}
                       >
@@ -1256,7 +1256,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                     setReactLocationPicker((prev) => ({ ...prev, placeholder: e.target.value }))
                   }
                   maxLength={50}
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                 />
               </div>
 
@@ -1272,7 +1272,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <button
                   type="button"
                   onClick={handleSave}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
+                  className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
                 >
                   <Save className="w-3 h-3" />
                   Save
@@ -1300,7 +1300,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                     onChange={(e) =>
                       setReactBusinessStats((prev) => ({ ...prev, restaurant: e.target.value }))
                     }
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
 
@@ -1314,7 +1314,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                     onChange={(e) =>
                       setReactBusinessStats((prev) => ({ ...prev, happyCustomer: e.target.value }))
                     }
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
 
@@ -1328,7 +1328,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                     onChange={(e) =>
                       setReactBusinessStats((prev) => ({ ...prev, averageDelivery: e.target.value }))
                     }
-                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
               </div>
@@ -1345,7 +1345,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <button
                   type="button"
                   onClick={handleSave}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
+                  className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
                 >
                   <Save className="w-3 h-3" />
                   Save
@@ -1372,7 +1372,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <input
                   type="text"
                   placeholder="Enter section title"
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                 />
               </div>
               <div>
@@ -1382,7 +1382,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <textarea
                   rows={4}
                   placeholder="Enter section description"
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                 />
               </div>
             </div>
@@ -1398,7 +1398,7 @@ export default function LandingPageSettings({ type = "admin" }) {
               <button
                 type="button"
                 onClick={handleSave}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
+                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
               >
                 <Save className="w-3 h-3" />
                 Save
@@ -1424,7 +1424,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <input
                   type="text"
                   placeholder="Enter step 1 title"
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                 />
               </div>
               <div>
@@ -1434,7 +1434,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <input
                   type="text"
                   placeholder="Enter step 2 title"
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                 />
               </div>
               <div>
@@ -1444,7 +1444,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <input
                   type="text"
                   placeholder="Enter step 3 title"
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                 />
               </div>
             </div>
@@ -1460,7 +1460,7 @@ export default function LandingPageSettings({ type = "admin" }) {
               <button
                 type="button"
                 onClick={handleSave}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
+                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
               >
                 <Save className="w-3 h-3" />
                 Save
@@ -1486,7 +1486,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <input
                   type="text"
                   placeholder="Enter banner title"
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                 />
               </div>
               <div>
@@ -1495,7 +1495,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 </label>
                 <div className="relative inline-block">
                   <label className="cursor-pointer">
-                    <div className="w-40 h-24 sm:w-48 sm:h-32 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center hover:border-blue-500 transition-colors">
+                    <div className="w-40 h-24 sm:w-48 sm:h-32 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center hover:border-primary transition-colors">
                       <span className="text-xs text-slate-500">Upload Image</span>
                     </div>
                     <input
@@ -1519,7 +1519,7 @@ export default function LandingPageSettings({ type = "admin" }) {
               <button
                 type="button"
                 onClick={handleSave}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
+                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
               >
                 <Save className="w-3 h-3" />
                 Save
@@ -1545,7 +1545,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <input
                   type="text"
                   placeholder="Enter categories section title"
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                 />
               </div>
               <div>
@@ -1555,7 +1555,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <input
                   type="number"
                   placeholder="Enter number"
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                 />
               </div>
             </div>
@@ -1571,7 +1571,7 @@ export default function LandingPageSettings({ type = "admin" }) {
               <button
                 type="button"
                 onClick={handleSave}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
+                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
               >
                 <Save className="w-3 h-3" />
                 Save
@@ -1597,7 +1597,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <input
                   type="text"
                   placeholder="Enter section title"
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                 />
               </div>
               <div>
@@ -1607,7 +1607,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <input
                   type="url"
                   placeholder="https://play.google.com/..."
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                 />
               </div>
               <div>
@@ -1617,7 +1617,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <input
                   type="url"
                   placeholder="https://apps.apple.com/..."
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                 />
               </div>
             </div>
@@ -1633,7 +1633,7 @@ export default function LandingPageSettings({ type = "admin" }) {
               <button
                 type="button"
                 onClick={handleSave}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
+                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
               >
                 <Save className="w-3 h-3" />
                 Save
@@ -1659,14 +1659,14 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <input
                   type="text"
                   placeholder="Enter gallery section title"
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                 />
               </div>
               <div>
                 <label className="block text-xs sm:text-sm font-semibold text-slate-700 mb-1.5">
                   Number of Images per Row
                 </label>
-                <select className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <select className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
                   <option>3</option>
                   <option>4</option>
                   <option>6</option>
@@ -1685,7 +1685,7 @@ export default function LandingPageSettings({ type = "admin" }) {
               <button
                 type="button"
                 onClick={handleSave}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
+                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
               >
                 <Save className="w-3 h-3" />
                 Save
@@ -1711,7 +1711,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <input
                   type="text"
                   placeholder="Enter section title"
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                 />
               </div>
               <div>
@@ -1719,7 +1719,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                   Enable Zone Display
                 </label>
                 <div className="flex items-center gap-2">
-                  <input type="checkbox" className="w-4 h-4 text-blue-600 rounded border-slate-300" />
+                  <input type="checkbox" className="w-4 h-4 text-primary rounded border-slate-300" />
                   <span className="text-xs sm:text-sm text-slate-700">Show available zones</span>
                 </div>
               </div>
@@ -1736,7 +1736,7 @@ export default function LandingPageSettings({ type = "admin" }) {
               <button
                 type="button"
                 onClick={handleSave}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
+                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
               >
                 <Save className="w-3 h-3" />
                 Save
@@ -1762,7 +1762,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <input
                   type="text"
                   placeholder="Enter registration section title"
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                 />
               </div>
               <div>
@@ -1772,7 +1772,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <input
                   type="text"
                   placeholder="Enter button text"
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                 />
               </div>
             </div>
@@ -1788,7 +1788,7 @@ export default function LandingPageSettings({ type = "admin" }) {
               <button
                 type="button"
                 onClick={handleSave}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
+                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
               >
                 <Save className="w-3 h-3" />
                 Save
@@ -1814,7 +1814,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <input
                   type="text"
                   placeholder="Enter testimonials section title"
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                 />
               </div>
               <div>
@@ -1824,7 +1824,7 @@ export default function LandingPageSettings({ type = "admin" }) {
                 <input
                   type="number"
                   placeholder="Enter number"
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                 />
               </div>
             </div>
@@ -1840,7 +1840,7 @@ export default function LandingPageSettings({ type = "admin" }) {
               <button
                 type="button"
                 onClick={handleSave}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
+                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1.5"
               >
                 <Save className="w-3 h-3" />
                 Save

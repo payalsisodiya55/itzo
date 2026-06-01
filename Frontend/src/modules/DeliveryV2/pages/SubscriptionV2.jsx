@@ -444,7 +444,7 @@ export default function SubscriptionV2() {
                         <Button 
                           onClick={() => handlePurchase(plan)}
                           disabled={!!purchasing || hasLockedSubscription}
-                          className={`rounded-2xl px-6 font-black h-12 transition-all shadow-lg ${(isCurrentPlan || isLocked) ? 'bg-slate-100 text-slate-400 shadow-none' : 'bg-slate-900 text-white hover:bg-black shadow-slate-200'}`}
+                          className={`rounded-2xl px-6 font-black h-12 transition-all shadow-lg ${(isCurrentPlan || isLocked) ? 'bg-slate-100 text-slate-400 shadow-none' : 'bg-primary text-primary-foreground hover:bg-primary/90 shadow-primary/20'}`}
                         >
                           {purchasing === plan._id ? (
                             <Loader2 className="w-5 h-5 animate-spin" />
@@ -620,7 +620,7 @@ export default function SubscriptionV2() {
                     <Button 
                       onClick={handleTopup}
                       disabled={topupLoading || !topupAmount || (isLowBalance && parseFloat(topupAmount) < requiredRecharge)}
-                      className="w-full h-14 bg-slate-900 hover:bg-black text-white rounded-2xl text-sm font-black shadow-xl shadow-slate-200 active:scale-95 transition-all flex items-center justify-center gap-2.5 disabled:opacity-40 disabled:cursor-not-allowed"
+                      className="w-full h-14 bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl text-sm font-black shadow-xl shadow-primary/20 active:scale-95 transition-all flex items-center justify-center gap-2.5 disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       {topupLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <ShieldCheck className="w-5 h-5" />}
                       {topupLoading ? 'Processing...' : 'Proceed to Payment'}

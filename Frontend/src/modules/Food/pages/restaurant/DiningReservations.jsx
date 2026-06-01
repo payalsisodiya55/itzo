@@ -439,7 +439,7 @@ export default function DiningReservations() {
                                 placeholder="Search guests..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="w-full sm:w-64 pl-11 pr-4 py-2.5 bg-slate-100/50 border-2 border-transparent rounded-2xl text-sm font-bold focus:bg-white focus:border-blue-500/20 focus:ring-4 focus:ring-blue-500/5 transition-all outline-none"
+                                className="w-full sm:w-64 pl-11 pr-4 py-2.5 bg-slate-100/50 border-2 border-transparent rounded-2xl text-sm font-bold focus:bg-white focus:border-primary/20 focus:ring-4 focus:ring-primary/5 transition-all outline-none"
                             />
                         </div>
                         <div className="flex items-center gap-1 bg-slate-100/50 p-1 rounded-2xl border border-slate-200/50">
@@ -471,7 +471,7 @@ export default function DiningReservations() {
                     >
                         <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50/50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110" />
                         <div className="flex items-center gap-4 relative">
-                            <div className="bg-blue-600 p-3 rounded-xl text-white shadow-lg shadow-blue-200">
+                            <div className="bg-primary p-3 rounded-xl text-white shadow-lg shadow-blue-200">
                                 <Users className="w-6 h-6" />
                             </div>
                             <div>
@@ -638,7 +638,7 @@ export default function DiningReservations() {
                                 <h2 className="text-lg font-bold text-slate-900">Menu Photos</h2>
                                 <p className="text-sm text-slate-500 mt-1">Add menu photos and view previously uploaded photos.</p>
                             </div>
-                            <label className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-blue-600 text-white text-sm font-semibold cursor-pointer hover:bg-blue-700 transition-colors">
+                            <label className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-primary text-white text-sm font-semibold cursor-pointer hover:bg-primary/90 transition-colors">
                                 <UploadCloud className="w-4 h-4" />
                                 {uploadingMenuPhotos ? "Uploading..." : "Add Photos"}
                                 <input
@@ -728,7 +728,7 @@ export default function DiningReservations() {
                                         value={maxGuestsLimit}
                                         onChange={(e) => setMaxGuestsLimit(e.target.value)}
                                         disabled={!isDiningToggleOn}
-                                        className="w-20 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-center text-sm font-semibold text-slate-900 outline-none focus:border-blue-500"
+                                        className="w-20 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-center text-sm font-semibold text-slate-900 outline-none focus:border-primary"
                                     />
                                 </div>
 
@@ -977,7 +977,7 @@ export default function DiningReservations() {
                                                             {String(booking.status || "").toLowerCase() === 'checked-in' && (
                                                                 <button
                                                                     onClick={() => handleStatusUpdate(booking._id, 'completed')}
-                                                                    className="px-3 py-1.5 bg-blue-600 text-white text-xs font-bold rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+                                                                    className="px-3 py-1.5 bg-primary text-white text-xs font-bold rounded-lg hover:bg-primary/90 transition-colors shadow-sm"
                                                                 >
                                                                     Check-out
                                                                 </button>
@@ -985,7 +985,7 @@ export default function DiningReservations() {
                                                             {booking.specialRequest && (
                                                                 <button
                                                                     title={booking.specialRequest}
-                                                                    className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border border-blue-100 bg-blue-50/50"
+                                                                    className="p-2 text-primary hover:bg-blue-50 rounded-lg transition-colors border border-blue-100 bg-blue-50/50"
                                                                 >
                                                                     <MessageSquare className="w-4 h-4" />
                                                                 </button>
@@ -1088,7 +1088,7 @@ export default function DiningReservations() {
                                                 {String(booking.status || "").toLowerCase() === 'checked-in' && (
                                                     <button
                                                         onClick={() => handleStatusUpdate(booking._id, 'completed')}
-                                                        className="flex-1 py-2.5 bg-blue-600 text-white text-xs font-black rounded-xl hover:bg-blue-700 transition-colors uppercase tracking-widest"
+                                                        className="flex-1 py-2.5 bg-primary text-white text-xs font-black rounded-xl hover:bg-primary/90 transition-colors uppercase tracking-widest"
                                                     >
                                                         Check-out
                                                     </button>

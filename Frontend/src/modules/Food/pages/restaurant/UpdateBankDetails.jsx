@@ -176,7 +176,7 @@ export default function UpdateBankDetails() {
     `w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-base transition-colors ${
       errors[key]
         ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-        : "border-gray-300 focus:ring-blue-500 focus:border-transparent"
+        : "border-gray-300 focus:ring-primary focus:border-transparent"
     }`
 
   return (
@@ -331,7 +331,7 @@ export default function UpdateBankDetails() {
             <button
               type="submit"
               disabled={saving || uploadingQr}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white font-bold py-4 rounded-lg text-base transition-colors"
+              className="w-full bg-primary hover:bg-primary/90 disabled:bg-blue-400 disabled:cursor-not-allowed text-white font-bold py-4 rounded-lg text-base transition-colors"
             >
               {saving ? "Saving..." : "Submit"}
             </button>

@@ -196,7 +196,7 @@ export default function SupportTickets() {
                       <td className="px-4 py-3">
                         <button
                           onClick={() => updateTicket(ticket._id, { adminResponse: drafts[ticket._id] ?? ticket.adminResponse ?? "" })}
-                          className="px-3 py-1 rounded bg-emerald-600 text-white text-sm hover:bg-emerald-700 transition-colors"
+                          className="px-3 py-1 rounded bg-primary text-primary-foreground text-sm hover:bg-primary/90 transition-colors"
                         >
                           Save
                         </button>

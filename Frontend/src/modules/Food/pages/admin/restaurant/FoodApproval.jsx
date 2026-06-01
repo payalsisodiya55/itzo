@@ -425,7 +425,7 @@ export default function FoodApproval() {
                    <p className="text-sm font-semibold text-gray-900">{selectedRequest.restaurantName || '-'}</p>
                    <p className="text-xs text-gray-500">ID: {selectedRequest.restaurantId || '-'}</p>
                 </div>
-                <div className="px-3 py-1 bg-white rounded-full border border-blue-100 text-[10px] font-bold text-blue-600">
+                <div className="px-3 py-1 bg-white rounded-full border border-blue-100 text-[10px] font-bold text-primary">
                     {selectedRequest.entityType?.toUpperCase()}
                 </div>
               </div>

@@ -163,7 +163,7 @@ export default function TaxReport() {
     return (
       <div className="p-4 lg:p-6 bg-slate-50 min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+          <Loader2 className="w-8 h-8 text-primary animate-spin" />
           <p className="text-gray-600">Loading tax report...</p>
         </div>
       </div>
@@ -193,7 +193,7 @@ export default function TaxReport() {
               <select
                 value={filters.dateRangeType}
                 onChange={(e) => setFilters(prev => ({ ...prev, dateRangeType: e.target.value }))}
-                className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 <option value="All Time">All Time</option>
                 <option value="Today">Today</option>
@@ -211,7 +211,7 @@ export default function TaxReport() {
               <select
                 value={filters.calculateTax}
                 onChange={(e) => setFilters(prev => ({ ...prev, calculateTax: e.target.value }))}
-                className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 <option value="Percentage">Percentage</option>
                 <option value="Fixed Amount">Fixed Amount</option>
@@ -227,7 +227,7 @@ export default function TaxReport() {
               <select
                 value={filters.taxRate}
                 onChange={(e) => setFilters(prev => ({ ...prev, taxRate: e.target.value }))}
-                className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 <option value="Select Tax Rate">Select Tax Rate</option>
                 <option value="5%">5%</option>
@@ -249,7 +249,7 @@ export default function TaxReport() {
             </button>
             <button
               onClick={handleSubmit}
-              className="px-6 py-2.5 text-sm font-medium rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-all"
+              className="px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary transition-all"
             >
               Submit
             </button>
@@ -263,7 +263,7 @@ export default function TaxReport() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-slate-600 mb-1">Total Income</p>
-                <p className="text-2xl font-bold text-blue-600">{stats.totalIncome}</p>
+                <p className="text-2xl font-bold text-primary">{stats.totalIncome}</p>
               </div>
               <div className="w-14 h-14 rounded-lg bg-yellow-100 flex items-center justify-center">
                 <DollarSign className="w-8 h-8 text-yellow-600" />
@@ -382,7 +382,7 @@ export default function TaxReport() {
                       <td className="px-4 py-3 text-center">
                         <button 
                           onClick={() => handleViewDetails(report)}
-                          className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                          className="text-primary hover:text-blue-800 text-sm font-medium"
                         >
                           View
                         </button>
@@ -427,7 +427,7 @@ export default function TaxReport() {
           <DialogHeader className="px-6 pt-6 pb-4 border-b border-slate-100">
             <DialogTitle className="flex items-center justify-between">
               <span className="flex items-center gap-2">
-                <FileText className="w-5 h-5 text-blue-600" />
+                <FileText className="w-5 h-5 text-primary" />
                 Tax Details: {selectedReport?.incomeSource}
               </span>
             </DialogTitle>
@@ -436,7 +436,7 @@ export default function TaxReport() {
           <div className="p-6 max-h-[70vh] overflow-y-auto">
             {detailLoading ? (
               <div className="flex flex-col items-center justify-center py-12">
-                <Loader2 className="w-8 h-8 text-blue-600 animate-spin mb-4" />
+                <Loader2 className="w-8 h-8 text-primary animate-spin mb-4" />
                 <p className="text-slate-600">Fetching order details...</p>
               </div>
             ) : reportDetail?.orders?.length > 0 ? (

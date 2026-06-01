@@ -74,7 +74,7 @@ export default function EmployeeRole() {
     { key: "en", label: "English(EN)" },
     { key: "bn", label: "Bengali - বাংলা(BN)" },
     { key: "ar", label: "Arabic - العربية(AR)" },
-    { key: "es", label: "Spanish - espa�ol(ES)" },
+    { key: "es", label: "Spanish - espa�ol(ES)" },
   ]
 
   const handlePermissionChange = (permissionId, checked) => {
@@ -163,7 +163,7 @@ export default function EmployeeRole() {
         {/* Page Header */}
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
               <UserCog className="w-5 h-5 text-white" />
             </div>
             <h1 className="text-2xl font-bold text-slate-900">Employee Role</h1>
@@ -178,7 +178,7 @@ export default function EmployeeRole() {
                 onClick={() => setActiveLanguage(tab.key)}
                 className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
                   activeLanguage === tab.key
-                    ? "border-blue-600 text-blue-600"
+                    ? "border-primary text-primary"
                     : "border-transparent text-slate-600 hover:text-slate-900"
                 }`}
               >
@@ -200,7 +200,7 @@ export default function EmployeeRole() {
                 value={roleName}
                 onChange={(e) => setRoleName(e.target.value)}
                 placeholder="Role name example"
-                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
               />
             </div>
           </div>
@@ -217,7 +217,7 @@ export default function EmployeeRole() {
                   id="selectAll"
                   checked={allSelected}
                   onChange={(e) => handleSelectAll(e.target.checked)}
-                  className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary"
                 />
                 <label htmlFor="selectAll" className="ml-2 text-sm font-semibold text-slate-700">
                   Select All
@@ -235,7 +235,7 @@ export default function EmployeeRole() {
                       id={permission.id}
                       checked={permissions[permission.id] || false}
                       onChange={(e) => handlePermissionChange(permission.id, e.target.checked)}
-                      className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                      className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary"
                     />
                     <label htmlFor={permission.id} className="ml-2 text-sm text-slate-700">
                       {permission.label}
@@ -253,7 +253,7 @@ export default function EmployeeRole() {
                       id={permission.id}
                       checked={permissions[permission.id] || false}
                       onChange={(e) => handlePermissionChange(permission.id, e.target.checked)}
-                      className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                      className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary"
                     />
                     <label htmlFor={permission.id} className="ml-2 text-sm text-slate-700">
                       {permission.label}
@@ -271,7 +271,7 @@ export default function EmployeeRole() {
                       id={permission.id}
                       checked={permissions[permission.id] || false}
                       onChange={(e) => handlePermissionChange(permission.id, e.target.checked)}
-                      className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                      className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary"
                     />
                     <label htmlFor={permission.id} className="ml-2 text-sm text-slate-700">
                       {permission.label}
@@ -289,7 +289,7 @@ export default function EmployeeRole() {
                       id={permission.id}
                       checked={permissions[permission.id] || false}
                       onChange={(e) => handlePermissionChange(permission.id, e.target.checked)}
-                      className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                      className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary"
                     />
                     <label htmlFor={permission.id} className="ml-2 text-sm text-slate-700">
                       {permission.label}
@@ -311,7 +311,7 @@ export default function EmployeeRole() {
             </button>
             <button
               type="submit"
-              className="px-6 py-2.5 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-md"
+              className="px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary/90 transition-all shadow-md"
             >
               Submit
             </button>
@@ -466,7 +466,7 @@ export default function EmployeeRole() {
                         <td className="px-6 py-4 whitespace-nowrap text-center">
                           <div className="flex items-center justify-center gap-2">
                             <button
-                              className="p-1.5 rounded text-blue-600 hover:bg-blue-50 transition-colors"
+                              className="p-1.5 rounded text-primary hover:bg-blue-50 transition-colors"
                               title="Edit"
                             >
                               <Edit className="w-4 h-4" />

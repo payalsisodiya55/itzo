@@ -47,7 +47,7 @@ export default function Chattings() {
                     onClick={() => setActiveTab("customer")}
                     className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
                       activeTab === "customer"
-                        ? "border-blue-600 text-blue-600"
+                        ? "border-primary text-primary"
                         : "border-transparent text-slate-600 hover:text-slate-900"
                     }`}
                   >
@@ -57,7 +57,7 @@ export default function Chattings() {
                     onClick={() => setActiveTab("restaurant")}
                     className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
                       activeTab === "restaurant"
-                        ? "border-blue-600 text-blue-600"
+                        ? "border-primary text-primary"
                         : "border-transparent text-slate-600 hover:text-slate-900"
                     }`}
                   >
@@ -165,9 +165,9 @@ export default function Chattings() {
                       <input
                         type="text"
                         placeholder="Type a message..."
-                        className="flex-1 px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                        className="flex-1 px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                       />
-                      <button className="px-6 py-2.5 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all">
+                      <button className="px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all">
                         Send
                       </button>
                     </div>

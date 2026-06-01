@@ -43,7 +43,7 @@ export default function SetupTaxes() {
                   name="price-mode"
                   checked={productPriceMode === "include"}
                   onChange={() => setProductPriceMode("include")}
-                  className="mt-1 w-3.5 h-3.5 text-blue-600"
+                  className="mt-1 w-3.5 h-3.5 text-primary"
                 />
                 <div>
                   <p className="font-semibold text-slate-900 mb-0.5">
@@ -57,13 +57,13 @@ export default function SetupTaxes() {
                 </div>
               </label>
 
-              <label className="flex gap-3 rounded-lg border border-blue-500 bg-blue-50 px-4 py-3 cursor-pointer">
+              <label className="flex gap-3 rounded-lg border border-primary bg-blue-50 px-4 py-3 cursor-pointer">
                 <input
                   type="radio"
                   name="price-mode"
                   checked={productPriceMode === "exclude"}
                   onChange={() => setProductPriceMode("exclude")}
-                  className="mt-1 w-3.5 h-3.5 text-blue-600"
+                  className="mt-1 w-3.5 h-3.5 text-primary"
                 />
                 <div>
                   <p className="font-semibold text-slate-900 mb-0.5">
@@ -91,7 +91,7 @@ export default function SetupTaxes() {
                 <select
                   value={taxType}
                   onChange={(e) => setTaxType(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                 >
                   <option value="order-wise">Order wise</option>
                   <option value="item-wise">Item wise</option>
@@ -106,7 +106,7 @@ export default function SetupTaxes() {
                   <select
                     value={taxRate}
                     onChange={(e) => setTaxRate(e.target.value)}
-                    className="w-full pl-3 pr-8 py-2 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full pl-3 pr-8 py-2 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   >
                     <option value="custom-10">Custom Tax (10%)</option>
                     <option value="gst-15">GST (15%)</option>
@@ -145,7 +145,7 @@ export default function SetupTaxes() {
                   <select
                     value="gst-15"
                     readOnly
-                    className="w-full pl-3 pr-8 py-2 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full pl-3 pr-8 py-2 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   >
                     <option>GST (15%)</option>
                   </select>
@@ -168,7 +168,7 @@ export default function SetupTaxes() {
           </button>
           <button
             type="button"
-            className="px-4 py-2 text-xs font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 text-xs font-semibold rounded-lg bg-primary text-white hover:bg-primary/90 transition-colors"
           >
             Save Information
           </button>
@@ -185,7 +185,7 @@ function ToggleSwitch({ enabled, onToggle }) {
       onClick={onToggle}
       className={`inline-flex items-center w-11 h-6 rounded-full border transition-all ${
         enabled
-          ? "bg-blue-600 border-blue-600 justify-end"
+          ? "bg-primary border-primary justify-end"
           : "bg-slate-200 border-slate-300 justify-start"
       }`}
     >

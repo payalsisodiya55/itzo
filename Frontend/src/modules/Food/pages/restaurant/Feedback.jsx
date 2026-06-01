@@ -488,7 +488,7 @@ export default function Feedback() {
 
                       {complaint.adminResponse && (
                         <div className="bg-blue-50 rounded-xl p-3 border border-blue-100">
-                          <p className="text-[9px] font-black text-blue-600 uppercase mb-1">ECS Response</p>
+                          <p className="text-[9px] font-black text-primary uppercase mb-1">ECS Response</p>
                           <p className="text-sm text-blue-900 font-medium">{complaint.adminResponse}</p>
                         </div>
                       )}

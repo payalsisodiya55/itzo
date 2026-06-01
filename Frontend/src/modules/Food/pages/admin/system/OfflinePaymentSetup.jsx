@@ -21,7 +21,7 @@ function ToggleSwitch({ enabled, onToggle }) {
       onClick={onToggle}
       className={`inline-flex items-center w-11 h-6 rounded-full border transition-all ${
         enabled
-          ? "bg-blue-600 border-blue-600 justify-end"
+          ? "bg-primary border-primary justify-end"
           : "bg-slate-200 border-slate-300 justify-start"
       }`}
     >
@@ -128,7 +128,7 @@ export default function OfflinePaymentSetup() {
         {/* Page Title */}
         <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-3 mb-3">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-blue-500 flex items-center justify-center">
+            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
               <Briefcase className="w-3.5 h-3.5 text-white" />
             </div>
             <h1 className="text-lg font-bold text-slate-900">Offline Payment Method Setup</h1>
@@ -144,7 +144,7 @@ export default function OfflinePaymentSetup() {
                 onClick={() => setActiveTab(tab.toLowerCase())}
                 className={`px-4 py-2 rounded-lg text-xs font-medium transition-colors ${
                   activeTab === tab.toLowerCase()
-                    ? "bg-blue-600 text-white"
+                    ? "bg-primary text-white"
                     : "text-slate-600 hover:bg-slate-100"
                 }`}
               >
@@ -163,7 +163,7 @@ export default function OfflinePaymentSetup() {
                 placeholder="Search by name, payment info..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-7 pr-2 py-1.5 w-full text-xs rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="pl-7 pr-2 py-1.5 w-full text-xs rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
               <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
             </div>
@@ -202,7 +202,7 @@ export default function OfflinePaymentSetup() {
             >
               <Settings className="w-4 h-4" />
             </button>
-            <button className="px-4 py-1.5 text-xs font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-1">
+            <button className="px-4 py-1.5 text-xs font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-1">
               <Plus className="w-3.5 h-3.5" />
               <span>Add New Method</span>
             </button>
@@ -311,7 +311,7 @@ export default function OfflinePaymentSetup() {
                           <div className="flex items-center justify-center gap-2">
                             <button
                               type="button"
-                              className="p-1.5 text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                              className="p-1.5 text-primary hover:bg-blue-50 rounded transition-colors"
                               title="Edit"
                             >
                               <Pencil className="w-3.5 h-3.5" />

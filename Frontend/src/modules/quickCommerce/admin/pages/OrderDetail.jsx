@@ -279,7 +279,7 @@ export default function OrderDetail() {
                         <Printer className="h-4 w-4 text-slate-400" />
                         Print Invoice
                     </button>
-                    <button onClick={handleExportIntelligence} className="flex items-center gap-2 px-5 py-3 bg-slate-900 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-800 transition-all shadow-xl active:scale-95">
+                    <button onClick={handleExportIntelligence} className="flex items-center gap-2 px-5 py-3 bg-primary text-primary-foreground rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-primary/90 transition-all shadow-xl active:scale-95">
                         <Download className="h-4 w-4 text-emerald-400" />
                         Export Intelligence
                     </button>

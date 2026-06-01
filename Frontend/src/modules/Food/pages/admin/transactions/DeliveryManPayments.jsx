@@ -147,7 +147,7 @@ export default function DeliveryManPayments() {
         {/* Provide Delivery Man Earning Form */}
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
           <div className="flex items-center gap-3 mb-6">
-            <Camera className="w-5 h-5 text-blue-600" />
+            <Camera className="w-5 h-5 text-primary" />
             <h1 className="text-2xl font-bold text-slate-900">Provide Delivery Man Earning</h1>
           </div>
 
@@ -160,7 +160,7 @@ export default function DeliveryManPayments() {
                 <select
                   value={formData.deliveryman}
                   onChange={(e) => handleInputChange("deliveryman", e.target.value)}
-                  className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                  className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm ${
                     formErrors.deliveryman ? "border-red-500" : "border-slate-300"
                   }`}
                 >
@@ -185,7 +185,7 @@ export default function DeliveryManPayments() {
                   value={formData.amount}
                   onChange={(e) => handleInputChange("amount", e.target.value)}
                   placeholder="Ex: 100"
-                  className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                  className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm ${
                     formErrors.amount ? "border-red-500" : "border-slate-300"
                   }`}
                 />
@@ -201,7 +201,7 @@ export default function DeliveryManPayments() {
                   value={formData.method}
                   onChange={(e) => handleInputChange("method", e.target.value)}
                   placeholder="Ex: Cash"
-                  className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                  className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm ${
                     formErrors.method ? "border-red-500" : "border-slate-300"
                   }`}
                 />
@@ -217,7 +217,7 @@ export default function DeliveryManPayments() {
                   value={formData.reference}
                   onChange={(e) => handleInputChange("reference", e.target.value)}
                   placeholder="Ex: Collect Cash"
-                  className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                 />
               </div>
             </div>
@@ -233,7 +233,7 @@ export default function DeliveryManPayments() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-6 py-2.5 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary/90 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? "Saving..." : "Save"}
               </button>
@@ -245,7 +245,7 @@ export default function DeliveryManPayments() {
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
             <div className="flex items-center gap-3">
-              <FileText className="w-5 h-5 text-blue-600" />
+              <FileText className="w-5 h-5 text-primary" />
               <h2 className="text-xl font-bold text-slate-900">Distribute DM Earning Table</h2>
               <span className="px-3 py-1 rounded-full text-sm font-semibold bg-slate-100 text-slate-700">
                 {filteredPayments.length}
@@ -335,7 +335,7 @@ export default function DeliveryManPayments() {
                         <span className="text-sm font-medium text-slate-700">{payment.sl}</span>
                       </td>}
                       {visibleColumns.name && <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm text-blue-600 font-medium cursor-pointer hover:underline">
+                        <span className="text-sm text-primary font-medium cursor-pointer hover:underline">
                           {payment.name}
                         </span>
                       </td>}
@@ -433,7 +433,7 @@ export default function DeliveryManPayments() {
             <DialogFooter className="px-6 pb-6">
               <button
                 onClick={() => setIsViewOpen(false)}
-                className="px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-md"
+                className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary/90 transition-all shadow-md"
               >
                 Close
               </button>
@@ -461,7 +461,7 @@ export default function DeliveryManPayments() {
                         id={`toggle-${key}`}
                         checked={isVisible}
                         onChange={() => toggleColumn(key)}
-                        className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                        className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary"
                       />
                       <label htmlFor={`toggle-${key}`} className="ml-2 text-sm text-slate-700 capitalize">
                         {key.replace(/([A-Z])/g, ' $1').trim()}

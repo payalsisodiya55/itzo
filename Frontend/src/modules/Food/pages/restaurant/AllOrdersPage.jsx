@@ -432,7 +432,7 @@ export default function AllOrdersPage() {
       case "PREPARING":
         return "bg-yellow-600 text-white"
       case "READY":
-        return "bg-blue-600 text-white"
+        return "bg-primary text-white"
       case "OUT FOR DELIVERY":
         return "bg-purple-600 text-white"
       default:
@@ -530,21 +530,21 @@ export default function AllOrdersPage() {
               placeholder="Search by order ID"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </div>
           <button
             onClick={() => setShowFilterPopup(true)}
             className={`p-2.5 border rounded-lg transition-colors relative ${
               hasActiveFilters() 
-                ? 'bg-blue-50 border-blue-500 hover:bg-blue-100' 
+                ? 'bg-blue-50 border-primary hover:bg-blue-100' 
                 : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
             }`}
             aria-label="Filter"
           >
-            <Filter className={`w-5 h-5 ${hasActiveFilters() ? 'text-blue-600' : 'text-gray-900'}`} />
+            <Filter className={`w-5 h-5 ${hasActiveFilters() ? 'text-primary' : 'text-gray-900'}`} />
             {hasActiveFilters() && (
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-blue-600 rounded-full text-white text-xs flex items-center justify-center font-bold">
+              <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full text-white text-xs flex items-center justify-center font-bold">
                 {Object.values(filters).flat().length}
               </span>
             )}
@@ -576,14 +576,14 @@ export default function AllOrdersPage() {
             className="bg-blue-50 border border-blue-200 rounded-lg p-3 flex items-center justify-between"
           >
             <div className="flex items-center gap-2">
-              <Filter className="w-4 h-4 text-blue-600" />
+              <Filter className="w-4 h-4 text-primary" />
               <span className="text-sm text-blue-900">
                 <span className="font-semibold">{Object.values(filters).flat().length}</span> filter{Object.values(filters).flat().length !== 1 ? 's' : ''} applied
               </span>
             </div>
             <button
               onClick={handleClearFilters}
-              className="text-xs text-blue-600 hover:text-blue-800 font-medium hover:underline"
+              className="text-xs text-primary hover:text-blue-800 font-medium hover:underline"
             >
               Clear all
             </button>
@@ -596,7 +596,7 @@ export default function AllOrdersPage() {
         {loading && (
           <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
             <div className="flex flex-col items-center gap-3">
-              <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
               <p className="text-gray-600 text-sm">Loading orders...</p>
             </div>
           </div>
@@ -743,7 +743,7 @@ export default function AllOrdersPage() {
                       onClick={() => setCurrentPage(pageNumber)}
                       className={`h-9 min-w-[36px] rounded-lg px-2 text-sm font-semibold transition-colors ${
                         currentPage === pageNumber
-                          ? "bg-blue-600 text-white"
+                          ? "bg-primary text-white"
                           : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                       }`}
                     >
@@ -822,7 +822,7 @@ export default function AllOrdersPage() {
                       onClick={() => handleDateRangeSelect(option)}
                       className={`w-full flex items-center justify-between rounded-xl border px-4 py-3 text-left transition-colors ${
                         isSelected
-                          ? "border-blue-500 bg-blue-50"
+                          ? "border-primary bg-blue-50"
                           : "border-gray-200 bg-white hover:bg-gray-50"
                       }`}
                     >
@@ -839,7 +839,7 @@ export default function AllOrdersPage() {
                           </p>
                         )}
                       </div>
-                      {isSelected && <span className="text-xs font-semibold text-blue-600">Selected</span>}
+                      {isSelected && <span className="text-xs font-semibold text-primary">Selected</span>}
                     </button>
                   )
                 })}
@@ -960,7 +960,7 @@ export default function AllOrdersPage() {
                         placeholder="Search"
                         value={filterSearch}
                         onChange={(e) => setFilterSearch(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                       />
                     </div>
                   </div>
@@ -986,13 +986,13 @@ export default function AllOrdersPage() {
                                   onClick={() => handleFilterToggle(option)}
                                   className={`w-5 h-5 rounded-full border-2 cursor-pointer transition-all ${
                                     isChecked 
-                                      ? 'border-blue-600 bg-white' 
+                                      ? 'border-primary bg-white' 
                                       : 'border-gray-300 bg-white'
                                   }`}
                                 >
                                   {isChecked && (
                                     <div className="w-full h-full rounded-full flex items-center justify-center">
-                                      <div className="w-3 h-3 rounded-full bg-blue-600"></div>
+                                      <div className="w-3 h-3 rounded-full bg-primary"></div>
                                     </div>
                                   )}
                                 </div>
@@ -1001,7 +1001,7 @@ export default function AllOrdersPage() {
                                   type="checkbox"
                                   checked={isChecked}
                                   onChange={() => handleFilterToggle(option)}
-                                  className="w-5 h-5 border-2 border-gray-300 rounded cursor-pointer transition-all appearance-none checked:bg-blue-600 checked:border-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 relative"
+                                  className="w-5 h-5 border-2 border-gray-300 rounded cursor-pointer transition-all appearance-none checked:bg-primary checked:border-primary focus:ring-2 focus:ring-primary focus:ring-offset-2 relative"
                                   style={{
                                     backgroundImage: isChecked ? `url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e")` : 'none',
                                     backgroundSize: '100% 100%',
@@ -1060,7 +1060,7 @@ export default function AllOrdersPage() {
             className="fixed inset-0 bg-white/80 backdrop-blur-sm z-50 flex items-center justify-center"
           >
             <div className="flex flex-col items-center gap-3">
-              <svg className="animate-spin h-10 w-10 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <svg className="animate-spin h-10 w-10 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>

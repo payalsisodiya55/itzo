@@ -193,7 +193,7 @@ export default function CashLimitSettlement() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-xs text-slate-500 font-mono">
                           {tx.proofImageUrl ? (
-                            <a href={tx.proofImageUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">View Proof</a>
+                            <a href={tx.proofImageUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">View Proof</a>
                           ) : tx.razorpayPaymentId ? (
                             tx.razorpayPaymentId.slice(0, 12) + "…"
                           ) : "—"}

@@ -29,6 +29,8 @@ import {
 
 export async function filterEligiblePartners(partners) {
   if (!partners.length) return [];
+  if (config.nodeEnv !== "production") return partners;
+  
   const partnerIds = partners.map(p => p.partnerId);
   const today = dayjs().tz("Asia/Kolkata").format("YYYY-MM-DD");
   
@@ -496,6 +498,7 @@ export async function resendDeliveryNotificationRestaurant(
   order.dispatch.status = "unassigned";
   order.dispatch.deliveryPartnerId = null;
   order.dispatch.offeredTo = [];
+  order.dispatch.dispatchingAt = undefined;
   await order.save();
 
   const res = await tryAutoAssign(order._id, { attempt: 3 });

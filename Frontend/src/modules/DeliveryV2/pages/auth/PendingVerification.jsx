@@ -45,7 +45,7 @@ export default function PendingVerification() {
             <button
               type="button"
               onClick={() => navigate("/food/delivery/login", { replace: true })}
-              className="w-full rounded-2xl bg-[#00B761] px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-[#00A055]"
+              className="w-full rounded-2xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90"
             >
               Back to Login
             </button>
@@ -58,7 +58,7 @@ export default function PendingVerification() {
               <button
                 type="button"
                 onClick={() => navigate("/food/delivery/profile/details")}
-                className="text-xs font-semibold text-[#0f7a42] hover:underline"
+                className="text-xs font-semibold text-primary hover:underline"
               >
                 View Registered Details
               </button>

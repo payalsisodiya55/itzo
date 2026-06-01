@@ -133,7 +133,7 @@ export default function RestaurantReport() {
     return (
       <div className="p-4 lg:p-6 bg-slate-50 min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+          <Loader2 className="w-8 h-8 text-primary animate-spin" />
           <p className="text-gray-600">Loading restaurant report...</p>
         </div>
       </div>
@@ -165,7 +165,7 @@ export default function RestaurantReport() {
                 <select
                   value={filters.zone}
                   onChange={(e) => setFilters(prev => ({ ...prev, zone: e.target.value }))}
-                  className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="All Zones">All Zones</option>
                   {zones.map(zone => (
@@ -182,7 +182,7 @@ export default function RestaurantReport() {
                 <select
                   value={filters.all}
                   onChange={(e) => setFilters(prev => ({ ...prev, all: e.target.value }))}
-                  className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="All">All</option>
                   <option value="Active">Active</option>
@@ -198,7 +198,7 @@ export default function RestaurantReport() {
                 <select
                   value={filters.type}
                   onChange={(e) => setFilters(prev => ({ ...prev, type: e.target.value }))}
-                  className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="All types">All types</option>
                   <option value="Commission">Commission</option>
@@ -214,7 +214,7 @@ export default function RestaurantReport() {
                 <select
                   value={filters.time}
                   onChange={(e) => setFilters(prev => ({ ...prev, time: e.target.value }))}
-                  className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="All Time">All Time</option>
                   <option value="Today">Today</option>
@@ -236,7 +236,7 @@ export default function RestaurantReport() {
               </button>
               <button 
                 onClick={handleFilterApply}
-                className={`px-6 py-2.5 text-sm font-medium rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-all flex items-center gap-2 relative ${
+                className={`px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary transition-all flex items-center gap-2 relative ${
                   activeFiltersCount > 0 ? "ring-2 ring-blue-300" : ""
                 }`}
               >
@@ -264,7 +264,7 @@ export default function RestaurantReport() {
                   placeholder="Ex: search restaurant nam"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-4 pr-10 py-2.5 w-full text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="pl-4 pr-10 py-2.5 w-full text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                 />
                 <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               </div>

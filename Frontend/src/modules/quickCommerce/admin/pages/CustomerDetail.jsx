@@ -217,7 +217,7 @@ const CustomerDetail = () => {
                                     <div key={i} className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col items-center justify-center text-center">
                                         <div className={cn("p-2 rounded-full mb-2",
                                             stat.color === 'emerald' && 'bg-emerald-100 text-emerald-600',
-                                            stat.color === 'blue' && 'bg-blue-100 text-blue-600',
+                                            stat.color === 'blue' && 'bg-blue-100 text-primary',
                                             stat.color === 'indigo' && 'bg-indigo-100 text-indigo-600',
                                             stat.color === 'fuchsia' && 'bg-fuchsia-100 text-fuchsia-600',
                                         )}>

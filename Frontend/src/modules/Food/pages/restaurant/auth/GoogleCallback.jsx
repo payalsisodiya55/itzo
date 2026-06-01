@@ -110,7 +110,7 @@ export default function RestaurantGoogleCallback() {
 
         {status === "loading" && (
           <div className="flex flex-col items-center justify-center py-6 space-y-3">
-            <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+            <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
             <p className="text-xs text-gray-500">Please wait, this may take a few seconds...</p>
           </div>
         )}
@@ -143,7 +143,7 @@ export default function RestaurantGoogleCallback() {
               </Button>
               <Button
                 onClick={handleRetry}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                className="flex-1 bg-primary hover:bg-primary/90 text-white"
               >
                 Try Again
               </Button>

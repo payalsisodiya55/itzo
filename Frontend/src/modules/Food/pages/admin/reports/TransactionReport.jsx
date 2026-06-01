@@ -189,7 +189,7 @@ export default function TransactionReport() {
     return (
       <div className="p-2 lg:p-3 bg-slate-50 min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+          <Loader2 className="w-8 h-8 text-primary animate-spin" />
           <p className="text-gray-600">Loading transaction report...</p>
         </div>
       </div>
@@ -202,7 +202,7 @@ export default function TransactionReport() {
         {/* Page Header */}
         <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-3 mb-3">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center">
+            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
               <BarChart3 className="w-3.5 h-3.5 text-white" />
             </div>
             <h1 className="text-lg font-bold text-slate-900">Transaction Report</h1>
@@ -216,7 +216,7 @@ export default function TransactionReport() {
               <select
                 value={filters.zone}
                 onChange={(e) => setFilters(prev => ({ ...prev, zone: e.target.value }))}
-                className="w-full px-2.5 py-1.5 pr-5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs appearance-none cursor-pointer"
+                className="w-full px-2.5 py-1.5 pr-5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-xs appearance-none cursor-pointer"
               >
                 <option value="All Zones">All Zones</option>
                 {zones.map(zone => (
@@ -230,7 +230,7 @@ export default function TransactionReport() {
               <select
                 value={filters.restaurant}
                 onChange={(e) => setFilters(prev => ({ ...prev, restaurant: e.target.value }))}
-                className="w-full px-2.5 py-1.5 pr-5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs appearance-none cursor-pointer"
+                className="w-full px-2.5 py-1.5 pr-5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-xs appearance-none cursor-pointer"
               >
                 <option value="All restaurants">All restaurants</option>
                 {restaurants.map(restaurant => (
@@ -244,7 +244,7 @@ export default function TransactionReport() {
               <select
                 value={filters.time}
                 onChange={(e) => setFilters(prev => ({ ...prev, time: e.target.value }))}
-                className="w-full px-2.5 py-1.5 pr-5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs appearance-none cursor-pointer"
+                className="w-full px-2.5 py-1.5 pr-5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-xs appearance-none cursor-pointer"
               >
                 <option value="All Time">All Time</option>
                 <option value="Today">Today</option>
@@ -256,7 +256,7 @@ export default function TransactionReport() {
 
             <button 
               onClick={handleFilterApply}
-              className={`px-3 py-1.5 text-xs font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all whitespace-nowrap relative ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all whitespace-nowrap relative ${
                 activeFiltersCount > 0 ? "ring-2 ring-blue-300" : ""
               }`}
             >
@@ -342,7 +342,7 @@ export default function TransactionReport() {
                   </div>
                   <div className="flex items-center gap-2">
                     <p className="text-sm font-semibold text-slate-900">Restaurant Earning</p>
-                    <div className="w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center">
+                    <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
                       <Info className="w-3 h-3 text-white" />
                     </div>
                   </div>
@@ -383,7 +383,7 @@ export default function TransactionReport() {
                   placeholder="Search by Order ID"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-7 pr-2 py-1.5 w-full text-[11px] rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="pl-7 pr-2 py-1.5 w-full text-[11px] rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                 />
                 <img src={searchIcon} alt="Search" className="absolute left-2 top-1/2 -translate-y-1/2 w-3 h-3" />
                 {isRefreshing && (
@@ -393,7 +393,7 @@ export default function TransactionReport() {
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="px-2.5 py-1.5 text-[11px] font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-1 transition-all">
+                  <button className="px-2.5 py-1.5 text-[11px] font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-1 transition-all">
                     <img src={exportIcon} alt="Export" className="w-3 h-3" />
                     <span>Export</span>
                     <ChevronDown className="w-2.5 h-2.5" />

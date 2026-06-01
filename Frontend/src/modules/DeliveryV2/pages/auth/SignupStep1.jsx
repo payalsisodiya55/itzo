@@ -269,7 +269,7 @@ export default function SignupStep1() {
               value={formData.name}
               onChange={handleChange}
               inputMode="text"
-              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.name ? "border-red-500" : "border-gray-300"
+              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary ${errors.name ? "border-red-500" : "border-gray-300"
                 }`}
               placeholder="Enter your full name"
             />
@@ -290,7 +290,7 @@ export default function SignupStep1() {
               autoCorrect="off"
               autoComplete="email"
               inputMode="email"
-              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.email ? "border-red-500" : "border-gray-300"
+              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary ${errors.email ? "border-red-500" : "border-gray-300"
                 }`}
               placeholder="Enter your User Id"
             />
@@ -307,7 +307,7 @@ export default function SignupStep1() {
               value={formData.address}
               onChange={handleChange}
               rows={3}
-              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.address ? "border-red-500" : "border-gray-300"
+              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary ${errors.address ? "border-red-500" : "border-gray-300"
                 }`}
               placeholder="Enter your address"
             />
@@ -325,7 +325,7 @@ export default function SignupStep1() {
                 name="city"
                 value={formData.city}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.city ? "border-red-500" : "border-gray-300"
+                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary ${errors.city ? "border-red-500" : "border-gray-300"
                   }`}
                 placeholder="City"
               />
@@ -340,7 +340,7 @@ export default function SignupStep1() {
                 name="state"
                 value={formData.state}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.state ? "border-red-500" : "border-gray-300"
+                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary ${errors.state ? "border-red-500" : "border-gray-300"
                   }`}
                 placeholder="State"
               />
@@ -357,7 +357,7 @@ export default function SignupStep1() {
               name="vehicleType"
               value={formData.vehicleType}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="bike">Bike</option>
               <option value="scooter">Scooter</option>
@@ -376,7 +376,7 @@ export default function SignupStep1() {
               name="vehicleName"
               value={formData.vehicleName}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="e.g., Honda Activa"
             />
           </div>
@@ -392,7 +392,7 @@ export default function SignupStep1() {
               value={formData.vehicleNumber}
               onChange={handleChange}
               maxLength={10}
-              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.vehicleNumber ? "border-red-500" : "border-gray-300"
+              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary ${errors.vehicleNumber ? "border-red-500" : "border-gray-300"
                 }`}
               placeholder="e.g., MH12AB1234"
             />
@@ -410,7 +410,7 @@ export default function SignupStep1() {
               value={formData.drivingLicenseNumber}
               onChange={handleChange}
               maxLength={16}
-              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 uppercase ${errors.drivingLicenseNumber ? "border-red-500" : "border-gray-300"
+              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary uppercase ${errors.drivingLicenseNumber ? "border-red-500" : "border-gray-300"
                 }`}
               placeholder="e.g., MH1220110012345"
             />
@@ -428,7 +428,7 @@ export default function SignupStep1() {
               value={formData.panNumber}
               onChange={handleChange}
               maxLength={10}
-              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 uppercase ${errors.panNumber ? "border-red-500" : "border-gray-300"
+              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary uppercase ${errors.panNumber ? "border-red-500" : "border-gray-300"
                 }`}
               placeholder="ABCDE1234F"
             />
@@ -447,7 +447,7 @@ export default function SignupStep1() {
               onChange={handleChange}
               maxLength={14}
               inputMode="numeric"
-              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 ${errors.aadharNumber ? "border-red-500" : "border-gray-300"
+              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary ${errors.aadharNumber ? "border-red-500" : "border-gray-300"
                 }`}
               placeholder="1234 5678 9012"
             />
@@ -460,7 +460,7 @@ export default function SignupStep1() {
             disabled={isSubmitting}
             className={`w-full py-4 rounded-lg font-bold text-white text-base transition-colors mt-6 ${isSubmitting
               ? "bg-gray-400 cursor-not-allowed"
-              : "bg-[#00B761] hover:bg-[#00A055]"
+              : "bg-primary hover:bg-primary/90 text-primary-foreground"
               }`}
           >
             {isSubmitting ? "Saving..." : "Continue"}

@@ -261,7 +261,7 @@ const MapPicker = ({
                   <input
                     type="text"
                     placeholder="Search for your shop area..."
-                    className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                    className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                   />
                 </div>
               </Autocomplete>

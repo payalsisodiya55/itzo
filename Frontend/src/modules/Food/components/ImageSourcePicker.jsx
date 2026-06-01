@@ -89,7 +89,7 @@ export const ImageSourcePicker = ({
           >
             <span className="font-medium text-sm text-gray-900">Upload from Device</span>
             <div className="p-2 rounded-lg bg-blue-50 group-hover:bg-blue-100 transition-colors">
-              <Upload className="h-5 w-5 text-blue-600" />
+              <Upload className="h-5 w-5 text-primary" />
             </div>
           </button>
         </div>

@@ -244,7 +244,7 @@ export default function JoinRequest() {
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
               <Package className="w-5 h-5 text-white" />
             </div>
             <h1 className="text-2xl font-bold text-slate-900">New Joining Request</h1>
@@ -256,7 +256,7 @@ export default function JoinRequest() {
               onClick={() => handleTabChange("pending")}
               className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === "pending"
-                  ? "border-blue-600 text-blue-600"
+                  ? "border-primary text-primary"
                   : "border-transparent text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -266,7 +266,7 @@ export default function JoinRequest() {
               onClick={() => handleTabChange("denied")}
               className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === "denied"
-                  ? "border-blue-600 text-blue-600"
+                  ? "border-primary text-primary"
                   : "border-transparent text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -339,7 +339,7 @@ export default function JoinRequest() {
           <div className="overflow-x-auto">
             {loading ? (
               <div className="flex items-center justify-center py-20">
-                <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
                 <span className="ml-3 text-sm text-slate-600">Loading requests...</span>
               </div>
             ) : (
@@ -425,7 +425,7 @@ export default function JoinRequest() {
                               )}
                             </div>
                             <span 
-                              className="text-sm font-medium text-slate-900 cursor-pointer hover:text-blue-600 transition-colors"
+                              className="text-sm font-medium text-slate-900 cursor-pointer hover:text-primary transition-colors"
                               onClick={() => handleView(request)}
                             >
                               {request.name}
@@ -469,7 +469,7 @@ export default function JoinRequest() {
                           <div className="flex items-center justify-center gap-2">
                             <button
                               onClick={() => handleView(request)}
-                              className="p-1.5 rounded bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors"
+                              className="p-1.5 rounded bg-blue-50 text-primary hover:bg-blue-100 transition-colors"
                               title="View Details"
                             >
                               <Eye className="w-4 h-4" />
@@ -806,7 +806,7 @@ export default function JoinRequest() {
                                 href={viewDetails.documents.aadhar.document} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700"
+                                className="inline-flex items-center gap-1 text-sm text-primary hover:text-blue-700"
                               >
                                 <ExternalLink className="w-3 h-3" /> View Document
                               </a>
@@ -828,7 +828,7 @@ export default function JoinRequest() {
                                 href={viewDetails.documents.pan.document} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700"
+                                className="inline-flex items-center gap-1 text-sm text-primary hover:text-blue-700"
                               >
                                 <ExternalLink className="w-3 h-3" /> View Document
                               </a>
@@ -855,7 +855,7 @@ export default function JoinRequest() {
                                 href={viewDetails.documents.drivingLicense.document} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700"
+                                className="inline-flex items-center gap-1 text-sm text-primary hover:text-blue-700"
                               >
                                 <ExternalLink className="w-3 h-3" /> View Document
                               </a>
@@ -877,7 +877,7 @@ export default function JoinRequest() {
                                 href={viewDetails.documents.vehicleRC.document} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700"
+                                className="inline-flex items-center gap-1 text-sm text-primary hover:text-blue-700"
                               >
                                 <ExternalLink className="w-3 h-3" /> View Document
                               </a>
@@ -968,7 +968,7 @@ export default function JoinRequest() {
               </div>
             ) : (
               <div className="flex items-center justify-center py-8">
-                <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
+                <Loader2 className="w-6 h-6 animate-spin text-primary" />
               </div>
             )}
           </div>
@@ -998,7 +998,7 @@ export default function JoinRequest() {
               <select
                 value={filters.zone}
                 onChange={(e) => setFilters({ ...filters, zone: e.target.value })}
-                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-sm"
               >
                 <option value="">All Zones</option>
                 {allZones.map(zone => (
@@ -1011,7 +1011,7 @@ export default function JoinRequest() {
               <select
                 value={filters.vehicleType}
                 onChange={(e) => setFilters({ ...filters, vehicleType: e.target.value })}
-                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-sm"
               >
                 <option value="">All Vehicle Types</option>
                 {vehicleTypes.map(type => (
@@ -1029,7 +1029,7 @@ export default function JoinRequest() {
             </button>
             <button
               onClick={() => setIsFilterOpen(false)}
-              className="px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-md"
+              className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary/90 transition-all shadow-md"
             >
               Apply
             </button>

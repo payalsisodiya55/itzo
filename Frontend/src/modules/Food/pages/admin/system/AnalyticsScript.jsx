@@ -55,7 +55,7 @@ function ToggleSwitch({ enabled, onToggle }) {
       onClick={onToggle}
       className={`inline-flex items-center w-11 h-6 rounded-full border transition-all ${
         enabled
-          ? "bg-blue-600 border-blue-600 justify-end"
+          ? "bg-primary border-primary justify-end"
           : "bg-slate-200 border-slate-300 justify-start"
       }`}
     >
@@ -98,7 +98,7 @@ export default function AnalyticsScript() {
 
         {/* Info Banner */}
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4 flex items-start gap-3">
-          <Lightbulb className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+          <Lightbulb className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
           <p className="text-xs text-slate-700">
             In this page you can add credentials to show your analytics on the platform make sure fill with proper data other wise you can not see the analytics properly
           </p>
@@ -120,7 +120,7 @@ export default function AnalyticsScript() {
                   <a
                     href="#"
                     onClick={handleHowItWorks}
-                    className="text-blue-600 hover:underline"
+                    className="text-primary hover:underline"
                   >
                     How it works
                   </a>

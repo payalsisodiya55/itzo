@@ -1103,8 +1103,8 @@ export default function Cart() {
       name: 'Quick Wallet',
       description: 'Pay from your wallet',
       icon: <Wallet className="w-5 h-5" />,
-      color: 'bg-blue-50 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400',
-      selectedColor: 'bg-blue-500 text-white',
+      color: 'bg-blue-50 text-primary dark:bg-blue-900/40 dark:text-blue-400',
+      selectedColor: 'bg-primary text-white',
       subInfo: `Bal: ${RUPEE_SYMBOL}${walletBalance.toFixed(0)}`,
       disabled: walletBalance < total,
       disabledText: 'Low Balance'
@@ -2426,7 +2426,7 @@ export default function Cart() {
                             {availableCoupons[0].customerGroup === "new" ? (
                               <p className="text-[11px] text-[#FE5502] mb-1">First-time users only</p>
                             ) : subtotal < availableCoupons[0].minOrder ? (
-                              <p className="text-xs text-blue-600 font-medium mb-1">Add items worth {RUPEE_SYMBOL}{(availableCoupons[0].minOrder - subtotal).toFixed(0)} more to unlock</p>
+                              <p className="text-xs text-primary font-medium mb-1">Add items worth {RUPEE_SYMBOL}{(availableCoupons[0].minOrder - subtotal).toFixed(0)} more to unlock</p>
                             ) : null}
 
                             {availableCoupons.length > 1 && (
@@ -2481,7 +2481,7 @@ export default function Cart() {
                                 {coupon.customerGroup === "new" ? (
                                   <p className="text-[11px] text-[#FE5502] mb-1">First-time users only</p>
                                 ) : subtotal < coupon.minOrder ? (
-                                  <p className="text-xs text-blue-600 font-medium mb-1 line-clamp-1">Add items worth {RUPEE_SYMBOL}{(coupon.minOrder - subtotal).toFixed(0)} more to unlock</p>
+                                  <p className="text-xs text-primary font-medium mb-1 line-clamp-1">Add items worth {RUPEE_SYMBOL}{(coupon.minOrder - subtotal).toFixed(0)} more to unlock</p>
                                 ) : (
                                   <p className="text-xs text-gray-500 mb-1 line-clamp-1">{coupon.description}</p>
                                 )}

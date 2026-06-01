@@ -156,7 +156,7 @@ export default function QuickCommerceAdminDashboard() {
                   <input value={productForm.unit} onChange={(e) => setProductForm((p) => ({ ...p, unit: e.target.value }))} placeholder="Unit (500 ml)" className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm" />
                   <input value={productForm.badge} onChange={(e) => setProductForm((p) => ({ ...p, badge: e.target.value }))} placeholder="Badge" className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm" />
                 </div>
-                <button disabled={submittingProduct} className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-3 py-2 text-sm font-bold text-white disabled:opacity-60">
+                <button disabled={submittingProduct} className="inline-flex items-center gap-2 rounded-xl bg-primary px-3 py-2 text-sm font-bold text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-60">
                   <Plus className="h-4 w-4" /> {submittingProduct ? 'Saving...' : 'Create Product'}
                 </button>
               </div>

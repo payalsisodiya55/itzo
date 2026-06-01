@@ -146,7 +146,7 @@ export default function RatingsReviews() {
         </div>
         <button
           onClick={() => navigate("/restaurant/feedback?tab=reviews")}
-          className="flex items-center gap-1 text-blue-600 text-sm font-normal hover:text-blue-700 transition-colors"
+          className="flex items-center gap-1 text-primary text-sm font-normal hover:text-blue-700 transition-colors"
         >
           <span>View order ratings</span>
           <ChevronRight className="w-4 h-4" />
@@ -214,10 +214,10 @@ export default function RatingsReviews() {
           <div className="flex items-center gap-3">
             <button
               onClick={handleThankYou}
-              className="flex-1 flex items-center justify-center gap-2 border-2 border-blue-600 bg-white rounded-lg py-3 px-4 hover:bg-blue-50 transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 border-2 border-primary bg-white rounded-lg py-3 px-4 hover:bg-blue-50 transition-colors"
             >
-              <ThumbsUp className="w-5 h-5 text-blue-600" />
-              <span className="text-blue-600 text-sm font-semibold">Yes, thank you</span>
+              <ThumbsUp className="w-5 h-5 text-primary" />
+              <span className="text-primary text-sm font-semibold">Yes, thank you</span>
             </button>
             <button
               onClick={handleNotHelpful}
@@ -266,7 +266,7 @@ export default function RatingsReviews() {
               setShowNotHelpfulPopup(false)
               debugLog("Contact support")
             }}
-            className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            className="w-full bg-primary text-white py-3 px-4 rounded-lg font-semibold hover:bg-primary/90 transition-colors"
           >
             Contact Support
           </button>

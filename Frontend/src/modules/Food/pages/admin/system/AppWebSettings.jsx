@@ -8,7 +8,7 @@ function ToggleSwitch({ enabled, onToggle }) {
       onClick={onToggle}
       className={`inline-flex items-center w-11 h-6 rounded-full border transition-all ${
         enabled
-          ? "bg-blue-600 border-blue-600 justify-end"
+          ? "bg-primary border-primary justify-end"
           : "bg-slate-200 border-slate-300 justify-start"
       }`}
     >
@@ -92,7 +92,7 @@ export default function AppWebSettings() {
         {/* Page Title */}
         <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-3 mb-3">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-blue-500 flex items-center justify-center">
+            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
               <Settings className="w-3.5 h-3.5 text-white" />
             </div>
             <h1 className="text-lg font-bold text-slate-900">App & Web Settings</h1>
@@ -171,7 +171,7 @@ export default function AppWebSettings() {
                     value={userAppAndroid.minVersion}
                     onChange={(e) => setUserAppAndroid(prev => ({ ...prev, minVersion: e.target.value }))}
                     placeholder="App minimum version"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   />
                 </div>
                 <div>
@@ -184,7 +184,7 @@ export default function AppWebSettings() {
                     value={userAppAndroid.downloadUrl}
                     onChange={(e) => setUserAppAndroid(prev => ({ ...prev, downloadUrl: e.target.value }))}
                     placeholder="Download Url"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   />
                 </div>
               </div>
@@ -207,7 +207,7 @@ export default function AppWebSettings() {
                     value={userAppIOS.minVersion}
                     onChange={(e) => setUserAppIOS(prev => ({ ...prev, minVersion: e.target.value }))}
                     placeholder="App minimum version"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   />
                 </div>
                 <div>
@@ -220,7 +220,7 @@ export default function AppWebSettings() {
                     value={userAppIOS.downloadUrl}
                     onChange={(e) => setUserAppIOS(prev => ({ ...prev, downloadUrl: e.target.value }))}
                     placeholder="Download Url"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   />
                 </div>
               </div>
@@ -237,7 +237,7 @@ export default function AppWebSettings() {
             </button>
             <button
               type="button"
-              className="px-4 py-2 text-xs font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-4 py-2 text-xs font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
             >
               Submit
             </button>
@@ -269,7 +269,7 @@ export default function AppWebSettings() {
                     value={restaurantAppAndroid.minVersion}
                     onChange={(e) => setRestaurantAppAndroid(prev => ({ ...prev, minVersion: e.target.value }))}
                     placeholder="App minimum version"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   />
                 </div>
                 <div>
@@ -282,7 +282,7 @@ export default function AppWebSettings() {
                     value={restaurantAppAndroid.downloadUrl}
                     onChange={(e) => setRestaurantAppAndroid(prev => ({ ...prev, downloadUrl: e.target.value }))}
                     placeholder="Download Url"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   />
                 </div>
               </div>
@@ -305,7 +305,7 @@ export default function AppWebSettings() {
                     value={restaurantAppIOS.minVersion}
                     onChange={(e) => setRestaurantAppIOS(prev => ({ ...prev, minVersion: e.target.value }))}
                     placeholder="App minimum version"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   />
                 </div>
                 <div>
@@ -318,7 +318,7 @@ export default function AppWebSettings() {
                     value={restaurantAppIOS.downloadUrl}
                     onChange={(e) => setRestaurantAppIOS(prev => ({ ...prev, downloadUrl: e.target.value }))}
                     placeholder="Download Url"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   />
                 </div>
               </div>
@@ -335,7 +335,7 @@ export default function AppWebSettings() {
             </button>
             <button
               type="button"
-              className="px-4 py-2 text-xs font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-4 py-2 text-xs font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
             >
               Submit
             </button>
@@ -367,7 +367,7 @@ export default function AppWebSettings() {
                     value={deliverymanAppAndroid.minVersion}
                     onChange={(e) => setDeliverymanAppAndroid(prev => ({ ...prev, minVersion: e.target.value }))}
                     placeholder="App minimum version"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   />
                 </div>
                 <div>
@@ -380,7 +380,7 @@ export default function AppWebSettings() {
                     value={deliverymanAppAndroid.downloadUrl}
                     onChange={(e) => setDeliverymanAppAndroid(prev => ({ ...prev, downloadUrl: e.target.value }))}
                     placeholder="Download Url"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   />
                 </div>
               </div>
@@ -403,7 +403,7 @@ export default function AppWebSettings() {
                     value={deliverymanAppIOS.minVersion}
                     onChange={(e) => setDeliverymanAppIOS(prev => ({ ...prev, minVersion: e.target.value }))}
                     placeholder="App minimum version"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   />
                 </div>
                 <div>
@@ -416,7 +416,7 @@ export default function AppWebSettings() {
                     value={deliverymanAppIOS.downloadUrl}
                     onChange={(e) => setDeliverymanAppIOS(prev => ({ ...prev, downloadUrl: e.target.value }))}
                     placeholder="Download Url"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                   />
                 </div>
               </div>
@@ -433,7 +433,7 @@ export default function AppWebSettings() {
             </button>
             <button
               type="button"
-              className="px-4 py-2 text-xs font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-4 py-2 text-xs font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
             >
               Submit
             </button>

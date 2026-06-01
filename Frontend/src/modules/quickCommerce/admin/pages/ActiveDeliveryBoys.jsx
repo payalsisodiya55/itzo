@@ -415,7 +415,7 @@ const ActiveDeliveryBoys = () => {
                                 </div>
 
                                 <div className="mt-8 flex gap-4">
-                                    <button className="flex-1 py-4 bg-slate-900 text-white rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl active:scale-95 transition-all">
+                                    <button className="flex-1 py-4 bg-primary text-primary-foreground rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl hover:bg-primary/90 hover:shadow-primary/20 active:scale-95 transition-all">
                                         Send Message
                                     </button>
                                     <button className="px-6 py-4 bg-rose-50 text-rose-600 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-rose-100 transition-all active:scale-95">
@@ -519,7 +519,7 @@ const ActiveDeliveryBoys = () => {
                                     </div>
                                 </div>
 
-                                <button type="submit" className="w-full py-4.5 bg-slate-900 text-white rounded-2xl text-xs font-black uppercase tracking-widest shadow-2xl hover:bg-slate-800 transition-all transform active:scale-[0.98] mt-4">
+                                <button type="submit" className="w-full py-4.5 bg-primary text-primary-foreground rounded-2xl text-xs font-black uppercase tracking-widest shadow-2xl hover:bg-primary/90 hover:shadow-primary/20 transition-all transform active:scale-[0.98] mt-4">
                                     SAVE CHANGES
                                 </button>
                             </form>

@@ -94,7 +94,7 @@ export default function ShowIdCardV2() {
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="text-center">
           <p className="text-gray-600 mb-4">Failed to load ID card data</p>
-          <button onClick={goBack} className="px-4 py-2 bg-blue-600 text-white rounded-lg">Go Back</button>
+          <button onClick={goBack} className="px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors rounded-lg">Go Back</button>
         </div>
       </div>
     );

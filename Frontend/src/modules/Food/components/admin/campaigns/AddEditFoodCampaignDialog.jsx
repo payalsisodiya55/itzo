@@ -97,7 +97,7 @@ export default function AddEditFoodCampaignDialog({ isOpen, onOpenChange, campai
       <DialogContent className="max-w-2xl bg-white p-0 opacity-0 data-[state=open]:opacity-100 data-[state=closed]:opacity-0 transition-opacity duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0 data-[state=open]:scale-100 data-[state=closed]:scale-100">
         <DialogHeader className="px-6 pt-6 pb-4 border-b border-slate-200">
           <DialogTitle className="flex items-center gap-2">
-            {campaign ? <Pencil className="w-5 h-5 text-blue-600" /> : <Plus className="w-5 h-5 text-blue-600" />}
+            {campaign ? <Pencil className="w-5 h-5 text-primary" /> : <Plus className="w-5 h-5 text-primary" />}
             {campaign ? "Edit Food Campaign" : "Add New Food Campaign"}
           </DialogTitle>
           <DialogDescription>
@@ -116,7 +116,7 @@ export default function AddEditFoodCampaignDialog({ isOpen, onOpenChange, campai
                 value={formData.title}
                 onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
                 placeholder="Enter campaign title"
-                className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                className={`w-full px-4 py-2.5 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm ${
                   errors.title ? "border-red-500" : "border-slate-300"
                 }`}
                 required
@@ -136,7 +136,7 @@ export default function AddEditFoodCampaignDialog({ isOpen, onOpenChange, campai
                     type="date"
                     value={formData.dateStart}
                     onChange={(e) => setFormData(prev => ({ ...prev, dateStart: e.target.value }))}
-                    className={`w-full px-4 py-2.5 pr-10 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                    className={`w-full px-4 py-2.5 pr-10 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm ${
                       errors.dateStart ? "border-red-500" : "border-slate-300"
                     }`}
                     required
@@ -157,7 +157,7 @@ export default function AddEditFoodCampaignDialog({ isOpen, onOpenChange, campai
                     type="date"
                     value={formData.dateEnd}
                     onChange={(e) => setFormData(prev => ({ ...prev, dateEnd: e.target.value }))}
-                    className={`w-full px-4 py-2.5 pr-10 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                    className={`w-full px-4 py-2.5 pr-10 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm ${
                       errors.dateEnd ? "border-red-500" : "border-slate-300"
                     }`}
                     required
@@ -180,7 +180,7 @@ export default function AddEditFoodCampaignDialog({ isOpen, onOpenChange, campai
                     type="time"
                     value={formData.timeStart}
                     onChange={(e) => setFormData(prev => ({ ...prev, timeStart: e.target.value }))}
-                    className={`w-full px-4 py-2.5 pr-10 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                    className={`w-full px-4 py-2.5 pr-10 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm ${
                       errors.timeStart ? "border-red-500" : "border-slate-300"
                     }`}
                     required
@@ -201,7 +201,7 @@ export default function AddEditFoodCampaignDialog({ isOpen, onOpenChange, campai
                     type="time"
                     value={formData.timeEnd}
                     onChange={(e) => setFormData(prev => ({ ...prev, timeEnd: e.target.value }))}
-                    className={`w-full px-4 py-2.5 pr-10 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                    className={`w-full px-4 py-2.5 pr-10 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm ${
                       errors.timeEnd ? "border-red-500" : "border-slate-300"
                     }`}
                     required
@@ -226,7 +226,7 @@ export default function AddEditFoodCampaignDialog({ isOpen, onOpenChange, campai
                   value={formData.price}
                   onChange={(e) => setFormData(prev => ({ ...prev, price: e.target.value }))}
                   placeholder="0.00"
-                  className={`w-full px-4 py-2.5 pr-10 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                  className={`w-full px-4 py-2.5 pr-10 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm ${
                     errors.price ? "border-red-500" : "border-slate-300"
                   }`}
                   required
@@ -249,7 +249,7 @@ export default function AddEditFoodCampaignDialog({ isOpen, onOpenChange, campai
             </button>
             <button
               type="submit"
-              className="px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-md"
+              className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary/90 transition-all shadow-md"
             >
               {campaign ? "Update Campaign" : "Create Campaign"}
             </button>

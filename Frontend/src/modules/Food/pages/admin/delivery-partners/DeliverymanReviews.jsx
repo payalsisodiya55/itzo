@@ -327,7 +327,7 @@ export default function DeliverymanReviews() {
                       )}
                       {visibleColumns.deliveryman && (
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <a href={`/ecs/delivery-partners/${review.deliverymanId}`} className="text-sm font-medium text-blue-600 hover:text-blue-700">
+                          <a href={`/ecs/delivery-partners/${review.deliverymanId}`} className="text-sm font-medium text-primary hover:text-blue-700">
                             {review.deliveryman}
                           </a>
                         </td>
@@ -341,7 +341,7 @@ export default function DeliverymanReviews() {
                       )}
                       {visibleColumns.customer && (
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <a href={`/ecs/users/${review.customerId}`} className="text-sm font-medium text-blue-600 hover:text-blue-700">
+                          <a href={`/ecs/users/${review.customerId}`} className="text-sm font-medium text-primary hover:text-blue-700">
                             {review.customer}
                           </a>
                         </td>
@@ -470,7 +470,7 @@ export default function DeliverymanReviews() {
               {/* Deliveryman & Customer */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-blue-50 rounded-lg p-4">
-                  <p className="text-xs text-blue-600 mb-1">Deliveryman</p>
+                  <p className="text-xs text-primary mb-1">Deliveryman</p>
                   <a 
                     href={`/ecs/delivery-partners/${selectedReview.deliverymanId}`}
                     className="text-sm font-semibold text-blue-700 hover:text-blue-800"

@@ -651,7 +651,7 @@ export default function DeliveryOTP() {
               <Button
                 onClick={handleSubmitName}
                 disabled={isLoading}
-                className="w-full h-11 bg-[#00B761] hover:bg-[#00A055] text-white font-semibold"
+                className="w-full h-11 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
               >
                 {isLoading ? "Continuing..." : "Continue"}
               </Button>
@@ -661,7 +661,7 @@ export default function DeliveryOTP() {
           {/* Loading Spinner */}
           {isLoading && !showNameInput && (
             <div className="flex justify-center pt-4">
-              <Loader2 className="h-6 w-6 text-green-500 animate-spin" />
+              <Loader2 className="h-6 w-6 text-primary animate-spin" />
             </div>
           )}
         </div>

@@ -1393,7 +1393,7 @@ export default function LandingPageManagement() {
         {/* Page Title */}
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-blue-500 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
               <Layout className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -1413,7 +1413,7 @@ export default function LandingPageManagement() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap ${activeTab === tab.id
-                    ? 'bg-blue-500 text-white'
+                    ? 'bg-primary text-white'
                     : 'text-slate-600 hover:bg-slate-100'
                     }`}
                 >
@@ -1469,15 +1469,15 @@ export default function LandingPageManagement() {
                 />
                 {bannersUploading ? (
                   <div className="flex flex-col items-center gap-3">
-                    <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-                    <p className="text-blue-600 font-medium">
+                    <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                    <p className="text-primary font-medium">
                       Uploading image {bannersUploadProgress.current} of {bannersUploadProgress.total}...
                     </p>
                     {bannersUploadProgress.total > 0 && (
                       <div className="w-full max-w-xs">
                         <div className="w-full bg-blue-200 rounded-full h-2">
                           <div
-                            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                            className="bg-primary h-2 rounded-full transition-all duration-300"
                             style={{ width: `${(bannersUploadProgress.current / bannersUploadProgress.total) * 100}%` }}
                           />
                         </div>
@@ -1486,12 +1486,12 @@ export default function LandingPageManagement() {
                   </div>
                 ) : (
                   <div className="flex flex-col items-center gap-3">
-                    <Upload className="w-8 h-8 text-blue-600" />
+                    <Upload className="w-8 h-8 text-primary" />
                     <div>
                       <button
                         type="button"
                         onClick={(e) => { e.stopPropagation(); bannersFileInputRef.current?.click(); }}
-                        className="text-blue-600 font-medium hover:text-blue-700 underline"
+                        className="text-primary font-medium hover:text-blue-700 underline"
                       >
                         Click to upload
                       </button>
@@ -1508,7 +1508,7 @@ export default function LandingPageManagement() {
               <h2 className="text-lg font-bold text-slate-900 mb-4">Banner List ({banners.length})</h2>
               {bannersLoading ? (
                 <div className="flex items-center justify-center py-12">
-                  <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+                  <Loader2 className="w-8 h-8 text-primary animate-spin" />
                 </div>
               ) : banners.length === 0 ? (
                 <div className="text-center py-12 text-slate-500">
@@ -1664,15 +1664,15 @@ export default function LandingPageManagement() {
                 />
                 {under250BannersUploading ? (
                   <div className="flex flex-col items-center gap-3">
-                    <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-                    <p className="text-blue-600 font-medium">
+                    <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                    <p className="text-primary font-medium">
                       Uploading image {under250BannersUploadProgress.current} of {under250BannersUploadProgress.total}...
                     </p>
                     {under250BannersUploadProgress.total > 0 && (
                       <div className="w-full max-w-xs">
                         <div className="w-full bg-blue-200 rounded-full h-2">
                           <div
-                            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                            className="bg-primary h-2 rounded-full transition-all duration-300"
                             style={{ width: `${(under250BannersUploadProgress.current / under250BannersUploadProgress.total) * 100}%` }}
                           />
                         </div>
@@ -1681,12 +1681,12 @@ export default function LandingPageManagement() {
                   </div>
                 ) : (
                   <div className="flex flex-col items-center gap-3">
-                    <Upload className="w-8 h-8 text-blue-600" />
+                    <Upload className="w-8 h-8 text-primary" />
                     <div>
                       <button
                         type="button"
                         onClick={(e) => { e.stopPropagation(); under250BannersFileInputRef.current?.click(); }}
-                        className="text-blue-600 font-medium hover:text-blue-700 underline"
+                        className="text-primary font-medium hover:text-blue-700 underline"
                       >
                         Click to upload
                       </button>
@@ -1703,7 +1703,7 @@ export default function LandingPageManagement() {
               <h2 className="text-lg font-bold text-slate-900 mb-4">Banner List ({under250Banners.length})</h2>
               {under250BannersLoading ? (
                 <div className="flex items-center justify-center py-12">
-                  <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+                  <Loader2 className="w-8 h-8 text-primary animate-spin" />
                 </div>
               ) : under250Banners.length === 0 ? (
                 <div className="text-center py-12 text-slate-500">
@@ -1780,15 +1780,15 @@ export default function LandingPageManagement() {
                 />
                 {diningBannersUploading ? (
                   <div className="flex flex-col items-center gap-3">
-                    <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-                    <p className="text-blue-600 font-medium">
+                    <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                    <p className="text-primary font-medium">
                       Uploading image {diningBannersUploadProgress.current} of {diningBannersUploadProgress.total}...
                     </p>
                     {diningBannersUploadProgress.total > 0 && (
                       <div className="w-full max-w-xs">
                         <div className="w-full bg-blue-200 rounded-full h-2">
                           <div
-                            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                            className="bg-primary h-2 rounded-full transition-all duration-300"
                             style={{ width: `${(diningBannersUploadProgress.current / diningBannersUploadProgress.total) * 100}%` }}
                           />
                         </div>
@@ -1797,12 +1797,12 @@ export default function LandingPageManagement() {
                   </div>
                 ) : (
                   <div className="flex flex-col items-center gap-3">
-                    <Upload className="w-8 h-8 text-blue-600" />
+                    <Upload className="w-8 h-8 text-primary" />
                     <div>
                       <button
                         type="button"
                         onClick={(e) => { e.stopPropagation(); diningBannersFileInputRef.current?.click(); }}
-                        className="text-blue-600 font-medium hover:text-blue-700 underline"
+                        className="text-primary font-medium hover:text-blue-700 underline"
                       >
                         Click to upload
                       </button>
@@ -1819,7 +1819,7 @@ export default function LandingPageManagement() {
               <h2 className="text-lg font-bold text-slate-900 mb-4">Banner List ({diningBanners.length})</h2>
               {diningBannersLoading ? (
                 <div className="flex items-center justify-center py-12">
-                  <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+                  <Loader2 className="w-8 h-8 text-primary animate-spin" />
                 </div>
               ) : diningBanners.length === 0 ? (
                 <div className="text-center py-12 text-slate-500">
@@ -1889,7 +1889,7 @@ export default function LandingPageManagement() {
                   type="button"
                   onClick={() => headerVideoInputRef.current?.click()}
                   disabled={headerVideoUploading || settingsLoading}
-                  className="bg-blue-500 hover:bg-blue-600 text-white"
+                  className="bg-primary hover:bg-primary text-white"
                 >
                   {headerVideoUploading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Upload className="w-4 h-4 mr-2" />}
                   Upload Video
@@ -1898,7 +1898,7 @@ export default function LandingPageManagement() {
 
               {settingsLoading ? (
                 <div className="flex items-center justify-center py-10">
-                  <Loader2 className="w-6 h-6 text-blue-600 animate-spin" />
+                  <Loader2 className="w-6 h-6 text-primary animate-spin" />
                 </div>
               ) : settings.headerVideoUrl ? (
                 <div className="space-y-4">
@@ -1954,7 +1954,7 @@ export default function LandingPageManagement() {
                 <Button
                   onClick={handleSaveSettings}
                   disabled={settingsSaving || settingsLoading}
-                  className="bg-blue-500 hover:bg-blue-600 text-white"
+                  className="bg-primary hover:bg-primary text-white"
                 >
                   {settingsSaving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
                   Save Settings
@@ -1963,7 +1963,7 @@ export default function LandingPageManagement() {
 
               {settingsLoading ? (
                 <div className="flex items-center justify-center py-8">
-                  <Loader2 className="w-6 h-6 text-blue-600 animate-spin" />
+                  <Loader2 className="w-6 h-6 text-primary animate-spin" />
                 </div>
               ) : (
                 <div className="space-y-5">
@@ -2051,7 +2051,7 @@ export default function LandingPageManagement() {
                       key={tab.id}
                       onClick={() => setExploreMoreSubTab(tab.id)}
                       className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap ${exploreMoreSubTab === tab.id
-                        ? 'bg-blue-500 text-white'
+                        ? 'bg-primary text-white'
                         : 'text-slate-600 hover:bg-slate-100'
                         }`}
                     >
@@ -2096,7 +2096,7 @@ export default function LandingPageManagement() {
 
                           {exploreIconsUploading[item.id] && (
                             <div className="absolute inset-0 bg-white/50 flex items-center justify-center z-10">
-                              <Loader2 className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+                              <Loader2 className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
                             </div>
                           )}
                         </div>
@@ -2141,7 +2141,7 @@ export default function LandingPageManagement() {
                         id="restaurant-gourmet"
                         value={selectedRestaurantGourmet}
                         onChange={(e) => setSelectedRestaurantGourmet(e.target.value)}
-                        className="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                         disabled={restaurantsLoading}
                       >
                         <option value="">Select a restaurant...</option>
@@ -2157,7 +2157,7 @@ export default function LandingPageManagement() {
                     <Button
                       onClick={handleAddGourmetRestaurant}
                       disabled={!selectedRestaurantGourmet}
-                      className="bg-blue-500 hover:bg-blue-600 text-white"
+                      className="bg-primary hover:bg-primary text-white"
                     >
                       Add to Gourmet
                     </Button>
@@ -2168,7 +2168,7 @@ export default function LandingPageManagement() {
                   <h2 className="text-lg font-bold text-slate-900 mb-4">Gourmet Restaurants ({gourmetRestaurants.length})</h2>
                   {gourmetLoading ? (
                     <div className="flex items-center justify-center py-12">
-                      <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+                      <Loader2 className="w-8 h-8 text-primary animate-spin" />
                     </div>
                   ) : gourmetRestaurants.length === 0 ? (
                     <div className="text-center py-12 text-slate-500">
@@ -2256,7 +2256,7 @@ export default function LandingPageManagement() {
                     placeholder="Search restaurants by name or ID..."
                     value={restaurantSearchQuery}
                     onChange={(e) => setRestaurantSearchQuery(e.target.value)}
-                    className="pl-10 h-11 bg-white border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+                    className="pl-10 h-11 bg-white border-slate-300 focus:border-primary focus:ring-primary"
                   />
                 </div>
                 {selectedRestaurantIds.length > 0 && (
@@ -2280,7 +2280,7 @@ export default function LandingPageManagement() {
               <div className="flex-1 overflow-y-auto bg-white">
                 {restaurantsLoading ? (
                   <div className="flex flex-col items-center justify-center py-16">
-                    <Loader2 className="w-10 h-10 text-blue-600 animate-spin mb-3" />
+                    <Loader2 className="w-10 h-10 text-primary animate-spin mb-3" />
                     <p className="text-slate-500">Loading restaurants...</p>
                   </div>
                 ) : filteredRestaurantsForModal.length === 0 ? (
@@ -2357,7 +2357,7 @@ export default function LandingPageManagement() {
                             {/* Selected Indicator */}
                             {isSelected && (
                               <div className="flex-shrink-0">
-                                <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
                                   <CheckCircle2 className="w-5 h-5 text-white" />
                                 </div>
                               </div>
@@ -2391,7 +2391,7 @@ export default function LandingPageManagement() {
                   <Button
                     onClick={handleLinkRestaurants}
                     disabled={linkingRestaurants || selectedRestaurantIds.length === 0}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 min-w-[140px]"
+                    className="bg-primary hover:bg-primary/90 text-white px-6 min-w-[140px]"
                   >
                     {linkingRestaurants ? (
                       <>

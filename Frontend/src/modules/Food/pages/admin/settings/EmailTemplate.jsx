@@ -42,7 +42,7 @@ export default function EmailTemplate() {
         linkedin: true,
         pinterest: true
       },
-      copyrightContent: "© 2023 StackFood. All rights reserved."
+      copyrightContent: "ï¿½ 2023 StackFood. All rights reserved."
     },
     "new-restaurant": {
       icon: null,
@@ -62,7 +62,7 @@ export default function EmailTemplate() {
         linkedin: true,
         pinterest: true
       },
-      copyrightContent: "© 2023 StackFood. All rights reserved."
+      copyrightContent: "ï¿½ 2023 StackFood. All rights reserved."
     },
     "new-deliveryman": {
       icon: null,
@@ -82,7 +82,7 @@ export default function EmailTemplate() {
         linkedin: true,
         pinterest: true
       },
-      copyrightContent: "© 2023 StackFood. All rights reserved."
+      copyrightContent: "ï¿½ 2023 StackFood. All rights reserved."
     },
     "withdraw-request": {
       icon: null,
@@ -102,7 +102,7 @@ export default function EmailTemplate() {
         linkedin: true,
         pinterest: true
       },
-      copyrightContent: "© 2023 StackFood. All rights reserved."
+      copyrightContent: "ï¿½ 2023 StackFood. All rights reserved."
     },
     "campaign-join": {
       icon: null,
@@ -122,7 +122,7 @@ export default function EmailTemplate() {
         linkedin: true,
         pinterest: true
       },
-      copyrightContent: "© 2023 StackFood. All rights reserved."
+      copyrightContent: "ï¿½ 2023 StackFood. All rights reserved."
     },
     "refund-request": {
       icon: null,
@@ -142,7 +142,7 @@ export default function EmailTemplate() {
         linkedin: true,
         pinterest: true
       },
-      copyrightContent: "© 2023 StackFood. All rights reserved."
+      copyrightContent: "ï¿½ 2023 StackFood. All rights reserved."
     },
     "new-advertisement": {
       icon: null,
@@ -162,7 +162,7 @@ export default function EmailTemplate() {
         linkedin: true,
         pinterest: true
       },
-      copyrightContent: "© 2023 StackFood. All rights reserved."
+      copyrightContent: "ï¿½ 2023 StackFood. All rights reserved."
     }
   }
   
@@ -183,7 +183,7 @@ export default function EmailTemplate() {
     { id: "en", label: "English(EN)" },
     { id: "bn", label: "Bengali - à¦¬à¦¾à¦‚à¦²à¦¾ (BN)" },
     { id: "ar", label: "Arabic - Ø§Ù„Ø¹Ø±Ø¨ÙŠØ© (AR)" },
-    { id: "es", label: "Spanish - español (ES)" }
+    { id: "es", label: "Spanish - espaï¿½ol (ES)" }
   ]
 
   const handleInputChange = (field, value) => {
@@ -238,7 +238,7 @@ export default function EmailTemplate() {
     // Replace placeholders with sample data
     return content
       .replace(/{userName}/g, "John Doe")
-      .replace(/{restaurantName}/g, "Café Monarch")
+      .replace(/{restaurantName}/g, "Cafï¿½ Monarch")
       .replace(/{ownerName}/g, "Jane Smith")
       .replace(/{email}/g, "owner@example.com")
       .replace(/{phone}/g, "+1234567890")
@@ -275,7 +275,7 @@ export default function EmailTemplate() {
                 onClick={() => handleTemplateChange(template.id)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   activeTemplate === template.id
-                    ? "bg-blue-600 text-white"
+                    ? "bg-primary text-white"
                     : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                 }`}
               >
@@ -302,7 +302,7 @@ export default function EmailTemplate() {
               type="button"
               onClick={() => setSendMailEnabled(!sendMailEnabled)}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                sendMailEnabled ? "bg-blue-600" : "bg-slate-300"
+                sendMailEnabled ? "bg-primary" : "bg-slate-300"
               }`}
             >
               <span
@@ -348,16 +348,16 @@ export default function EmailTemplate() {
                 formData.pageLinks.contactUs) && (
                 <div className="flex flex-wrap gap-2 mb-4 text-xs text-slate-600">
                   {formData.pageLinks.privacyPolicy && (
-                    <span>• Privacy Policy</span>
+                    <span>ï¿½ Privacy Policy</span>
                   )}
                   {formData.pageLinks.refundPolicy && (
-                    <span>• Refund Policy</span>
+                    <span>ï¿½ Refund Policy</span>
                   )}
                   {formData.pageLinks.cancellationPolicy && (
-                    <span>• Cancelation Policy</span>
+                    <span>ï¿½ Cancelation Policy</span>
                   )}
                   {formData.pageLinks.contactUs && (
-                    <span>• Contact us</span>
+                    <span>ï¿½ Contact us</span>
                   )}
                 </div>
               )}
@@ -370,7 +370,7 @@ export default function EmailTemplate() {
                 formData.socialMediaLinks.pinterest) && (
                 <div className="flex gap-3 mb-4">
                   {formData.socialMediaLinks.facebook && (
-                    <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
                       <Facebook className="w-4 h-4 text-white" />
                     </div>
                   )}
@@ -385,7 +385,7 @@ export default function EmailTemplate() {
                     </div>
                   )}
                   {formData.socialMediaLinks.linkedin && (
-                    <div className="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-primary/90 flex items-center justify-center">
                       <Linkedin className="w-4 h-4 text-white" />
                     </div>
                   )}
@@ -414,7 +414,7 @@ export default function EmailTemplate() {
                   onClick={() => setActiveLanguage(lang.id)}
                   className={`px-3 py-1.5 text-sm font-medium rounded transition-colors ${
                     activeLanguage === lang.id
-                      ? "bg-blue-600 text-white"
+                      ? "bg-primary text-white"
                       : "text-slate-600 hover:bg-slate-100"
                   }`}
                 >
@@ -426,7 +426,7 @@ export default function EmailTemplate() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Read Instructions Link */}
               <div className="flex items-center gap-2 mb-4">
-                <a href="#" className="text-sm text-blue-600 hover:underline flex items-center gap-1">
+                <a href="#" className="text-sm text-primary hover:underline flex items-center gap-1">
                   Read Instructions
                   <Info className="w-4 h-4" />
                 </a>
@@ -444,9 +444,9 @@ export default function EmailTemplate() {
                     placeholder="Choose File"
                     value={formData.icon ? "File selected" : ""}
                     readOnly
-                    className="flex-1 px-4 py-2 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="flex-1 px-4 py-2 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-sm"
                   />
-                  <label className="px-4 py-2 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition-colors text-sm font-medium">
+                  <label className="px-4 py-2 bg-primary text-white rounded-lg cursor-pointer hover:bg-primary/90 transition-colors text-sm font-medium">
                     Browse
                     <input
                       type="file"
@@ -472,7 +472,7 @@ export default function EmailTemplate() {
                     type="text"
                     value={formData.mainTitle}
                     onChange={(e) => handleInputChange("mainTitle", e.target.value)}
-                    className="w-full px-4 py-2 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    className="w-full px-4 py-2 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                   />
                 </div>
               </div>
@@ -499,7 +499,7 @@ export default function EmailTemplate() {
                     value={formData.mailBody}
                     onChange={(e) => handleInputChange("mailBody", e.target.value)}
                     rows={8}
-                    className="w-full px-4 py-2 border-0 rounded-b-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm resize-none"
+                    className="w-full px-4 py-2 border-0 rounded-b-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-sm resize-none"
                   />
                 </div>
               </div>
@@ -520,7 +520,7 @@ export default function EmailTemplate() {
                       type="text"
                       value={formData.footerText}
                       onChange={(e) => handleInputChange("footerText", e.target.value)}
-                      className="w-full px-4 py-2 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                      className="w-full px-4 py-2 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                     />
                   </div>
 
@@ -539,7 +539,7 @@ export default function EmailTemplate() {
                             type="checkbox"
                             checked={formData.pageLinks[item.key]}
                             onChange={(e) => handleCheckboxChange("pageLinks", item.key, e.target.checked)}
-                            className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                            className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary"
                           />
                           <span className="text-sm text-slate-700">{item.label}</span>
                         </label>
@@ -563,7 +563,7 @@ export default function EmailTemplate() {
                             type="checkbox"
                             checked={formData.socialMediaLinks[item.key]}
                             onChange={(e) => handleCheckboxChange("socialMediaLinks", item.key, e.target.checked)}
-                            className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                            className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary"
                           />
                           <span className="text-sm text-slate-700">{item.label}</span>
                         </label>
@@ -580,7 +580,7 @@ export default function EmailTemplate() {
                       type="text"
                       value={formData.copyrightContent}
                       onChange={(e) => handleInputChange("copyrightContent", e.target.value)}
-                      className="w-full px-4 py-2 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                      className="w-full px-4 py-2 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                     />
                   </div>
                 </div>
@@ -598,7 +598,7 @@ export default function EmailTemplate() {
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center gap-2"
+                  className="px-6 py-2.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium flex items-center gap-2"
                 >
                   <Save className="w-4 h-4" />
                   Save

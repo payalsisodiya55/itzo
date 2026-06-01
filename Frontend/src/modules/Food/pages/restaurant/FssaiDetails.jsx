@@ -50,7 +50,7 @@ export default function FssaiDetails() {
   if (loading) {
     return (
       <div className="min-h-screen bg-white flex flex-col items-center justify-center">
-        <Loader2 className="w-8 h-8 text-blue-600 animate-spin mb-2" />
+        <Loader2 className="w-8 h-8 text-primary animate-spin mb-2" />
         <p className="text-sm text-gray-500 font-medium">Loading FSSAI details...</p>
       </div>
     )

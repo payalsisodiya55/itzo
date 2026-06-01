@@ -1434,7 +1434,7 @@ export default function AddRestaurant() {
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <header className="px-4 py-4 sm:px-6 sm:py-5 bg-white flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Building2 className="w-5 h-5 text-blue-600" />
+          <Building2 className="w-5 h-5 text-primary" />
           <div className="text-sm font-semibold text-black">Add New Restaurant</div>
         </div>
         <div className="text-xs text-gray-600">Step {step} of 3</div>

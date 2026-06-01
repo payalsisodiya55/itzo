@@ -298,7 +298,7 @@ export default function RestaurantWelcome() {
         {/* <Button
           onClick={handlePartner}
           variant="outline"
-          className="w-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-bold py-6 md:py-7 text-base md:text-lg rounded-lg transition-all shadow-lg bg-transparent"
+          className="w-full border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold py-6 md:py-7 text-base md:text-lg rounded-lg transition-all shadow-lg bg-transparent"
         >
           Partner with Appzeto
         </Button> */}

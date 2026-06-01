@@ -514,7 +514,7 @@ availableCashLimit: deliveryman.availableCashLimit || 0,
           <div className="overflow-x-auto">
             {loading ? (
               <div className="flex items-center justify-center py-20">
-                <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
                 <span className="ml-3 text-sm text-slate-600">Loading delivery partners...</span>
               </div>
             ) : (
@@ -634,7 +634,7 @@ availableCashLimit: deliveryman.availableCashLimit || 0,
                               </div>
                               <div className="flex items-center gap-2">
                                 <span 
-                                  className="text-sm font-medium text-slate-900 cursor-pointer hover:text-blue-600 transition-colors"
+                                  className="text-sm font-medium text-slate-900 cursor-pointer hover:text-primary transition-colors"
                                   onClick={() => handleView(dm)}
                                 >
                                   {dm.name}
@@ -748,7 +748,7 @@ availableCashLimit: deliveryman.availableCashLimit || 0,
                               )}
                               <button 
                                 onClick={() => handleView(dm)}
-                                className="p-1.5 rounded bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors" 
+                                className="p-1.5 rounded bg-blue-50 text-primary hover:bg-blue-100 transition-colors" 
                                 title="View Details"
                               >
                                 <Eye className="w-4 h-4" />
@@ -1012,7 +1012,7 @@ availableCashLimit: deliveryman.availableCashLimit || 0,
                                 href={viewDetails.documents.aadhar.document} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700"
+                                className="inline-flex items-center gap-1 text-sm text-primary hover:text-blue-700"
                               >
                                 <ExternalLink className="w-3 h-3" /> View Document
                               </a>
@@ -1034,7 +1034,7 @@ availableCashLimit: deliveryman.availableCashLimit || 0,
                                 href={viewDetails.documents.pan.document} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700"
+                                className="inline-flex items-center gap-1 text-sm text-primary hover:text-blue-700"
                               >
                                 <ExternalLink className="w-3 h-3" /> View Document
                               </a>
@@ -1061,7 +1061,7 @@ availableCashLimit: deliveryman.availableCashLimit || 0,
                                 href={viewDetails.documents.drivingLicense.document} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700"
+                                className="inline-flex items-center gap-1 text-sm text-primary hover:text-blue-700"
                               >
                                 <ExternalLink className="w-3 h-3" /> View Document
                               </a>
@@ -1083,7 +1083,7 @@ availableCashLimit: deliveryman.availableCashLimit || 0,
                                 href={viewDetails.documents.vehicleRC.document} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700"
+                                className="inline-flex items-center gap-1 text-sm text-primary hover:text-blue-700"
                               >
                                 <ExternalLink className="w-3 h-3" /> View Document
                               </a>
@@ -1166,7 +1166,7 @@ availableCashLimit: deliveryman.availableCashLimit || 0,
               </div>
             ) : (
               <div className="flex items-center justify-center py-8">
-                <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
+                <Loader2 className="w-6 h-6 animate-spin text-primary" />
               </div>
             )}
           </div>

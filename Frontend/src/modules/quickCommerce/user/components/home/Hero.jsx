@@ -34,7 +34,7 @@ const banners = [
         image: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&w=2070&auto=format&fit=crop", // Changed Image
         badge: "New Stock",
         badgeIcon: Star,
-        badgeColor: "bg-blue-600 text-white",
+        badgeColor: "bg-primary text-white",
         title: "Healthy",
         highlight: "Choices",
         highlightColor: "text-cyan-300",

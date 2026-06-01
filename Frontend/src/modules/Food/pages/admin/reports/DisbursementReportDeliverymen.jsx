@@ -169,7 +169,7 @@ export default function DisbursementReportDeliverymen() {
                 <select
                   value={filters.zone}
                   onChange={(e) => setFilters(prev => ({ ...prev, zone: e.target.value }))}
-                  className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="All Zones">All Zones</option>
                   <option value="Zone 1">Zone 1</option>
@@ -186,7 +186,7 @@ export default function DisbursementReportDeliverymen() {
                 <select
                   value={filters.deliveryMan}
                   onChange={(e) => setFilters(prev => ({ ...prev, deliveryMan: e.target.value }))}
-                  className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="All delivery mans">All delivery mans</option>
                   <option value="Kathryn Murphy">Kathryn Murphy</option>
@@ -203,7 +203,7 @@ export default function DisbursementReportDeliverymen() {
                 <select
                   value={filters.paymentMethod}
                   onChange={(e) => setFilters(prev => ({ ...prev, paymentMethod: e.target.value }))}
-                  className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="All Payment Method">All Payment Method</option>
                   <option value="6cash">6cash</option>
@@ -219,7 +219,7 @@ export default function DisbursementReportDeliverymen() {
                 <select
                   value={filters.status}
                   onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value }))}
-                  className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="All status">All status</option>
                   <option value="Pending">Pending</option>
@@ -238,7 +238,7 @@ export default function DisbursementReportDeliverymen() {
                 <select
                   value={filters.time}
                   onChange={(e) => setFilters(prev => ({ ...prev, time: e.target.value }))}
-                  className="w-full sm:w-48 px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full sm:w-48 px-4 py-2.5 pr-8 text-sm rounded-lg border border-slate-300 bg-white text-slate-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="All Time">All Time</option>
                   <option value="Today">Today</option>
@@ -258,7 +258,7 @@ export default function DisbursementReportDeliverymen() {
                 </button>
                 <button 
                   onClick={handleFilterApply}
-                  className={`px-6 py-2.5 text-sm font-medium rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-all flex items-center gap-2 relative ${
+                  className={`px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary transition-all flex items-center gap-2 relative ${
                     activeFiltersCount > 0 ? "ring-2 ring-blue-300" : ""
                   }`}
                 >
@@ -287,7 +287,7 @@ export default function DisbursementReportDeliverymen() {
                   placeholder="Search by id"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-4 pr-10 py-2.5 w-full text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="pl-4 pr-10 py-2.5 w-full text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                 />
                 <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               </div>
@@ -418,7 +418,7 @@ export default function DisbursementReportDeliverymen() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-center">
                         <button
-                          className="p-1.5 rounded text-blue-600 hover:bg-blue-50 transition-colors"
+                          className="p-1.5 rounded text-primary hover:bg-blue-50 transition-colors"
                           title="View Details"
                         >
                           <Eye className="w-4 h-4" />

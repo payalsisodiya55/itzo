@@ -312,7 +312,7 @@ const WithdrawalRequests = () => {
                                                     <>
                                                         <button
                                                             onClick={() => handleAction('approve', req)}
-                                                            className="p-2 bg-emerald-50 text-emerald-600 rounded-xl hover:bg-emerald-500 hover:text-white transition-all active:scale-90"
+                                                            className="p-2 bg-primary/10 text-primary rounded-xl hover:bg-primary hover:text-primary-foreground transition-all active:scale-90"
                                                         >
                                                             <CheckCircle className="h-4 w-4" />
                                                         </button>
@@ -408,7 +408,7 @@ const WithdrawalRequests = () => {
                                 <>
                                     <button
                                         onClick={() => { setSelectedRequest(null); handleAction('approve', selectedRequest); }}
-                                        className="flex-1 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest shadow-xl shadow-indigo-200 transition-all active:scale-[0.98]"
+                                        className="flex-1 py-4 bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl font-black text-[11px] uppercase tracking-widest shadow-xl shadow-primary/20 transition-all active:scale-[0.98]"
                                     >
                                         Authorize Transfer
                                     </button>
@@ -459,7 +459,7 @@ const WithdrawalRequests = () => {
                                 disabled={loading}
                                 className={cn(
                                     "w-full py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all shadow-xl flex items-center justify-center gap-2",
-                                    actionModal.type === 'approve' ? "bg-emerald-500 text-white shadow-emerald-200" : "bg-rose-500 text-white shadow-rose-200"
+                                    actionModal.type === 'approve' ? "bg-primary text-primary-foreground shadow-primary/20" : "bg-rose-500 text-white shadow-rose-200"
                                 )}
                             >
                                 {loading && <RotateCw className="h-4 w-4 animate-spin" />}

@@ -615,7 +615,7 @@ export default function ProductDetail() {
                                 <div className="flex items-center gap-2 mb-1">
                                   <h3 className="font-semibold">{review.userName}</h3>
                                   {review.verified && (
-                                    <Badge className="bg-blue-500 text-white text-xs px-2 py-0">
+                                    <Badge className="bg-primary text-white text-xs px-2 py-0">
                                       Verified
                                     </Badge>
                                   )}
@@ -718,7 +718,7 @@ export default function ProductDetail() {
                                       <div className="flex items-center gap-2">
                                         <span className="font-semibold text-sm">{reply.userName}</span>
                                         {reply.verified && (
-                                          <Badge className="bg-blue-500 text-white text-xs px-1.5 py-0">
+                                          <Badge className="bg-primary text-white text-xs px-1.5 py-0">
                                             Verified
                                           </Badge>
                                         )}

@@ -279,7 +279,7 @@ const FleetTrackingTable = () => {
 
                 <div className="space-y-4">
                   <div className="flex items-center gap-4 text-sm">
-                    <div className="h-10 w-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center shrink-0">
+                    <div className="h-10 w-10 bg-blue-50 text-primary rounded-xl flex items-center justify-center shrink-0">
                       <HiOutlinePhone className="h-5 w-5" />
                     </div>
                     <div>

@@ -162,7 +162,7 @@ const Withdrawals = () => {
                                 <div className={cn(
                                     "h-10 w-10 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110",
                                     stat.color === 'emerald' ? 'bg-emerald-50 text-emerald-600' :
-                                        stat.color === 'amber' ? 'bg-amber-50 text-amber-600' : 'bg-blue-50 text-blue-600'
+                                        stat.color === 'amber' ? 'bg-amber-50 text-amber-600' : 'bg-blue-50 text-primary'
                                 )}>
                                     <stat.icon className="h-5 w-5" />
                                 </div>

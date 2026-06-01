@@ -487,11 +487,11 @@ export default function SignupStep2() {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-300 rounded-lg hover:border-green-500 transition-colors px-4">
+          <div className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary transition-colors px-4">
             <div className="flex flex-col items-center justify-center pt-5 pb-3">
               {isUploading ? (
                 <>
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500 mb-2"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-2"></div>
                   <p className="text-sm text-gray-500">{uploading[docType] ? "Uploading..." : "Restoring..."}</p>
                 </>
               ) : (
@@ -508,7 +508,7 @@ export default function SignupStep2() {
                 <button
                   type="button"
                   onClick={() => handleTakeCameraPhoto(docType, label)}
-                  className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-gray-900 text-white text-xs font-bold cursor-pointer hover:bg-black transition-all active:scale-95"
+                  className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-primary text-primary-foreground text-xs font-bold cursor-pointer hover:bg-primary/90 transition-all active:scale-95"
                 >
                   <Camera className="w-4 h-4" />
                   <span>Take Photo</span>
@@ -516,7 +516,7 @@ export default function SignupStep2() {
                 <button
                   type="button"
                   onClick={() => handlePickFromGallery(docType)}
-                  className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-[#00B761] text-white text-xs font-bold cursor-pointer hover:bg-[#00A055] transition-all active:scale-95"
+                  className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-orange-50 text-orange-600 border border-orange-100 hover:bg-orange-100/50 transition-all active:scale-95"
                 >
                   <ImageIcon className="w-4 h-4" />
                   <span>Gallery</span>
@@ -591,7 +591,7 @@ export default function SignupStep2() {
               !hasDocumentValue(documents.panPhoto, uploadedDocs.panPhoto) ||
               !hasDocumentValue(documents.drivingLicensePhoto, uploadedDocs.drivingLicensePhoto)
               ? "bg-gray-400 cursor-not-allowed"
-              : "bg-[#00B761] hover:bg-[#00A055]"
+              : "bg-primary hover:bg-primary/90 text-primary-foreground"
               }`}
           >
             {isSubmitting ? "Submitting..." : "Complete Signup"}

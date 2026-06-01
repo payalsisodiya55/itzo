@@ -4,7 +4,7 @@ const stories = [
     { id: 1, title: 'Big Savings', image: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=150&auto=format&fit=crop', color: 'border-orange-500' },
     { id: 2, title: 'New Arrival', image: 'https://images.unsplash.com/photo-1615485290382-441e4d019cb5?q=80&w=150&auto=format&fit=crop', color: 'border-[#0c831f]' },
     { id: 3, title: 'Organic', image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=150&auto=format&fit=crop', color: 'border-green-400' },
-    { id: 4, title: 'Under ₹99', image: 'https://images.unsplash.com/photo-1580913182749-51b1b1ae4e12?q=80&w=150&auto=format&fit=crop', color: 'border-blue-500' },
+    { id: 4, title: 'Under ₹99', image: 'https://images.unsplash.com/photo-1580913182749-51b1b1ae4e12?q=80&w=150&auto=format&fit=crop', color: 'border-primary' },
     { id: 5, title: 'Snacks', image: 'https://images.unsplash.com/photo-1599490659213-e2b9527bb087?q=80&w=150&auto=format&fit=crop', color: 'border-purple-500' },
     { id: 6, title: 'Superfast', image: 'https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=150&auto=format&fit=crop', color: 'border-red-500' },
     { id: 7, title: 'Trending', image: 'https://images.unsplash.com/photo-1550989460-0adf9ea622e2?q=80&w=150&auto=format&fit=crop', color: 'border-yellow-500' },

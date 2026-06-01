@@ -377,7 +377,7 @@ const PendingDeliveryBoys = () => {
                                     <button
                                         disabled={isProcessing}
                                         onClick={() => handleApprove(viewingRider.id)}
-                                        className="flex-1 py-5 bg-slate-900 text-white rounded-xl font-black text-xs uppercase tracking-widest shadow-2xl active:scale-95 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+                                        className="flex-1 py-5 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl font-black text-xs uppercase tracking-widest shadow-2xl shadow-primary/20 active:scale-95 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                                     >
                                         {isProcessing ? (
                                             <>

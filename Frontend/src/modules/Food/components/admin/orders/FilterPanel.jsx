@@ -44,7 +44,7 @@ export default function FilterPanel({
                     onClick={() => setFilters(prev => ({ ...prev, status: status === "All" ? "" : status }))}
                     className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                       filters.status === status || (status === "All" && !filters.status)
-                        ? "bg-blue-600 text-white shadow-md"
+                        ? "bg-primary text-white shadow-md"
                         : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                     }`}
                   >

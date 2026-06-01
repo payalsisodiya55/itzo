@@ -1480,7 +1480,7 @@ export default function RestaurantsList() {
               {canCreate && (
                 <button
                   onClick={() => navigate("/ecs/food/restaurants/add")}
-                  className="px-4 py-2.5 text-sm font-medium rounded-lg bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2 transition-all"
+                  className="px-4 py-2.5 text-sm font-medium rounded-lg bg-primary hover:bg-primary/90 text-white flex items-center gap-2 transition-all"
                 >
                   <Plus className="w-4 h-4" />
                   <span>Add Restaurant</span>
@@ -1492,7 +1492,7 @@ export default function RestaurantsList() {
                   placeholder="Search by restaurant name or ID"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 pr-4 py-2.5 w-full text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="pl-10 pr-4 py-2.5 w-full text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                 />
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               </div>
@@ -1521,7 +1521,7 @@ export default function RestaurantsList() {
           <div className="overflow-x-auto">
             {loading ? (
               <div className="flex items-center justify-center py-20">
-                <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
                 <span className="ml-3 text-slate-600">Loading restaurants...</span>
               </div>
             ) : error ? (
@@ -1531,7 +1531,7 @@ export default function RestaurantsList() {
                 <button
                   type="button"
                   onClick={() => navigate("/ecs/login", { replace: true, state: { from: "/ecs/food/restaurants" } })}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
                 >
                   Log in as admin
                 </button>
@@ -1546,7 +1546,7 @@ export default function RestaurantsList() {
                     >
                       <div className="flex items-center gap-1">
                         <span>SL</span>
-                        <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === 'sl' ? 'text-blue-600' : 'text-slate-400'}`} />
+                        <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === 'sl' ? 'text-primary' : 'text-slate-400'}`} />
                       </div>
                     </th>
                     <th
@@ -1555,7 +1555,7 @@ export default function RestaurantsList() {
                     >
                       <div className="flex items-center gap-1">
                         <span>Restaurant Info</span>
-                        <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === 'name' ? 'text-blue-600' : 'text-slate-400'}`} />
+                        <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === 'name' ? 'text-primary' : 'text-slate-400'}`} />
                       </div>
                     </th>
                     <th
@@ -1564,7 +1564,7 @@ export default function RestaurantsList() {
                     >
                       <div className="flex items-center gap-1">
                         <span>Owner Info</span>
-                        <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === 'owner' ? 'text-blue-600' : 'text-slate-400'}`} />
+                        <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === 'owner' ? 'text-primary' : 'text-slate-400'}`} />
                       </div>
                     </th>
                     <th
@@ -1573,7 +1573,7 @@ export default function RestaurantsList() {
                     >
                       <div className="flex items-center gap-1">
                         <span>Zone</span>
-                        <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === 'zone' ? 'text-blue-600' : 'text-slate-400'}`} />
+                        <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === 'zone' ? 'text-primary' : 'text-slate-400'}`} />
                       </div>
                     </th>
                     <th
@@ -1582,7 +1582,7 @@ export default function RestaurantsList() {
                     >
                       <div className="flex items-center gap-1">
                         <span>Rating</span>
-                        <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === 'rating' ? 'text-blue-600' : 'text-slate-400'}`} />
+                        <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === 'rating' ? 'text-primary' : 'text-slate-400'}`} />
                       </div>
                     </th>
                     <th
@@ -1591,7 +1591,7 @@ export default function RestaurantsList() {
                     >
                       <div className="flex items-center gap-1">
                         <span>Status</span>
-                        <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === 'status' ? 'text-blue-600' : 'text-slate-400'}`} />
+                        <ArrowUpDown className={`w-3 h-3 ${sortConfig.key === 'status' ? 'text-primary' : 'text-slate-400'}`} />
                       </div>
                     </th>
                     <th className="px-6 py-4 text-center text-[10px] font-bold text-slate-700 uppercase tracking-wider">Action</th>
@@ -1633,7 +1633,7 @@ export default function RestaurantsList() {
                             </div>
                             <div className="flex flex-col">
                               <span 
-                                className="text-sm font-medium text-slate-900 cursor-pointer hover:text-blue-600 transition-colors"
+                                className="text-sm font-medium text-slate-900 cursor-pointer hover:text-primary transition-colors"
                                 onClick={() => handleViewDetails(restaurant)}
                               >
                                 {restaurant.name}
@@ -1674,7 +1674,7 @@ export default function RestaurantsList() {
                           <div className="flex items-center justify-center gap-2">
                             <button
                               onClick={() => handleViewDetails(restaurant)}
-                              className="p-1.5 rounded text-blue-600 hover:bg-blue-50 transition-colors"
+                              className="p-1.5 rounded text-primary hover:bg-blue-50 transition-colors"
                               title="View Details"
                             >
                               <Eye className="w-4 h-4" />
@@ -1732,7 +1732,7 @@ export default function RestaurantsList() {
                   !isEditingDetails ? (
                     <button
                       onClick={handleStartEditDetails}
-                      className="px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-colors"
+                      className="px-3 py-2 rounded-xl bg-primary hover:bg-primary/90 text-white text-sm font-medium transition-colors"
                     >
                       Edit Details
                     </button>
@@ -1748,7 +1748,7 @@ export default function RestaurantsList() {
                       <button
                         onClick={handleSaveDetails}
                         disabled={savingDetails}
-                        className="px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-colors disabled:opacity-60 flex items-center gap-2"
+                        className="px-3 py-2 rounded-xl bg-primary hover:bg-primary/90 text-white text-sm font-medium transition-colors disabled:opacity-60 flex items-center gap-2"
                       >
                         {savingDetails && <Loader2 className="w-4 h-4 animate-spin" />}
                         {savingDetails ? "Saving..." : "Save Changes"}
@@ -1771,7 +1771,7 @@ export default function RestaurantsList() {
                 <div className="flex flex-col items-center justify-center py-24">
                   <div className="relative">
                     <div className="w-12 h-12 rounded-full border-4 border-slate-100"></div>
-                    <div className="absolute inset-0 w-12 h-12 rounded-full border-4 border-blue-600 border-t-transparent animate-spin"></div>
+                    <div className="absolute inset-0 w-12 h-12 rounded-full border-4 border-primary border-t-transparent animate-spin"></div>
                   </div>
                   <span className="mt-4 text-slate-500 font-medium tracking-wide">Fetching restaurant data...</span>
                 </div>
@@ -1876,7 +1876,7 @@ export default function RestaurantsList() {
                         type="checkbox"
                         checked={detailsForm.isActive}
                         onChange={(e) => setDetailsForm((prev) => ({ ...prev, isActive: e.target.checked }))}
-                        className="h-4 w-4 rounded border-slate-300 text-blue-600"
+                        className="h-4 w-4 rounded border-slate-300 text-primary"
                       />
                       <label htmlFor="restaurant-status-active" className="text-sm text-slate-700">
                         Restaurant is active
@@ -1988,16 +1988,16 @@ export default function RestaurantsList() {
                     {/* Owner Information */}
                     <div className="space-y-6">
                       <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
-                        <User className="w-4 h-4 text-blue-600" />
+                        <User className="w-4 h-4 text-primary" />
                         <h4 className="text-sm font-bold text-slate-900 uppercase tracking-widest">Owner Information</h4>
                       </div>
                       <div className="space-y-4">
                         <div className="flex items-start gap-4 p-4 rounded-2xl bg-blue-50/30 border border-blue-100/30">
                           <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center shrink-0">
-                            <User className="w-5 h-5 text-blue-600" />
+                            <User className="w-5 h-5 text-primary" />
                           </div>
                           <div>
-                            <p className="text-[10px] text-blue-600 font-bold uppercase tracking-wider mb-0.5">Full Name</p>
+                            <p className="text-[10px] text-primary font-bold uppercase tracking-wider mb-0.5">Full Name</p>
                             <p className="text-base font-bold text-slate-800">
                               {r?.ownerName || "N/A"}
                             </p>
@@ -2142,7 +2142,7 @@ export default function RestaurantsList() {
                               href={profileImgUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700"
+                              className="inline-flex items-center gap-2 text-primary hover:text-blue-700"
                             >
                               <ImageIcon className="w-4 h-4" />
                               <span>View Profile Image</span>
@@ -2303,7 +2303,7 @@ export default function RestaurantsList() {
                               {panDocumentUrl && (
                                 <div className="md:col-span-2">
                                   <p className="text-xs text-slate-500 mb-2">PAN Document</p>
-                                  <a href={panDocumentUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700">
+                                  <a href={panDocumentUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:text-blue-700">
                                     <ImageIcon className="w-4 h-4" />
                                     <span>View PAN Document</span>
                                     <ExternalLink className="w-3 h-3" />
@@ -2351,7 +2351,7 @@ export default function RestaurantsList() {
                               {gstDocumentUrl && (
                                 <div className="md:col-span-2">
                                   <p className="text-xs text-slate-500 mb-2">GST Document</p>
-                                  <a href={gstDocumentUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700">
+                                  <a href={gstDocumentUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:text-blue-700">
                                     <ImageIcon className="w-4 h-4" />
                                     <span>View GST Document</span>
                                     <ExternalLink className="w-3 h-3" />
@@ -2387,7 +2387,7 @@ export default function RestaurantsList() {
                               {fssaiDocumentUrl && (
                                 <div className="md:col-span-2">
                                   <p className="text-xs text-slate-500 mb-2">FSSAI Document</p>
-                                  <a href={fssaiDocumentUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700">
+                                  <a href={fssaiDocumentUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:text-blue-700">
                                     <ImageIcon className="w-4 h-4" />
                                     <span>View FSSAI Document</span>
                                     <ExternalLink className="w-3 h-3" />
@@ -2549,7 +2549,7 @@ export default function RestaurantsList() {
                               <img
                                 src={r.onboarding.step2.profileImageUrl.url}
                                 alt="Profile"
-                                className="w-32 h-32 rounded-lg object-cover border border-slate-200 hover:border-blue-500 transition-colors"
+                                className="w-32 h-32 rounded-lg object-cover border border-slate-200 hover:border-primary transition-colors"
                                 onError={(e) => {
                                   e.target.src = PLACEHOLDER_128
                                 }}

@@ -291,7 +291,7 @@ export default function RestaurantConfigPage() {
                   />
                   <Button
                     onClick={addCharacteristic}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-4"
+                    className="bg-primary hover:bg-primary text-white px-4"
                   >
                     <Plus className="w-4 h-4" />
                   </Button>
@@ -328,7 +328,7 @@ export default function RestaurantConfigPage() {
                   />
                   <Button
                     onClick={addTag}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-4"
+                    className="bg-primary hover:bg-primary text-white px-4"
                   >
                     <Plus className="w-4 h-4" />
                   </Button>
@@ -521,7 +521,7 @@ export default function RestaurantConfigPage() {
                   ))}
                   <Button
                     onClick={() => addTimeSlot(day.key)}
-                    className="bg-blue-500 hover:bg-blue-600 text-white"
+                    className="bg-primary hover:bg-primary text-white"
                     size="sm"
                   >
                     <Plus className="w-4 h-4 mr-1" />

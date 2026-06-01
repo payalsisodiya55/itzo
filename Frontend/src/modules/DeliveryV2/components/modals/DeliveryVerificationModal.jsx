@@ -184,7 +184,7 @@ const OtpModal = ({ order, onVerified, onClose }) => {
             isAlreadyVerified
           }
           onConfirm={verifyOtp}
-          color="bg-gray-900"
+          color="bg-primary"
         />
       </motion.div>
     </div>
@@ -441,7 +441,7 @@ const PaymentModal = ({ order, otpString, onComplete, onClose }) => {
                 throw e;
               }
             }}
-            color="bg-green-600"
+            color="bg-primary"
           />
         </motion.div>
       </div>
@@ -586,7 +586,7 @@ export const DeliveryVerificationModal = ({ order, onComplete, onClose }) => {
               onConfirm={async () => {
                 await onComplete(verifiedOtp);
               }}
-              color="bg-green-600"
+              color="bg-primary"
             />
           </motion.div>
         </div>

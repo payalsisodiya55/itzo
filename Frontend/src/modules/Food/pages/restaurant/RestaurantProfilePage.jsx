@@ -141,7 +141,7 @@ export default function RestaurantProfilePage() {
                 </div>
                 <button 
                   onClick={() => navigate("/food/restaurant/onboarding?step=1")}
-                  className="absolute bottom-0 right-0 p-2 bg-blue-600 rounded-full shadow-lg text-white"
+                  className="absolute bottom-0 right-0 p-2 bg-primary rounded-full shadow-lg text-white"
                 >
                   <Edit className="w-4 h-4" />
                 </button>

@@ -843,13 +843,13 @@ const ProductDetailSheet = () => {
                                                     className={cn(
                                                         "flex-shrink-0 px-4 py-2 font-bold rounded-xl text-sm transition-all relative overflow-hidden",
                                                         selectedVariant?.sku === v.sku
-                                                            ? "bg-white border-2 border-blue-600 text-blue-700 shadow-sm shadow-blue-100"
+                                                            ? "bg-white border-2 border-primary text-blue-700 shadow-sm shadow-blue-100"
                                                             : "bg-gray-50 border border-gray-200 text-gray-600"
                                                     )}
                                                 >
                                                     {v.name}
                                                     {selectedVariant?.sku === v.sku && (
-                                                        <div className="absolute top-0 right-0 w-3 h-3 bg-blue-600 rounded-bl-lg" />
+                                                        <div className="absolute top-0 right-0 w-3 h-3 bg-primary rounded-bl-lg" />
                                                     )}
                                                 </button>
                                             ))}
@@ -919,7 +919,7 @@ const ProductDetailSheet = () => {
                                                 value={newReview.comment}
                                                 onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
                                                 placeholder="Write your experience..."
-                                                className="w-full bg-white border border-gray-100 rounded-2xl p-4 text-sm font-medium min-h-[100px] outline-none focus:border-blue-500/50 transition-all resize-none"
+                                                className="w-full bg-white border border-gray-100 rounded-2xl p-4 text-sm font-medium min-h-[100px] outline-none focus:border-primary/50 transition-all resize-none"
                                             />
                                             <Button
                                                 type="submit"
@@ -935,14 +935,14 @@ const ProductDetailSheet = () => {
                                     <div className="space-y-4">
                                         {reviewLoading ? (
                                             <div className="flex justify-center py-8">
-                                                <Loader2 className="animate-spin text-blue-600" size={24} />
+                                                <Loader2 className="animate-spin text-primary" size={24} />
                                             </div>
                                         ) : reviews.length > 0 ? (
                                             reviews.map((r) => (
                                                 <div key={r._id} className="p-5 rounded-2xl border border-gray-100 space-y-2">
                                                     <div className="flex justify-between items-start">
                                                         <div className="flex items-center gap-2">
-                                                            <div className="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center text-[10px] font-black text-blue-600">
+                                                            <div className="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center text-[10px] font-black text-primary">
                                                                 {r.userId?.name?.[0] || "A"}
                                                             </div>
                                                             <div>

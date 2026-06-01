@@ -160,7 +160,7 @@ export default function DisbursementPage({
           </div>
 
           <div className="flex items-center gap-3 mb-4">
-            {Icon && <Icon className="w-5 h-5 text-blue-600" />}
+            {Icon && <Icon className="w-5 h-5 text-primary" />}
             <h1 className="text-2xl font-bold text-slate-900">{title}</h1>
             <span className="px-3 py-1 rounded-full text-sm font-semibold bg-slate-100 text-slate-700">
               {filteredDisbursements.length}
@@ -214,13 +214,13 @@ export default function DisbursementPage({
                 onClick={() => setActiveTab(tab.toLowerCase())}
                 className={`px-4 py-2 text-sm font-medium transition-colors relative ${
                   activeTab === tab.toLowerCase()
-                    ? "text-blue-600"
+                    ? "text-primary"
                     : "text-slate-600 hover:text-slate-900"
                 }`}
               >
                 {tab}
                 {activeTab === tab.toLowerCase() && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600" />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
                 )}
               </button>
             ))}
@@ -231,7 +231,7 @@ export default function DisbursementPage({
         <div className="space-y-4">
           {loading ? (
              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-12 text-center">
-                <div className="animate-spin w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"></div>
+                <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
                 <p className="text-slate-500">Loading data...</p>
              </div>
           ) : filteredDisbursements.length === 0 ? (
@@ -319,7 +319,7 @@ export default function DisbursementPage({
               <select
                 value={filters.status}
                 onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-sm"
               >
                 <option value="">All Status</option>
                 <option value="pending">Pending</option>
@@ -335,7 +335,7 @@ export default function DisbursementPage({
                 type="date"
                 value={filters.dateRange.start}
                 onChange={(e) => setFilters({ ...filters, dateRange: { ...filters.dateRange, start: e.target.value } })}
-                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-sm"
               />
             </div>
             <div>
@@ -344,7 +344,7 @@ export default function DisbursementPage({
                 type="date"
                 value={filters.dateRange.end}
                 onChange={(e) => setFilters({ ...filters, dateRange: { ...filters.dateRange, end: e.target.value } })}
-                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-sm"
               />
             </div>
             <div>
@@ -353,7 +353,7 @@ export default function DisbursementPage({
                 type="number"
                 value={filters.amountRange.min}
                 onChange={(e) => setFilters({ ...filters, amountRange: { ...filters.amountRange, min: e.target.value } })}
-                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-sm"
                 placeholder="0.00"
               />
             </div>
@@ -363,7 +363,7 @@ export default function DisbursementPage({
                 type="number"
                 value={filters.amountRange.max}
                 onChange={(e) => setFilters({ ...filters, amountRange: { ...filters.amountRange, max: e.target.value } })}
-                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary text-sm"
                 placeholder="0.00"
               />
             </div>
@@ -377,7 +377,7 @@ export default function DisbursementPage({
             </button>
             <button
               onClick={() => setIsFilterOpen(false)}
-              className="px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-md"
+              className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary/90 transition-all shadow-md"
             >
               Apply
             </button>

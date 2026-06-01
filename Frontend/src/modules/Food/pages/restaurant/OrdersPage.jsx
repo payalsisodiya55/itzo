@@ -474,7 +474,7 @@ export default function OrdersPage() {
               <p className="text-red-600 text-base md:text-lg mb-2">Error: {error}</p>
               <button 
                 onClick={() => window.location.reload()} 
-                className="text-blue-600 hover:underline"
+                className="text-primary hover:underline"
               >
                 Retry
               </button>
@@ -526,7 +526,7 @@ export default function OrdersPage() {
                   
                   {/* Footer Row */}
                   <div className="flex items-center justify-between pt-2 md:pt-3 border-t border-gray-100 pb-3 md:pb-0">
-                    <span className="text-blue-600 text-xs md:text-sm font-medium">
+                    <span className="text-primary text-xs md:text-sm font-medium">
                       {order.deliveryType}
                     </span>
                     <div className="text-right">

@@ -29,7 +29,7 @@ const RestaurantDishCard = ({
         {/* Floating Badges */}
         <div className="absolute top-4 left-4 flex flex-col gap-2">
           {restaurant.offer && (
-             <div className="bg-blue-600 text-white px-3 py-1 rounded-full text-[10px] font-bold shadow-lg flex items-center gap-1">
+             <div className="bg-primary text-white px-3 py-1 rounded-full text-[10px] font-bold shadow-lg flex items-center gap-1">
                <BadgePercent className="w-3 h-3" />
                {restaurant.offer}
              </div>
