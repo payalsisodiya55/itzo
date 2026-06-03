@@ -28,18 +28,7 @@ const HeroSection = React.memo(function HeroSection({ navigate }) {
     };
     window.addEventListener('businessSettingsUpdated', handleUpdate);
     
-    // Fetch ECS admin panel video settings
-    const fetchAdminVideo = async () => {
-      try {
-        const res = await api.get('/food/hero-banners/landing/settings');
-        if (res.data?.success && res.data?.data?.settings?.headerVideoUrl) {
-          if (mounted) setAdminVideoUrl(res.data.data.settings.headerVideoUrl);
-        }
-      } catch (err) {
-        console.error('Failed to fetch admin video', err);
-      }
-    };
-    fetchAdminVideo();
+    // Removed legacy fetchAdminVideo that overridden the premium settings
     
     return () => { 
       mounted = false; 
@@ -47,12 +36,11 @@ const HeroSection = React.memo(function HeroSection({ navigate }) {
     };
   }, []);
 
-  const [adminVideoUrl, setAdminVideoUrl] = useState("");
-
   // Use the admin video if available, else fallback to business settings video
-  const videoUrl = adminVideoUrl || settings?.landingVideo?.url || "";
+  const videoUrl = settings?.landingVideo?.url || "";
   const posterUrl = settings?.landingPoster?.url || "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2070&auto=format&fit=crop";
   const appName = settings?.landingHeroTitle || "ItzoFood";
+  const appSubtitle = settings?.landingHeroSubtitle || "India's #1\nfood delivery app";
   const appStoreImg = settings?.landingAppStoreBadge?.url || "https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg";
   const playStoreImg = settings?.landingPlayStoreBadge?.url || "https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg";
 
@@ -101,8 +89,8 @@ const HeroSection = React.memo(function HeroSection({ navigate }) {
           </h1>
 
           {/* Heading */}
-          <h2 className="text-white text-4xl md:text-5xl lg:text-[56px] font-bold leading-tight drop-shadow-xl mb-6">
-            India's #1<br/>food delivery app
+          <h2 className="text-white text-4xl md:text-5xl lg:text-[56px] font-bold leading-tight drop-shadow-xl mb-6 whitespace-pre-line">
+            {appSubtitle}
           </h2>
 
           {/* Subheading */}
