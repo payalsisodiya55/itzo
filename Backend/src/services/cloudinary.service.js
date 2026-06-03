@@ -78,7 +78,7 @@ export const uploadBufferDetailed = async (
     }
 
     return new Promise((resolve, reject) => {
-        const stream = cloudinary.uploader.upload_stream(
+        const stream = (resourceType === 'video' ? cloudinary.uploader.upload_chunked_stream : cloudinary.uploader.upload_stream)(
             resourceType === 'image'
                 ? getImageUploadOptions(folder)
                 : { folder, resource_type: resourceType },
