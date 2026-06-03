@@ -41,8 +41,10 @@ const errorHandler = (err, req, res, next) => {
     logger.error(
         `[${requestId}] ${req.method} ${req.originalUrl} ${statusCode} - ${err.name || 'Error'} - ${message}`
     );
-    if (config.nodeEnv === 'development' && err.stack) {
-        logger.error(`[${requestId}] ${err.stack}`);
+    
+    // Always log stack traces for 500 errors or in development mode for easier debugging
+    if ((config.nodeEnv === 'development' || statusCode === 500) && err.stack) {
+        logger.error(`[${requestId}] Stack Trace:\n${err.stack}`);
     }
 
     res.status(statusCode).json({

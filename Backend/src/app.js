@@ -46,15 +46,37 @@ app.use(helmet({
     noSniff: true,
     referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
 }));
+const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    process.env.CORS_ORIGIN,
+    'http://localhost:5173',
+    'http://localhost:3000'
+].filter(Boolean);
+
 const corsOptions = {
     origin: function (origin, callback) {
-        // Allow all origins dynamically to support credentials across deployed domains
-        callback(null, origin || true);
+        // Handle requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        
+        // Ensure exact frontend URL match, but also dynamically allow any Vercel deployment URL
+        // or local network IP addresses for seamless testing and preview deployments
+        if (
+            allowedOrigins.includes(origin) || 
+            origin.endsWith('.vercel.app') || 
+            origin.startsWith('http://192.168.') ||
+            origin.startsWith('http://localhost')
+        ) {
+            callback(null, origin);
+        } else {
+            // Strict exact match fallback if none of the above match
+            callback(null, allowedOrigins[0] || origin);
+        }
     },
     credentials: true,
-    exposedHeaders: ['set-cookie']
+    exposedHeaders: ['set-cookie', 'Authorization']
 };
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Explicitly handle preflight requests
 app.use(morgan('dev'));
 app.use(express.json({
     limit: config.requestBodyLimit,
