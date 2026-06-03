@@ -26,7 +26,9 @@ router.patch('/', authMiddleware, requireRoles('ADMIN'), upload.fields([
     { name: 'userLoginBanner2', maxCount: 1 },
     { name: 'userLoginBanner3', maxCount: 1 },
     { name: 'userLoginBanner4', maxCount: 1 },
-    { name: 'userLoginBanner5', maxCount: 1 }
+    { name: 'userLoginBanner5', maxCount: 1 },
+    { name: 'landingVideo', maxCount: 1 },
+    { name: 'landingPoster', maxCount: 1 }
 ]), settingsController.updateGlobalSettings);
 
 export default router;

@@ -23,6 +23,9 @@ const AdminForgotPassword = lazy(() => import("@food/pages/admin/auth/AdminForgo
 // Delivery Module
 const DeliveryRouter = lazy(() => import("../DeliveryV2"))
 
+// New Landing Page
+const ItzoFoodLanding = lazy(() => import("@food/pages/landing/ItzoFoodLanding"))
+
 function UserPathRedirect() {
   const location = useLocation()
   // Correctly handle the /food/user -> /food redirect regardless of where it starts
@@ -109,6 +112,9 @@ export default function App() {
             path="delivery/*"
             element={<DeliveryRouter />}
           />
+
+          {/* Premium Landing Page */}
+          <Route path="welcome" element={<ItzoFoodLanding />} />
 
           {/* Legacy Redirects & Fallbacks - use absolute path to avoid /user appended in a loop */}
           <Route path="/" element={<Navigate to="/food/user" replace />} />

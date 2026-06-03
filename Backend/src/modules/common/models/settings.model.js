@@ -72,6 +72,16 @@ const globalSettingsSchema = new mongoose.Schema(
             url: { type: String, default: '' },
             publicId: { type: String, default: '' }
         },
+        landingHeroTitle: { type: String, default: 'ItzoFood' },
+        landingHeroSubtitle: { type: String, default: 'Discover the best food & drinks in your city' },
+        landingVideo: {
+            url: { type: String, default: '' },
+            publicId: { type: String, default: '' }
+        },
+        landingPoster: {
+            url: { type: String, default: '' },
+            publicId: { type: String, default: '' }
+        },
         themeColor: { type: String, default: '#0a0a0a' },
         modules: {
             food: { type: Boolean, default: true },

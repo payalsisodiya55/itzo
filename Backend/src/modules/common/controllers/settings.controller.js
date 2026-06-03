@@ -1,6 +1,6 @@
 import { GlobalSettings } from '../models/settings.model.js';
 import { sendResponse } from '../../../utils/response.js';
-import { uploadImageBufferDetailed } from '../../../services/cloudinary.service.js';
+import { uploadImageBufferDetailed, uploadBufferDetailed } from '../../../services/cloudinary.service.js';
 
 export async function getGlobalSettings(req, res, next) {
     try {
@@ -49,7 +49,7 @@ export async function updateGlobalSettings(req, res, next) {
         const { 
             companyName, email, phoneCountryCode, phoneNumber, address, state, pincode, region, 
             adminLogoUrl, adminFaviconUrl, userLogoUrl, userFaviconUrl, deliveryLogoUrl, deliveryFaviconUrl, restaurantLogoUrl, restaurantFaviconUrl, sellerLogoUrl, sellerFaviconUrl,
-            themeColor, modules 
+            themeColor, modules, landingHeroTitle, landingHeroSubtitle, landingVideoUrl, landingPosterUrl
         } = data;
         
         console.log("Updating global settings with data:", data);
@@ -84,13 +84,16 @@ export async function updateGlobalSettings(req, res, next) {
         if (state !== undefined) settings.state = state;
         if (pincode !== undefined) settings.pincode = pincode;
         if (region) settings.region = region;
+        if (landingHeroTitle !== undefined) settings.landingHeroTitle = landingHeroTitle;
+        if (landingHeroSubtitle !== undefined) settings.landingHeroSubtitle = landingHeroSubtitle;
 
         // Update URLs if provided
         const mediaFields = [
             'adminLogo', 'adminFavicon', 'userLogo', 'userFavicon', 
             'deliveryLogo', 'deliveryFavicon', 'restaurantLogo', 'restaurantFavicon', 
             'sellerLogo', 'sellerFavicon',
-            'userLoginBanner1', 'userLoginBanner2', 'userLoginBanner3', 'userLoginBanner4', 'userLoginBanner5'
+            'userLoginBanner1', 'userLoginBanner2', 'userLoginBanner3', 'userLoginBanner4', 'userLoginBanner5',
+            'landingPoster', 'landingVideo'
         ];
         mediaFields.forEach(field => {
             const urlKey = `${field}Url`;
@@ -135,17 +138,24 @@ export async function updateGlobalSettings(req, res, next) {
                 { name: 'userLoginBanner2', folder: 'business/banners/user' },
                 { name: 'userLoginBanner3', folder: 'business/banners/user' },
                 { name: 'userLoginBanner4', folder: 'business/banners/user' },
-                { name: 'userLoginBanner5', folder: 'business/banners/user' }
+                { name: 'userLoginBanner5', folder: 'business/banners/user' },
+                { name: 'landingPoster', folder: 'business/landing' },
+                { name: 'landingVideo', folder: 'business/landing' }
             ];
 
             for (const field of mediaUploadFields) {
                 if (req.files[field.name] && req.files[field.name][0]) {
-                    const result = await uploadImageBufferDetailed(req.files[field.name][0].buffer, field.folder);
+                    let result;
+                    if (field.name === 'landingVideo') {
+                        result = await uploadBufferDetailed(req.files[field.name][0].buffer, { folder: field.folder, resourceType: 'video' });
+                    } else {
+                        result = await uploadImageBufferDetailed(req.files[field.name][0].buffer, field.folder);
+                    }
                     settings[field.name] = {
                         url: result.secure_url,
                         publicId: result.public_id
                     };
-                    settings.markModified(field);
+                    settings.markModified(field.name);
                 }
             }
         }

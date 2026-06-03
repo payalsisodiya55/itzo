@@ -232,6 +232,7 @@ export const adminSidebarMenu = [
     label: "BANNER SETTINGS",
     permissionKey: "banner_settings",
     items: [
+      { type: "link", label: "Premium Landing Page", permissionKey: "premium_landing", path: "/ecs/food/itzofood-landing-settings", icon: "Monitor" },
       { type: "link", label: "Landing Page Management", permissionKey: "landing_page", path: "/ecs/food/hero-banner-management", icon: "Image" },
     ],
   },

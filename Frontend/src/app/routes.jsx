@@ -10,6 +10,7 @@ import ProtectedRoute from '@core/guards/ProtectedRoute'
 import RoleGuard from '@core/guards/RoleGuard'
 import { UserRole } from '@core/constants/roles'
 import SellerAuthPage from '../modules/seller/pages/Auth'
+import ItzoFoodLanding from '../modules/Food/pages/landing/ItzoFoodLanding'
 
 const NATIVE_LAST_ROUTE_KEY = 'native_last_route'
 
@@ -143,12 +144,13 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-        {/* Root now lands on the food user home page */}
-        <Route path="/" element={<Navigate to={`/food/user${location.search}`} replace />} />
+        {/* Root now lands on the premium ItzoFood landing page */}
+        <Route path="/" element={<ItzoFoodLanding />} />
 
         {/* Auth Module */}
         <Route path="/user/auth/*" element={<AuthApp />} />
-        <Route path="/portal" element={<Navigate to={`/food/user${location.search}`} replace />} />
+        {/* Portal redirect handles the post-login flow, now pointing to the root landing page */}
+        <Route path="/portal" element={<Navigate to={`/${location.search}`} replace />} />
         <Route path="/login" element={<Navigate to={`/user/auth/login${location.search}`} replace />} />
 
         {/* Shared home entry so /food/user <-> /quick doesn't remount through different app trees */}

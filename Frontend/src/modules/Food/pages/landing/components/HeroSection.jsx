@@ -1,0 +1,145 @@
+import React, { useState, useEffect } from 'react';
+import { ChevronDown } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { getCachedSettings, loadBusinessSettings } from '@common/utils/businessSettings';
+import api from '@/services/api';
+
+const HeroSection = React.memo(function HeroSection({ navigate }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [settings, setSettings] = useState(null);
+
+  useEffect(() => {
+    let mounted = true;
+    const fetchSettings = async () => {
+      let currentSettings = getCachedSettings();
+      if (!currentSettings) {
+        currentSettings = await loadBusinessSettings();
+      }
+      if (mounted) {
+        setSettings(currentSettings);
+      }
+    };
+    fetchSettings();
+    
+    const handleUpdate = (e) => {
+      if (mounted) {
+        setSettings(e?.detail || getCachedSettings());
+      }
+    };
+    window.addEventListener('businessSettingsUpdated', handleUpdate);
+    
+    // Fetch ECS admin panel video settings
+    const fetchAdminVideo = async () => {
+      try {
+        const res = await api.get('/food/hero-banners/landing/settings');
+        if (res.data?.success && res.data?.data?.settings?.headerVideoUrl) {
+          if (mounted) setAdminVideoUrl(res.data.data.settings.headerVideoUrl);
+        }
+      } catch (err) {
+        console.error('Failed to fetch admin video', err);
+      }
+    };
+    fetchAdminVideo();
+    
+    return () => { 
+      mounted = false; 
+      window.removeEventListener('businessSettingsUpdated', handleUpdate);
+    };
+  }, []);
+
+  const [adminVideoUrl, setAdminVideoUrl] = useState("");
+
+  // Use the admin video if available, else fallback to business settings video
+  const videoUrl = adminVideoUrl || settings?.landingVideo?.url || "";
+  const posterUrl = settings?.landingPoster?.url || "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2070&auto=format&fit=crop";
+  const appName = settings?.landingHeroTitle || "ItzoFood";
+  const appStoreImg = settings?.landingAppStoreBadge?.url || "https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg";
+  const playStoreImg = settings?.landingPlayStoreBadge?.url || "https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg";
+
+  return (
+    <div className="relative h-screen w-full flex flex-col items-center justify-center bg-gray-900 overflow-hidden">
+      
+      {/* Background Wrapper */}
+      <div className="absolute inset-0 z-0 bg-gray-900">
+        {videoUrl ? (
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            preload="metadata"
+            poster={posterUrl}
+            onLoadedData={() => setIsLoaded(true)}
+            className={`object-cover w-full h-full transition-opacity duration-1000 ${isLoaded ? 'opacity-90' : 'opacity-0'}`}
+          >
+            <source src={videoUrl} type="video/mp4" />
+          </video>
+        ) : (
+          <img 
+            src={posterUrl} 
+            alt="Background" 
+            onLoad={() => setIsLoaded(true)}
+            className={`object-cover w-full h-full transition-opacity duration-1000 ${isLoaded ? 'opacity-90' : 'opacity-0'}`}
+          />
+        )}
+        {/* Dark overlay to make text readable */}
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
+      
+      {/* Hero Content */}
+      <div className="relative z-10 w-full max-w-5xl px-4 flex flex-col items-center text-center -mt-10">
+        
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="flex flex-col items-center"
+        >
+          {/* Logo Text (simulating white zomato logo) */}
+          <h1 className="text-white text-6xl md:text-7xl lg:text-[80px] font-black italic tracking-tighter drop-shadow-lg mb-8">
+            {appName.toLowerCase()}
+          </h1>
+
+          {/* Heading */}
+          <h2 className="text-white text-4xl md:text-5xl lg:text-[56px] font-bold leading-tight drop-shadow-xl mb-6">
+            India's #1<br/>food delivery app
+          </h2>
+
+          {/* Subheading */}
+          <p className="text-gray-100 text-xl md:text-[22px] font-medium drop-shadow-md mb-10 max-w-2xl leading-snug">
+            Experience fast & easy online ordering<br/>on the {appName} app
+          </p>
+
+          {/* App Download Buttons */}
+          <div className="flex flex-wrap justify-center gap-4 md:gap-5">
+            <img 
+              src={playStoreImg}
+              alt="Get it on Google Play" 
+              className="h-12 md:h-[52px] object-contain cursor-pointer hover:scale-105 transition-transform" 
+            />
+            <img 
+              src={appStoreImg}
+              alt="Download on the App Store" 
+              className="h-12 md:h-[52px] object-contain cursor-pointer hover:scale-105 transition-transform" 
+            />
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Scroll Down */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-white cursor-pointer z-10 hover:text-gray-200 transition-colors"
+        onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
+      >
+        <span className="text-[17px] font-medium mb-1 drop-shadow-md">Scroll down</span>
+        <ChevronDown size={24} className="animate-bounce drop-shadow-md" />
+      </motion.div>
+
+    </div>
+  );
+});
+
+export default HeroSection;

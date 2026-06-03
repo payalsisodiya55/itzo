@@ -119,6 +119,7 @@ const NotificationChannels = lazy(() => import("@food/pages/admin/system/Notific
 const NotificationBroadcast = lazy(() => import("@food/pages/admin/system/NotificationBroadcast"));
 const AdminNotifications = lazy(() => import("@food/pages/admin/system/AdminNotifications"));
 const LandingPageSettings = lazy(() => import("@food/pages/admin/system/LandingPageSettings"));
+const ItzoFoodLandingSettings = lazy(() => import("@food/pages/admin/system/ItzoFoodLandingSettings"));
 const PageMetaData = lazy(() => import("@food/pages/admin/system/PageMetaData"));
 const ReactSite = lazy(() => import("@food/pages/admin/system/ReactSite"));
 const CleanDatabase = lazy(() => import("@food/pages/admin/system/CleanDatabase"));
@@ -393,6 +394,7 @@ export default function AdminRouter() {
             <Route path="notification-channels" element={<NotificationChannels />} />
             <Route path="landing-page-settings/admin" element={<LandingPageSettings type="admin" />} />
             <Route path="landing-page-settings/react" element={<LandingPageSettings type="react" />} />
+            <Route path="itzofood-landing-settings" element={<ItzoFoodLandingSettings />} />
             <Route path="page-meta-data" element={<PageMetaData />} />
             <Route path="react-site" element={<ReactSite />} />
             <Route path="clean-database" element={<CleanDatabase />} />
