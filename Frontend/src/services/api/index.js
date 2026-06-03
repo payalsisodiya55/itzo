@@ -996,6 +996,7 @@ export const adminAPI = {
 
     return apiClient.patch(API_ENDPOINTS.ADMIN.BUSINESS_SETTINGS, formData, {
       contextModule: "admin",
+      timeout: 300000, // 5 minutes for large video uploads
     });
   },
 };

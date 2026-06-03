@@ -1,6 +1,7 @@
 import { GlobalSettings } from '../models/settings.model.js';
 import { sendResponse } from '../../../utils/response.js';
-import { uploadImageBufferDetailed, uploadBufferDetailed } from '../../../services/cloudinary.service.js';
+import fs from 'fs';
+import { uploadImageBufferDetailed, uploadBufferDetailed, uploadFileDetailed } from '../../../services/cloudinary.service.js';
 
 export async function getGlobalSettings(req, res, next) {
     try {
@@ -159,16 +160,27 @@ export async function updateGlobalSettings(req, res, next) {
             for (const field of mediaUploadFields) {
                 if (req.files[field.name] && req.files[field.name][0]) {
                     let result;
-                    if (field.name === 'landingVideo') {
-                        result = await uploadBufferDetailed(req.files[field.name][0].buffer, { folder: field.folder, resourceType: 'video' });
-                    } else {
-                        result = await uploadImageBufferDetailed(req.files[field.name][0].buffer, field.folder);
+                    const fileObj = req.files[field.name][0];
+                    if (fileObj.path) {
+                        if (field.name === 'landingVideo') {
+                            result = await uploadFileDetailed(fileObj.path, { folder: field.folder, resourceType: 'video' });
+                        } else {
+                            result = await uploadFileDetailed(fileObj.path, { folder: field.folder, resourceType: 'image' });
+                        }
+                    } else if (fileObj.buffer) {
+                        if (field.name === 'landingVideo') {
+                            result = await uploadBufferDetailed(fileObj.buffer, { folder: field.folder, resourceType: 'video' });
+                        } else {
+                            result = await uploadImageBufferDetailed(fileObj.buffer, field.folder);
+                        }
                     }
                     settings[field.name] = {
                         url: result.secure_url,
                         publicId: result.public_id
                     };
                     settings.markModified(field.name);
+
+                    // Clean up handled later in finally block
                 }
             }
         }
@@ -177,5 +189,22 @@ export async function updateGlobalSettings(req, res, next) {
         return sendResponse(res, 200, 'Global settings updated successfully', settings);
     } catch (error) {
         next(error);
+    } finally {
+        // Robust cleanup of any temporary files uploaded to disk
+        if (req.files) {
+            Object.values(req.files).forEach(fileArray => {
+                fileArray.forEach(fileObj => {
+                    if (fileObj.path) {
+                        try {
+                            if (fs.existsSync(fileObj.path)) {
+                                fs.unlinkSync(fileObj.path);
+                            }
+                        } catch (e) {
+                            console.error('Failed to cleanup temp file in finally:', fileObj.path, e);
+                        }
+                    }
+                });
+            });
+        }
     }
 }

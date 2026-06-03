@@ -1,6 +1,6 @@
 import express from 'express';
 import * as settingsController from '../controllers/settings.controller.js';
-import { upload } from '../../../middleware/upload.js';
+import { upload, diskUpload } from '../../../middleware/upload.js';
 import { authMiddleware } from '../../../core/auth/auth.middleware.js';
 import { requireRoles } from '../../../core/roles/role.middleware.js';
 
@@ -11,7 +11,7 @@ router.get('/public', settingsController.getGlobalSettings);
 
 // Protected admin endpoints
 router.get('/', authMiddleware, requireRoles('ADMIN', 'EMPLOYEE'), settingsController.getGlobalSettings);
-router.patch('/', authMiddleware, requireRoles('ADMIN'), upload.fields([
+router.patch('/', authMiddleware, requireRoles('ADMIN'), diskUpload.fields([
     { name: 'adminLogo', maxCount: 1 },
     { name: 'adminFavicon', maxCount: 1 },
     { name: 'userLogo', maxCount: 1 },

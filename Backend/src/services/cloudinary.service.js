@@ -100,3 +100,34 @@ export const uploadBufferDetailed = async (
         stream.end(buffer);
     });
 };
+
+export const uploadFileDetailed = async (
+    filePath,
+    { folder = 'uploads', resourceType = 'auto' } = {}
+) => {
+    if (!filePath) {
+        throw new Error('File path is required');
+    }
+
+    const options = resourceType === 'image'
+        ? getImageUploadOptions(folder)
+        : { folder, resource_type: resourceType };
+
+    // Use upload_large for videos/files to handle chunked uploading from disk safely
+    return new Promise((resolve, reject) => {
+        const uploader = resourceType === 'video' ? cloudinary.uploader.upload_large : cloudinary.uploader.upload;
+        
+        uploader(filePath, options, (error, result) => {
+            if (error) {
+                return reject(error);
+            }
+            if (resourceType === 'image') {
+                return resolve({
+                    ...result,
+                    secure_url: getOptimizedCloudinaryImageUrl(result.secure_url)
+                });
+            }
+            return resolve(result);
+        });
+    });
+};
