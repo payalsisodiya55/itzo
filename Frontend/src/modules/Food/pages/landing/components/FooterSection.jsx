@@ -57,12 +57,8 @@ const FooterSection = React.memo(function FooterSection() {
           <div>
             <h3 className="font-medium text-white tracking-wide mb-4 text-[15px]">About ItzoFood</h3>
             <ul className="space-y-2.5 text-gray-400 text-[14px]">
-              <li><a href="/profile/about" className="hover:text-white transition-colors">Who We Are</a></li>
-              <li><a href="/" className="hover:text-white transition-colors">Blog</a></li>
-              <li><a href="/profile/about" className="hover:text-white transition-colors">Work With Us</a></li>
-              <li><a href="/" className="hover:text-white transition-colors">Investor Relations</a></li>
-              <li><a href="/profile/support" className="hover:text-white transition-colors">Report Fraud</a></li>
-              <li><a href="/profile/support" className="hover:text-white transition-colors">Contact Us</a></li>
+              <li><a href="/about" className="hover:text-white transition-colors">Who We Are</a></li>
+              <li><a href="/contact" className="hover:text-white transition-colors">Contact Us</a></li>
             </ul>
           </div>
 
@@ -72,7 +68,7 @@ const FooterSection = React.memo(function FooterSection() {
             <ul className="space-y-2.5 text-gray-400 text-[14px]">
               <li><a href="/food/restaurant" className="hover:text-white transition-colors">Partner With Us</a></li>
               <li><a href="/food/restaurant" className="hover:text-white transition-colors">Apps For You</a></li>
-              <li><a href="/food/restaurant" className="hover:text-white transition-colors">Restaurant Consulting</a></li>
+              <li><a href="/consulting" className="hover:text-white transition-colors">Restaurant Consulting</a></li>
             </ul>
           </div>
 
@@ -92,7 +88,7 @@ const FooterSection = React.memo(function FooterSection() {
               <li><a href="/profile/privacy" className="hover:text-white transition-colors">Privacy</a></li>
               <li><a href="/profile/privacy" className="hover:text-white transition-colors">Security</a></li>
               <li><a href="/profile/terms" className="hover:text-white transition-colors">Terms of Service</a></li>
-              <li><a href="/profile/support" className="hover:text-white transition-colors">Help & Support</a></li>
+              <li><a href="/support" className="hover:text-white transition-colors">Help & Support</a></li>
             </ul>
           </div>
 

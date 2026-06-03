@@ -12,6 +12,10 @@ import { UserRole } from '@core/constants/roles'
 import SellerAuthPage from '../modules/seller/pages/Auth'
 import ItzoFoodLanding from '../modules/Food/pages/landing/ItzoFoodLanding'
 
+const PublicAboutPage = lazy(() => import('../modules/Food/pages/landing/pages/AboutUs'))
+const PublicContactPage = lazy(() => import('../modules/Food/pages/landing/pages/ContactUs'))
+const PublicConsultingPage = lazy(() => import('../modules/Food/pages/landing/pages/RestaurantConsulting'))
+const PublicHelpSupportPage = lazy(() => import('../modules/Food/pages/landing/pages/HelpSupport'))
 const NATIVE_LAST_ROUTE_KEY = 'native_last_route'
 
 // Lazy load the Food service module (Quick-spicy app)
@@ -147,6 +151,27 @@ const AppRoutes = () => {
         {/* Root now lands on the premium ItzoFood landing page */}
         <Route path="/" element={<ItzoFoodLanding />} />
 
+        {/* Public Landing Pages */}
+        <Route path="/about" element={
+          <Suspense fallback={<PageLoader />}>
+            <PublicAboutPage />
+          </Suspense>
+        } />
+        <Route path="/contact" element={
+          <Suspense fallback={<PageLoader />}>
+            <PublicContactPage />
+          </Suspense>
+        } />
+        <Route path="/consulting" element={
+          <Suspense fallback={<PageLoader />}>
+            <PublicConsultingPage />
+          </Suspense>
+        } />
+        <Route path="/support" element={
+          <Suspense fallback={<PageLoader />}>
+            <PublicHelpSupportPage />
+          </Suspense>
+        } />
         {/* Auth Module */}
         <Route path="/user/auth/*" element={<AuthApp />} />
         {/* Portal redirect handles the post-login flow, now pointing to the root landing page */}

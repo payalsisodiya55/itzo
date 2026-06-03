@@ -197,7 +197,7 @@ export default function DeliverySignIn() {
         </div>
 
         {/* DELIVERY Badge */}
-        <div className="bg-primary px-6 py-2 rounded mt-2">
+        <div className="bg-orange-500 px-6 py-2 rounded mt-2">
           <span className="text-white font-semibold text-sm uppercase tracking-wide">
             DELIVERY
           </span>
