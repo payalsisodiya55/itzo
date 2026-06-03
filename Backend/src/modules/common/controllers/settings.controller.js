@@ -49,7 +49,8 @@ export async function updateGlobalSettings(req, res, next) {
         const { 
             companyName, email, phoneCountryCode, phoneNumber, address, state, pincode, region, 
             adminLogoUrl, adminFaviconUrl, userLogoUrl, userFaviconUrl, deliveryLogoUrl, deliveryFaviconUrl, restaurantLogoUrl, restaurantFaviconUrl, sellerLogoUrl, sellerFaviconUrl,
-            themeColor, modules, landingHeroTitle, landingHeroSubtitle, landingVideoUrl, landingPosterUrl
+            themeColor, modules, landingHeroTitle, landingHeroSubtitle, landingVideoUrl, landingPosterUrl,
+            socialLinkedinUrl, socialInstagramUrl, socialYoutubeUrl, socialFacebookUrl, socialTwitterUrl
         } = data;
         
         console.log("Updating global settings with data:", data);
@@ -86,6 +87,11 @@ export async function updateGlobalSettings(req, res, next) {
         if (region) settings.region = region;
         if (landingHeroTitle !== undefined) settings.landingHeroTitle = landingHeroTitle;
         if (landingHeroSubtitle !== undefined) settings.landingHeroSubtitle = landingHeroSubtitle;
+        if (socialLinkedinUrl !== undefined) settings.socialLinkedinUrl = socialLinkedinUrl;
+        if (socialInstagramUrl !== undefined) settings.socialInstagramUrl = socialInstagramUrl;
+        if (socialYoutubeUrl !== undefined) settings.socialYoutubeUrl = socialYoutubeUrl;
+        if (socialFacebookUrl !== undefined) settings.socialFacebookUrl = socialFacebookUrl;
+        if (socialTwitterUrl !== undefined) settings.socialTwitterUrl = socialTwitterUrl;
 
         // Update URLs if provided
         const mediaFields = [
@@ -93,7 +99,8 @@ export async function updateGlobalSettings(req, res, next) {
             'deliveryLogo', 'deliveryFavicon', 'restaurantLogo', 'restaurantFavicon', 
             'sellerLogo', 'sellerFavicon',
             'userLoginBanner1', 'userLoginBanner2', 'userLoginBanner3', 'userLoginBanner4', 'userLoginBanner5',
-            'landingPoster', 'landingVideo'
+            'landingPoster', 'landingVideo', 'landingPizzaImage', 'landingTomatoImage', 'landingQrCodeImage',
+            'landingAppStoreBadge', 'landingPlayStoreBadge', 'landingFooterLogo'
         ];
         mediaFields.forEach(field => {
             const urlKey = `${field}Url`;
@@ -140,7 +147,13 @@ export async function updateGlobalSettings(req, res, next) {
                 { name: 'userLoginBanner4', folder: 'business/banners/user' },
                 { name: 'userLoginBanner5', folder: 'business/banners/user' },
                 { name: 'landingPoster', folder: 'business/landing' },
-                { name: 'landingVideo', folder: 'business/landing' }
+                { name: 'landingVideo', folder: 'business/landing' },
+                { name: 'landingPizzaImage', folder: 'business/landing' },
+                { name: 'landingTomatoImage', folder: 'business/landing' },
+                { name: 'landingQrCodeImage', folder: 'business/landing' },
+                { name: 'landingAppStoreBadge', folder: 'business/landing' },
+                { name: 'landingPlayStoreBadge', folder: 'business/landing' },
+                { name: 'landingFooterLogo', folder: 'business/landing' }
             ];
 
             for (const field of mediaUploadFields) {

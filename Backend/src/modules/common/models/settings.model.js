@@ -82,6 +82,35 @@ const globalSettingsSchema = new mongoose.Schema(
             url: { type: String, default: '' },
             publicId: { type: String, default: '' }
         },
+        socialLinkedinUrl: { type: String, default: '' },
+        socialInstagramUrl: { type: String, default: '' },
+        socialYoutubeUrl: { type: String, default: '' },
+        socialFacebookUrl: { type: String, default: '' },
+        socialTwitterUrl: { type: String, default: '' },
+        landingPizzaImage: {
+            url: { type: String, default: '' },
+            publicId: { type: String, default: '' }
+        },
+        landingTomatoImage: {
+            url: { type: String, default: '' },
+            publicId: { type: String, default: '' }
+        },
+        landingQrCodeImage: {
+            url: { type: String, default: '' },
+            publicId: { type: String, default: '' }
+        },
+        landingAppStoreBadge: {
+            url: { type: String, default: '' },
+            publicId: { type: String, default: '' }
+        },
+        landingPlayStoreBadge: {
+            url: { type: String, default: '' },
+            publicId: { type: String, default: '' }
+        },
+        landingFooterLogo: {
+            url: { type: String, default: '' },
+            publicId: { type: String, default: '' }
+        },
         themeColor: { type: String, default: '#0a0a0a' },
         modules: {
             food: { type: Boolean, default: true },
