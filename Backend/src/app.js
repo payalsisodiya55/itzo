@@ -46,7 +46,15 @@ app.use(helmet({
     noSniff: true,
     referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
 }));
-app.use(cors());
+const corsOptions = {
+    origin: function (origin, callback) {
+        // Allow all origins dynamically to support credentials across deployed domains
+        callback(null, origin || true);
+    },
+    credentials: true,
+    exposedHeaders: ['set-cookie']
+};
+app.use(cors(corsOptions));
 app.use(morgan('dev'));
 app.use(express.json({
     limit: config.requestBodyLimit,
