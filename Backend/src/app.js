@@ -50,26 +50,26 @@ const allowedOrigins = [
     process.env.FRONTEND_URL,
     process.env.CORS_ORIGIN,
     'http://localhost:5173',
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'https://itzo-two.vercel.app'
 ].filter(Boolean);
 
 const corsOptions = {
     origin: function (origin, callback) {
-        // Handle requests with no origin (like mobile apps or curl requests)
+        // Allow requests with no origin (e.g. mobile apps, curl)
         if (!origin) return callback(null, true);
         
-        // Ensure exact frontend URL match, but also dynamically allow any Vercel deployment URL
-        // or local network IP addresses for seamless testing and preview deployments
-        if (
-            allowedOrigins.includes(origin) || 
-            origin.endsWith('.vercel.app') || 
-            origin.startsWith('http://192.168.') ||
-            origin.startsWith('http://localhost')
-        ) {
+        // Check if origin is allowed
+        const isAllowed = allowedOrigins.includes(origin) || 
+                          origin.endsWith('.vercel.app') || 
+                          origin.startsWith('http://192.168.') ||
+                          origin.startsWith('http://localhost');
+                          
+        if (isAllowed) {
             callback(null, origin);
         } else {
-            // Strict exact match fallback if none of the above match
-            callback(null, allowedOrigins[0] || origin);
+            // Block the request instead of returning a wildcard or default origin
+            callback(null, false);
         }
     },
     credentials: true,
