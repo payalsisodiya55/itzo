@@ -56,8 +56,12 @@ const allowedOrigins = [
 
 const corsOptions = {
     origin: function (origin, callback) {
+        console.log(`[CORS] Origin Check: ${origin || 'NO_ORIGIN'}`);
         // Allow requests with no origin (e.g. mobile apps, curl)
-        if (!origin) return callback(null, true);
+        if (!origin) {
+            console.log(`[CORS] Allowed NO_ORIGIN`);
+            return callback(null, true);
+        }
         
         // Check if origin is allowed
         const isAllowed = allowedOrigins.includes(origin) || 
@@ -66,9 +70,11 @@ const corsOptions = {
                           origin.startsWith('http://localhost');
                           
         if (isAllowed) {
+            console.log(`[CORS] Allowed Origin: ${origin}`);
             callback(null, origin);
         } else {
-            // Block the request instead of returning a wildcard or default origin
+            console.log(`[CORS] Blocked Origin: ${origin}`);
+            // Block the request strictly
             callback(null, false);
         }
     },

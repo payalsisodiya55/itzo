@@ -73,7 +73,7 @@ export const config = {
     firebaseVapidPrivateKey: process.env.FIREBASE_VAPID_PRIVATE_KEY,
 
     // Socket.io
-    socketCorsOrigin: process.env.SOCKET_CORS_ORIGIN || '*',
+    socketCorsOrigin: process.env.SOCKET_CORS_ORIGIN || 'https://itzo-two.vercel.app',
 
     // Razorpay (payments)
     razorpayKeyId: process.env.RAZORPAY_KEY_ID,
@@ -95,7 +95,7 @@ export const env = {
     mongoDbName: process.env.MONGODB_DB_NAME || 'appzeto_food',
     jwtSecret: config.jwtAccessSecret,
     jwtExpiresIn: config.jwtAccessExpiresIn,
-    corsOrigin: process.env.CORS_ORIGIN || process.env.FRONTEND_URL || '*',
+    corsOrigin: process.env.CORS_ORIGIN || process.env.FRONTEND_URL || 'https://itzo-two.vercel.app',
     cloudinary: {
         cloudName: config.cloudinaryCloudName || '',
         apiKey: config.cloudinaryApiKey || '',
