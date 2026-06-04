@@ -132,7 +132,7 @@ export async function updateGlobalSettings(req, res, next) {
         // Handle file uploads
         if (req.files) {
             const limits = {
-                landingVideo: 20 * 1024 * 1024,
+                landingVideo: 50 * 1024 * 1024,
                 landingPoster: 5 * 1024 * 1024,
                 landingPizzaImage: 2 * 1024 * 1024,
                 landingTomatoImage: 2 * 1024 * 1024,

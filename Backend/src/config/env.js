@@ -43,7 +43,7 @@ export const config = {
 
     // Uploads
     uploadPath: process.env.UPLOAD_PATH || 'uploads/',
-    requestBodyLimit: process.env.REQUEST_BODY_LIMIT || '2mb',
+    requestBodyLimit: process.env.REQUEST_BODY_LIMIT || '50mb',
 
     // Redis
     redisEnabled: process.env.REDIS_ENABLED === 'true',

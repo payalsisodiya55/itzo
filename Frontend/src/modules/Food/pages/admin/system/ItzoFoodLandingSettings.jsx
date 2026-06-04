@@ -287,8 +287,8 @@ const ItzoFoodLandingSettings = () => {
               <MediaUploadBox 
                  type="video"
                  title="Background Video" 
-                 size="1080p, <20MB" 
-                 maxSizeMB={20}
+                 size="1080p, <50MB" 
+                 maxSizeMB={50}
                  preview={landingVideoPreview} 
                  onUpload={(file) => handleVideoUpload(file, setLandingVideoFile, setLandingVideoPreview)} 
                  onClear={() => { setLandingVideoPreview(null); setLandingVideoFile(null); }} 
