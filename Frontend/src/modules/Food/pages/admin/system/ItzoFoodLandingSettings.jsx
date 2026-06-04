@@ -53,7 +53,7 @@ const InputField = ({ label, name, value, onChange, placeholder, info }) => {
   );
 };
 
-const MediaUploadBox = ({ title, size, preview, onUpload, onClear, type = 'image' }) => {
+const MediaUploadBox = ({ title, size, preview, onUpload, onClear, type = 'image', maxSizeMB }) => {
   const fileInputRef = useRef(null);
   
   return (
@@ -90,7 +90,21 @@ const MediaUploadBox = ({ title, size, preview, onUpload, onClear, type = 'image
             accept={type === 'video' ? "video/*" : "image/*"}
             className="hidden" 
             ref={fileInputRef} 
-            onChange={(e) => { if(e.target.files[0]) onUpload(e.target.files[0]); }} 
+            onChange={(e) => { 
+              const file = e.target.files[0];
+              if(file) {
+                if (maxSizeMB && file.size > maxSizeMB * 1024 * 1024) {
+                  if (type === 'video') {
+                    toast.error(`Video size exceeds the maximum allowed limit. Please upload a video smaller than ${maxSizeMB} MB.`);
+                  } else {
+                    toast.error(`Image size exceeds the maximum allowed limit. Please upload an image smaller than ${maxSizeMB} MB.`);
+                  }
+                  if (fileInputRef.current) fileInputRef.current.value = '';
+                  return;
+                }
+                onUpload(file); 
+              } 
+            }} 
           />
        </div>
     </div>
@@ -273,7 +287,8 @@ const ItzoFoodLandingSettings = () => {
               <MediaUploadBox 
                  type="video"
                  title="Background Video" 
-                 size="1080p, <50MB" 
+                 size="1080p, <20MB" 
+                 maxSizeMB={20}
                  preview={landingVideoPreview} 
                  onUpload={(file) => handleVideoUpload(file, setLandingVideoFile, setLandingVideoPreview)} 
                  onClear={() => { setLandingVideoPreview(null); setLandingVideoFile(null); }} 
@@ -282,6 +297,7 @@ const ItzoFoodLandingSettings = () => {
                  type="image"
                  title="Fallback Poster Image" 
                  size="HD, <5MB" 
+                 maxSizeMB={5}
                  preview={landingPosterPreview} 
                  onUpload={(file) => handleImageUpload(file, setLandingPosterFile, setLandingPosterPreview)} 
                  onClear={() => { setLandingPosterPreview(null); setLandingPosterFile(null); }} 
@@ -296,6 +312,7 @@ const ItzoFoodLandingSettings = () => {
                   type="image"
                   title="Pizza Image" 
                   size="<2MB" 
+                  maxSizeMB={2}
                   preview={landingPizzaPreview} 
                   onUpload={(file) => handleImageUpload(file, setLandingPizzaFile, setLandingPizzaPreview)} 
                   onClear={() => { setLandingPizzaPreview(null); setLandingPizzaFile(null); }} 
@@ -304,6 +321,7 @@ const ItzoFoodLandingSettings = () => {
                   type="image"
                   title="Tomato Image" 
                   size="<2MB" 
+                  maxSizeMB={2}
                   preview={landingTomatoPreview} 
                   onUpload={(file) => handleImageUpload(file, setLandingTomatoFile, setLandingTomatoPreview)} 
                   onClear={() => { setLandingTomatoPreview(null); setLandingTomatoFile(null); }} 
@@ -317,6 +335,7 @@ const ItzoFoodLandingSettings = () => {
                   type="image"
                   title="App Store Badge" 
                   size="<1MB" 
+                  maxSizeMB={1}
                   preview={landingAppStoreBadgePreview} 
                   onUpload={(file) => handleImageUpload(file, setLandingAppStoreBadgeFile, setLandingAppStoreBadgePreview)} 
                   onClear={() => { setLandingAppStoreBadgePreview(null); setLandingAppStoreBadgeFile(null); }} 
@@ -325,6 +344,7 @@ const ItzoFoodLandingSettings = () => {
                   type="image"
                   title="Google Play Badge" 
                   size="<1MB" 
+                  maxSizeMB={1}
                   preview={landingPlayStoreBadgePreview} 
                   onUpload={(file) => handleImageUpload(file, setLandingPlayStoreBadgeFile, setLandingPlayStoreBadgePreview)} 
                   onClear={() => { setLandingPlayStoreBadgePreview(null); setLandingPlayStoreBadgeFile(null); }} 
@@ -333,6 +353,7 @@ const ItzoFoodLandingSettings = () => {
                   type="image"
                   title="QR Code Image" 
                   size="<2MB" 
+                  maxSizeMB={2}
                   preview={landingQrCodePreview} 
                   onUpload={(file) => handleImageUpload(file, setLandingQrCodeFile, setLandingQrCodePreview)} 
                   onClear={() => { setLandingQrCodePreview(null); setLandingQrCodeFile(null); }} 
@@ -346,6 +367,7 @@ const ItzoFoodLandingSettings = () => {
                   type="image"
                   title="Footer Logo" 
                   size="<2MB" 
+                  maxSizeMB={2}
                   preview={landingFooterLogoPreview} 
                   onUpload={(file) => handleImageUpload(file, setLandingFooterLogoFile, setLandingFooterLogoPreview)} 
                   onClear={() => { setLandingFooterLogoPreview(null); setLandingFooterLogoFile(null); }} 

@@ -131,6 +131,31 @@ export async function updateGlobalSettings(req, res, next) {
 
         // Handle file uploads
         if (req.files) {
+            const limits = {
+                landingVideo: 20 * 1024 * 1024,
+                landingPoster: 5 * 1024 * 1024,
+                landingPizzaImage: 2 * 1024 * 1024,
+                landingTomatoImage: 2 * 1024 * 1024,
+                landingQrCodeImage: 2 * 1024 * 1024,
+                landingAppStoreBadge: 1 * 1024 * 1024,
+                landingPlayStoreBadge: 1 * 1024 * 1024,
+                landingFooterLogo: 2 * 1024 * 1024
+            };
+
+            for (const [fieldName, maxBytes] of Object.entries(limits)) {
+                if (req.files[fieldName] && req.files[fieldName][0]) {
+                    if (req.files[fieldName][0].size > maxBytes) {
+                        const maxMB = maxBytes / (1024 * 1024);
+                        return res.status(413).json({ 
+                            success: false, 
+                            message: fieldName === 'landingVideo' 
+                                ? `Video size exceeds the maximum allowed limit. Please upload a video smaller than ${maxMB} MB.`
+                                : `Image size exceeds the maximum allowed limit. Please upload an image smaller than ${maxMB} MB.`
+                        });
+                    }
+                }
+            }
+
             const mediaUploadFields = [
                 { name: 'adminLogo', folder: 'business/logos/admin' },
                 { name: 'adminFavicon', folder: 'business/favicons/admin' },
