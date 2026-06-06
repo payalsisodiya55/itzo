@@ -21,8 +21,6 @@ import {
   Loader2,
   Star
 } from "lucide-react"
-import { jsPDF } from "jspdf"
-import autoTable from "jspdf-autotable"
 import AnimatedPage from "@food/components/user/AnimatedPage"
 import { Card, CardContent } from "@food/components/ui/card"
 import { Button } from "@food/components/ui/button"
@@ -1781,13 +1779,15 @@ export default function OrderTracking() {
     }
   }
 
-  const handleDownloadInvoice = useCallback(() => {
+  const handleDownloadInvoice = useCallback(async () => {
     if (!order) {
       toast.error("Order details are not ready yet")
       return
     }
 
     try {
+      const { jsPDF } = await import("jspdf")
+      const autoTable = (await import("jspdf-autotable")).default
       const doc = new jsPDF({ unit: "pt", format: "a4" })
       const pageWidth = doc.internal.pageSize.getWidth()
       const pageHeight = doc.internal.pageSize.getHeight()
