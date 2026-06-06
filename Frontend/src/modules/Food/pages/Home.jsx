@@ -47,7 +47,7 @@ export default function Home() {
               <img
                 src={logoUrl}
                 alt={companyName}
-                className="h-16 w-auto object-contain"
+                className="h-16 w-auto md:h-24 lg:h-32 object-contain"
                 onError={(e) => {
                   e.target.style.display = 'none'
                 }}

@@ -983,7 +983,7 @@ export default function PageNavbar({
               <img
                 src={logoUrl}
                 alt={companyName || "Logo"}
-                className="h-10 w-auto sm:h-12 md:h-14 object-contain"
+                className="h-10 w-auto sm:h-12 md:h-16 lg:h-20 object-contain"
                 crossOrigin="anonymous"
                 onError={(e) => {
                   e.target.style.display = 'none'

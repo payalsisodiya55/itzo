@@ -34,7 +34,8 @@ router.patch('/', authMiddleware, requireRoles('ADMIN'), diskUpload.fields([
     { name: 'landingQrCodeImage', maxCount: 1 },
     { name: 'landingAppStoreBadge', maxCount: 1 },
     { name: 'landingPlayStoreBadge', maxCount: 1 },
-    { name: 'landingFooterLogo', maxCount: 1 }
+    { name: 'landingFooterLogo', maxCount: 1 },
+    { name: 'landingNavbarLogo', maxCount: 1 }
 ]), settingsController.updateGlobalSettings);
 
 export default router;

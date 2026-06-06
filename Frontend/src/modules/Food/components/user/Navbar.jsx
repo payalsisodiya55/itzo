@@ -119,7 +119,7 @@ export default function Navbar() {
               <img
                 src={logoUrl}
                 alt={companyName || "Logo"}
-                className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 object-contain"
+                className="h-8 w-auto sm:h-10 md:h-16 lg:h-20 object-contain"
                 onError={(e) => {
                   e.target.style.display = 'none'
                 }}

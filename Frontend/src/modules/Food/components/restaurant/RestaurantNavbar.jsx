@@ -343,7 +343,7 @@ export default function RestaurantNavbar({
       {/* Left Side - Restaurant Info */}
       <div className="flex-1 min-w-0 pr-4 flex items-center gap-3">
         {logoUrl && (
-          <img src={logoUrl} alt="Logo" className="h-10 w-10 object-contain rounded-lg" />
+          <img src={logoUrl} alt="Logo" className="h-10 w-auto md:h-16 lg:h-20 object-contain rounded-lg" />
         )}
         <div className="min-w-0">
           {/* Restaurant Name & Company */}

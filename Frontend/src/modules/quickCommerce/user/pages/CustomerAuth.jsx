@@ -266,7 +266,7 @@ const CustomerAuth = () => {
                                         <img
                                             src={logoUrl}
                                             alt={`${appName} logo`}
-                                            className="w-14 h-14 object-contain"
+                                            className="w-14 h-14 md:w-24 md:h-24 object-contain"
                                         />
                                     ) : (
                                         activeCategory.icon

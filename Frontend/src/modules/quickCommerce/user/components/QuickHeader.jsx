@@ -278,7 +278,7 @@ export default function QuickHeader({ showSearch = true, activeCategory = null, 
                 <img
                   src={logo}
                   alt="Logo"
-                  className="h-10 w-auto object-contain brightness-0 invert"
+                  className="h-10 md:h-16 w-auto object-contain brightness-0 invert"
                 />
               </div>
             </div>

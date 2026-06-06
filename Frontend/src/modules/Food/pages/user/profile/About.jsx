@@ -142,7 +142,7 @@ export default function About() {
                       <img
                         src={logoUrl}
                         alt={`${companyName || aboutData.appName} Logo`}
-                        className="h-16 w-16 md:h-20 md:w-20 object-contain rounded-full"
+                        className="h-16 w-16 md:h-28 md:w-28 lg:h-32 lg:w-32 object-contain rounded-full"
                         onError={(e) => {
                           e.target.style.display = 'none'
                         }}

@@ -209,7 +209,7 @@ const AdminAuth = () => {
                                 <img
                                     src={logoUrl}
                                     alt={`${appName} logo`}
-                                    className="w-14 h-14 object-contain"
+                                    className="w-14 h-14 md:w-20 md:h-20 object-contain"
                                 />
                             ) : (
                                 <ShieldCheck size={30} className="text-indigo-600" />

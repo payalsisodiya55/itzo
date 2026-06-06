@@ -96,8 +96,10 @@ const MediaUploadBox = ({ title, size, preview, onUpload, onClear, type = 'image
               if (maxSizeMB && file.size > maxSizeMB * 1024 * 1024) {
                 if (type === 'video') {
                   toast.error(`Video size exceeds the maximum allowed limit. Please upload a video smaller than ${maxSizeMB} MB.`);
+                  window.alert(`Video size exceeds the maximum allowed limit. Please upload a video smaller than ${maxSizeMB} MB.`);
                 } else {
                   toast.error(`Image size exceeds the maximum allowed limit. Please upload an image smaller than ${maxSizeMB} MB.`);
+                  window.alert(`Image size exceeds the maximum allowed limit. Please upload an image smaller than ${maxSizeMB} MB.`);
                 }
                 if (fileInputRef.current) fileInputRef.current.value = '';
                 return;
@@ -142,6 +144,9 @@ const ItzoFoodLandingSettings = () => {
   const [landingFooterLogoPreview, setLandingFooterLogoPreview] = useState(null);
   const [landingFooterLogoFile, setLandingFooterLogoFile] = useState(null);
 
+  const [landingNavbarLogoPreview, setLandingNavbarLogoPreview] = useState(null);
+  const [landingNavbarLogoFile, setLandingNavbarLogoFile] = useState(null);
+
   const [formData, setFormData] = useState({
     landingHeroTitle: "ItzoFood",
     landingHeroSubtitle: "Discover upto 30% off on your favourite meals & drinks in your city",
@@ -177,6 +182,7 @@ const ItzoFoodLandingSettings = () => {
         if (settings.landingAppStoreBadge?.url) setLandingAppStoreBadgePreview(settings.landingAppStoreBadge.url);
         if (settings.landingPlayStoreBadge?.url) setLandingPlayStoreBadgePreview(settings.landingPlayStoreBadge.url);
         if (settings.landingFooterLogo?.url) setLandingFooterLogoPreview(settings.landingFooterLogo.url);
+        if (settings.landingNavbarLogo?.url) setLandingNavbarLogoPreview(settings.landingNavbarLogo.url);
       }
     } catch (err) {
       console.error('Fetch error:', err);
@@ -219,6 +225,7 @@ const ItzoFoodLandingSettings = () => {
       if (landingAppStoreBadgeFile) files.landingAppStoreBadge = landingAppStoreBadgeFile;
       if (landingPlayStoreBadgeFile) files.landingPlayStoreBadge = landingPlayStoreBadgeFile;
       if (landingFooterLogoFile) files.landingFooterLogo = landingFooterLogoFile;
+      if (landingNavbarLogoFile) files.landingNavbarLogo = landingNavbarLogoFile;
 
       const response = await adminAPI.updateBusinessSettings(dataToSend, files);
       const updatedSettings = response?.data?.data || response?.data;
@@ -229,7 +236,11 @@ const ItzoFoodLandingSettings = () => {
       toast.success('Landing settings saved successfully!');
     } catch (err) {
       console.error('Update error:', err);
-      toast.error('Failed to save landing settings');
+      const errorMessage = err?.response?.data?.message || err?.message || 'Failed to save landing settings';
+      toast.error(errorMessage);
+      if (err?.response?.status === 413 || errorMessage.toLowerCase().includes('large')) {
+        window.alert('File size is too large. ' + errorMessage);
+      }
     } finally {
       setSaving(false);
     }
@@ -287,8 +298,8 @@ const ItzoFoodLandingSettings = () => {
             <MediaUploadBox
               type="video"
               title="Background Video"
-              size="1080p, <50MB"
-              maxSizeMB={50}
+              size="1080p, <100MB"
+              maxSizeMB={100}
               preview={landingVideoPreview}
               onUpload={(file) => handleVideoUpload(file, setLandingVideoFile, setLandingVideoPreview)}
               onClear={() => { setLandingVideoPreview(null); setLandingVideoFile(null); }}
@@ -296,8 +307,8 @@ const ItzoFoodLandingSettings = () => {
             <MediaUploadBox
               type="image"
               title="Fallback Poster Image"
-              size="HD, <5MB"
-              maxSizeMB={5}
+              size="HD, <10MB"
+              maxSizeMB={10}
               preview={landingPosterPreview}
               onUpload={(file) => handleImageUpload(file, setLandingPosterFile, setLandingPosterPreview)}
               onClear={() => { setLandingPosterPreview(null); setLandingPosterFile(null); }}
@@ -311,8 +322,8 @@ const ItzoFoodLandingSettings = () => {
             <MediaUploadBox
               type="image"
               title="Pizza Image"
-              size="<2MB"
-              maxSizeMB={2}
+              size="<10MB"
+              maxSizeMB={10}
               preview={landingPizzaPreview}
               onUpload={(file) => handleImageUpload(file, setLandingPizzaFile, setLandingPizzaPreview)}
               onClear={() => { setLandingPizzaPreview(null); setLandingPizzaFile(null); }}
@@ -320,8 +331,8 @@ const ItzoFoodLandingSettings = () => {
             <MediaUploadBox
               type="image"
               title="Tomato Image"
-              size="<2MB"
-              maxSizeMB={2}
+              size="<10MB"
+              maxSizeMB={10}
               preview={landingTomatoPreview}
               onUpload={(file) => handleImageUpload(file, setLandingTomatoFile, setLandingTomatoPreview)}
               onClear={() => { setLandingTomatoPreview(null); setLandingTomatoFile(null); }}
@@ -335,8 +346,8 @@ const ItzoFoodLandingSettings = () => {
             <MediaUploadBox
               type="image"
               title="QR Code Image"
-              size="<2MB"
-              maxSizeMB={2}
+              size="<10MB"
+              maxSizeMB={10}
               preview={landingQrCodePreview}
               onUpload={(file) => handleImageUpload(file, setLandingQrCodeFile, setLandingQrCodePreview)}
               onClear={() => { setLandingQrCodePreview(null); setLandingQrCodeFile(null); }}
@@ -344,13 +355,22 @@ const ItzoFoodLandingSettings = () => {
           </div>
         </SectionCard>
 
-        <SectionCard title="Footer Assets">
+        <SectionCard title="Logo Assets">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <MediaUploadBox
               type="image"
+              title="Navbar Logo (Top Left)"
+              size="<10MB"
+              maxSizeMB={10}
+              preview={landingNavbarLogoPreview}
+              onUpload={(file) => handleImageUpload(file, setLandingNavbarLogoFile, setLandingNavbarLogoPreview)}
+              onClear={() => { setLandingNavbarLogoPreview(null); setLandingNavbarLogoFile(null); }}
+            />
+            <MediaUploadBox
+              type="image"
               title="Footer Logo"
-              size="<2MB"
-              maxSizeMB={2}
+              size="<10MB"
+              maxSizeMB={10}
               preview={landingFooterLogoPreview}
               onUpload={(file) => handleImageUpload(file, setLandingFooterLogoFile, setLandingFooterLogoPreview)}
               onClear={() => { setLandingFooterLogoPreview(null); setLandingFooterLogoFile(null); }}

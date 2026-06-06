@@ -104,7 +104,7 @@ export async function updateGlobalSettings(req, res, next) {
             'sellerLogo', 'sellerFavicon',
             'userLoginBanner1', 'userLoginBanner2', 'userLoginBanner3', 'userLoginBanner4', 'userLoginBanner5',
             'landingPoster', 'landingVideo', 'landingPizzaImage', 'landingTomatoImage', 'landingQrCodeImage',
-            'landingAppStoreBadge', 'landingPlayStoreBadge', 'landingFooterLogo'
+            'landingAppStoreBadge', 'landingPlayStoreBadge', 'landingFooterLogo', 'landingNavbarLogo'
         ];
         mediaFields.forEach(field => {
             const urlKey = `${field}Url`;
@@ -135,14 +135,15 @@ export async function updateGlobalSettings(req, res, next) {
         // Handle file uploads
         if (req.files) {
             const limits = {
-                landingVideo: 50 * 1024 * 1024,
-                landingPoster: 5 * 1024 * 1024,
-                landingPizzaImage: 2 * 1024 * 1024,
-                landingTomatoImage: 2 * 1024 * 1024,
-                landingQrCodeImage: 2 * 1024 * 1024,
-                landingAppStoreBadge: 1 * 1024 * 1024,
-                landingPlayStoreBadge: 1 * 1024 * 1024,
-                landingFooterLogo: 2 * 1024 * 1024
+                landingVideo: 100 * 1024 * 1024,
+                landingPoster: 10 * 1024 * 1024,
+                landingPizzaImage: 10 * 1024 * 1024,
+                landingTomatoImage: 10 * 1024 * 1024,
+                landingQrCodeImage: 10 * 1024 * 1024,
+                landingAppStoreBadge: 10 * 1024 * 1024,
+                landingPlayStoreBadge: 10 * 1024 * 1024,
+                landingFooterLogo: 10 * 1024 * 1024,
+                landingNavbarLogo: 10 * 1024 * 1024
             };
 
             for (const [fieldName, maxBytes] of Object.entries(limits)) {
@@ -182,7 +183,8 @@ export async function updateGlobalSettings(req, res, next) {
                 { name: 'landingQrCodeImage', folder: 'business/landing' },
                 { name: 'landingAppStoreBadge', folder: 'business/landing' },
                 { name: 'landingPlayStoreBadge', folder: 'business/landing' },
-                { name: 'landingFooterLogo', folder: 'business/landing' }
+                { name: 'landingFooterLogo', folder: 'business/landing' },
+                { name: 'landingNavbarLogo', folder: 'business/landing' }
             ];
 
             for (const field of mediaUploadFields) {

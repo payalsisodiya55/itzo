@@ -114,6 +114,10 @@ const globalSettingsSchema = new mongoose.Schema(
             url: { type: String, default: '' },
             publicId: { type: String, default: '' }
         },
+        landingNavbarLogo: {
+            url: { type: String, default: '' },
+            publicId: { type: String, default: '' }
+        },
         themeColor: { type: String, default: '#0a0a0a' },
         modules: {
             food: { type: Boolean, default: true },

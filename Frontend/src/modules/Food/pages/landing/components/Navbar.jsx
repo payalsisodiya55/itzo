@@ -2,11 +2,38 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { User, Menu, X, ChevronDown } from 'lucide-react';
+import { getCachedSettings, loadBusinessSettings } from '@common/utils/businessSettings';
 
 const Navbar = React.memo(function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [settings, setSettings] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let mounted = true;
+    const fetchSettings = async () => {
+      let currentSettings = getCachedSettings();
+      if (!currentSettings) {
+        currentSettings = await loadBusinessSettings();
+      }
+      if (mounted) {
+        setSettings(currentSettings);
+      }
+    };
+    fetchSettings();
+    
+    const handleUpdate = (e) => {
+      if (mounted) {
+        setSettings(e?.detail || getCachedSettings());
+      }
+    };
+    window.addEventListener('businessSettingsUpdated', handleUpdate);
+    return () => { 
+      mounted = false; 
+      window.removeEventListener('businessSettingsUpdated', handleUpdate);
+    };
+  }, []);
 
   useEffect(() => {
     let timeoutId = null;
@@ -28,6 +55,8 @@ const Navbar = React.memo(function Navbar() {
     ? 'bg-white shadow-md text-gray-800' 
     : 'bg-transparent text-white';
 
+  const logoImg = settings?.landingNavbarLogo?.url || "/itzo-logo.jpg";
+
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${navClass}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -35,7 +64,7 @@ const Navbar = React.memo(function Navbar() {
           
           {/* Logo */}
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/food/user')}>
-            <img src="/itzo-logo.jpg" alt="ItzoFood Logo" className="h-10 md:h-12 w-auto object-contain rounded-md" />
+            <img src={logoImg} alt="ItzoFood Logo" className="h-10 md:h-12 w-auto object-contain rounded-md" />
           </div>
 
           {/* Desktop Navigation */}

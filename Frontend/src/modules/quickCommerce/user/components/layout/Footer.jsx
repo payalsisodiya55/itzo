@@ -29,7 +29,7 @@ const Footer = () => {
                     {/* Brand Info */}
                     <div className="space-y-4 md:space-y-8">
                         <div className="flex items-center">
-                            <img src={logoUrl} alt={`${settings?.appName || 'App'} Logo`} className="h-12 md:h-16 w-auto object-contain" />
+                            <img src={logoUrl} alt={`${settings?.appName || 'App'} Logo`} className="h-12 md:h-24 w-auto object-contain" />
                         </div>
                         <p className="text-sm leading-relaxed md:text-base md:leading-loose text-white/90 md:max-w-xs transition-opacity hover:opacity-100 font-medium">
                             Your daily dose of fresh, organic, and healthy products delivered straight to your door. Freshness guaranteed.

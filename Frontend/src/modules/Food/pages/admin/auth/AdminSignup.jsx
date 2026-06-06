@@ -256,7 +256,7 @@ export default function AdminSignup() {
                   <img
                     src={logoUrl}
                     alt={companyName || "Logo"}
-                    className="h-10 w-24 object-contain"
+                    className="h-10 w-24 md:h-16 md:w-32 lg:h-20 lg:w-40 object-contain"
                     loading="lazy"
                     onError={(e) => {
                       e.target.style.display = 'none'

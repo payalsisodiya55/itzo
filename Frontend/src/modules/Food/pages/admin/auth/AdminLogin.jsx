@@ -173,7 +173,7 @@ export default function AdminLogin() {
           <img
             src={logoUrl}
             alt={companyName || "Logo"}
-            className="h-12 md:h-16 object-contain"
+            className="h-12 md:h-24 lg:h-32 object-contain"
             loading="lazy"
             onError={(e) => {
               e.target.style.display = 'none'

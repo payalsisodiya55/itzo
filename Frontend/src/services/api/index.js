@@ -986,7 +986,7 @@ export const adminAPI = {
       'sellerLogo', 'sellerFavicon', 'favicon',
       'userLoginBanner1', 'userLoginBanner2', 'userLoginBanner3', 'userLoginBanner4', 'userLoginBanner5',
       'landingPoster', 'landingVideo', 'landingPizzaImage', 'landingTomatoImage', 
-      'landingQrCodeImage', 'landingAppStoreBadge', 'landingPlayStoreBadge', 'landingFooterLogo'
+      'landingQrCodeImage', 'landingAppStoreBadge', 'landingPlayStoreBadge', 'landingFooterLogo', 'landingNavbarLogo'
     ];
     fileFields.forEach(field => {
       if (files[field]) {
