@@ -8,7 +8,7 @@ import { isModuleAuthenticated, setAuthData } from "@food/utils/auth"
 import { loadBusinessSettings, getCachedSettings, getAppLogo, getCompanyName, setAppType } from "@common/utils/businessSettings"
 
 import loginBanner from "@food/assets/loginbanner.png"
-import foodDiscovery from "@food/assets/food_discovery_bg.png"
+import food@food/assets/food_discovery_bg.png"
 import offerBanner from "@food/assets/offerpagebanner.png"
 import gourmetBanner from "@food/assets/groumetpagebanner.png"
 import collectionsBanner from "@food/assets/collectionspagebanner.png"

@@ -76,7 +76,7 @@ const globalSettingsSchema = new mongoose.Schema(
             publicId: { type: String, default: '' }
         },
         landingHeroTitle: { type: String, default: 'ItzoFood' },
-        landingHeroSubtitle: { type: String, default: 'Discover the best food & drinks in your city' },
+        landingHeroSubtitle: { type: String, default: 'Discover up to 30% off on your favorite meals & drinks in your city' },
         landingVideo: {
             url: { type: String, default: '' },
             publicId: { type: String, default: '' }
