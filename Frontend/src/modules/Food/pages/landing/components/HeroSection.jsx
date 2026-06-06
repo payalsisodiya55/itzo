@@ -83,9 +83,23 @@ const HeroSection = React.memo(function HeroSection({ navigate }) {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="flex flex-col items-center"
         >
-          {/* Logo Text (simulating white zomato logo) */}
-          <h1 className="text-white text-6xl md:text-7xl lg:text-[80px] font-black italic tracking-tighter drop-shadow-lg mb-8">
-            {appName.toLowerCase()}
+          {/* Logo Text */}
+          <h1 className="text-6xl md:text-7xl lg:text-[80px] font-black italic tracking-tighter drop-shadow-[0_2px_10px_rgba(255,255,255,0.5)] mb-8">
+            {appName.toLowerCase() === 'itzofood' ? (
+              <>
+                <span 
+                  className="text-transparent bg-clip-text"
+                  style={{ backgroundImage: 'linear-gradient(to bottom, #ff7800 42%, #0f172a 42%)' }}
+                >
+                  i
+                </span>
+                <span className="text-[#0f172a]">tz</span>
+                <span className="text-[#ff7800]">o</span>
+                <span className="text-[#0f172a]">food</span>
+              </>
+            ) : (
+              <span className="text-[#0f172a]">{appName.toLowerCase()}</span>
+            )}
           </h1>
 
           {/* Heading */}
