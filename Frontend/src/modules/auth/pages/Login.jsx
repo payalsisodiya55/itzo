@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Routes, Route, Navigate, Link, useLocation, useNavigate } from "react-router-dom"
-import { Phone, Lock, ArrowRight, ShieldCheck, Loader2, UserRound, Mail, ChevronDown } from "lucide-react"
+import { Phone, Lock, ArrowRight, ShieldCheck, Loader2, UserRound, Mail, ChevronDown, ArrowLeft } from "lucide-react"
 import { toast } from "sonner"
 import { authAPI, userAPI } from "@food/api"
 import { isModuleAuthenticated, setAuthData } from "@food/utils/auth"
@@ -374,9 +374,18 @@ export default function UnifiedOTPFastLogin() {
       <div className="w-full max-w-[420px] bg-white dark:bg-neutral-900 rounded-none md:rounded-2xl shadow-[0_-8px_30px_rgb(0,0,0,0.12)] md:shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.5)] relative z-20 border-t md:border border-gray-100 dark:border-neutral-800 mt-[50vh] md:mt-0 flex-1 md:flex-initial flex flex-col">
         <div className="p-6 md:p-8 space-y-6 flex-1">
           <div className="flex items-center justify-between">
-            <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 tracking-tight">
-              Login
-            </h2>
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={() => navigate(-1)} 
+                className="p-2 -ml-2 rounded-full hover:bg-gray-100 dark:hover:bg-neutral-800 transition-colors text-gray-600 dark:text-gray-300"
+                aria-label="Go back"
+              >
+                <ArrowLeft className="w-6 h-6" />
+              </button>
+              <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 tracking-tight">
+                Login
+              </h2>
+            </div>
           </div>
 
           <form onSubmit={showNameInput ? handleSubmitName : step === 1 ? handleSendOTP : handleVerifyOTP} className="space-y-4">
