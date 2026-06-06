@@ -280,9 +280,9 @@ export default function AdminNavbar({ onMenuClick }) {
   return (
     <>
       <header className="sticky top-0 z-50 bg-white border-b border-neutral-200 shadow-sm">
-        <div className="flex items-center justify-between px-6 py-3">
+        <div className="flex items-center justify-between px-3 md:px-6 py-3 gap-2">
           {/* Left: Logo and Mobile Menu */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 md:gap-3 shrink-0">
             <button
               onClick={onMenuClick}
               className="lg:hidden p-2 rounded-md text-neutral-700 hover:bg-neutral-100 hover:text-black transition-colors"
@@ -313,21 +313,21 @@ export default function AdminNavbar({ onMenuClick }) {
           </div>
 
           {/* Center: Search Bar */}
-          <div className="flex-1 flex justify-center max-w-md mx-8">
+          <div className="flex-1 flex justify-center max-w-md mx-2 md:mx-8">
             <button
               onClick={() => setSearchOpen(true)}
               className="flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-100 text-neutral-600 cursor-pointer hover:bg-neutral-200 transition-colors w-full border border-neutral-200"
             >
               <Search className="w-4 h-4 text-neutral-700" />
               <span className="text-sm flex-1 text-left text-neutral-700">Search</span>
-              <span className="text-xs px-2 py-0.5 rounded bg-white text-neutral-600 border border-neutral-200">
+              <span className="text-xs px-2 py-0.5 rounded bg-white text-neutral-600 border border-neutral-200 hidden sm:block">
                 Ctrl+K
               </span>
             </button>
           </div>
 
           {/* Right: User Profile */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 md:gap-3 shrink-0">
             <Popover open={notificationsOpen} onOpenChange={setNotificationsOpen}>
               <PopoverTrigger asChild>
                 <button
