@@ -329,26 +329,9 @@ const ItzoFoodLandingSettings = () => {
             </div>
          </SectionCard>
 
-         <SectionCard title="App Download & QR Code">
+         <SectionCard title="QR Code">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-               <MediaUploadBox 
-                  type="image"
-                  title="App Store Badge" 
-                  size="<1MB" 
-                  maxSizeMB={1}
-                  preview={landingAppStoreBadgePreview} 
-                  onUpload={(file) => handleImageUpload(file, setLandingAppStoreBadgeFile, setLandingAppStoreBadgePreview)} 
-                  onClear={() => { setLandingAppStoreBadgePreview(null); setLandingAppStoreBadgeFile(null); }} 
-               />
-               <MediaUploadBox 
-                  type="image"
-                  title="Google Play Badge" 
-                  size="<1MB" 
-                  maxSizeMB={1}
-                  preview={landingPlayStoreBadgePreview} 
-                  onUpload={(file) => handleImageUpload(file, setLandingPlayStoreBadgeFile, setLandingPlayStoreBadgePreview)} 
-                  onClear={() => { setLandingPlayStoreBadgePreview(null); setLandingPlayStoreBadgeFile(null); }} 
-               />
+
                <MediaUploadBox 
                   type="image"
                   title="QR Code Image" 
