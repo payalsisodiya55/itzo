@@ -1,11 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import FooterSection from '../components/FooterSection';
 import { motion } from 'framer-motion';
+import { loadBusinessSettings } from '@common/utils/businessSettings';
 
 export default function ContactUs() {
+  const [supportEmail, setSupportEmail] = useState('support@itzofood.com');
+  const [partnershipEmail, setPartnershipEmail] = useState('partners@itzofood.com');
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    loadBusinessSettings().then(settings => {
+      if (settings?.customerSupportEmail) setSupportEmail(settings.customerSupportEmail);
+      if (settings?.partnershipEmail) setPartnershipEmail(settings.partnershipEmail);
+    });
   }, []);
 
   return (
@@ -28,14 +36,14 @@ export default function ContactUs() {
             <div className="w-12 h-12 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center text-xl mx-auto mb-4">💬</div>
             <h4 className="text-2xl font-bold text-slate-900 mb-3">Customer Support</h4>
             <p className="text-slate-600 text-lg mb-2">Need help with an order? Contact our 24/7 support team.</p>
-            <p className="text-rose-500 font-bold text-lg">support@itzofood.com</p>
+            <p className="text-rose-500 font-bold text-lg">{supportEmail}</p>
           </div>
           <div className="w-full h-px bg-slate-200"></div>
           <div>
             <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl mx-auto mb-4">🤝</div>
             <h4 className="text-2xl font-bold text-slate-900 mb-3">Partnerships</h4>
             <p className="text-slate-600 text-lg mb-2">Interested in partnering with us? Let's talk.</p>
-            <p className="text-rose-500 font-bold text-lg">partners@itzofood.com</p>
+            <p className="text-rose-500 font-bold text-lg">{partnershipEmail}</p>
           </div>
         </div>
       </main>

@@ -4,6 +4,9 @@ const globalSettingsSchema = new mongoose.Schema(
     {
         companyName: { type: String, required: true, default: 'Appzeto' },
         email: { type: String, required: true, default: 'admin@appzeto.com' },
+        customerSupportEmail: { type: String, default: 'support@itzofood.com' },
+        partnershipEmail: { type: String, default: 'partners@itzofood.com' },
+        helpAndSupportEmail: { type: String, default: 'support@itzofood.com' },
         phone: {
             countryCode: { type: String, default: '+91' },
             number: { type: String, default: '' }

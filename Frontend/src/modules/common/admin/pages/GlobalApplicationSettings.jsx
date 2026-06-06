@@ -138,6 +138,9 @@ const GlobalApplicationSettings = () => {
     companyName: "",
     themeColor: "#0a0a0a",
     email: "",
+    customerSupportEmail: "",
+    partnershipEmail: "",
+    helpAndSupportEmail: "",
     phoneNumber: "",
     address: "",
   });
@@ -153,6 +156,9 @@ const GlobalApplicationSettings = () => {
           companyName: settings.companyName || "",
           themeColor: settings.themeColor || "#0a0a0a",
           email: settings.email || "",
+          customerSupportEmail: settings.customerSupportEmail || "",
+          partnershipEmail: settings.partnershipEmail || "",
+          helpAndSupportEmail: settings.helpAndSupportEmail || "",
           phoneNumber: settings.phone?.number || "",
           address: settings.address || "",
         });
@@ -208,6 +214,9 @@ const GlobalApplicationSettings = () => {
         companyName: formData.companyName.trim(),
         themeColor: formData.themeColor,
         email: formData.email,
+        customerSupportEmail: formData.customerSupportEmail,
+        partnershipEmail: formData.partnershipEmail,
+        helpAndSupportEmail: formData.helpAndSupportEmail,
         phoneNumber: formData.phoneNumber,
         address: formData.address,
       };
@@ -287,6 +296,15 @@ const GlobalApplicationSettings = () => {
               <InputField label="Support User Id" name="email" value={formData.email} onChange={handleChange} placeholder="admin@appzeto.com" />
               <InputField label="Support Phone" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} placeholder="0000000000" />
               <InputField label="Office Address" name="address" value={formData.address} onChange={handleChange} placeholder="Main Street, NY" />
+           </div>
+        </SectionCard>
+
+        {/* Contact & Support Emails */}
+        <SectionCard title="Contact & Support Emails">
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+              <InputField label="Customer Support Email (/contact page)" name="customerSupportEmail" value={formData.customerSupportEmail} onChange={handleChange} placeholder="support@itzofood.com" />
+              <InputField label="Partnership Email (/contact page)" name="partnershipEmail" value={formData.partnershipEmail} onChange={handleChange} placeholder="partners@itzofood.com" />
+              <InputField label="Help & Support Email (Help page)" name="helpAndSupportEmail" value={formData.helpAndSupportEmail} onChange={handleChange} placeholder="support@itzofood.com" />
            </div>
         </SectionCard>
 

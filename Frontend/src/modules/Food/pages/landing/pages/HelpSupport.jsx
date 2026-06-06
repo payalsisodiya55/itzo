@@ -1,11 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import FooterSection from '../components/FooterSection';
 import { motion } from 'framer-motion';
+import { loadBusinessSettings } from '@common/utils/businessSettings';
 
 export default function HelpSupport() {
+  const [supportEmail, setSupportEmail] = useState('support@itzofood.com');
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    loadBusinessSettings().then(settings => {
+      if (settings?.helpAndSupportEmail) setSupportEmail(settings.helpAndSupportEmail);
+    });
   }, []);
 
   return (
@@ -52,7 +58,7 @@ export default function HelpSupport() {
               </a>
               <div className="text-center pt-4 border-t border-gray-100">
                 <p className="text-sm text-slate-500">Or email us directly at</p>
-                <p className="text-rose-500 font-medium mt-1">support@itzofood.com</p>
+                <p className="text-rose-500 font-medium mt-1">{supportEmail}</p>
               </div>
             </div>
           </div>

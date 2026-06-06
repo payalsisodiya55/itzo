@@ -48,7 +48,7 @@ export async function updateGlobalSettings(req, res, next) {
         }
         
         const { 
-            companyName, email, phoneCountryCode, phoneNumber, address, state, pincode, region, 
+            companyName, email, customerSupportEmail, partnershipEmail, helpAndSupportEmail, phoneCountryCode, phoneNumber, address, state, pincode, region, 
             adminLogoUrl, adminFaviconUrl, userLogoUrl, userFaviconUrl, deliveryLogoUrl, deliveryFaviconUrl, restaurantLogoUrl, restaurantFaviconUrl, sellerLogoUrl, sellerFaviconUrl,
             themeColor, modules, landingHeroTitle, landingHeroSubtitle, landingVideoUrl, landingPosterUrl,
             socialLinkedinUrl, socialInstagramUrl, socialYoutubeUrl, socialFacebookUrl, socialTwitterUrl
@@ -76,6 +76,9 @@ export async function updateGlobalSettings(req, res, next) {
 
         if (companyName) settings.companyName = companyName;
         if (email) settings.email = email;
+        if (customerSupportEmail !== undefined) settings.customerSupportEmail = customerSupportEmail;
+        if (partnershipEmail !== undefined) settings.partnershipEmail = partnershipEmail;
+        if (helpAndSupportEmail !== undefined) settings.helpAndSupportEmail = helpAndSupportEmail;
         if (phoneCountryCode || phoneNumber) {
             settings.phone = {
                 countryCode: phoneCountryCode || settings.phone?.countryCode || '+91',
