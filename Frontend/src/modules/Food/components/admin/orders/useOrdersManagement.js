@@ -2,6 +2,7 @@ import { useState, useMemo } from "react"
 import { exportToCSV, exportToExcel, exportToPDF, exportToJSON } from "./ordersExportUtils"
 
 import { getCachedSettings, loadBusinessSettings } from "@common/utils/businessSettings"
+import itzoLogo from "@/assets/Logo.png"
 const debugError = () => {}
 
 
@@ -301,8 +302,7 @@ export function useOrdersManagement(orders, statusKey, title) {
 
       const settings = getCachedSettings() || await loadBusinessSettings()
       const companyName = settings?.companyName || "Appzeto Food"
-      const logoUrl = settings?.logo?.url || undefined
-      const logoDataUrl = await imageUrlToDataUrl(logoUrl)
+      const logoDataUrl = await imageUrlToDataUrl(itzoLogo)
 
       const items = Array.isArray(order.items) ? order.items : []
       const itemsSubtotal = items.reduce((sum, item) => {
