@@ -1249,9 +1249,8 @@ function RestaurantDetailsContent() {
             toast.error(result.error || 'Cannot add item from different restaurant. Please clear cart first.')
             return
           }
-          if (newQuantity > existingCartItem.quantity + 1) {
-            updateQuantity(lineItemId, newQuantity)
-          }
+          // ALWAYS update to exact requested quantity to prevent desync
+          updateQuantity(lineItemId, newQuantity)
         }
         // If decreasing quantity, trigger removal animation with sourcePosition
         else if (newQuantity < existingCartItem.quantity && sourcePosition) {
