@@ -1,4 +1,5 @@
 import { getCachedSettings, loadBusinessSettings } from "./businessSettings"
+import { adminAPI, restaurantAPI } from "@food/api"
 
 const toNumber = (value) => {
   const parsed = Number(value)
@@ -86,7 +87,7 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
     const orderDate = order.createdAt ? new Date(order.createdAt).toISOString().split("T")[0] : (order.date || new Date().toISOString().split("T")[0])
     
     const settings = getCachedSettings() || await loadBusinessSettings()
-    const companyName = "Itzo" // Replacing eternal with Itzo
+    const companyName = settings?.companyName || "Itzo" // Replacing eternal with Itzo
     const companyFullName = settings?.legalName || "ITZO LIMITED"
     const companyPan = settings?.panNumber || "N/A"
     const companyCin = settings?.cinNumber || "N/A"
@@ -96,11 +97,64 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
     const logoDataUrl = await imageUrlToDataUrl(itzoLogoUrl)
 
     // Dynamic Restaurant Details
-    const legalEntityName = formatDisplayText(companyFullName || order.restaurantDetails?.legalEntityName || order.restaurant)
-    const restaurantName = formatDisplayText(order.restaurant)
-    const restaurantAddress = formatDisplayText(order.restaurantAddress || order.restaurantDetails?.address)
-    const restaurantGstin = formatDisplayText(companyGstin)
-    const restaurantFssai = formatDisplayText(companyFssai)
+    let fetchedRestaurant = null;
+    
+    let actualRestId = null;
+    if (order.restaurantId && typeof order.restaurantId === 'string') {
+        actualRestId = order.restaurantId;
+    } else if (order.restaurantId && typeof order.restaurantId === 'object') {
+        actualRestId = order.restaurantId._id || order.restaurantId.id;
+        fetchedRestaurant = order.restaurantId; // fallback if fetch fails
+    } else if (order.restaurant?._id) {
+        actualRestId = order.restaurant._id;
+    }
+
+    if (actualRestId) {
+        try {
+            // First try admin API to get full details including GSTIN and FSSAI
+            const res = await adminAPI.getRestaurantById(actualRestId);
+            if (res?.data?.data?.restaurant) {
+                fetchedRestaurant = res.data.data.restaurant;
+            }
+        } catch (e1) {
+            try {
+                // Fallback to public/restaurant API if not an admin
+                const res = await restaurantAPI.getRestaurantById(actualRestId);
+                if (res?.data?.data?.restaurant) {
+                    fetchedRestaurant = res.data.data.restaurant;
+                }
+            } catch (e2) {
+                console.error("Failed to fetch restaurant details for invoice");
+            }
+        }
+    }
+
+    const legalEntityName = formatDisplayText(companyFullName || order.restaurantDetails?.legalEntityName || fetchedRestaurant?.legalEntityName || order.pickupSources?.[0]?.legalEntityName || order.restaurant)
+    const restaurantName = formatDisplayText(order.restaurant || fetchedRestaurant?.name || order.pickupSources?.[0]?.name)
+    const restaurantAddress = formatDisplayText(
+      fetchedRestaurant?.location?.formattedAddress ||
+      fetchedRestaurant?.address ||
+      order.restaurantAddress || 
+      order.restaurantDetails?.address || 
+      order.restaurantLocation?.address || 
+      order.pickupSources?.[0]?.address
+    )
+    const restaurantGstin = formatDisplayText(
+      fetchedRestaurant?.gstNumber ||
+      fetchedRestaurant?.gstin ||
+      order.restaurantDetails?.gstin || 
+      order.restaurant?.gstin || 
+      order.pickupSources?.[0]?.gstin || 
+      order.pickupSources?.[0]?.gstNumber
+    )
+    const restaurantFssai = formatDisplayText(
+      fetchedRestaurant?.fssaiNumber ||
+      fetchedRestaurant?.fssai ||
+      order.restaurantDetails?.fssai || 
+      order.restaurant?.fssai || 
+      order.pickupSources?.[0]?.fssai || 
+      order.pickupSources?.[0]?.fssaiNumber
+    )
 
     // Dynamic Customer Details
     const customerName = formatDisplayText(order.userName || order.customerName)
@@ -274,6 +328,16 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
     const footerY = pageHeight - 40
     doc.setFont("helvetica", "bold")
     doc.text(`For ${companyFullName}`, margin, footerY)
+    
+    // Dummy Signature
+    doc.setTextColor(0, 0, 150)
+    doc.setFont("times", "italic")
+    doc.setFontSize(22)
+    doc.text(companyName, pageWidth - margin - 45, footerY + 14, { angle: -5 })
+    doc.setTextColor(0)
+
+    doc.setFontSize(10)
+    doc.setFont("helvetica", "bold")
     doc.text("Authorized Signatory", pageWidth - margin - 40, footerY + 20)
     doc.setFontSize(8)
     doc.setFont("helvetica", "normal")
@@ -392,7 +456,18 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
       
       // Signatory
       doc.setFont("helvetica", "bold")
+      doc.setFontSize(10)
       doc.text(`For ${companyFullName}`, pageWidth - margin - 80, pageHeight - 50)
+      
+      // Dummy Signature
+      doc.setTextColor(0, 0, 150)
+      doc.setFont("times", "italic")
+      doc.setFontSize(22)
+      doc.text(companyName, pageWidth - margin - 75, pageHeight - 36, { angle: -5 })
+      doc.setTextColor(0)
+
+      doc.setFontSize(10)
+      doc.setFont("helvetica", "bold")
       doc.text("Authorized Signatory", pageWidth - margin - 80, pageHeight - 30)
       
       doc.setFontSize(7)
