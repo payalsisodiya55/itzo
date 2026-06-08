@@ -41,6 +41,7 @@ import { useUserNotifications } from "@food/hooks/useUserNotifications"
 import { customerApi } from "../../../../quickCommerce/user/services/customerApi"
 import DeliveryOtpDisplay from "../../../../quickCommerce/user/components/DeliveryOtpDisplay"
 import circleIcon from "@food/assets/circleicon.png"
+import itzoLogo from "@/assets/Logo.png"
 import { RESTAURANT_PIN_SVG, CUSTOMER_PIN_SVG, RIDER_BIKE_SVG } from "@food/constants/mapIcons"
 
 // Fallback definitions in case imports fail at runtime or are shadowed
@@ -52,7 +53,7 @@ const SAFE_RESTAURANT_PIN = typeof RESTAURANT_PIN_SVG !== 'undefined' ? RESTAURA
 const debugLog = (...args) => console.log('[OrderTracking]', ...args)
 const debugWarn = (...args) => console.warn('[OrderTracking]', ...args)
 const debugError = (...args) => console.error('[OrderTracking]', ...args)
-const INVOICE_BRAND_NAME = "Appzeto"
+const INVOICE_BRAND_NAME = "Itzo"
 
 
 // Animated checkmark component
@@ -1816,10 +1817,30 @@ export default function OrderTracking() {
 
       doc.setFillColor(18, 18, 18)
       doc.rect(0, 0, pageWidth, 116, "F")
+      let logoDataUrl = null;
+      try {
+        const response = await fetch(itzoLogo);
+        const blob = await response.blob();
+        logoDataUrl = await new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.readAsDataURL(blob);
+        });
+      } catch (err) {
+        debugError("Failed to load logo", err);
+      }
+
+      if (logoDataUrl) {
+        const logoFormat = logoDataUrl.includes("image/jpeg") ? "JPEG" : "PNG";
+        doc.addImage(logoDataUrl, logoFormat, margin, 26, 80, 32, undefined, "FAST");
+      } else {
+        doc.setTextColor(255, 255, 255)
+        doc.setFont("helvetica", "bold")
+        doc.setFontSize(24)
+        doc.text(INVOICE_BRAND_NAME, margin, 52)
+      }
+
       doc.setTextColor(255, 255, 255)
-      doc.setFont("helvetica", "bold")
-      doc.setFontSize(24)
-      doc.text(INVOICE_BRAND_NAME, margin, 52)
       doc.setFontSize(11)
       doc.setFont("helvetica", "normal")
       doc.text("Tax Invoice", margin, 72)
