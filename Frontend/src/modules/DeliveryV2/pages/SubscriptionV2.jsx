@@ -444,7 +444,7 @@ export default function SubscriptionV2() {
                         <Button 
                           onClick={() => handlePurchase(plan)}
                           disabled={!!purchasing || hasLockedSubscription}
-                          className={`rounded-2xl px-6 font-black h-12 transition-all shadow-lg ${(isCurrentPlan || isLocked) ? 'bg-slate-100 text-slate-400 shadow-none' : 'bg-primary text-primary-foreground hover:bg-primary/90 shadow-primary/20'}`}
+                          className={`rounded-2xl px-6 font-black h-12 transition-all shadow-lg ${(isCurrentPlan || isLocked) ? 'bg-slate-100 text-slate-400 shadow-none' : 'bg-orange-500 text-white hover:bg-orange-600 shadow-orange-500/20'}`}
                         >
                           {purchasing === plan._id ? (
                             <Loader2 className="w-5 h-5 animate-spin" />
