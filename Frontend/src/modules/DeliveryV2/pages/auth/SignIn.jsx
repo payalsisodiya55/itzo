@@ -262,7 +262,7 @@ export default function DeliverySignIn() {
             onClick={handleSendOTP}
             disabled={!isValid || isSending}
             className={`w-full py-4 rounded-lg font-bold text-base transition-colors ${isValid && !isSending
-              ? "bg-primary hover:bg-primary/90 active:bg-primary/80 text-primary-foreground"
+              ? "bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
               }`}
           >
