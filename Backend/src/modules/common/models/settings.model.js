@@ -15,6 +15,11 @@ const globalSettingsSchema = new mongoose.Schema(
         state: { type: String, default: '' },
         pincode: { type: String, default: '' },
         region: { type: String, default: 'India' },
+        legalName: { type: String, default: '' },
+        gstin: { type: String, default: '' },
+        fssai: { type: String, default: '' },
+        panNumber: { type: String, default: '' },
+        cinNumber: { type: String, default: '' },
         adminLogo: {
             url: { type: String, default: '' },
             publicId: { type: String, default: '' }

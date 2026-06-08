@@ -49,6 +49,7 @@ export async function updateGlobalSettings(req, res, next) {
         
         const { 
             companyName, email, customerSupportEmail, partnershipEmail, helpAndSupportEmail, phoneCountryCode, phoneNumber, address, state, pincode, region, 
+            legalName, gstin, fssai, panNumber, cinNumber,
             adminLogoUrl, adminFaviconUrl, userLogoUrl, userFaviconUrl, deliveryLogoUrl, deliveryFaviconUrl, restaurantLogoUrl, restaurantFaviconUrl, sellerLogoUrl, sellerFaviconUrl,
             themeColor, modules, landingHeroTitle, landingHeroSubtitle, landingVideoUrl, landingPosterUrl,
             socialLinkedinUrl, socialInstagramUrl, socialYoutubeUrl, socialFacebookUrl, socialTwitterUrl
@@ -89,6 +90,11 @@ export async function updateGlobalSettings(req, res, next) {
         if (state !== undefined) settings.state = state;
         if (pincode !== undefined) settings.pincode = pincode;
         if (region) settings.region = region;
+        if (legalName !== undefined) settings.legalName = legalName;
+        if (gstin !== undefined) settings.gstin = gstin;
+        if (fssai !== undefined) settings.fssai = fssai;
+        if (panNumber !== undefined) settings.panNumber = panNumber;
+        if (cinNumber !== undefined) settings.cinNumber = cinNumber;
         if (landingHeroTitle !== undefined) settings.landingHeroTitle = landingHeroTitle;
         if (landingHeroSubtitle !== undefined) settings.landingHeroSubtitle = landingHeroSubtitle;
         if (socialLinkedinUrl !== undefined) settings.socialLinkedinUrl = socialLinkedinUrl;

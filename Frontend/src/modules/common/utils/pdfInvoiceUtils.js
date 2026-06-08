@@ -132,6 +132,7 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
     const legalEntityName = formatDisplayText(companyFullName || order.restaurantDetails?.legalEntityName || fetchedRestaurant?.legalEntityName || order.pickupSources?.[0]?.legalEntityName || order.restaurant)
     const restaurantName = formatDisplayText(order.restaurant || fetchedRestaurant?.name || order.pickupSources?.[0]?.name)
     const restaurantAddress = formatDisplayText(
+      settings?.address ||
       fetchedRestaurant?.location?.formattedAddress ||
       fetchedRestaurant?.address ||
       order.restaurantAddress || 
@@ -145,7 +146,8 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
       order.restaurantDetails?.gstin || 
       order.restaurant?.gstin || 
       order.pickupSources?.[0]?.gstin || 
-      order.pickupSources?.[0]?.gstNumber
+      order.pickupSources?.[0]?.gstNumber ||
+      settings?.gstin
     )
     const restaurantFssai = formatDisplayText(
       fetchedRestaurant?.fssaiNumber ||
@@ -153,7 +155,8 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
       order.restaurantDetails?.fssai || 
       order.restaurant?.fssai || 
       order.pickupSources?.[0]?.fssai || 
-      order.pickupSources?.[0]?.fssaiNumber
+      order.pickupSources?.[0]?.fssaiNumber ||
+      settings?.fssai
     )
 
     // Dynamic Customer Details
@@ -175,10 +178,16 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
     let totalGross = 0;
     items.forEach(item => totalGross += toNumber(item.quantity || 1) * toNumber(item.price))
     
-    // We assume standard GST is 5% (2.5% CGST + 2.5% SGST) for restaurant services
+    // Determine if CGST should be shown based on Gujarat state
+    const isUserGujarat = stateName.toLowerCase().includes('gujrat') || stateName.toLowerCase().includes('gujarat');
+    const restState = formatDisplayText(fetchedRestaurant?.location?.state || fetchedRestaurant?.state || order.restaurantLocation?.state || settings?.state || "N/A");
+    const isRestGujarat = restState.toLowerCase().includes('gujrat') || restState.toLowerCase().includes('gujarat');
+    const shouldShowCgst = !(isUserGujarat && isRestGujarat);
+
+    // We assume standard GST is 5% for restaurant services
     const gstRate = order.restaurantDetails?.gstRate ? toNumber(order.restaurantDetails.gstRate) : 5;
-    const cgstRate = gstRate / 2;
-    const sgstRate = gstRate / 2;
+    const cgstRate = shouldShowCgst ? gstRate / 2 : 0;
+    const sgstRate = shouldShowCgst ? gstRate / 2 : gstRate;
     
     let totalItemsNet = 0;
     let totalItemsCgst = 0;
@@ -207,7 +216,12 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
       totalItemsSgst += sgstVal;
       totalItemsTotal += totalVal;
       
-      return [title, formatMoney(grossValue), formatMoney(itemDiscount), formatMoney(netValue), `${cgstRate}%`, formatMoney(cgstVal), `${sgstRate}%`, formatMoney(sgstVal), formatMoney(totalVal)]
+      const row = [title, formatMoney(grossValue), formatMoney(itemDiscount), formatMoney(netValue)];
+      if (shouldShowCgst) {
+        row.push(`${cgstRate}%`, formatMoney(cgstVal));
+      }
+      row.push(`${sgstRate}%`, formatMoney(sgstVal), formatMoney(totalVal));
+      return row;
     })
     
     // Packaging Charge
@@ -282,17 +296,33 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
     doc.setFont("helvetica", "bold")
     doc.text(`HSN Code: ${hsnCode}`, margin, currentY); currentY += 5
     doc.setFont("helvetica", "normal")
-    doc.text(`Service Description: Restaurant Service`, margin, currentY); currentY += 8
+    doc.text(`Service Description: ${order.restaurantDetails?.serviceDescription || "Restaurant Service"}`, margin, currentY); currentY += 8
 
     // Table
+    const tableHead = shouldShowCgst 
+      ? [["Particulars", "Gross value", "Discount", "Net value", "CGST\n(Rate)", "CGST\n(INR)", "SGST\n(Rate)", "SGST\n(INR)", "Total"]]
+      : [["Particulars", "Gross value", "Discount", "Net value", "SGST\n(Rate)", "SGST\n(INR)", "Total"]];
+
+    const totalRow = ["Item(s) Total", formatMoney(totalGross), formatMoney(discountAmount), formatMoney(totalItemsNet)];
+    if (shouldShowCgst) totalRow.push("", formatMoney(totalItemsCgst));
+    totalRow.push("", formatMoney(totalItemsSgst), formatMoney(totalItemsTotal));
+
+    const packRow = ["Restaurant Packaging Charge", formatMoney(packagingCharge), "0.00", formatMoney(packagingCharge)];
+    if (shouldShowCgst) packRow.push(`${cgstRate}%`, formatMoney(packCgst));
+    packRow.push(`${sgstRate}%`, formatMoney(packSgst), formatMoney(packTotal));
+
+    const grandRow = ["Total Value", "", "", formatMoney(grandNet)];
+    if (shouldShowCgst) grandRow.push("", formatMoney(grandCgst));
+    grandRow.push("", formatMoney(grandSgst), formatMoney(grandTotal));
+
     autoTable(doc, {
       startY: currentY,
-      head: [["Particulars", "Gross value", "Discount", "Net value", "CGST\n(Rate)", "CGST\n(INR)", "SGST\n(Rate)", "SGST\n(INR)", "Total"]],
+      head: tableHead,
       body: [
         ...tableBody,
-        ["Item(s) Total", formatMoney(totalGross), formatMoney(discountAmount), formatMoney(totalItemsNet), "", formatMoney(totalItemsCgst), "", formatMoney(totalItemsSgst), formatMoney(totalItemsTotal)],
-        ["Restaurant Packaging Charge", formatMoney(packagingCharge), "0.00", formatMoney(packagingCharge), `${cgstRate}%`, formatMoney(packCgst), `${sgstRate}%`, formatMoney(packSgst), formatMoney(packTotal)],
-        ["Total Value", "", "", formatMoney(grandNet), "", formatMoney(grandCgst), "", formatMoney(grandSgst), formatMoney(grandTotal)]
+        totalRow,
+        packRow,
+        grandRow
       ],
       theme: "grid",
       headStyles: { fillColor: 255, textColor: 0, fontStyle: "bold", lineWidth: 0.2, lineColor: 0, halign: 'center' },
@@ -322,7 +352,7 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
     doc.text(`Amount (in words): ${numberToWords(grandTotal)}`, margin, currentY); currentY += 8
     doc.setFont("helvetica", "normal")
     doc.text(`Amount of INR ${formatMoney(grandTotal)} settled digitally against Order ID ${orderId} dated ${orderDate}.`, margin, currentY); currentY += 8
-    doc.text("Supply attracts reverse charge : No", margin, currentY); currentY += 16
+    doc.text(`Supply attracts reverse charge : ${order.restaurantDetails?.reverseCharge ? "Yes" : "No"}`, margin, currentY); currentY += 16
 
     // Signatory
     const footerY = pageHeight - 40
@@ -351,9 +381,9 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
     // -------------------------------------------------------------------------
     const platformFee = toNumber(order.platformFee ?? order.pricing?.platformFee ?? 0)
     const deliveryCharge = toNumber(order.deliveryCharge ?? order.deliveryFee ?? order.pricing?.deliveryFee ?? 0)
-    const totalPlatformServices = platformFee + deliveryCharge
+    const totalPlatformServices = platformFee;
     
-    if (totalPlatformServices > 0) {
+    if (platformFee > 0) {
       doc.addPage()
       renderHeader(doc, "Tax Invoice", "ORIGINAL FOR RECIPIENT")
       currentY = margin + 22
@@ -404,7 +434,7 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
       doc.text(deliveryAddressLinesPF, margin, box2LeftY); 
       box2LeftY += deliveryAddressLinesPF.length * 4;
 
-      doc.text("GSTIN: UNREGISTERED", pageWidth / 2, box2RightY); box2RightY += 4;
+      doc.text(`GSTIN: ${order.customerGstin || order.userGstin || "UNREGISTERED"}`, pageWidth / 2, box2RightY); box2RightY += 4;
       doc.text(`Place of Supply: ${stateName}`, pageWidth / 2, box2RightY); box2RightY += 4;
 
       currentY = Math.max(box2LeftY, box2RightY) + 4;
@@ -417,25 +447,37 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
       currentY += 10
       
       doc.setFont("helvetica", "normal")
-      doc.text("HSN Code: 999799", margin, currentY)
-      doc.text("Supply Description: Other Services N.E.C", pageWidth / 2, currentY); currentY += 6
+      doc.text(`HSN Code: ${settings?.platformHsnCode || "999799"}`, margin, currentY)
+      doc.text(`Supply Description: ${settings?.platformSupplyDescription || "Other Services N.E.C"}`, pageWidth / 2, currentY); currentY += 6
 
       // Platform Fee Taxes (assuming 18% GST -> 9% CGST, 9% SGST)
-      const platGstRate = 18;
-      const platCgstRate = 9;
-      const platSgstRate = 9;
+      const platGstRate = settings?.platformGstRate ? toNumber(settings.platformGstRate) : 18;
+      const platCgstRate = shouldShowCgst ? platGstRate / 2 : 0;
+      const platSgstRate = shouldShowCgst ? platGstRate / 2 : platGstRate;
       
       // Assuming platform fee is inclusive of tax
       const platNet = totalPlatformServices / (1 + (platGstRate/100));
       const platCgst = platNet * (platCgstRate/100);
       const platSgst = platNet * (platSgstRate/100);
       
+      const platHead = shouldShowCgst 
+        ? [["Sr.No", "Particulars", "Taxable Amount", "CGST", "SGST", "Total"]]
+        : [["Sr.No", "Particulars", "Taxable Amount", "SGST", "Total"]];
+        
+      const platRow1 = ["1", "Platform fee", formatMoney(platNet)];
+      if (shouldShowCgst) platRow1.push(formatMoney(platCgst));
+      platRow1.push(formatMoney(platSgst), formatMoney(totalPlatformServices));
+
+      const platTotalRow = ["Total", "", formatMoney(platNet)];
+      if (shouldShowCgst) platTotalRow.push(formatMoney(platCgst));
+      platTotalRow.push(formatMoney(platSgst), formatMoney(totalPlatformServices));
+
       autoTable(doc, {
         startY: currentY,
-        head: [["Sr.No", "Particulars", "Taxable Amount", "CGST", "SGST", "Total"]],
+        head: platHead,
         body: [
-          ["1", "Platform & Delivery fee", formatMoney(platNet), formatMoney(platCgst), formatMoney(platSgst), formatMoney(totalPlatformServices)],
-          ["Total", "", formatMoney(platNet), formatMoney(platCgst), formatMoney(platSgst), formatMoney(totalPlatformServices)]
+          platRow1,
+          platTotalRow
         ],
         theme: "grid",
         headStyles: { fillColor: 255, textColor: 0, fontStyle: "bold", lineWidth: 0.2, lineColor: 0, halign: 'center' },
@@ -452,7 +494,7 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
       
       doc.setFont("helvetica", "normal")
       doc.text(`Amount of INR ${formatMoney(totalPlatformServices)} settled through digital mode/payment received against Order id (${orderId}) dated (${orderDate})`, margin, currentY); currentY += 4
-      doc.text("Tax is not payable on reverse charge basis", margin, currentY);
+      doc.text(`Tax is ${settings?.platformReverseCharge ? "" : "not "}payable on reverse charge basis`, margin, currentY);
       
       // Signatory
       doc.setFont("helvetica", "bold")
@@ -474,6 +516,125 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
       doc.setFont("helvetica", "normal")
       doc.text("Communication Address: As per platform policies", margin, pageHeight - 15, { align: "left" })
       doc.text("Please refer to platform terms and conditions which are incorporated in this invoice by reference.", margin, pageHeight - 10, { align: "left" })
+    }
+
+    // -------------------------------------------------------------------------
+    // PAGE 3: DELIVERY FEE INVOICE
+    // -------------------------------------------------------------------------
+    if (deliveryCharge > 0) {
+      doc.addPage()
+      renderHeader(doc, "Tax Invoice", "ORIGINAL FOR RECIPIENT")
+      currentY = margin + 22
+      
+      const driverName = formatDisplayText(order.dispatch?.deliveryPartner?.name || order.dispatch?.partner?.name || order.deliveryPartnerName || order.driver?.name || "Delivery Partner")
+      const driverState = formatDisplayText(order.dispatch?.deliveryPartner?.address?.state || order.dispatch?.partner?.address?.state || order.driver?.address?.state || stateName)
+      
+      // Box 1
+      doc.setDrawColor(0)
+      doc.setFillColor(230, 230, 230)
+      doc.rect(margin, currentY, pageWidth - margin * 2, 6, 'FD')
+      doc.setFont("helvetica", "bold")
+      doc.text("Tax Invoice on behalf of -", margin + 2, currentY + 4)
+      currentY += 10
+      
+      doc.setFont("helvetica", "normal")
+      doc.setFontSize(8)
+      
+      let box1LeftY = currentY;
+      
+      doc.text(`Delivery Partner / Vendor Name: ${driverName}`, margin, box1LeftY); box1LeftY += 4;
+      doc.text(`Delivery Partner / Vendor State: ${driverState}`, margin, box1LeftY); box1LeftY += 4;
+      doc.text(`Invoice No. : ${orderId}`, margin, box1LeftY); box1LeftY += 4;
+      doc.text(`Invoice Date : ${orderDate}`, margin, box1LeftY); box1LeftY += 4;
+
+      currentY = box1LeftY + 4;
+      
+      // Box 2
+      doc.text(`Customer Name : ${customerName}`, margin, currentY); currentY += 4;
+      const deliveryAddressLinesPF = doc.splitTextToSize(`Delivery Address : ${deliveryAddress}`, pageWidth - margin * 2);
+      doc.text(deliveryAddressLinesPF, margin, currentY); 
+      currentY += deliveryAddressLinesPF.length * 4;
+      doc.text(`State name and Place of Supply: ${stateName}`, margin, currentY); currentY += 8;
+
+      doc.text(`HSN Code : 996813`, margin, currentY)
+      doc.text(`Service Description : Local delivery service`, margin, currentY + 4); currentY += 10
+
+      // Delivery Fee Taxes (assuming 18% GST -> 9% CGST, 9% SGST)
+      const delGstRate = 18;
+      const isDriverGujarat = driverState.toLowerCase().includes('gujrat') || driverState.toLowerCase().includes('gujarat');
+      const shouldShowDelCgst = !(isUserGujarat && isDriverGujarat);
+
+      const delCgstRate = shouldShowDelCgst ? delGstRate / 2 : 0;
+      const delSgstRate = shouldShowDelCgst ? delGstRate / 2 : delGstRate;
+      
+      // Assuming delivery fee is inclusive of tax
+      const delNet = deliveryCharge / (1 + (delGstRate/100));
+      const delCgst = delNet * (delCgstRate/100);
+      const delSgst = delNet * (delSgstRate/100);
+      
+      const delHead = shouldShowDelCgst 
+        ? [["Particulars", "Gross value", "Discount", "Net value", "CGST\n(Rate)", "CGST\n(INR)", "SGST\n(Rate)", "SGST\n(INR)", "Total"]]
+        : [["Particulars", "Gross value", "Discount", "Net value", "SGST\n(Rate)", "SGST\n(INR)", "Total"]];
+        
+      const delRow1 = ["Fee for delivery services", formatMoney(deliveryCharge), "0.00", formatMoney(delNet)];
+      if (shouldShowDelCgst) delRow1.push(`${delCgstRate}%`, formatMoney(delCgst));
+      delRow1.push(`${delSgstRate}%`, formatMoney(delSgst), formatMoney(deliveryCharge));
+
+      const delTotalRow = ["Total Value", formatMoney(deliveryCharge), "0.00", formatMoney(delNet)];
+      if (shouldShowDelCgst) delTotalRow.push("", formatMoney(delCgst));
+      delTotalRow.push("", formatMoney(delSgst), formatMoney(deliveryCharge));
+
+      autoTable(doc, {
+        startY: currentY,
+        head: delHead,
+        body: [
+          delRow1,
+          delTotalRow
+        ],
+        theme: "grid",
+        headStyles: { fillColor: 255, textColor: 0, fontStyle: "bold", lineWidth: 0.2, lineColor: 0, halign: 'center' },
+        bodyStyles: { textColor: 0, lineWidth: 0.2, lineColor: 0, halign: 'right' },
+        styles: { fontSize: 8, cellPadding: 2 },
+        columnStyles: { 0: { halign: 'left', cellWidth: 'auto' } },
+        didParseCell: function (data) {
+          if (data.row.index === 1) {
+            data.cell.styles.fontStyle = 'bold';
+          }
+        }
+      })
+      
+      currentY = doc.lastAutoTable.finalY + 8
+      
+      doc.setFont("helvetica", "bold")
+      doc.text(`Amount (in words): ${numberToWords(deliveryCharge)}`, margin, currentY); currentY += 8
+      
+      doc.setFont("helvetica", "normal")
+      doc.text(`Amount of INR ${formatMoney(deliveryCharge)} settled through digital mode/payment received against Order Id: ${orderId} dated ${orderDate}.`, margin, currentY); currentY += 8
+      doc.text(`Supply attracts reverse charge : No`, margin, currentY); currentY += 16
+      
+      // Signatory
+      const footerY3 = pageHeight - 40
+      doc.setFont("helvetica", "bold")
+      doc.setFontSize(10)
+      doc.text(`For ${companyFullName}`, margin, footerY3)
+      
+      // Dummy Signature
+      doc.setTextColor(0, 0, 150)
+      doc.setFont("times", "italic")
+      doc.setFontSize(22)
+      doc.text(companyName, pageWidth - margin - 45, footerY3 + 14, { angle: -5 })
+      doc.setTextColor(0)
+
+      doc.setFontSize(10)
+      doc.setFont("helvetica", "bold")
+      doc.text("Authorised Signatory", pageWidth - margin - 40, footerY3 + 20)
+      
+      doc.setFontSize(8)
+      doc.setFont("helvetica", "normal")
+      doc.text(`${companyName} PAN: ${companyPan}`, margin, footerY3 + 6)
+      doc.text(`${companyName} CIN: ${companyCin}`, margin, footerY3 + 10)
+      doc.text(`${companyName} GST : ${companyGstin}`, margin, footerY3 + 14)
+      doc.text(`${companyName} FSSAI : ${companyFssai}`, margin, footerY3 + 18)
     }
 
     const filename = `Invoice_${orderId}_${new Date().toISOString().split("T")[0]}.pdf`
