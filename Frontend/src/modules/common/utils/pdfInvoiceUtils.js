@@ -96,11 +96,11 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
     const logoDataUrl = await imageUrlToDataUrl(itzoLogoUrl)
 
     // Dynamic Restaurant Details
-    const legalEntityName = formatDisplayText(order.restaurantDetails?.legalEntityName || order.restaurant)
+    const legalEntityName = formatDisplayText(companyFullName || order.restaurantDetails?.legalEntityName || order.restaurant)
     const restaurantName = formatDisplayText(order.restaurant)
     const restaurantAddress = formatDisplayText(order.restaurantAddress || order.restaurantDetails?.address)
-    const restaurantGstin = formatDisplayText(order.restaurantDetails?.gstin || "N/A")
-    const restaurantFssai = formatDisplayText(order.restaurantDetails?.fssai || "N/A")
+    const restaurantGstin = formatDisplayText(companyGstin)
+    const restaurantFssai = formatDisplayText(companyFssai)
 
     // Dynamic Customer Details
     const customerName = formatDisplayText(order.userName || order.customerName)
