@@ -208,7 +208,8 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
     doc.setFont("helvetica", "normal")
     doc.text(`Legal Entity Name: ${legalEntityName}`, margin, currentY); currentY += 5
     doc.text(`Restaurant Name: ${restaurantName}`, margin, currentY); currentY += 5
-    doc.text(`Restaurant Address: ${restaurantAddress}`, margin, currentY); currentY += 5
+    const restAddressLines = doc.splitTextToSize(`Restaurant Address: ${restaurantAddress}`, pageWidth - margin * 2);
+    doc.text(restAddressLines, margin, currentY); currentY += restAddressLines.length * 5;
     doc.text(`Restaurant GSTIN: ${restaurantGstin}`, margin, currentY); currentY += 5
     doc.text(`Restaurant FSSAI: ${restaurantFssai}`, margin, currentY); currentY += 5
     doc.text(`Invoice No.: ${orderId}`, margin, currentY); currentY += 5
@@ -218,7 +219,8 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
     doc.setFont("helvetica", "bold")
     doc.text(`Customer Name: ${customerName}`, margin, currentY); currentY += 5
     doc.setFont("helvetica", "normal")
-    doc.text(`Delivery Address: ${deliveryAddress}`, margin, currentY); currentY += 5
+    const delAddressLines = doc.splitTextToSize(`Delivery Address: ${deliveryAddress}`, pageWidth - margin * 2);
+    doc.text(delAddressLines, margin, currentY); currentY += delAddressLines.length * 5;
     doc.text(`State name and Place of Supply: ${stateName}`, margin, currentY); currentY += 8
 
     // Service Details
@@ -302,14 +304,23 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
       
       doc.setFont("helvetica", "normal")
       doc.setFontSize(8)
-      doc.text(`Address: ${settings?.address || "N/A"}`, margin, currentY)
-      doc.text(`PAN: ${companyPan}`, pageWidth / 2, currentY); currentY += 4
-      doc.text(`State: ${settings?.state || "N/A"}`, margin, currentY)
-      doc.text(`CIN: ${companyCin}`, pageWidth / 2, currentY); currentY += 4
-      doc.text(`Email ID: ${settings?.email || "support@itzo.com"}`, margin, currentY)
-      doc.text(`GSTIN: ${companyGstin}`, pageWidth / 2, currentY); currentY += 4
-      doc.text(`Invoice No: PF-${orderId}`, margin, currentY)
-      doc.text(`Invoice Date: ${orderDate}`, pageWidth / 2, currentY); currentY += 8
+      
+      let box1LeftY = currentY;
+      let box1RightY = currentY;
+
+      const addressLines = doc.splitTextToSize(`Address: ${settings?.address || "N/A"}`, (pageWidth / 2) - margin - 5);
+      doc.text(addressLines, margin, box1LeftY); 
+      box1LeftY += addressLines.length * 4;
+      doc.text(`State: ${settings?.state || "N/A"}`, margin, box1LeftY); box1LeftY += 4;
+      doc.text(`Email ID: ${settings?.email || "support@itzo.com"}`, margin, box1LeftY); box1LeftY += 4;
+      doc.text(`Invoice No: PF-${orderId}`, margin, box1LeftY); box1LeftY += 4;
+
+      doc.text(`PAN: ${companyPan}`, pageWidth / 2, box1RightY); box1RightY += 4;
+      doc.text(`CIN: ${companyCin}`, pageWidth / 2, box1RightY); box1RightY += 4;
+      doc.text(`GSTIN: ${companyGstin}`, pageWidth / 2, box1RightY); box1RightY += 4;
+      doc.text(`Invoice Date: ${orderDate}`, pageWidth / 2, box1RightY); box1RightY += 4;
+
+      currentY = Math.max(box1LeftY, box1RightY) + 4;
       
       // Box 2
       doc.setFillColor(230, 230, 230)
@@ -319,10 +330,20 @@ export const generateOrderInvoicePDF = async (order, itzoLogoUrl) => {
       currentY += 10
       
       doc.setFontSize(8)
-      doc.text(`Name: ${customerName}`, margin, currentY)
-      doc.text("GSTIN: UNREGISTERED", pageWidth / 2, currentY); currentY += 4
-      doc.text(`Delivery Address: ${deliveryAddress}`, margin, currentY)
-      doc.text(`Place of Supply: ${stateName}`, pageWidth / 2, currentY); currentY += 8
+      doc.setFont("helvetica", "normal")
+      
+      let box2LeftY = currentY;
+      let box2RightY = currentY;
+
+      doc.text(`Name: ${customerName}`, margin, box2LeftY); box2LeftY += 4;
+      const deliveryAddressLinesPF = doc.splitTextToSize(`Delivery Address: ${deliveryAddress}`, (pageWidth / 2) - margin - 5);
+      doc.text(deliveryAddressLinesPF, margin, box2LeftY); 
+      box2LeftY += deliveryAddressLinesPF.length * 4;
+
+      doc.text("GSTIN: UNREGISTERED", pageWidth / 2, box2RightY); box2RightY += 4;
+      doc.text(`Place of Supply: ${stateName}`, pageWidth / 2, box2RightY); box2RightY += 4;
+
+      currentY = Math.max(box2LeftY, box2RightY) + 4;
       
       // Box 3
       doc.setFillColor(230, 230, 230)

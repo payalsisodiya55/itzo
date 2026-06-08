@@ -143,6 +143,11 @@ const GlobalApplicationSettings = () => {
     helpAndSupportEmail: "",
     phoneNumber: "",
     address: "",
+    legalName: "",
+    gstin: "",
+    fssai: "",
+    panNumber: "",
+    cinNumber: "",
   });
 
   const fetchSettings = async () => {
@@ -161,6 +166,11 @@ const GlobalApplicationSettings = () => {
           helpAndSupportEmail: settings.helpAndSupportEmail || "",
           phoneNumber: settings.phone?.number || "",
           address: settings.address || "",
+          legalName: settings.legalName || "",
+          gstin: settings.gstin || "",
+          fssai: settings.fssai || "",
+          panNumber: settings.panNumber || "",
+          cinNumber: settings.cinNumber || "",
         });
 
         if (settings.adminLogo?.url) setAdminLogoPreview(settings.adminLogo.url);
@@ -219,6 +229,11 @@ const GlobalApplicationSettings = () => {
         helpAndSupportEmail: formData.helpAndSupportEmail,
         phoneNumber: formData.phoneNumber,
         address: formData.address,
+        legalName: formData.legalName,
+        gstin: formData.gstin,
+        fssai: formData.fssai,
+        panNumber: formData.panNumber,
+        cinNumber: formData.cinNumber,
       };
 
       const files = {};
@@ -296,6 +311,17 @@ const GlobalApplicationSettings = () => {
               <InputField label="Support User Id" name="email" value={formData.email} onChange={handleChange} placeholder="admin@appzeto.com" />
               <InputField label="Support Phone" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} placeholder="0000000000" />
               <InputField label="Office Address" name="address" value={formData.address} onChange={handleChange} placeholder="Main Street, NY" />
+           </div>
+        </SectionCard>
+
+        {/* Legal & Tax Details */}
+        <SectionCard title="Legal & Tax Details (Invoice)">
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+              <InputField label="Legal Entity Name" name="legalName" value={formData.legalName} onChange={handleChange} placeholder="ITZO LIMITED" />
+              <InputField label="GSTIN" name="gstin" value={formData.gstin} onChange={handleChange} placeholder="22AAAAA0000A1Z5" />
+              <InputField label="FSSAI Number" name="fssai" value={formData.fssai} onChange={handleChange} placeholder="10000000000000" />
+              <InputField label="PAN Number" name="panNumber" value={formData.panNumber} onChange={handleChange} placeholder="ABCDE1234F" />
+              <InputField label="CIN Number" name="cinNumber" value={formData.cinNumber} onChange={handleChange} placeholder="U12345MH2024PTC123456" />
            </div>
         </SectionCard>
 
