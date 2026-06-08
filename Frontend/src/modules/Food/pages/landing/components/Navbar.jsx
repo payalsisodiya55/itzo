@@ -63,7 +63,7 @@ const Navbar = React.memo(function Navbar() {
         <div className="flex justify-between items-center h-20">
           
           {/* Logo */}
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/food/user')}>
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.location.href = '/food/user'}>
             <img src={logoImg} alt="ItzoFood Logo" className="h-10 md:h-12 w-auto object-contain rounded-md" />
           </div>
 
@@ -71,8 +71,8 @@ const Navbar = React.memo(function Navbar() {
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/food/restaurant" className="text-lg font-medium hover:text-rose-400 transition-colors">Add restaurant</Link>
             <div className="flex items-center space-x-6">
-              <button onClick={() => navigate('/user/auth/login')} className="text-lg font-medium hover:text-rose-400 transition-colors">Log in</button>
-              <button onClick={() => navigate('/user/auth/signup')} className="text-lg font-medium hover:text-rose-400 transition-colors">Sign up</button>
+              <button onClick={() => window.location.href = '/user/auth/login'} className="text-lg font-medium hover:text-rose-400 transition-colors">Log in</button>
+              <button onClick={() => window.location.href = '/user/auth/signup'} className="text-lg font-medium hover:text-rose-400 transition-colors">Sign up</button>
             </div>
           </div>
 
@@ -89,8 +89,8 @@ const Navbar = React.memo(function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden bg-white text-gray-800 shadow-xl absolute top-20 left-0 right-0 py-4 px-6 flex flex-col space-y-4 border-t border-gray-100">
           <Link to="/food/restaurant" className="text-lg font-medium py-2 border-b border-gray-100">Add restaurant</Link>
-          <button onClick={() => navigate('/user/auth/login')} className="text-left text-lg font-medium py-2 border-b border-gray-100">Log in</button>
-          <button onClick={() => navigate('/user/auth/signup')} className="text-left text-lg font-medium py-2">Sign up</button>
+          <button onClick={() => window.location.href = '/user/auth/login'} className="text-left text-lg font-medium py-2 border-b border-gray-100">Log in</button>
+          <button onClick={() => window.location.href = '/user/auth/signup'} className="text-left text-lg font-medium py-2">Sign up</button>
         </div>
       )}
     </nav>
