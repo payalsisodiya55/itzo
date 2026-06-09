@@ -25,6 +25,9 @@ export default function RestaurantOTP() {
   const [contactInfo, setContactInfo] = useState("") 
   const [focusedIndex, setFocusedIndex] = useState(null)
   const [keyboardOffset, setKeyboardOffset] = useState(0)
+  const [pendingMessage, setPendingMessage] = useState("")
+  const [isRejected, setIsRejected] = useState(false)
+  const [rejectionReason, setRejectionReason] = useState("")
   const inputRefs = useRef([])
   const hasSubmittedRef = useRef(false)
   const otpSectionRef = useRef(null)
@@ -219,6 +222,27 @@ export default function RestaurantOTP() {
       const response = await restaurantAPI.verifyOTP(phone, code, purpose, null, email)
       const data = response?.data?.data || response?.data
 
+      if (data?.pendingApproval === true) {
+        setIsRejected(data.isRejected || false)
+        setRejectionReason(data.rejectionReason || "")
+        setPendingMessage(data.message || "")
+        
+        if (!data.isRejected) {
+          const pendingPhone = authData?.phone || authData?.email || contactInfo
+          if (pendingPhone) {
+            setRestaurantPendingPhone(pendingPhone)
+          }
+          sessionStorage.removeItem("restaurantAuthData")
+          sessionStorage.removeItem("restaurantLoginPhone")
+          navigate("/food/restaurant/pending-verification", {
+            replace: true,
+            state: { phone: pendingPhone || "" },
+          })
+        }
+        setIsLoading(false)
+        return
+      }
+
       const needsRegistration = data?.needsRegistration === true
       const normalizedPhone = data?.phone || phone
 
@@ -381,6 +405,47 @@ export default function RestaurantOTP() {
         </div>
 
         <div className="w-full max-w-[400px] flex-1 flex flex-col justify-between animate-in fade-in slide-in-from-bottom-4 duration-500">
+          {isRejected ? (
+            <div className="space-y-6">
+              <div className="rounded-3xl border p-6 text-center shadow-2xl bg-red-50 border-red-100 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1 bg-red-500" />
+                <div className="space-y-3 relative z-10">
+                  <p className="text-xl font-black text-red-600 tracking-tight uppercase">
+                    Application Rejected
+                  </p>
+                  <p className="text-sm font-semibold leading-relaxed text-red-800/80">
+                    {pendingMessage}
+                  </p>
+                  {rejectionReason && (
+                    <div className="mt-4 p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-red-100 shadow-sm text-left">
+                      <p className="text-[10px] font-black text-red-500 uppercase tracking-widest mb-1.5">Reason provided by admin</p>
+                      <p className="text-sm font-bold text-red-900 leading-relaxed">"{rejectionReason}"</p>
+                    </div>
+                  )}
+                </div>
+                <div className="mt-8 flex flex-col gap-3 relative z-10">
+                  <Button
+                    onClick={() => {
+                      const pendingPhone = authData?.phone || authData?.email || contactInfo
+                      setRestaurantPendingPhone(pendingPhone)
+                      sessionStorage.removeItem("restaurantAuthData")
+                      sessionStorage.removeItem("restaurantLoginPhone")
+                      navigate("/food/restaurant/onboarding", { replace: true })
+                    }}
+                    className="w-full h-14 rounded-full bg-red-600 hover:bg-red-700 text-white font-black text-sm tracking-widest uppercase shadow-lg shadow-red-600/20 transition-all active:scale-[0.98]"
+                  >
+                    Re-Onboard Now
+                  </Button>
+                  <button
+                    onClick={() => navigate("/food/restaurant/login", { replace: true })}
+                    className="text-[11px] mt-2 font-black tracking-widest uppercase text-red-600/70 hover:text-red-800 transition-colors"
+                  >
+                    Back to login
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
           <div className="space-y-6">
             <div ref={otpSectionRef} className="flex justify-center gap-4">
               {otp.map((digit, index) => (
@@ -446,6 +511,7 @@ export default function RestaurantOTP() {
               </div>
             </div>
           </div>
+          )}
         </div>
       </div>
 
