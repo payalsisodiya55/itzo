@@ -919,7 +919,7 @@ export default function AdminSidebar({ isOpen = false, onClose, onCollapseChange
 
           {/* Admin Panel Label */}
           {!isCollapsed && (
-            <div className="mb-3 animate-[slideIn_0.4s_ease-out_0.1s_both]">
+            <div className="mb-3 mt-5 lg:mt-0 animate-[slideIn_0.4s_ease-out_0.1s_both]">
               <h2 className="text-xs font-bold text-black uppercase tracking-wider text-left">
                 ECS PANEL
               </h2>
