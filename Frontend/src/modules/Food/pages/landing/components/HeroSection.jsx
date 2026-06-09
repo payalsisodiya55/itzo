@@ -43,6 +43,8 @@ const HeroSection = React.memo(function HeroSection({ navigate }) {
   const appSubtitle = settings?.landingHeroSubtitle || "India's #1\nfood delivery app";
   const appStoreImg = settings?.landingAppStoreBadge?.url || "https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg";
   const playStoreImg = settings?.landingPlayStoreBadge?.url || "https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg";
+  const playStoreUrl = settings?.playStoreLink || "#!";
+  const appStoreUrl = settings?.appStoreLink || "#!";
 
   return (
     <div className="relative h-screen w-full flex flex-col items-center justify-center bg-gray-900 overflow-hidden">
@@ -114,16 +116,20 @@ const HeroSection = React.memo(function HeroSection({ navigate }) {
 
           {/* App Download Buttons */}
           <div className="flex flex-wrap justify-center gap-4 md:gap-5">
-            <img 
-              src={playStoreImg}
-              alt="Get it on Google Play" 
-              className="h-12 md:h-[52px] object-contain cursor-pointer hover:scale-105 transition-transform" 
-            />
-            <img 
-              src={appStoreImg}
-              alt="Download on the App Store" 
-              className="h-12 md:h-[52px] object-contain cursor-pointer hover:scale-105 transition-transform" 
-            />
+            <a href={playStoreUrl} target="_blank" rel="noopener noreferrer">
+              <img 
+                src={playStoreImg}
+                alt="Get it on Google Play" 
+                className="h-12 md:h-[52px] object-contain cursor-pointer hover:scale-105 transition-transform" 
+              />
+            </a>
+            <a href={appStoreUrl} target="_blank" rel="noopener noreferrer">
+              <img 
+                src={appStoreImg}
+                alt="Download on the App Store" 
+                className="h-12 md:h-[52px] object-contain cursor-pointer hover:scale-105 transition-transform" 
+              />
+            </a>
           </div>
         </motion.div>
       </div>

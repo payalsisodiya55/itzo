@@ -95,6 +95,8 @@ const globalSettingsSchema = new mongoose.Schema(
         socialYoutubeUrl: { type: String, default: '' },
         socialFacebookUrl: { type: String, default: '' },
         socialTwitterUrl: { type: String, default: '' },
+        playStoreLink: { type: String, default: '' },
+        appStoreLink: { type: String, default: '' },
         landingPizzaImage: {
             url: { type: String, default: '' },
             publicId: { type: String, default: '' }

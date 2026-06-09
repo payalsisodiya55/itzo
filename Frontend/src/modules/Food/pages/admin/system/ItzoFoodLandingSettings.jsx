@@ -155,6 +155,8 @@ const ItzoFoodLandingSettings = () => {
     socialYoutubeUrl: "",
     socialFacebookUrl: "",
     socialTwitterUrl: "",
+    playStoreLink: "",
+    appStoreLink: "",
   });
 
   const fetchSettings = async () => {
@@ -172,6 +174,8 @@ const ItzoFoodLandingSettings = () => {
           socialYoutubeUrl: settings.socialYoutubeUrl || "",
           socialFacebookUrl: settings.socialFacebookUrl || "",
           socialTwitterUrl: settings.socialTwitterUrl || "",
+          playStoreLink: settings.playStoreLink || "",
+          appStoreLink: settings.appStoreLink || "",
         });
 
         if (settings.landingPoster?.url) setLandingPosterPreview(settings.landingPoster.url);
@@ -214,6 +218,8 @@ const ItzoFoodLandingSettings = () => {
         socialYoutubeUrl: formData.socialYoutubeUrl.trim(),
         socialFacebookUrl: formData.socialFacebookUrl.trim(),
         socialTwitterUrl: formData.socialTwitterUrl.trim(),
+        playStoreLink: formData.playStoreLink.trim(),
+        appStoreLink: formData.appStoreLink.trim(),
       };
 
       const files = {};
@@ -375,6 +381,14 @@ const ItzoFoodLandingSettings = () => {
               onUpload={(file) => handleImageUpload(file, setLandingFooterLogoFile, setLandingFooterLogoPreview)}
               onClear={() => { setLandingFooterLogoPreview(null); setLandingFooterLogoFile(null); }}
             />
+          </div>
+        </SectionCard>
+
+        {/* App Download Links */}
+        <SectionCard title="App Download Links">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-12">
+            <InputField label="Google Play Store App Link" name="playStoreLink" value={formData.playStoreLink} onChange={handleChange} placeholder="https://play.google.com/store/apps/details?id=com.itzofood" />
+            <InputField label="App Store App Link" name="appStoreLink" value={formData.appStoreLink} onChange={handleChange} placeholder="https://apps.apple.com/app/itzofood" />
           </div>
         </SectionCard>
 

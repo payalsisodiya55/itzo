@@ -41,6 +41,8 @@ const FooterSection = React.memo(function FooterSection() {
   const logoImg = settings?.landingFooterLogo?.url || "/itzo-logo.jpg";
   const appStoreImg = settings?.landingAppStoreBadge?.url || "https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg";
   const playStoreImg = settings?.landingPlayStoreBadge?.url || "https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg";
+  const playStoreUrl = settings?.playStoreLink || "#!";
+  const appStoreUrl = settings?.appStoreLink || "#!";
 
   return (
     <footer className="bg-black pt-16 pb-8 border-t border-gray-800 font-sans">
@@ -111,10 +113,10 @@ const FooterSection = React.memo(function FooterSection() {
             </div>
             
             <div className="flex flex-col gap-3 w-[140px]">
-              <a href="#!" target="_blank" rel="noopener noreferrer">
+              <a href={appStoreUrl} target="_blank" rel="noopener noreferrer">
                 <img src={appStoreImg} alt="App Store" loading="lazy" decoding="async" className="cursor-pointer hover:opacity-80 transition-opacity w-full border border-gray-700 rounded-md" />
               </a>
-              <a href="#!" target="_blank" rel="noopener noreferrer">
+              <a href={playStoreUrl} target="_blank" rel="noopener noreferrer">
                 <img src={playStoreImg} alt="Google Play" loading="lazy" decoding="async" className="cursor-pointer hover:opacity-80 transition-opacity w-full border border-gray-700 rounded-md" />
               </a>
             </div>

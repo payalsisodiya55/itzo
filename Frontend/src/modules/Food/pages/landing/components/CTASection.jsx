@@ -33,6 +33,8 @@ const CTASection = React.memo(function CTASection() {
   const qrCodeImg = settings?.landingQrCodeImage?.url || "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://itzofood.com/app&color=000000&bgcolor=ffffff";
   const appStoreImg = settings?.landingAppStoreBadge?.url || "https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg";
   const playStoreImg = settings?.landingPlayStoreBadge?.url || "https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg";
+  const playStoreUrl = settings?.playStoreLink || "#!";
+  const appStoreUrl = settings?.appStoreLink || "#!";
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -60,16 +62,20 @@ const CTASection = React.memo(function CTASection() {
             Experience seamless online ordering only on the ItzoFood app
           </p>
           <div className="flex flex-wrap justify-center md:justify-start gap-4">
-            <img 
-              src={playStoreImg}
-              alt="Get it on Google Play" 
-              className="h-[46px] object-contain cursor-pointer hover:scale-105 transition-transform" 
-            />
-            <img 
-              src={appStoreImg}
-              alt="Download on the App Store" 
-              className="h-[46px] object-contain cursor-pointer hover:scale-105 transition-transform" 
-            />
+            <a href={playStoreUrl} target="_blank" rel="noopener noreferrer">
+              <img 
+                src={playStoreImg}
+                alt="Get it on Google Play" 
+                className="h-[46px] object-contain cursor-pointer hover:scale-105 transition-transform" 
+              />
+            </a>
+            <a href={appStoreUrl} target="_blank" rel="noopener noreferrer">
+              <img 
+                src={appStoreImg}
+                alt="Download on the App Store" 
+                className="h-[46px] object-contain cursor-pointer hover:scale-105 transition-transform" 
+              />
+            </a>
           </div>
         </motion.div>
 

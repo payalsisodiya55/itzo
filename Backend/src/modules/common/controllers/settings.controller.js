@@ -52,7 +52,7 @@ export async function updateGlobalSettings(req, res, next) {
             legalName, gstin, fssai, panNumber, cinNumber,
             adminLogoUrl, adminFaviconUrl, userLogoUrl, userFaviconUrl, deliveryLogoUrl, deliveryFaviconUrl, restaurantLogoUrl, restaurantFaviconUrl, sellerLogoUrl, sellerFaviconUrl,
             themeColor, modules, landingHeroTitle, landingHeroSubtitle, landingVideoUrl, landingPosterUrl,
-            socialLinkedinUrl, socialInstagramUrl, socialYoutubeUrl, socialFacebookUrl, socialTwitterUrl
+            socialLinkedinUrl, socialInstagramUrl, socialYoutubeUrl, socialFacebookUrl, socialTwitterUrl, playStoreLink, appStoreLink
         } = data;
         
         console.log("Updating global settings with data:", data);
@@ -102,6 +102,8 @@ export async function updateGlobalSettings(req, res, next) {
         if (socialYoutubeUrl !== undefined) settings.socialYoutubeUrl = socialYoutubeUrl;
         if (socialFacebookUrl !== undefined) settings.socialFacebookUrl = socialFacebookUrl;
         if (socialTwitterUrl !== undefined) settings.socialTwitterUrl = socialTwitterUrl;
+        if (playStoreLink !== undefined) settings.playStoreLink = playStoreLink;
+        if (appStoreLink !== undefined) settings.appStoreLink = appStoreLink;
 
         // Update URLs if provided
         const mediaFields = [
