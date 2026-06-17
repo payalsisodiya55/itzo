@@ -132,27 +132,28 @@ export default function RestaurantLogin() {
 
   return (
     <div
-      className="min-h-[100dvh] bg-white flex flex-col overflow-y-auto overscroll-contain font-sans"
+      className="min-h-[100dvh] bg-[#111] lg:bg-slate-50 flex flex-col lg:flex-row overflow-y-auto overscroll-contain font-sans"
       style={{ paddingBottom: keyboardInset ? `${keyboardInset + 24}px` : undefined }}
     >
-      {/* Curved Header Background */}
-      <div className="relative h-[300px] w-full bg-[#FE5502] overflow-hidden">
-        {/* Abstract Circles like in the image */}
-        <div className="absolute -top-10 -left-10 w-48 h-48 rounded-full bg-white/10" />
-        <div className="absolute top-20 -right-10 w-64 h-64 rounded-full bg-white/10" />
-        <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-80 h-80 rounded-full bg-white/5" />
-
-        <div className="absolute bottom-0 w-full h-[100px] bg-white rounded-t-[100px] shadow-[0_-20px_40px_rgba(0,0,0,0.05)]" />
+      {/* Hero Image Section (Fully Visible) */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center bg-[#111] pt-8 pb-16 lg:py-0 shrink-0">
+        <img 
+          src="/packaging-promo.jpg" 
+          alt="ITZO Packaging" 
+          className="w-full max-w-[600px] h-auto object-contain drop-shadow-2xl"
+        />
       </div>
 
-      <div id="login-content" className="flex-1 flex flex-col items-center px-4 sm:px-8 -mt-12 sm:-mt-16 z-10 overflow-hidden">
-        <div className="w-28 h-28 sm:w-32 sm:h-32 bg-white rounded-full shadow-xl flex items-center justify-center border-4 border-slate-50 mb-4 sm:mb-6">
-          <div className="text-center">
-            <div className="w-16 h-16 bg-[#FE5502] rounded-2xl mx-auto flex items-center justify-center transform rotate-12 shadow-lg mb-1">
-              <ShieldCheck className="w-8 h-8 text-white -rotate-12" />
+      {/* Form Section */}
+      <div className="w-full lg:w-1/2 flex-1 flex flex-col items-center justify-center px-4 sm:px-8 py-10 sm:py-16 bg-white rounded-t-[40px] lg:rounded-none lg:rounded-l-[40px] shadow-[0_-20px_40px_rgba(0,0,0,0.3)] lg:shadow-[-20px_0_40px_rgba(0,0,0,0.1)] -mt-12 lg:mt-0 relative z-10">
+        <div id="login-content" className="w-full max-w-[400px] flex flex-col items-center">
+          <div className="w-24 h-24 sm:w-28 sm:h-28 bg-white rounded-full shadow-xl flex items-center justify-center border-4 border-slate-50 mb-6 -mt-20 lg:-mt-0 lg:mb-8">
+            <div className="text-center">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 bg-[#FE5502] rounded-2xl mx-auto flex items-center justify-center transform rotate-12 shadow-lg mb-1">
+                <ShieldCheck className="w-7 h-7 sm:w-8 sm:h-8 text-white -rotate-12" />
+              </div>
             </div>
           </div>
-        </div>
 
         <div className="text-center space-y-1.5 sm:space-y-2 mb-6 sm:mb-10">
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight lowercase">
@@ -230,6 +231,7 @@ export default function RestaurantLogin() {
           <p className="text-[10px] font-black text-slate-300 tracking-[0.2em] uppercase">
             &copy; {new Date().getFullYear()} {companyName.toUpperCase()} PARTNER
           </p>
+      </div>
       </div>
     </div>
   )
