@@ -187,95 +187,109 @@ export default function DeliverySignIn() {
   const isValid = !validatePhone(formData.phone, formData.countryCode)
 
   return (
-    <div className="max-h-screen h-screen bg-white flex flex-col">
-      {/* Top Section - Logo and Badge */}
-      <div className="flex flex-col items-center pt-8 pb-6 px-6">
-        <div>
-          <h1 className="text-3xl text-black font-extrabold italic lowercase tracking-tight">
-            {companyName.toLowerCase()}
-          </h1>
-        </div>
-
-        {/* DELIVERY Badge */}
-        <div className="bg-orange-500 px-6 py-2 rounded mt-2">
-          <span className="text-white font-semibold text-sm uppercase tracking-wide">
-            DELIVERY
-          </span>
-        </div>
+    <div className="min-h-[100dvh] bg-[#111] lg:bg-slate-50 flex flex-col lg:flex-row overflow-y-auto overscroll-contain font-sans">
+      
+      {/* Hero Image Section (Fully Visible) */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center bg-[#111] pt-8 pb-16 lg:py-0 shrink-0">
+        <img 
+          src="/delivery-promo.png" 
+          alt="ITZO Uniform" 
+          className="w-full max-w-[800px] h-auto object-contain drop-shadow-2xl px-4 lg:px-8"
+        />
       </div>
 
-      {/* Main Content - Form Section */}
-      <div className="flex-1 flex flex-col px-6">
-        <div className="w-full max-w-md mx-auto space-y-6">
-          {/* Sign In Heading */}
-          <div className="space-y-2 text-center">
-            <h2 className="text-2xl font-bold text-black">
-              Sign in to your account
-            </h2>
-            <p className="text-base text-gray-600">
-              Login with your phone number
-            </p>
-          </div>
-
-          {/* Mobile Number Input */}
-          <div className="space-y-2 w-full">
-            <div className="flex gap-2 items-stretch w-full">
-              <div className="flex items-center px-4 h-12 border border-gray-300 bg-gray-50 text-gray-900 rounded-lg shrink-0">
-                <span className="flex items-center gap-2 text-base font-medium">
-                  <span>🇮🇳</span>
-                  <span>+91</span>
-                </span>
-              </div>
-              <input
-                type="tel"
-                inputMode="numeric"
-                maxLength={10}
-                placeholder="Enter 10-digit mobile number"
-                value={formData.phone}
-                onChange={handlePhoneChange}
-                autoComplete="off"
-                autoFocus={false}
-                className={`flex-1 h-12 px-4 text-gray-900 placeholder-gray-400 focus:outline-none text-base border rounded-lg min-w-0 ${error ? "border-red-500" : "border-gray-300"
-                  }`}
-              />
+      {/* Form Section */}
+      <div className="w-full lg:w-1/2 flex-1 flex flex-col items-center justify-center px-4 sm:px-8 py-10 sm:py-16 bg-white rounded-t-[40px] lg:rounded-none lg:rounded-l-[40px] shadow-[0_-20px_40px_rgba(0,0,0,0.3)] lg:shadow-[-20px_0_40px_rgba(0,0,0,0.1)] -mt-12 lg:mt-0 relative z-10">
+        
+        <div className="w-full max-w-[400px] flex flex-col items-center">
+          
+          {/* Top Section - Logo and Badge */}
+          <div className="flex flex-col items-center pb-8 lg:pb-12">
+            <div>
+              <h1 className="text-4xl text-black font-extrabold italic lowercase tracking-tight">
+                {companyName.toLowerCase()}
+              </h1>
             </div>
 
-            {/* Hint Text */}
-            <p className="text-sm text-gray-500">
-              Enter exactly 10 digits
-            </p>
-
-            {error && (
-              <p className="text-sm text-red-500">
-                {error}
-              </p>
-            )}
+            {/* DELIVERY Badge */}
+            <div className="bg-orange-500 px-6 py-2 rounded-xl mt-2 shadow-md">
+              <span className="text-white font-bold text-sm uppercase tracking-widest">
+                DELIVERY PARTNER
+              </span>
+            </div>
           </div>
-        </div>
-      </div>
 
-      {/* Bottom Section - Continue Button and Terms */}
-      <div className="px-6 pb-8 pt-4">
-        <div className="w-full max-w-md mx-auto space-y-4">
-          {/* Continue Button */}
-          <button
-            onClick={handleSendOTP}
-            disabled={!isValid || isSending}
-            className={`w-full py-4 rounded-lg font-bold text-base transition-colors ${isValid && !isSending
-              ? "bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white"
-              : "bg-gray-300 text-gray-500 cursor-not-allowed"
-              }`}
-          >
-            {isSending ? "Sending OTP..." : "Continue"}
-          </button>
+          <div className="w-full space-y-6">
+            {/* Sign In Heading */}
+            <div className="space-y-2 text-center pb-4">
+              <h2 className="text-2xl font-black text-slate-900 tracking-tight">
+                Welcome Aboard
+              </h2>
+              <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">
+                Login to continue
+              </p>
+            </div>
 
-          {/* Terms and Conditions */}
-          <p className="text-xs text-center text-gray-600 px-4">
-            By continuing, you agree to our{" "}
-            <Link to="/food/delivery/terms" className="text-primary hover:underline">
-              Terms and Conditions
-            </Link>
-          </p>
+            {/* Mobile Number Input */}
+            <div className="space-y-3 w-full">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-1">Registered Mobile Number</label>
+              
+              <div className="flex items-center gap-2 h-16 bg-slate-50 border border-slate-100 rounded-[32px] px-6 focus-within:border-[#FE5502]/30 focus-within:ring-4 focus-within:ring-[#FE5502]/5 transition-all overflow-hidden">
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span className="font-bold text-slate-900 text-lg">🇮🇳 +91</span>
+                </div>
+                
+                <div className="w-[1px] h-6 bg-slate-200 ml-2" />
+
+                <input
+                  type="tel"
+                  inputMode="numeric"
+                  maxLength={10}
+                  placeholder="Mobile number"
+                  value={formData.phone}
+                  onChange={handlePhoneChange}
+                  autoComplete="off"
+                  autoFocus={false}
+                  className="min-w-0 flex-1 h-12 bg-transparent border-0 outline-none ring-0 shadow-none focus:border-0 focus:outline-none focus:ring-0 focus:shadow-none text-left text-lg font-bold leading-none tracking-[0.02em] text-slate-900 placeholder-slate-300 caret-[#FE5502] px-2"
+                />
+              </div>
+
+              {error && (
+                <p className="text-[#FE5502] text-xs font-bold italic ml-4 animate-bounce">
+                  {error}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* Bottom Section - Continue Button and Terms */}
+          <div className="w-full pt-8 pb-4">
+            <div className="w-full space-y-6">
+              {/* Continue Button */}
+              <button
+                onClick={handleSendOTP}
+                disabled={!isValid || isSending}
+                className={`w-full h-14 sm:h-16 rounded-[32px] font-black text-base sm:text-lg tracking-widest uppercase transition-all duration-300 ${
+                  isValid && !isSending
+                    ? "bg-[#FE5502] hover:bg-[#E64D02] text-white shadow-lg shadow-[#FE5502]/20 transform active:scale-[0.98]"
+                    : "bg-slate-100 text-slate-400 cursor-not-allowed"
+                }`}
+              >
+                {isSending ? "Sending OTP..." : "Continue"}
+              </button>
+
+              {/* Terms and Conditions */}
+              <div className="text-center">
+                <p className="text-slate-400 text-xs font-medium">
+                  By logging in, you agree to our <br />
+                  <Link to="/food/delivery/terms" className="text-[#FE5502] font-bold hover:underline">
+                    Terms & Conditions
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
