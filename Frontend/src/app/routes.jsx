@@ -174,8 +174,8 @@ const AppRoutes = () => {
         } />
         {/* Auth Module */}
         <Route path="/user/auth/*" element={<AuthApp />} />
-        {/* Portal redirect handles the post-login flow, now pointing to the root landing page */}
-        <Route path="/portal" element={<Navigate to={`/${location.search}`} replace />} />
+        {/* Portal redirect handles the post-login flow, now pointing to the authenticated dashboard */}
+        <Route path="/portal" element={<Navigate to={`/food/user${location.search}`} replace />} />
         <Route path="/login" element={<Navigate to={`/user/auth/login${location.search}`} replace />} />
 
         {/* Shared home entry so /food/user <-> /quick doesn't remount through different app trees */}
