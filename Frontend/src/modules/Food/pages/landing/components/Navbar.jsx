@@ -55,7 +55,8 @@ const Navbar = React.memo(function Navbar() {
     ? 'bg-white shadow-md text-gray-800' 
     : 'bg-transparent text-white';
 
-  const logoImg = settings?.landingNavbarLogo?.url || "/itzo-logo.jpg";
+  let logoImg = settings?.landingNavbarLogo?.url || "/itzo-logo-transparent.png";
+  if (logoImg.includes("itzo-logo.jpg")) logoImg = "/itzo-logo-transparent.png";
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${navClass}`}>
