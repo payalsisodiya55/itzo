@@ -56,6 +56,10 @@ const globalSettingsSchema = new mongoose.Schema(
             url: { type: String, default: '' },
             publicId: { type: String, default: '' }
         },
+        userLoginVideo: {
+            url: { type: String, default: '' },
+            publicId: { type: String, default: '' }
+        },
         deliveryLogo: {
             url: { type: String, default: '' },
             publicId: { type: String, default: '' }

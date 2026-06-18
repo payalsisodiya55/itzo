@@ -51,7 +51,7 @@ export async function updateGlobalSettings(req, res, next) {
             companyName, email, customerSupportEmail, partnershipEmail, helpAndSupportEmail, phoneCountryCode, phoneNumber, address, state, pincode, region, 
             legalName, gstin, fssai, panNumber, cinNumber,
             adminLogoUrl, adminFaviconUrl, userLogoUrl, userFaviconUrl, deliveryLogoUrl, deliveryFaviconUrl, restaurantLogoUrl, restaurantFaviconUrl, sellerLogoUrl, sellerFaviconUrl,
-            themeColor, modules, landingHeroTitle, landingHeroSubtitle, landingVideoUrl, landingPosterUrl,
+            themeColor, modules, landingHeroTitle, landingHeroSubtitle, landingVideoUrl, landingPosterUrl, userLoginVideoUrl,
             socialLinkedinUrl, socialInstagramUrl, socialYoutubeUrl, socialFacebookUrl, socialTwitterUrl, playStoreLink, appStoreLink
         } = data;
         
@@ -110,7 +110,7 @@ export async function updateGlobalSettings(req, res, next) {
             'adminLogo', 'adminFavicon', 'userLogo', 'userFavicon', 
             'deliveryLogo', 'deliveryFavicon', 'restaurantLogo', 'restaurantFavicon', 
             'sellerLogo', 'sellerFavicon',
-            'userLoginBanner1', 'userLoginBanner2', 'userLoginBanner3', 'userLoginBanner4', 'userLoginBanner5',
+            'userLoginBanner1', 'userLoginBanner2', 'userLoginBanner3', 'userLoginBanner4', 'userLoginBanner5', 'userLoginVideo',
             'landingPoster', 'landingVideo', 'landingPizzaImage', 'landingTomatoImage', 'landingQrCodeImage',
             'landingAppStoreBadge', 'landingPlayStoreBadge', 'landingFooterLogo', 'landingNavbarLogo'
         ];
@@ -144,6 +144,7 @@ export async function updateGlobalSettings(req, res, next) {
         if (req.files) {
             const limits = {
                 landingVideo: 100 * 1024 * 1024,
+                userLoginVideo: 100 * 1024 * 1024,
                 landingPoster: 10 * 1024 * 1024,
                 landingPizzaImage: 10 * 1024 * 1024,
                 landingTomatoImage: 10 * 1024 * 1024,
@@ -160,7 +161,7 @@ export async function updateGlobalSettings(req, res, next) {
                         const maxMB = maxBytes / (1024 * 1024);
                         return res.status(413).json({ 
                             success: false, 
-                            message: fieldName === 'landingVideo' 
+                            message: (fieldName === 'landingVideo' || fieldName === 'userLoginVideo')
                                 ? `Video size exceeds the maximum allowed limit. Please upload a video smaller than ${maxMB} MB.`
                                 : `Image size exceeds the maximum allowed limit. Please upload an image smaller than ${maxMB} MB.`
                         });
@@ -184,6 +185,7 @@ export async function updateGlobalSettings(req, res, next) {
                 { name: 'userLoginBanner3', folder: 'business/banners/user' },
                 { name: 'userLoginBanner4', folder: 'business/banners/user' },
                 { name: 'userLoginBanner5', folder: 'business/banners/user' },
+                { name: 'userLoginVideo', folder: 'business/banners/user' },
                 { name: 'landingPoster', folder: 'business/landing' },
                 { name: 'landingVideo', folder: 'business/landing' },
                 { name: 'landingPizzaImage', folder: 'business/landing' },
@@ -200,13 +202,13 @@ export async function updateGlobalSettings(req, res, next) {
                     let result;
                     const fileObj = req.files[field.name][0];
                     if (fileObj.path) {
-                        if (field.name === 'landingVideo') {
+                        if (field.name === 'landingVideo' || field.name === 'userLoginVideo') {
                             result = await uploadFileDetailed(fileObj.path, { folder: field.folder, resourceType: 'video' });
                         } else {
                             result = await uploadFileDetailed(fileObj.path, { folder: field.folder, resourceType: 'image' });
                         }
                     } else if (fileObj.buffer) {
-                        if (field.name === 'landingVideo') {
+                        if (field.name === 'landingVideo' || field.name === 'userLoginVideo') {
                             result = await uploadBufferDetailed(fileObj.buffer, { folder: field.folder, resourceType: 'video' });
                         } else {
                             result = await uploadImageBufferDetailed(fileObj.buffer, field.folder);

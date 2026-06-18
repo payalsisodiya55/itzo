@@ -93,6 +93,39 @@ const ImageUploadBox = ({ title, size, preview, onUpload, onClear }) => {
   );
 };
 
+const VideoUploadBox = ({ title, size, preview, onUpload, onClear }) => {
+  const fileInputRef = useRef(null);
+  return (
+    <div className="space-y-3">
+       <div className="flex items-center justify-between px-0.5">
+          <label className="text-xs font-bold text-gray-500">{title}({size})</label>
+       </div>
+       <div className="aspect-[2/1] w-full rounded-xl border border-dashed border-gray-300 bg-gray-50/50 relative overflow-hidden group hover:border-indigo-300 transition-colors cursor-pointer flex items-center justify-center" onClick={() => fileInputRef.current?.click()}>
+          {preview ? (
+            <video src={preview} className="w-full h-full object-cover" controls={false} autoPlay loop muted playsInline />
+          ) : (
+            <div className="flex flex-col items-center justify-center gap-2 text-gray-400">
+                <p className="text-[11px] font-bold uppercase tracking-widest">Upload Video</p>
+                <Upload size={24} strokeWidth={1.5} />
+            </div>
+          )}
+          
+          <div className="absolute top-4 right-4 flex items-center gap-2">
+             <button onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }} className="w-8 h-8 rounded-lg bg-[#E6F8F6] text-[#00BFA5] shadow-sm border border-[#C2EFE9] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <Upload size={14} />
+             </button>
+             {preview && (
+               <button onClick={(e) => { e.stopPropagation(); onClear(); }} className="w-8 h-8 rounded-lg bg-[#FFF1F1] text-[#FF4D4D] shadow-sm border border-[#FEDADA] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <X size={14} />
+               </button>
+             )}
+          </div>
+          <input type="file" accept="video/*" className="hidden" ref={fileInputRef} onChange={(e) => { if(e.target.files[0]) onUpload(e.target.files[0]); }} />
+       </div>
+    </div>
+  );
+};
+
 const GlobalApplicationSettings = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -133,6 +166,9 @@ const GlobalApplicationSettings = () => {
   const [userLoginBanner4File, setUserLoginBanner4File] = useState(null);
   const [userLoginBanner5Preview, setUserLoginBanner5Preview] = useState(null);
   const [userLoginBanner5File, setUserLoginBanner5File] = useState(null);
+
+  const [userLoginVideoPreview, setUserLoginVideoPreview] = useState(null);
+  const [userLoginVideoFile, setUserLoginVideoFile] = useState(null);
 
   const [formData, setFormData] = useState({
     companyName: "",
@@ -193,6 +229,7 @@ const GlobalApplicationSettings = () => {
         if (settings.userLoginBanner3?.url) setUserLoginBanner3Preview(settings.userLoginBanner3.url);
         if (settings.userLoginBanner4?.url) setUserLoginBanner4Preview(settings.userLoginBanner4.url);
         if (settings.userLoginBanner5?.url) setUserLoginBanner5Preview(settings.userLoginBanner5.url);
+        if (settings.userLoginVideo?.url) setUserLoginVideoPreview(settings.userLoginVideo.url);
       }
     } catch (err) {
       console.error('Fetch error:', err);
@@ -234,6 +271,25 @@ const GlobalApplicationSettings = () => {
         fssai: formData.fssai,
         panNumber: formData.panNumber,
         cinNumber: formData.cinNumber,
+        
+        // Send URLs to clear them if preview is null
+        adminLogoUrl: adminLogoPreview ? (adminLogoPreview.startsWith('blob:') ? undefined : adminLogoPreview) : "",
+        adminFaviconUrl: adminFaviconPreview ? (adminFaviconPreview.startsWith('blob:') ? undefined : adminFaviconPreview) : "",
+        userLogoUrl: userLogoPreview ? (userLogoPreview.startsWith('blob:') ? undefined : userLogoPreview) : "",
+        userFaviconUrl: userFaviconPreview ? (userFaviconPreview.startsWith('blob:') ? undefined : userFaviconPreview) : "",
+        deliveryLogoUrl: deliveryLogoPreview ? (deliveryLogoPreview.startsWith('blob:') ? undefined : deliveryLogoPreview) : "",
+        deliveryFaviconUrl: deliveryFaviconPreview ? (deliveryFaviconPreview.startsWith('blob:') ? undefined : deliveryFaviconPreview) : "",
+        restaurantLogoUrl: restaurantLogoPreview ? (restaurantLogoPreview.startsWith('blob:') ? undefined : restaurantLogoPreview) : "",
+        restaurantFaviconUrl: restaurantFaviconPreview ? (restaurantFaviconPreview.startsWith('blob:') ? undefined : restaurantFaviconPreview) : "",
+        sellerLogoUrl: sellerLogoPreview ? (sellerLogoPreview.startsWith('blob:') ? undefined : sellerLogoPreview) : "",
+        sellerFaviconUrl: sellerFaviconPreview ? (sellerFaviconPreview.startsWith('blob:') ? undefined : sellerFaviconPreview) : "",
+        
+        userLoginBanner1Url: userLoginBanner1Preview ? (userLoginBanner1Preview.startsWith('blob:') ? undefined : userLoginBanner1Preview) : "",
+        userLoginBanner2Url: userLoginBanner2Preview ? (userLoginBanner2Preview.startsWith('blob:') ? undefined : userLoginBanner2Preview) : "",
+        userLoginBanner3Url: userLoginBanner3Preview ? (userLoginBanner3Preview.startsWith('blob:') ? undefined : userLoginBanner3Preview) : "",
+        userLoginBanner4Url: userLoginBanner4Preview ? (userLoginBanner4Preview.startsWith('blob:') ? undefined : userLoginBanner4Preview) : "",
+        userLoginBanner5Url: userLoginBanner5Preview ? (userLoginBanner5Preview.startsWith('blob:') ? undefined : userLoginBanner5Preview) : "",
+        userLoginVideoUrl: userLoginVideoPreview ? (userLoginVideoPreview.startsWith('blob:') ? undefined : userLoginVideoPreview) : "",
       };
 
       const files = {};
@@ -258,6 +314,7 @@ const GlobalApplicationSettings = () => {
       if (userLoginBanner3File) files.userLoginBanner3 = userLoginBanner3File;
       if (userLoginBanner4File) files.userLoginBanner4 = userLoginBanner4File;
       if (userLoginBanner5File) files.userLoginBanner5 = userLoginBanner5File;
+      if (userLoginVideoFile) files.userLoginVideo = userLoginVideoFile;
 
       const response = await adminAPI.updateBusinessSettings(dataToSend, files);
       const updatedSettings = response?.data?.data || response?.data;
@@ -279,6 +336,12 @@ const GlobalApplicationSettings = () => {
     const reader = new FileReader();
     reader.onload = () => setPreview(String(reader.result || ''));
     reader.readAsDataURL(compressed);
+  };
+
+  const handleVideoUpload = (file, setFile, setPreview) => {
+    setFile(file);
+    const url = URL.createObjectURL(file);
+    setPreview(url);
   };
 
   if (loading) {
@@ -377,6 +440,13 @@ const GlobalApplicationSettings = () => {
               <ImageUploadBox title="Banner 3" size="HD" preview={userLoginBanner3Preview} onUpload={(file) => handleFileUpload(file, setUserLoginBanner3File, setUserLoginBanner3Preview)} onClear={() => { setUserLoginBanner3Preview(null); setUserLoginBanner3File(null); }} />
               <ImageUploadBox title="Banner 4" size="HD" preview={userLoginBanner4Preview} onUpload={(file) => handleFileUpload(file, setUserLoginBanner4File, setUserLoginBanner4Preview)} onClear={() => { setUserLoginBanner4Preview(null); setUserLoginBanner4File(null); }} />
               <ImageUploadBox title="Banner 5" size="HD" preview={userLoginBanner5Preview} onUpload={(file) => handleFileUpload(file, setUserLoginBanner5File, setUserLoginBanner5Preview)} onClear={() => { setUserLoginBanner5Preview(null); setUserLoginBanner5File(null); }} />
+           </div>
+           
+           <div className="mt-8 border-t border-gray-100 pt-8">
+              <h4 className="text-[13px] font-bold text-gray-700 uppercase tracking-tight mb-4">Video Background (Overrides Banners)</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                 <VideoUploadBox title="Login Video" size="MP4/WebM" preview={userLoginVideoPreview} onUpload={(file) => handleVideoUpload(file, setUserLoginVideoFile, setUserLoginVideoPreview)} onClear={() => { setUserLoginVideoPreview(null); setUserLoginVideoFile(null); }} />
+              </div>
            </div>
         </SectionCard>
 

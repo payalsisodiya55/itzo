@@ -984,7 +984,7 @@ export const adminAPI = {
       'logo', 'adminLogo', 'adminFavicon', 'userLogo', 'userFavicon', 
       'deliveryLogo', 'deliveryFavicon', 'restaurantLogo', 'restaurantFavicon', 
       'sellerLogo', 'sellerFavicon', 'favicon',
-      'userLoginBanner1', 'userLoginBanner2', 'userLoginBanner3', 'userLoginBanner4', 'userLoginBanner5',
+      'userLoginBanner1', 'userLoginBanner2', 'userLoginBanner3', 'userLoginBanner4', 'userLoginBanner5', 'userLoginVideo',
       'landingPoster', 'landingVideo', 'landingPizzaImage', 'landingTomatoImage', 
       'landingQrCodeImage', 'landingAppStoreBadge', 'landingPlayStoreBadge', 'landingFooterLogo', 'landingNavbarLogo'
     ];

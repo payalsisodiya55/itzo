@@ -24,6 +24,7 @@ const defaultBackgroundImages = [
 export default function UnifiedOTPFastLogin() {
   const [backgroundImages, setBackgroundImages] = useState(defaultBackgroundImages)
   const [currentBg, setCurrentBg] = useState(0)
+  const [backgroundVideo, setBackgroundVideo] = useState(null)
 
   useEffect(() => {
     if (backgroundImages.length === 0) return;
@@ -66,6 +67,9 @@ export default function UnifiedOTPFastLogin() {
           
           if (dynamicBanners.length > 0) {
             setBackgroundImages(dynamicBanners);
+          }
+          if (settings.userLoginVideo?.url) {
+            setBackgroundVideo(settings.userLoginVideo.url);
           }
         }
       } catch (error) {}
@@ -331,44 +335,67 @@ export default function UnifiedOTPFastLogin() {
     <div className="min-h-screen bg-gray-50 dark:bg-neutral-950 flex flex-col md:flex-row md:items-center md:justify-center relative transition-colors duration-1000 md:p-4">
       {/* Background decoration */}
       <div className="fixed inset-0 z-0 hidden md:block opacity-30 bg-black">
-        <AnimatePresence mode="popLayout">
-          {backgroundImages.map((img, index) => (
-            index === currentBg && (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 1.05 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.05 }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
-                className="absolute inset-0 w-full h-full"
-              >
-                <img src={img} alt={`background ${index}`} className="w-full h-full object-cover blur-sm" />
-              </motion.div>
-            )
-          ))}
-        </AnimatePresence>
+        {backgroundVideo ? (
+           <video 
+              src={backgroundVideo} 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className="absolute inset-0 w-full h-full object-cover blur-sm"
+           />
+        ) : (
+           <AnimatePresence mode="popLayout">
+             {backgroundImages.map((img, index) => (
+               index === currentBg && (
+                 <motion.div
+                   key={index}
+                   initial={{ opacity: 0, scale: 1.05 }}
+                   animate={{ opacity: 1, scale: 1 }}
+                   exit={{ opacity: 0, scale: 1.05 }}
+                   transition={{ duration: 1.5, ease: "easeInOut" }}
+                   className="absolute inset-0 w-full h-full"
+                 >
+                   <img src={img} alt={`background ${index}`} className="w-full h-full object-cover blur-sm" />
+                 </motion.div>
+               )
+             ))}
+           </AnimatePresence>
+        )}
         <div className="absolute inset-0 bg-white/70 dark:bg-black/90 z-10" />
       </div>
 
       {/* Banner (Mobile Only) */}
       <div className="absolute top-0 left-0 right-0 h-[50vh] md:hidden z-0 bg-black">
-        <AnimatePresence mode="popLayout">
-          {backgroundImages.map((img, index) => (
-            index === currentBg && (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 1.05 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.05 }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
-                className="absolute inset-0 w-full h-full"
-              >
-                <img src={img} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              </motion.div>
-            )
-          ))}
-        </AnimatePresence>
+        {backgroundVideo ? (
+           <video 
+              src={backgroundVideo} 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className="absolute inset-0 w-full h-full object-cover"
+           />
+        ) : (
+           <AnimatePresence mode="popLayout">
+             {backgroundImages.map((img, index) => (
+               index === currentBg && (
+                 <motion.div
+                   key={index}
+                   initial={{ opacity: 0, scale: 1.05 }}
+                   animate={{ opacity: 1, scale: 1 }}
+                   exit={{ opacity: 0, scale: 1.05 }}
+                   transition={{ duration: 1.5, ease: "easeInOut" }}
+                   className="absolute inset-0 w-full h-full"
+                 >
+                   <img src={img} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
+                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                 </motion.div>
+               )
+             ))}
+           </AnimatePresence>
+        )}
+        {backgroundVideo && <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />}
       </div>
 
       <div className="w-full max-w-[420px] bg-white dark:bg-neutral-900 rounded-none md:rounded-2xl shadow-[0_-8px_30px_rgb(0,0,0,0.12)] md:shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.5)] relative z-20 border-t md:border border-gray-100 dark:border-neutral-800 mt-[50vh] md:mt-0 flex-1 md:flex-initial flex flex-col">
