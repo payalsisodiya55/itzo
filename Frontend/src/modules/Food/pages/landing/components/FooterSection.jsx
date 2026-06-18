@@ -165,7 +165,7 @@ const FooterSection = React.memo(function FooterSection() {
         {/* Bottom Text */}
         <div className="border-t border-gray-200 pt-6 mt-2">
           <p className="text-gray-500 text-[13px] leading-relaxed">
-            By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and Content Policies. All trademarks are properties of their respective owners 2026 © ItzoFood™ Ltd. All rights reserved.
+            By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and Content Policies. All trademarks are properties of their respective owners 2026 © ItzoFood Partners Private Limited. All rights reserved.
           </p>
         </div>
       </div>
