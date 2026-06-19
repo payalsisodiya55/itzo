@@ -1,19 +1,15 @@
 import express from 'express';
 import * as jobController from '../controllers/job.controller.js';
-import { adminAuth } from '../../../../core/auth/middleware.js';
-import { requireAdminPermission } from '../../../../middleware/requireAdminPermission.js';
+import { checkPermission } from '../../../../core/auth/auth.middleware.js';
 
 const router = express.Router();
 
-router.use(adminAuth);
-router.use(requireAdminPermission(['staff_management', 'dashboard'])); // Just ensuring basic admin access or we could use specific permission like 'roles' or add a new 'careers'
-
-router.post('/', jobController.createJobController);
-router.get('/', jobController.getAllJobsController);
-router.get('/:id', jobController.getJobByIdController);
-router.put('/:id', jobController.updateJobController);
-router.delete('/:id', jobController.deleteJobController);
-router.patch('/:id/featured', jobController.toggleFeaturedController);
-router.patch('/:id/status', jobController.updateStatusController);
+router.post('/', checkPermission('food::staff_management::list', 'create'), jobController.createJobController);
+router.get('/', checkPermission('food::staff_management::list', 'view'), jobController.getAllJobsController);
+router.get('/:id', checkPermission('food::staff_management::list', 'view'), jobController.getJobByIdController);
+router.put('/:id', checkPermission('food::staff_management::list', 'edit'), jobController.updateJobController);
+router.delete('/:id', checkPermission('food::staff_management::list', 'delete'), jobController.deleteJobController);
+router.patch('/:id/featured', checkPermission('food::staff_management::list', 'edit'), jobController.toggleFeaturedController);
+router.patch('/:id/status', checkPermission('food::staff_management::list', 'edit'), jobController.updateStatusController);
 
 export default router;
