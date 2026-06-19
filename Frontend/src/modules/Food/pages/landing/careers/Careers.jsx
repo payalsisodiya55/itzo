@@ -45,14 +45,14 @@ export default function Careers() {
   }, [searchQuery]);
 
   return (
-    <div className="min-h-screen bg-white font-sans selection:bg-rose-500 selection:text-white flex flex-col">
+    <div className="min-h-screen bg-white font-sans selection:bg-orange-500 selection:text-white flex flex-col">
       <Navbar />
       
       {/* Hero Section */}
       <div className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-slate-900 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-rose-500/20 blur-3xl mix-blend-multiply"></div>
-          <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-blue-500/20 blur-3xl mix-blend-multiply"></div>
+          <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-orange-500/20 blur-3xl mix-blend-multiply"></div>
+          <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-amber-500/20 blur-3xl mix-blend-multiply"></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 relative z-10 text-center">
@@ -61,12 +61,18 @@ export default function Careers() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block py-1 px-3 rounded-full bg-white/10 text-rose-300 text-sm font-semibold tracking-wider mb-6 border border-white/20 backdrop-blur-sm">
-              JOIN ITZOFOOD
+            <span className="inline-flex items-center gap-2 py-1 px-4 rounded-full bg-white/10 text-orange-300 text-sm font-semibold tracking-wider mb-6 border border-white/20 backdrop-blur-sm">
+              JOIN 
+              <span className="font-black italic tracking-tighter text-lg leading-none lowercase" style={{ marginTop: '-2px' }}>
+                <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(to bottom, #ff7800 42%, white 42%)' }}>i</span>
+                <span className="text-white">tz</span>
+                <span className="text-[#ff7800]">o</span>
+                <span className="text-white">food</span>
+              </span>
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight">
               Build the Future of <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-orange-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">
                 Food Delivery
               </span>
             </h1>
@@ -101,7 +107,7 @@ export default function Careers() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 text-center"
               >
-                <div className="w-12 h-12 bg-rose-50 text-rose-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <div className="w-12 h-12 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center mx-auto mb-4">
                   <perk.icon className="w-6 h-6" />
                 </div>
                 <h3 className="text-xl font-semibold text-slate-900 mb-2">{perk.title}</h3>
@@ -127,7 +133,7 @@ export default function Careers() {
                 placeholder="Search jobs..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 bg-slate-50 transition-all"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 bg-slate-50 transition-all"
               />
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             </div>
@@ -135,7 +141,7 @@ export default function Careers() {
 
           {loading ? (
             <div className="flex justify-center py-20">
-              <div className="w-10 h-10 border-4 border-rose-500 border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-10 h-10 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
             </div>
           ) : jobs.length === 0 ? (
             <div className="text-center py-20 bg-slate-50 rounded-2xl border border-slate-100">
@@ -153,7 +159,7 @@ export default function Careers() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
                   onClick={() => navigate(`/food/careers/${job._id}`)}
-                  className="group bg-white p-6 rounded-2xl border border-slate-200 hover:border-rose-200 hover:shadow-md transition-all cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4"
+                  className="group bg-white p-6 rounded-2xl border border-slate-200 hover:border-orange-200 hover:shadow-md transition-all cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4"
                 >
                   <div>
                     <div className="flex flex-wrap items-center gap-2 mb-2">
@@ -166,7 +172,7 @@ export default function Careers() {
                         </span>
                       )}
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-1 group-hover:text-rose-600 transition-colors">
+                    <h3 className="text-xl font-bold text-slate-900 mb-1 group-hover:text-orange-600 transition-colors">
                       {job.title}
                     </h3>
                     <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
@@ -175,7 +181,7 @@ export default function Careers() {
                     </div>
                   </div>
                   
-                  <div className="flex items-center text-rose-600 font-medium md:opacity-0 md:-translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                  <div className="flex items-center text-orange-600 font-medium md:opacity-0 md:-translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
                     View Details
                     <ArrowRight className="w-5 h-5 ml-1" />
                   </div>

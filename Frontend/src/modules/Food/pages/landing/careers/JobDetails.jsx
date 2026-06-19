@@ -43,7 +43,7 @@ export default function JobDetails() {
       <div className="min-h-screen bg-slate-50 font-sans flex flex-col">
         <Navbar />
         <div className="flex-grow flex justify-center items-center">
-          <div className="w-12 h-12 border-4 border-rose-500 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
         </div>
         <FooterSection />
       </div>
@@ -86,7 +86,7 @@ export default function JobDetails() {
           <div className="flex flex-col md:flex-row md:items-start justify-between gap-8">
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2 mb-4">
-                <span className="bg-rose-50 text-rose-600 px-3 py-1 text-sm font-semibold rounded-md uppercase tracking-wider">
+                <span className="bg-orange-50 text-orange-600 px-3 py-1 text-sm font-semibold rounded-md uppercase tracking-wider">
                   {job.department}
                 </span>
                 <span className="text-slate-400">&bull;</span>
@@ -123,7 +123,7 @@ export default function JobDetails() {
                   href={job.applicationFormLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex w-full md:w-auto items-center justify-center px-8 py-4 border border-transparent text-lg font-bold rounded-full shadow-md text-white bg-rose-600 hover:bg-rose-700 transition-all active:scale-95"
+                  className="inline-flex w-full md:w-auto items-center justify-center px-8 py-4 border border-transparent text-lg font-bold rounded-full shadow-md text-white bg-orange-500 hover:bg-orange-600 transition-all active:scale-95"
                 >
                   Apply Now
                 </a>
@@ -157,7 +157,7 @@ export default function JobDetails() {
                 <ul className="space-y-4">
                   {job.responsibilities.map((item, index) => (
                     <li key={index} className="flex items-start">
-                      <ChevronRight className="w-6 h-6 text-rose-500 mr-2 shrink-0" />
+                      <ChevronRight className="w-6 h-6 text-orange-500 mr-2 shrink-0" />
                       <span className="text-slate-600 mt-0.5">{item}</span>
                     </li>
                   ))}
@@ -171,7 +171,7 @@ export default function JobDetails() {
                 <ul className="space-y-4">
                   {job.requirements.map((item, index) => (
                     <li key={index} className="flex items-start">
-                      <ChevronRight className="w-6 h-6 text-rose-500 mr-2 shrink-0" />
+                      <ChevronRight className="w-6 h-6 text-orange-500 mr-2 shrink-0" />
                       <span className="text-slate-600 mt-0.5">{item}</span>
                     </li>
                   ))}
@@ -199,7 +199,7 @@ export default function JobDetails() {
               <h2 className="text-xl font-bold text-slate-900 mb-4">Questions?</h2>
               <p className="text-slate-600">
                 If you have any questions about this role, please contact {job.hiringManagerName ? `${job.hiringManagerName} at ` : 'our recruiting team at '}
-                <a href={`mailto:${job.contactEmail || 'careers@itzofood.com'}`} className="text-rose-600 hover:underline font-medium">
+                <a href={`mailto:${job.contactEmail || 'careers@itzofood.com'}`} className="text-orange-600 hover:underline font-medium">
                   {job.contactEmail || 'careers@itzofood.com'}
                 </a>
               </p>
@@ -214,7 +214,7 @@ export default function JobDetails() {
                 href={job.applicationFormLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full md:w-auto items-center justify-center px-10 py-4 border border-transparent text-lg font-bold rounded-full shadow-md text-white bg-rose-600 hover:bg-rose-700 transition-all active:scale-95"
+                className="inline-flex w-full md:w-auto items-center justify-center px-10 py-4 border border-transparent text-lg font-bold rounded-full shadow-md text-white bg-orange-500 hover:bg-orange-600 transition-all active:scale-95"
               >
                 Apply for this job
               </a>
