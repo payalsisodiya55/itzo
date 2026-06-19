@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getCachedSettings, loadBusinessSettings } from '@common/utils/businessSettings';
 import api from '@/services/api';
@@ -133,18 +132,6 @@ const HeroSection = React.memo(function HeroSection({ navigate }) {
           </div>
         </motion.div>
       </div>
-
-      {/* Scroll Down */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-white cursor-pointer z-10 hover:text-gray-200 transition-colors"
-        onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
-      >
-        <span className="text-[17px] font-medium mb-1 drop-shadow-md">Scroll down</span>
-        <ChevronDown size={24} className="animate-bounce drop-shadow-md" />
-      </motion.div>
 
     </div>
   );
