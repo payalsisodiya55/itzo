@@ -190,45 +190,53 @@ export default function DeliverySignIn() {
     <div className="min-h-[100dvh] bg-[#111] lg:bg-slate-50 flex flex-col lg:flex-row overflow-y-auto overscroll-contain font-sans">
       
       {/* Hero Image Section (Fully Visible) */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center bg-[#111] pt-8 pb-16 lg:py-0 shrink-0">
+      <div className="w-full lg:w-1/2 flex items-center justify-center bg-[#111] pt-6 pb-12 lg:py-0 shrink-0">
         <img 
           src="/delivery-promo.png" 
           alt="ITZO Uniform" 
-          className="w-full max-w-[800px] h-auto object-contain drop-shadow-2xl px-4 lg:px-8"
+          className="w-full max-w-[600px] h-auto object-contain drop-shadow-2xl px-4 lg:px-8"
         />
       </div>
 
       {/* Form Section */}
-      <div className="w-full lg:w-1/2 flex-1 flex flex-col items-center justify-center px-4 sm:px-8 py-10 sm:py-16 bg-white rounded-t-[40px] lg:rounded-none lg:rounded-l-[40px] shadow-[0_-20px_40px_rgba(0,0,0,0.3)] lg:shadow-[-20px_0_40px_rgba(0,0,0,0.1)] -mt-12 lg:mt-0 relative z-10">
+      <div className="w-full lg:w-1/2 flex-1 flex flex-col items-center justify-center px-4 sm:px-8 py-8 sm:py-16 bg-white rounded-t-[40px] lg:rounded-none lg:rounded-l-[40px] shadow-[0_-20px_40px_rgba(0,0,0,0.3)] lg:shadow-[-20px_0_40px_rgba(0,0,0,0.1)] -mt-12 lg:mt-0 relative z-10">
         
-        <div className="w-full max-w-[400px] flex flex-col items-center">
+        <div className="w-full max-w-[400px] flex flex-col items-center flex-1 justify-between">
           
-          {/* Top Section - Logo and Badge */}
-          <div className="flex flex-col items-center pb-8 lg:pb-12">
-            <div>
-              <h1 className="text-4xl text-black font-extrabold italic lowercase tracking-tight">
-                {companyName.toLowerCase()}
-              </h1>
+          <div className="w-full flex flex-col items-center">
+            {/* Top Section - Logo and Badge */}
+            <div className="flex flex-col items-center pb-6 lg:pb-8">
+              <div className="w-20 h-20 sm:w-28 sm:h-28 bg-white rounded-full shadow-xl flex items-center justify-center border-4 border-slate-50 mb-3 -mt-16 lg:-mt-0 lg:mb-6 overflow-hidden p-2.5">
+                <img 
+                  src="/itzo-logo-transparent.png" 
+                  alt="Itzo Logo" 
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div>
+                <h1 className="text-3xl sm:text-4xl text-black font-extrabold italic lowercase tracking-tight">
+                  {companyName.toLowerCase()}
+                </h1>
+              </div>
+
+              {/* DELIVERY Badge */}
+              <div className="bg-orange-500 px-5 py-1.5 rounded-xl mt-2 shadow-md">
+                <span className="text-white font-bold text-xs sm:text-sm uppercase tracking-widest">
+                  DELIVERY PARTNER
+                </span>
+              </div>
             </div>
 
-            {/* DELIVERY Badge */}
-            <div className="bg-orange-500 px-6 py-2 rounded-xl mt-2 shadow-md">
-              <span className="text-white font-bold text-sm uppercase tracking-widest">
-                DELIVERY PARTNER
-              </span>
-            </div>
-          </div>
-
-          <div className="w-full space-y-6">
-            {/* Sign In Heading */}
-            <div className="space-y-2 text-center pb-4">
-              <h2 className="text-2xl font-black text-slate-900 tracking-tight">
-                Welcome Aboard
-              </h2>
-              <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">
-                Login to continue
-              </p>
-            </div>
+            <div className="w-full space-y-5">
+              {/* Sign In Heading */}
+              <div className="space-y-1 text-center pb-2">
+                <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                  Welcome Aboard
+                </h2>
+                <p className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-widest">
+                  Login to continue
+                </p>
+              </div>
 
             {/* Mobile Number Input */}
             <div className="space-y-3 w-full">
@@ -261,10 +269,11 @@ export default function DeliverySignIn() {
               )}
             </div>
           </div>
+        </div>
 
-          {/* Bottom Section - Continue Button and Terms */}
-          <div className="w-full pt-8 pb-4">
-            <div className="w-full space-y-6">
+        {/* Bottom Section - Continue Button and Terms */}
+        <div className="w-full mt-auto pt-6 pb-2">
+            <div className="w-full space-y-5">
               {/* Continue Button */}
               <button
                 onClick={handleSendOTP}
