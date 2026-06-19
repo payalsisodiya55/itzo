@@ -22,7 +22,7 @@ export default function JobDetails() {
     let mounted = true;
     const fetchJob = async () => {
       try {
-        const res = await axiosInstance.get(`/food/landing/careers/${id}`);
+        const res = await axiosInstance.get(`/food/careers/${id}`);
         if (mounted && res.data.success) {
           setJob(res.data.data);
         }
