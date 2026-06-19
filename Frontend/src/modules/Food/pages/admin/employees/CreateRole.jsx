@@ -273,7 +273,7 @@ export default function CreateRole() {
         >
           <div className="flex items-center gap-3 flex-1 min-w-0">
             <div 
-              className="flex items-center gap-2 cursor-pointer select-none" 
+              className="flex items-center gap-2 cursor-pointer select-none flex-1 min-w-0" 
               onClick={() => hasChildren && toggleExpand(node.permissionKey)}
               style={{ paddingLeft: `${depth * 20}px` }}
             >
@@ -294,11 +294,11 @@ export default function CreateRole() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 md:gap-8">
+          <div className="flex items-center gap-3 md:gap-8 shrink-0">
             {["view", "create", "edit", "delete"].map(action => {
               const isAllowed = !node.allowedActions || node.allowedActions.includes(action);
               return (
-                <div key={action} className="flex flex-col items-center gap-1.5 min-w-[44px]" title={depth > 0 ? actionIcons[action].label : ""}>
+                <div key={action} className="flex flex-col items-center gap-1.5 min-w-[36px] md:min-w-[44px] shrink-0" title={depth > 0 ? actionIcons[action].label : ""}>
                   {depth === 0 ? (
                     <span className={cn("text-[9px] font-bold uppercase tracking-tighter", actionIcons[action].color)}>
                       {actionIcons[action].label}
@@ -323,7 +323,7 @@ export default function CreateRole() {
               );
             })}
 
-            <div className="w-12 flex justify-center border-l border-neutral-100 ml-2">
+            <div className="w-12 flex justify-center border-l border-neutral-100 ml-2 shrink-0">
                {depth > 0 && (
                  <button 
                   type="button"
@@ -371,50 +371,50 @@ export default function CreateRole() {
   return (
     <div className="p-6 max-w-[1400px] mx-auto space-y-6 animate-in fade-in duration-700">
       {/* Sticky Header */}
-      <div className="flex items-center justify-between bg-white/80 backdrop-blur-md p-4 rounded-3xl border border-neutral-200 shadow-xl shadow-neutral-100/50 sticky top-4 z-20">
-        <div className="flex items-center gap-5">
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between bg-white/80 backdrop-blur-md p-4 rounded-3xl border border-neutral-200 shadow-xl shadow-neutral-100/50 sticky top-4 z-30 gap-4">
+        <div className="flex items-center gap-3 md:gap-5 min-w-0">
           <Button 
             type="button" 
             variant="ghost" 
             size="icon" 
             onClick={() => navigate("/ecs/food/employee-role")}
-            className="rounded-2xl hover:bg-neutral-100 h-12 w-12 transition-all active:scale-90"
+            className="rounded-2xl hover:bg-neutral-100 h-10 w-10 md:h-12 md:w-12 transition-all active:scale-90 shrink-0"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
           </Button>
-          <div>
-            <h1 className="text-xl font-black text-neutral-900 tracking-tighter flex items-center gap-2.5">
-              <div className="bg-orange-100 p-2 rounded-xl">
-                <ShieldCheck className="w-6 h-6 text-orange-500" />
+          <div className="min-w-0">
+            <h1 className="text-lg md:text-xl font-black text-neutral-900 tracking-tighter flex items-center gap-2 md:gap-2.5">
+              <div className="bg-orange-100 p-1.5 md:p-2 rounded-xl shrink-0">
+                <ShieldCheck className="w-5 h-5 md:w-6 md:h-6 text-orange-500" />
               </div>
-              {isEdit ? "EDIT ACCESS ROLE" : "CREATE STAFF ROLE"}
+              <span className="truncate">{isEdit ? "EDIT ACCESS ROLE" : "CREATE STAFF ROLE"}</span>
             </h1>
-            <div className="flex items-center gap-2 mt-0.5">
-              <span className="text-[10px] bg-neutral-100 text-neutral-500 px-1.5 py-0.5 rounded font-bold uppercase tracking-widest">Security Layer</span>
-              <div className="w-1 h-1 rounded-full bg-neutral-300" />
-              <p className="text-xs text-neutral-500 font-medium">Define granular access levels for administrative modules.</p>
+            <div className="flex flex-wrap items-center gap-1.5 md:gap-2 mt-1 md:mt-0.5">
+              <span className="text-[9px] md:text-[10px] bg-neutral-100 text-neutral-500 px-1.5 py-0.5 rounded font-bold uppercase tracking-widest whitespace-nowrap">Security Layer</span>
+              <div className="hidden sm:block w-1 h-1 rounded-full bg-neutral-300" />
+              <p className="text-[10px] md:text-xs text-neutral-500 font-medium truncate sm:whitespace-normal">Define granular access levels for administrative modules.</p>
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-4">
-          <div className="hidden md:flex flex-col items-end mr-2">
-            <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest">{selectedCount} Permissions</span>
-            <span className="text-[9px] text-neutral-400 font-bold uppercase">Ready to Commit</span>
+        <div className="flex flex-wrap items-center justify-end gap-2 md:gap-4 w-full xl:w-auto">
+          <div className="hidden sm:flex flex-col items-end mr-2">
+            <span className="text-[9px] md:text-[10px] font-black text-orange-500 uppercase tracking-widest">{selectedCount} Permissions</span>
+            <span className="text-[8px] md:text-[9px] text-neutral-400 font-bold uppercase">Ready to Commit</span>
           </div>
           <Button 
             type="button" 
             variant="outline" 
             onClick={() => navigate("/ecs/food/employee-role")}
-            className="rounded-2xl border-neutral-200 text-neutral-600 h-12 px-6 font-bold transition-all hover:bg-neutral-50"
+            className="rounded-xl md:rounded-2xl border-neutral-200 text-neutral-600 h-10 md:h-12 px-4 md:px-6 text-xs md:text-sm font-bold transition-all hover:bg-neutral-50 flex-1 sm:flex-none"
           >
             Cancel
           </Button>
           <Button 
             onClick={handleSubmit}
             disabled={loading}
-            className="rounded-2xl bg-orange-500 hover:bg-orange-600 text-white h-12 px-8 font-black shadow-2xl shadow-orange-500/30 transition-all active:scale-95 disabled:opacity-50"
+            className="rounded-xl md:rounded-2xl bg-orange-500 hover:bg-orange-600 text-white h-10 md:h-12 px-4 md:px-8 text-xs md:text-sm font-black shadow-lg md:shadow-2xl shadow-orange-500/30 transition-all active:scale-95 disabled:opacity-50 flex-1 sm:flex-none"
           >
-            {loading ? "PROVISIONING..." : <><Save className="w-4 h-4 mr-2" /> {isEdit ? "UPDATE ROLE" : "SAVE ROLE"}</>}
+            {loading ? "PROVISIONING..." : <><Save className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1.5 md:mr-2" /> {isEdit ? "UPDATE ROLE" : "SAVE ROLE"}</>}
           </Button>
         </div>
       </div>
