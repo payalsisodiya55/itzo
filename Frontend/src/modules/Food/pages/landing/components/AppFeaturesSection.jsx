@@ -19,7 +19,7 @@ const FeatureCard = ({ icon, title, className, delay }) => (
 
 const AppFeaturesSection = React.memo(function AppFeaturesSection() {
   return (
-    <div className="w-full bg-[#fff0f2] pt-20 overflow-hidden relative">
+    <div className="w-full bg-[#fff0f2] pt-20 pb-12 md:pb-20 overflow-hidden relative">
       <div className="max-w-7xl mx-auto px-4 flex flex-col items-center">
         
         {/* Heading */}
@@ -92,7 +92,7 @@ const AppFeaturesSection = React.memo(function AppFeaturesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2, type: "spring", stiffness: 80 }}
-            className="absolute bottom-0 w-[280px] md:w-[320px] h-[400px] md:h-[480px] bg-white rounded-t-[3rem] border-[12px] border-b-0 border-slate-800 shadow-2xl flex flex-col items-center pt-24 z-10"
+            className="absolute bottom-0 md:-bottom-4 w-[280px] md:w-[320px] h-[440px] md:h-[500px] bg-white rounded-[3rem] border-[12px] border-slate-800 shadow-2xl flex flex-col items-center pt-24 z-10"
           >
             {/* Phone Notch */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[110px] h-[24px] bg-slate-800 rounded-b-[1.25rem] flex justify-center items-center">
@@ -111,6 +111,9 @@ const AppFeaturesSection = React.memo(function AppFeaturesSection() {
                  Schedule<br/>your order
                </span>
             </div>
+
+            {/* Phone Home Bar */}
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-24 h-1.5 bg-slate-200 rounded-full"></div>
           </motion.div>
 
         </div>

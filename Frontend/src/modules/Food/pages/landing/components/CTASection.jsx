@@ -84,10 +84,10 @@ const CTASection = React.memo(function CTASection() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative z-10 w-full md:w-[45%] flex justify-center md:justify-end md:self-end h-full mt-8 md:mt-0"
+          className="relative z-10 w-full md:w-[45%] flex justify-center md:justify-end items-center h-full mt-8 md:mt-0 pb-12 md:pb-0"
         >
           {/* Phone Frame */}
-          <div className="relative w-[280px] md:w-[320px] h-[340px] md:h-[380px] bg-white rounded-t-[2.5rem] border-[10px] border-b-0 border-slate-800 shadow-xl flex flex-col items-center pt-14 overflow-hidden translate-y-2 md:translate-y-0">
+          <div className="relative w-[280px] md:w-[320px] h-[360px] md:h-[380px] bg-white rounded-[2.5rem] border-[10px] border-slate-800 shadow-xl flex flex-col items-center pt-14">
             {/* Phone Notch */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[110px] h-[24px] bg-slate-800 rounded-b-[1.25rem] flex justify-center items-center">
                <div className="w-12 h-1.5 bg-slate-700 rounded-full"></div>
@@ -108,6 +108,9 @@ const CTASection = React.memo(function CTASection() {
                 />
               </div>
             </div>
+
+            {/* Phone Home Bar */}
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-24 h-1.5 bg-slate-200 rounded-full"></div>
           </div>
         </motion.div>
 
