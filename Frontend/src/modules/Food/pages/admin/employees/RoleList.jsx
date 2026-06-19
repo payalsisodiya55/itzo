@@ -251,18 +251,18 @@ export default function RoleList() {
                         <div className="flex items-center gap-4">
                           <div className={cn(
                             "w-12 h-12 rounded-2xl flex items-center justify-center font-black text-sm shadow-inner transition-transform group-hover:scale-110 duration-300",
-                            role.status === 'active' ? "bg-primary/10 text-primary" : "bg-neutral-100 text-neutral-400"
+                            role.status === 'active' ? "bg-orange-100 text-orange-500" : "bg-neutral-100 text-neutral-400"
                           )}>
                             {role.roleName.substring(0, 2).toUpperCase()}
                           </div>
                           <div>
-                            <p className="font-black text-neutral-900 tracking-tight leading-none group-hover:text-primary transition-colors">
+                            <p className="font-black text-neutral-900 tracking-tight leading-none group-hover:text-orange-500 transition-colors">
                               {role.roleName.toUpperCase()}
                             </p>
                             {role.isDefault && (
                               <div className="flex items-center gap-1.5 mt-1.5">
-                                 <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
-                                 <span className="text-[9px] font-black text-blue-500 uppercase tracking-widest">SYSTEM CORE</span>
+                                 <div className="w-1.5 h-1.5 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.5)]" />
+                                 <span className="text-[9px] font-black text-orange-500 uppercase tracking-widest">SYSTEM CORE</span>
                               </div>
                             )}
                           </div>
@@ -274,7 +274,7 @@ export default function RoleList() {
                         </p>
                       </td>
                       <td className="px-8 py-6 text-center">
-                        <Badge className="bg-neutral-900 text-[10px] font-black text-white hover:bg-black transition-all px-3 py-1 rounded-xl shadow-lg shadow-neutral-900/20">
+                        <Badge className="bg-orange-500 text-[10px] font-black text-white hover:bg-orange-600 transition-all px-3 py-1 rounded-xl shadow-lg shadow-orange-500/20">
                           {Object.keys(role.permissions || {}).length} MODULES
                         </Badge>
                       </td>
@@ -285,7 +285,7 @@ export default function RoleList() {
                           className={cn(
                             "inline-flex items-center gap-2 px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed",
                             role.status === 'active' 
-                            ? 'bg-emerald-50 text-emerald-600 border border-emerald-100 hover:bg-emerald-100' 
+                            ? 'bg-orange-50 text-orange-600 border border-orange-100 hover:bg-orange-100' 
                             : 'bg-neutral-50 text-neutral-400 border border-neutral-100 hover:bg-neutral-100'
                           )}
                         >
@@ -305,7 +305,7 @@ export default function RoleList() {
                             <DropdownMenuSeparator className="bg-neutral-100" />
                             {canEditRole && (
                               <DropdownMenuItem 
-                                className="rounded-xl h-11 font-bold text-sm focus:bg-primary/5 focus:text-primary cursor-pointer px-3"
+                                className="rounded-xl h-11 font-bold text-sm focus:bg-orange-50 focus:text-orange-500 cursor-pointer px-3"
                                 onClick={() => navigate(`/ecs/food/employee-role/edit/${role._id}`)}
                               >
                                 <Edit2 className="w-4 h-4 mr-3 opacity-60" /> Edit Configuration
@@ -340,7 +340,7 @@ export default function RoleList() {
              <span>RBAC v2.1.0</span>
            </div>
            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+              <div className="w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.5)]" />
               NODE STATUS: STABLE
            </div>
         </div>
