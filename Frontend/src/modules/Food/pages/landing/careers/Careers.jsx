@@ -22,7 +22,7 @@ export default function Careers() {
     const fetchJobs = async () => {
       setLoading(true);
       try {
-        const res = await axiosInstance.get('/food/landing/careers', { params: { search: searchQuery } });
+        const res = await axiosInstance.get('/food/careers', { params: { search: searchQuery } });
         if (mounted && res.data.success) {
           setJobs(res.data.data.jobs || []);
         }
