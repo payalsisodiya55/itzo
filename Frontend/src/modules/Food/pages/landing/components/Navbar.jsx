@@ -70,6 +70,7 @@ const Navbar = React.memo(function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
+            <Link to="/food/careers" className="text-lg font-medium hover:text-rose-400 transition-colors">Jobs</Link>
             <Link to="/food/restaurant" className="text-lg font-medium hover:text-rose-400 transition-colors">Add restaurant</Link>
             <div className="flex items-center space-x-6">
               <button onClick={() => navigate('/user/auth/login')} className="text-lg font-medium hover:text-rose-400 transition-colors">Log in</button>
@@ -89,6 +90,7 @@ const Navbar = React.memo(function Navbar() {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-white text-gray-800 shadow-xl absolute top-20 left-0 right-0 py-4 px-6 flex flex-col space-y-4 border-t border-gray-100">
+          <Link to="/food/careers" className="text-lg font-medium py-2 border-b border-gray-100">Jobs</Link>
           <Link to="/food/restaurant" className="text-lg font-medium py-2 border-b border-gray-100">Add restaurant</Link>
           <button onClick={() => navigate('/user/auth/login')} className="text-left text-lg font-medium py-2 border-b border-gray-100">Log in</button>
           <button onClick={() => navigate('/user/auth/signup')} className="text-left text-lg font-medium py-2">Sign up</button>

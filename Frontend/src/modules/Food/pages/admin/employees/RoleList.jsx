@@ -116,7 +116,7 @@ export default function RoleList() {
       label: "TOTAL ROLES", 
       value: (roles || []).length, 
       icon: Layers, 
-      color: "bg-neutral-900", 
+      color: "bg-orange-500", 
       textColor: "text-white",
       sub: "Administrative Layers"
     },
@@ -124,7 +124,7 @@ export default function RoleList() {
       label: "ACTIVE", 
       value: (roles || []).filter(r => r.status === 'active').length, 
       icon: CheckCircle2, 
-      color: "bg-emerald-500", 
+      color: "bg-orange-400", 
       textColor: "text-white",
       sub: "Operational Access"
     },
@@ -132,7 +132,7 @@ export default function RoleList() {
       label: "INACTIVE", 
       value: (roles || []).filter(r => r.status !== 'active').length, 
       icon: ShieldAlert, 
-      color: "bg-amber-500", 
+      color: "bg-orange-300", 
       textColor: "text-white",
       sub: "Restricted Access"
     }
@@ -144,8 +144,8 @@ export default function RoleList() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <div className="flex items-center gap-3">
-             <div className="bg-primary/10 p-2.5 rounded-2xl">
-               <ShieldCheck className="w-8 h-8 text-primary" />
+             <div className="bg-orange-100 p-2.5 rounded-2xl">
+               <ShieldCheck className="w-8 h-8 text-orange-500" />
              </div>
              <div>
                <h1 className="text-2xl font-black text-neutral-900 tracking-tighter">
@@ -162,7 +162,7 @@ export default function RoleList() {
         {canCreateRole && (
           <Button 
             onClick={() => navigate("/ecs/food/employee-role/create")}
-            className="bg-neutral-900 hover:bg-black text-white h-12 px-8 rounded-2xl font-black shadow-2xl shadow-neutral-900/20 transition-all active:scale-95"
+            className="bg-orange-500 hover:bg-orange-600 text-white h-12 px-8 rounded-2xl font-black shadow-2xl shadow-orange-500/20 transition-all active:scale-95"
           >
             <Plus className="w-5 h-5 mr-2" />
             CREATE NEW ROLE
@@ -211,10 +211,10 @@ export default function RoleList() {
             </div>
           ) : filteredRoles.length === 0 ? (
             <div className="py-24 px-6 flex flex-col items-center justify-center text-center space-y-6">
-              <div className="w-24 h-24 bg-neutral-50 rounded-[2.5rem] flex items-center justify-center relative">
-                <ShieldCheck className="w-12 h-12 text-neutral-200" />
+              <div className="w-24 h-24 bg-orange-50 rounded-[2.5rem] flex items-center justify-center relative">
+                <ShieldCheck className="w-12 h-12 text-orange-200" />
                 <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center">
-                   <div className="w-4 h-4 bg-primary/20 rounded-full animate-ping" />
+                   <div className="w-4 h-4 bg-orange-500/20 rounded-full animate-ping" />
                 </div>
               </div>
               <div className="space-y-2 max-w-sm">
@@ -226,7 +226,7 @@ export default function RoleList() {
               {canCreateRole && (
                 <Button 
                   onClick={() => navigate("/ecs/food/employee-role/create")}
-                  className="bg-primary hover:bg-primary/90 text-white rounded-2xl h-12 px-8 font-black shadow-xl shadow-primary/20"
+                  className="bg-orange-500 hover:bg-orange-600 text-white rounded-2xl h-12 px-8 font-black shadow-xl shadow-orange-500/20"
                 >
                   PROVISION FIRST ROLE <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>

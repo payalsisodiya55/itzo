@@ -90,11 +90,13 @@ const RestaurantVATReport = lazy(() => import("@food/pages/admin/reports/Restaur
 // Transaction Management
 const RestaurantWithdraws = lazy(() => import("@food/pages/admin/transactions/RestaurantWithdraws"));
 const WithdrawMethod = lazy(() => import("@food/pages/admin/transactions/WithdrawMethod"));
-// Employee Management
+// Employee & Careers Management
 const RoleList = lazy(() => import("@food/pages/admin/employees/RoleList"));
 const CreateRole = lazy(() => import("@food/pages/admin/employees/CreateRole"));
 const AddEmployee = lazy(() => import("@food/pages/admin/employees/AddEmployee"));
 const EmployeeList = lazy(() => import("@food/pages/admin/employees/EmployeeList"));
+const JobsList = lazy(() => import("@food/pages/admin/careers/JobsList"));
+const AddEditJob = lazy(() => import("@food/pages/admin/careers/AddEditJob"));
 // Business Settings
 const EmailTemplate = lazy(() => import("@food/pages/admin/settings/EmailTemplate"));
 const ThemeSettings = lazy(() => import("@food/pages/admin/settings/ThemeSettings"));
@@ -367,6 +369,11 @@ export default function AdminRouter() {
             <Route path="employees" element={<EmployeeList />} />
             <Route path="employees/add" element={<AddEmployee />} />
             <Route path="employees/edit/:id" element={<AddEmployee />} />
+
+            {/* CAREERS */}
+            <Route path="careers" element={<JobsList />} />
+            <Route path="careers/add" element={<AddEditJob />} />
+            <Route path="careers/edit/:id" element={<AddEditJob />} />
 
             {/* SYSTEM & BUSINESS SETTINGS */}
             <Route path="email-template" element={<EmailTemplate />} />

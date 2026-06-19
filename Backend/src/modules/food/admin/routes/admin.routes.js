@@ -220,5 +220,8 @@ router.post('/employees', checkPermission('food::staff_management::list', 'creat
 router.patch('/employees/:id', checkPermission('food::staff_management::list', 'edit'), upload.single('employeeImage'), employeeController.updateEmployee);
 router.patch('/employees/:id/status', checkPermission('food::staff_management::list', 'edit'), employeeController.toggleEmployeeStatus);
 router.delete('/employees/:id', checkPermission('food::staff_management::list', 'delete'), employeeController.deleteEmployee);
+// ----- Careers / Job Openings -----
+import jobRoutes from './job.route.js';
+router.use('/careers/jobs', jobRoutes);
 
 export default router;

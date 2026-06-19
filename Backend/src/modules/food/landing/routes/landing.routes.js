@@ -63,6 +63,10 @@ router.get('/pages/:key', getPublicPageController);
 // Public referral settings (no auth required).
 router.get('/referral-settings', getPublicReferralSettingsController);
 
+// Public Careers API
+import careerRoutes from './career.route.js';
+router.use('/careers', careerRoutes);
+
 // Admin hero banner management (DEV: auth temporarily disabled for faster integration)
 router.get('/hero-banners', listHeroBannersController);
 router.post(

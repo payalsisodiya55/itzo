@@ -252,6 +252,7 @@ export const adminSidebarMenu = [
     items: [
       { type: "link", label: "Roles & Permissions", permissionKey: "roles", path: "/ecs/food/employee-role", icon: "Lock" },
       { type: "link", label: "Employee List", permissionKey: "list", path: "/ecs/food/employees", icon: "Users" },
+      { type: "link", label: "Careers / Job Openings", permissionKey: "list", path: "/ecs/food/careers", icon: "Briefcase" },
     ],
   },
   {

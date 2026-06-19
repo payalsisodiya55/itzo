@@ -99,6 +99,7 @@ const FooterSection = React.memo(function FooterSection() {
             <h3 className="font-medium text-black tracking-wide mb-4 text-[15px]">About ItzoFood</h3>
             <ul className="space-y-2.5 text-gray-600 text-[14px]">
               <li><a href="/about" className="hover:text-black transition-colors">Who We Are</a></li>
+              <li><a href="/food/careers" className="hover:text-black transition-colors">Careers / Jobs</a></li>
               <li><a href="/contact" className="hover:text-black transition-colors">Contact Us</a></li>
             </ul>
           </div>
