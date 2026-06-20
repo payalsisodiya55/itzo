@@ -3,9 +3,13 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
+      "@core/*": ["./src/core/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@common/*": ["./src/modules/common/*"],
       "@food/api": ["./src/services/api"],
       "@food/*": ["./src/modules/Food/*"],
-      "@delivery/*": ["./src/modules/DeliveryV2/*"]
+      "@delivery/*": ["./src/modules/DeliveryV2/*"],
+      "@modules/*": ["./src/modules/*"]
     }
   },
   "include": ["src"]
