@@ -180,7 +180,7 @@ export default function LoginGrowthSettings() {
     return (
       <div className="h-full overflow-y-auto bg-slate-50 p-4 lg:p-6 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-900 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FE5502] mx-auto"></div>
           <p className="mt-4 text-slate-600 font-semibold">Loading settings configuration...</p>
         </div>
       </div>
@@ -195,13 +195,13 @@ export default function LoginGrowthSettings() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
             <h1 className="text-3xl font-extrabold text-slate-950 tracking-tight flex items-center gap-2">
-              <TrendingUp className="h-8 w-8 text-indigo-600" />
+              <TrendingUp className="h-8 w-8 text-[#FE5502]" />
               Login Onboarding Growth Settings
             </h1>
             <p className="text-sm text-slate-600 mt-1">Configure role-specific saving figures, benefits lists, and marketing overlays for login journeys</p>
           </div>
           
-          <Button onClick={handleSave} disabled={saving} className="bg-slate-950 text-white font-bold hover:bg-slate-900 flex items-center gap-2 px-6 py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg self-start md:self-auto">
+          <Button onClick={handleSave} disabled={saving} className="bg-[#FE5502] text-white font-bold hover:bg-[#E64D02] flex items-center gap-2 px-6 py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg self-start md:self-auto">
             <Save className="h-4 w-4" />
             {saving ? 'Saving...' : 'Save All Settings'}
           </Button>
@@ -219,7 +219,7 @@ export default function LoginGrowthSettings() {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-4 py-3 text-sm font-semibold border-b-2 transition-all ${
                 activeTab === tab.id
-                  ? "border-slate-900 text-slate-950"
+                  ? "border-[#FE5502] text-[#FE5502]"
                   : "border-transparent text-slate-500 hover:text-slate-800"
               }`}
             >
@@ -245,7 +245,7 @@ export default function LoginGrowthSettings() {
                     value={restaurantData.headline}
                     onChange={(e) => setRestaurantData(prev => ({ ...prev, headline: e.target.value }))}
                     placeholder="Grow Your Restaurant Without Paying Commission"
-                    className="rounded-xl border-slate-200 focus-visible:ring-slate-950"
+                    className="rounded-xl border-slate-200 focus-visible:ring-[#FE5502]"
                   />
                 </div>
                 <div className="space-y-2">
@@ -255,7 +255,7 @@ export default function LoginGrowthSettings() {
                     value={restaurantData.subheadline}
                     onChange={(e) => setRestaurantData(prev => ({ ...prev, subheadline: e.target.value }))}
                     placeholder="Keep More Profit. Get More Orders. Pay Only ₹30/Day."
-                    className="rounded-xl border-slate-200 focus-visible:ring-slate-950"
+                    className="rounded-xl border-slate-200 focus-visible:ring-[#FE5502]"
                   />
                 </div>
               </CardContent>
@@ -278,7 +278,7 @@ export default function LoginGrowthSettings() {
                         ...prev,
                         savingsExample: { ...prev.savingsExample, orderValue: Number(e.target.value) }
                       }))}
-                      className="rounded-xl border-slate-200 focus-visible:ring-slate-950"
+                      className="rounded-xl border-slate-200 focus-visible:ring-[#FE5502]"
                     />
                   </div>
                   <div className="space-y-2">
@@ -291,7 +291,7 @@ export default function LoginGrowthSettings() {
                         savingsExample: { ...prev.savingsExample, traditionalCommission: e.target.value }
                       }))}
                       placeholder="₹120–₹150 Commission"
-                      className="rounded-xl border-slate-200 focus-visible:ring-slate-950"
+                      className="rounded-xl border-slate-200 focus-visible:ring-[#FE5502]"
                     />
                   </div>
                 </div>
@@ -307,7 +307,7 @@ export default function LoginGrowthSettings() {
                         savingsExample: { ...prev.savingsExample, itzoCommission: e.target.value }
                       }))}
                       placeholder="₹0 Commission"
-                      className="rounded-xl border-slate-200 focus-visible:ring-slate-950"
+                      className="rounded-xl border-slate-200 focus-visible:ring-[#FE5502]"
                     />
                   </div>
                   <div className="space-y-2">
@@ -320,7 +320,7 @@ export default function LoginGrowthSettings() {
                         savingsExample: { ...prev.savingsExample, keepsRevenueText: e.target.value }
                       }))}
                       placeholder="Restaurant Keeps Full Revenue"
-                      className="rounded-xl border-slate-200 focus-visible:ring-slate-950"
+                      className="rounded-xl border-slate-200 focus-visible:ring-[#FE5502]"
                     />
                   </div>
                 </div>
@@ -338,7 +338,7 @@ export default function LoginGrowthSettings() {
                           additionalMessaging: { ...prev.additionalMessaging, monthlyProfit: e.target.value }
                         }))}
                         placeholder="₹59,100"
-                        className="rounded-xl border-slate-200 focus-visible:ring-slate-950"
+                        className="rounded-xl border-slate-200 focus-visible:ring-[#FE5502]"
                       />
                     </div>
                     <div className="space-y-2">
@@ -351,7 +351,7 @@ export default function LoginGrowthSettings() {
                           additionalMessaging: { ...prev.additionalMessaging, yearlyProfit: e.target.value }
                         }))}
                         placeholder="₹7,19,050"
-                        className="rounded-xl border-slate-200 focus-visible:ring-slate-950"
+                        className="rounded-xl border-slate-200 focus-visible:ring-[#FE5502]"
                       />
                     </div>
                   </div>
@@ -368,7 +368,7 @@ export default function LoginGrowthSettings() {
                     <CardTitle className="text-lg font-bold text-slate-950">Partner Benefits List</CardTitle>
                     <CardDescription>Key selling points for restaurants</CardDescription>
                   </div>
-                  <Button onClick={() => addListItem(setRestaurantData, "benefits")} size="sm" className="bg-slate-950 text-white font-bold hover:bg-slate-900 rounded-xl">
+                  <Button onClick={() => addListItem(setRestaurantData, "benefits")} size="sm" className="bg-[#FE5502] text-white font-bold hover:bg-[#E64D02] rounded-xl">
                     <Plus className="h-3.5 w-3.5 mr-1" /> Add
                   </Button>
                 </CardHeader>
@@ -404,7 +404,7 @@ export default function LoginGrowthSettings() {
                     <CardTitle className="text-lg font-bold text-slate-950">FSSAI / GST Consulting Assistance</CardTitle>
                     <CardDescription>Services offered to help restaurants register</CardDescription>
                   </div>
-                  <Button onClick={() => addListItem(setRestaurantData, "consultingServices")} size="sm" className="bg-slate-950 text-white font-bold hover:bg-slate-900 rounded-xl">
+                  <Button onClick={() => addListItem(setRestaurantData, "consultingServices")} size="sm" className="bg-[#FE5502] text-white font-bold hover:bg-[#E64D02] rounded-xl">
                     <Plus className="h-3.5 w-3.5 mr-1" /> Add
                   </Button>
                 </CardHeader>
@@ -452,7 +452,7 @@ export default function LoginGrowthSettings() {
                     value={deliveryData.headline}
                     onChange={(e) => setDeliveryData(prev => ({ ...prev, headline: e.target.value }))}
                     placeholder="Earn More. Keep 100% Of Your Delivery Earnings."
-                    className="rounded-xl border-slate-200 focus-visible:ring-slate-950"
+                    className="rounded-xl border-slate-200 focus-visible:ring-[#FE5502]"
                   />
                 </div>
                 <div className="space-y-2">
@@ -462,7 +462,7 @@ export default function LoginGrowthSettings() {
                     value={deliveryData.subheadline}
                     onChange={(e) => setDeliveryData(prev => ({ ...prev, subheadline: e.target.value }))}
                     placeholder="Zero Commission. Unlimited Opportunities."
-                    className="rounded-xl border-slate-200 focus-visible:ring-slate-950"
+                    className="rounded-xl border-slate-200 focus-visible:ring-[#FE5502]"
                   />
                 </div>
 
@@ -474,7 +474,7 @@ export default function LoginGrowthSettings() {
                       value={deliveryData.driverMarketingBanner}
                       onChange={(e) => setDeliveryData(prev => ({ ...prev, driverMarketingBanner: e.target.value }))}
                       placeholder="AB COMMISSION KA KHEL KHATAM!"
-                      className="rounded-xl border-slate-200 focus-visible:ring-slate-950 font-bold"
+                      className="rounded-xl border-slate-200 focus-visible:ring-[#FE5502] font-bold"
                     />
                   </div>
                   <div className="space-y-2">
@@ -484,7 +484,7 @@ export default function LoginGrowthSettings() {
                       value={deliveryData.ctaText}
                       onChange={(e) => setDeliveryData(prev => ({ ...prev, ctaText: e.target.value }))}
                       placeholder="Sirf ₹30 Mein Apni Delivery Agency Shuru Karein."
-                      className="rounded-xl border-slate-200 focus-visible:ring-slate-950"
+                      className="rounded-xl border-slate-200 focus-visible:ring-[#FE5502]"
                     />
                   </div>
                 </div>
@@ -499,7 +499,7 @@ export default function LoginGrowthSettings() {
                   <div>
                     <CardTitle className="text-lg font-bold text-slate-950">Partner Benefits</CardTitle>
                   </div>
-                  <Button onClick={() => addListItem(setDeliveryData, "benefits")} size="sm" className="bg-slate-950 text-white font-bold hover:bg-slate-900 rounded-xl">
+                  <Button onClick={() => addListItem(setDeliveryData, "benefits")} size="sm" className="bg-[#FE5502] text-white font-bold hover:bg-[#E64D02] rounded-xl">
                     <Plus className="h-3.5 w-3.5 mr-1" /> Add
                   </Button>
                 </CardHeader>
@@ -534,7 +534,7 @@ export default function LoginGrowthSettings() {
                   <div>
                     <CardTitle className="text-lg font-bold text-slate-950">Welfare & Insurance</CardTitle>
                   </div>
-                  <Button onClick={() => addListItem(setDeliveryData, "partnerWelfare")} size="sm" className="bg-slate-950 text-white font-bold hover:bg-slate-900 rounded-xl">
+                  <Button onClick={() => addListItem(setDeliveryData, "partnerWelfare")} size="sm" className="bg-[#FE5502] text-white font-bold hover:bg-[#E64D02] rounded-xl">
                     <Plus className="h-3.5 w-3.5 mr-1" /> Add
                   </Button>
                 </CardHeader>
@@ -569,7 +569,7 @@ export default function LoginGrowthSettings() {
                   <div>
                     <CardTitle className="text-lg font-bold text-slate-950">Operational Comforts</CardTitle>
                   </div>
-                  <Button onClick={() => addListItem(setDeliveryData, "operationalBenefits")} size="sm" className="bg-slate-950 text-white font-bold hover:bg-slate-900 rounded-xl">
+                  <Button onClick={() => addListItem(setDeliveryData, "operationalBenefits")} size="sm" className="bg-[#FE5502] text-white font-bold hover:bg-[#E64D02] rounded-xl">
                     <Plus className="h-3.5 w-3.5 mr-1" /> Add
                   </Button>
                 </CardHeader>
@@ -617,7 +617,7 @@ export default function LoginGrowthSettings() {
                     value={userData.headline}
                     onChange={(e) => setUserData(prev => ({ ...prev, headline: e.target.value }))}
                     placeholder="Order Smarter. Save More."
-                    className="rounded-xl border-slate-200 focus-visible:ring-slate-950"
+                    className="rounded-xl border-slate-200 focus-visible:ring-[#FE5502]"
                   />
                 </div>
                 <div className="space-y-2">
@@ -627,7 +627,7 @@ export default function LoginGrowthSettings() {
                     value={userData.subheadline}
                     onChange={(e) => setUserData(prev => ({ ...prev, subheadline: e.target.value }))}
                     placeholder="Real Restaurant Prices. No Hidden Charges."
-                    className="rounded-xl border-slate-200 focus-visible:ring-slate-950"
+                    className="rounded-xl border-slate-200 focus-visible:ring-[#FE5502]"
                   />
                 </div>
               </CardContent>
@@ -650,7 +650,7 @@ export default function LoginGrowthSettings() {
                         comparison: { ...prev.comparison, traditionalAppsText: e.target.value }
                       }))}
                       placeholder="Menu Price + Markup + Fees"
-                      className="rounded-xl border-slate-200 focus-visible:ring-slate-950"
+                      className="rounded-xl border-slate-200 focus-visible:ring-[#FE5502]"
                     />
                   </div>
                   <div className="space-y-2">
@@ -663,7 +663,7 @@ export default function LoginGrowthSettings() {
                         comparison: { ...prev.comparison, itzoFoodText: e.target.value }
                       }))}
                       placeholder="Actual Menu Price + Delivery Fee"
-                      className="rounded-xl border-slate-200 focus-visible:ring-slate-950"
+                      className="rounded-xl border-slate-200 focus-visible:ring-[#FE5502]"
                     />
                   </div>
                 </div>
@@ -679,7 +679,7 @@ export default function LoginGrowthSettings() {
                     onChange={(e) => setUserData(prev => ({ ...prev, privacyMessage: e.target.value }))}
                     placeholder="Your Privacy Matters: Female customer contact information remains protected..."
                     rows={3}
-                    className="rounded-xl border-slate-200 focus-visible:ring-slate-950"
+                    className="rounded-xl border-slate-200 focus-visible:ring-[#FE5502]"
                   />
                 </div>
               </CardContent>
@@ -694,7 +694,7 @@ export default function LoginGrowthSettings() {
                     <CardTitle className="text-lg font-bold text-slate-950">Benefits List</CardTitle>
                     <CardDescription>Primary reasons to order from ItzoFood</CardDescription>
                   </div>
-                  <Button onClick={() => addListItem(setUserData, "benefits")} size="sm" className="bg-slate-950 text-white font-bold hover:bg-slate-900 rounded-xl">
+                  <Button onClick={() => addListItem(setUserData, "benefits")} size="sm" className="bg-[#FE5502] text-white font-bold hover:bg-[#E64D02] rounded-xl">
                     <Plus className="h-3.5 w-3.5 mr-1" /> Add
                   </Button>
                 </CardHeader>
@@ -730,7 +730,7 @@ export default function LoginGrowthSettings() {
                     <CardTitle className="text-lg font-bold text-slate-950">Consumer Advantages</CardTitle>
                     <CardDescription>Core value advantages points</CardDescription>
                   </div>
-                  <Button onClick={() => addListItem(setUserData, "keyAdvantages")} size="sm" className="bg-slate-950 text-white font-bold hover:bg-slate-900 rounded-xl">
+                  <Button onClick={() => addListItem(setUserData, "keyAdvantages")} size="sm" className="bg-[#FE5502] text-white font-bold hover:bg-[#E64D02] rounded-xl">
                     <Plus className="h-3.5 w-3.5 mr-1" /> Add
                   </Button>
                 </CardHeader>
