@@ -1,5 +1,6 @@
 // Order Service - Backend Logic
 import mongoose from 'mongoose';
+import { getSettingsSync } from '../../../common/utils/settingsCache.js';
 import { FoodOrder, FoodSettings } from '../models/order.model.js';
 // import { paymentSnapshotFromOrder } from './foodOrderPayment.service.js';
 import { logger } from '../../../../utils/logger.js';
@@ -98,6 +99,27 @@ function sanitizeOrderForExternal(orderDoc) {
       },
     };
   }
+
+  // Female customer privacy mask
+  const userGender = o.userId?.gender || "";
+  const isFemale = String(userGender).toLowerCase() === 'female';
+  const settings = getSettingsSync();
+
+  if (isFemale && settings.enableFemaleContactProtection) {
+    o.customerPhone = null;
+    o.userPhone = null;
+    o.isContactProtected = true;
+    o.contactMessage = settings.privacyMessage || "For privacy and safety reasons, customer contact information is protected. Please contact ItzoFood Support.";
+    o.companySupportNumber = settings.companySupportNumber || "";
+    o.companyWhatsappNumber = settings.companyWhatsappNumber || "";
+
+    if (o.deliveryAddress) {
+      o.deliveryAddress.phone = null;
+    }
+  } else {
+    o.isContactProtected = false;
+  }
+
   return o;
 }
 
@@ -924,6 +946,26 @@ function buildDeliveryOrderView(orderDoc, deliveryPartnerId, options = {}) {
     order.deliveryPartnerId = assignedLeg.deliveryPartnerId || order.deliveryPartnerId || null;
   }
 
+  // Female customer privacy mask
+  const userGender = order.userId?.gender || "";
+  const isFemale = String(userGender).toLowerCase() === 'female';
+  const settings = getSettingsSync();
+
+  if (isFemale && settings.enableFemaleContactProtection) {
+    order.customerPhone = null;
+    order.userPhone = null;
+    order.isContactProtected = true;
+    order.contactMessage = settings.privacyMessage || "For privacy and safety reasons, customer contact information is protected. Please contact ItzoFood Support.";
+    order.companySupportNumber = settings.companySupportNumber || "";
+    order.companyWhatsappNumber = settings.companyWhatsappNumber || "";
+
+    if (order.deliveryAddress) {
+      order.deliveryAddress.phone = null;
+    }
+  } else {
+    order.isContactProtected = false;
+  }
+
   return order;
 }
 
@@ -961,6 +1003,16 @@ function buildDeliverySocketPayload(orderDoc, restaurantDoc = null) {
   const restaurant = restaurantDoc || order?.restaurantId || null;
   const restaurantLocation = restaurant?.location || {};
   const pickupPoints = Array.isArray(order?.pickupPoints) ? order.pickupPoints : [];
+
+  const userGender = order?.userId?.gender || "";
+  const isFemale = String(userGender).toLowerCase() === 'female';
+  const settings = getSettingsSync();
+  const isProtected = isFemale && settings.enableFemaleContactProtection;
+
+  const sanitizedDeliveryAddress = { ...(order?.deliveryAddress || {}) };
+  if (isProtected) {
+    sanitizedDeliveryAddress.phone = null;
+  }
 
   return {
     orderMongoId:
@@ -1005,12 +1057,16 @@ function buildDeliverySocketPayload(orderDoc, restaurantDoc = null) {
       city: restaurantLocation?.city || restaurant?.city || "",
       state: restaurantLocation?.state || restaurant?.state || "",
     },
-    deliveryAddress: order?.deliveryAddress,
+    deliveryAddress: sanitizedDeliveryAddress,
     customerAddress: order?.deliveryAddress?.formattedAddress || order?.deliveryAddress?.addressLine1 || "",
     customerName: order?.userId?.name || order?.customerName || "",
-    customerPhone: order?.userId?.phone || order?.deliveryAddress?.phone || "",
+    customerPhone: isProtected ? null : (order?.userId?.phone || order?.deliveryAddress?.phone || ""),
     userName: order?.userId?.name || order?.customerName || "",
-    userPhone: order?.userId?.phone || order?.deliveryAddress?.phone || "",
+    userPhone: isProtected ? null : (order?.userId?.phone || order?.deliveryAddress?.phone || ""),
+    isContactProtected: isProtected,
+    contactMessage: isProtected ? (settings.privacyMessage || "For privacy and safety reasons, customer contact information is protected. Please contact ItzoFood Support.") : undefined,
+    companySupportNumber: isProtected ? (settings.companySupportNumber || "") : undefined,
+    companyWhatsappNumber: isProtected ? (settings.companyWhatsappNumber || "") : undefined,
     riderEarning: order?.riderEarning || 0,
     earnings: order?.riderEarning || order?.pricing?.deliveryFee || 0,
     deliveryFee: order?.pricing?.deliveryFee || 0,
@@ -2750,7 +2806,7 @@ export async function getOrderById(
     )
     .populate("dispatch.deliveryPartnerId", "name phone rating totalRatings")
     .populate("dispatchPlan.legs.deliveryPartnerId", "name phone rating totalRatings")
-    .populate("userId", "name phone email")
+    .populate("userId", "name phone email gender")
     .select("+deliveryOtp")
     .lean();
   if (!order) throw new NotFoundError("Order not found");
@@ -3464,7 +3520,7 @@ export async function getCurrentTripDelivery(deliveryPartnerId) {
     }
   })
     .populate({ path: "restaurantId", select: "restaurantName name phone location addressLine1 area city state profileImage" })
-    .populate({ path: "userId", select: "name phone" })
+    .populate({ path: "userId", select: "name phone gender" })
     .sort({ updatedAt: -1 })
     .lean();
 
@@ -3535,7 +3591,7 @@ export async function listOrdersAvailableDelivery(deliveryPartnerId, query) {
 
   const orders = await FoodOrder.find(filter)
     .sort({ createdAt: -1 })
-    .populate("userId", "name phone email")
+    .populate("userId", "name phone email gender")
     .populate("restaurantId", "restaurantName name address phone ownerPhone location profileImage")
     .lean();
 
@@ -4265,7 +4321,7 @@ export async function createCollectQr(
 ) {
   const query = mongoose.Types.ObjectId.isValid(orderId) ? { _id: orderId } : { orderId };
   const order = await FoodOrder.findOne(query)
-    .populate("userId", "name email phone")
+    .populate("userId", "name email phone gender")
     .lean();
   if (!order) throw new NotFoundError("Order not found");
   if (
@@ -4283,6 +4339,14 @@ export async function createCollectQr(
 
   const amountPaise = Math.round(amountDue * 100);
   const user = order.userId || {};
+  const userGender = user.gender || "";
+  const isFemale = String(userGender).toLowerCase() === 'female';
+  const settings = getSettingsSync();
+  const isProtected = isFemale && settings.enableFemaleContactProtection;
+  const targetPhone = isProtected 
+    ? (settings.companySupportNumber || "9999999999") 
+    : (customerInfo.phone || user.phone);
+
   const link = await createPaymentLink({
     amountPaise,
     currency: "INR",
@@ -4290,7 +4354,7 @@ export async function createCollectQr(
     orderId: order.orderId,
     customerName: customerInfo.name || user.name || "Customer",
     customerEmail: customerInfo.email || user.email || "customer@example.com",
-    customerPhone: customerInfo.phone || user.phone,
+    customerPhone: targetPhone,
   });
 
   await FoodOrder.findByIdAndUpdate(order._id, {

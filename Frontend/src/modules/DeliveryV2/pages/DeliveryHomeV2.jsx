@@ -25,7 +25,7 @@ import {
   Bell, HelpCircle, AlertTriangle, 
   Wallet, History, User as UserIcon, LayoutGrid,
   Plus, Minus, Navigation2, Target, Play, CheckCircle2, Clock, ChevronDown,
-  Contact, Package, ShieldCheck, Loader2, Zap
+  Contact, Package, ShieldCheck, Loader2, Zap, Phone
 } from 'lucide-react';
 import { subscriptionAPI } from '@food/api';
 
@@ -1065,13 +1065,60 @@ export default function DeliveryHomeV2({ tab = 'feed' }) {
                                />
                             </div>
                             <div>
-                               <h3 className="text-gray-950 text-2xl font-bold uppercase">Handover Drop</h3>
+                               <h3 className="text-gray-950 text-xl font-bold uppercase line-clamp-1 max-w-[180px]">
+                                 {activeOrder?.customerName || activeOrder?.userName || 'Customer'}
+                               </h3>
                                <p className={`text-[10px] font-bold uppercase tracking-[0.2em] mt-1.5 ${isWithinRange ? 'text-green-600' : 'text-orange-500'}`}>
                                  {isWithinRange ? 'Ready - Swipe to Arrive √' : `${(distanceToTarget / 1000).toFixed(1)} km • ${eta || '--'} min Arrival`}
                                </p>
                             </div>
                           </div>
+
+                          <div className="flex gap-2 shrink-0">
+                            {activeOrder?.isContactProtected ? (
+                              <button
+                                onClick={() => {
+                                  const num = activeOrder?.companySupportNumber?.replace(/\D/g, '') || '';
+                                  if (num) window.location.href = `tel:${num}`;
+                                  else toast.error('Support number not configured');
+                                }}
+                                className="px-4 py-2.5 rounded-2xl bg-amber-50 text-amber-700 border border-amber-100 flex items-center gap-2 font-bold text-xs uppercase tracking-wider active:scale-95 transition-all shadow-xs"
+                                title="Contact Support"
+                              >
+                                <Phone className="w-4 h-4 text-amber-600" />
+                                <span>Support</span>
+                              </button>
+                            ) : (
+                              (activeOrder?.customerPhone || activeOrder?.userPhone) && (
+                                <button
+                                  onClick={() => {
+                                    const num = (activeOrder?.customerPhone || activeOrder?.userPhone)?.replace(/\D/g, '');
+                                    if (num) window.location.href = `tel:${num}`;
+                                  }}
+                                  className="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center text-green-600 border border-green-100 shadow-sm active:scale-95 transition-all"
+                                  title="Call Customer"
+                                >
+                                  <Phone className="w-5 h-5" />
+                                </button>
+                              )
+                            )}
+                          </div>
                         </div>
+
+                        {/* Privacy Protection Notice */}
+                        {activeOrder?.isContactProtected && (
+                          <div className="w-full bg-amber-50/70 border border-amber-100 rounded-3xl p-5 mb-8 flex gap-4 items-start shadow-xs text-left mx-2">
+                             <div className="w-10 h-10 bg-white rounded-2xl flex items-center justify-center text-amber-500 shadow-xs shrink-0 border border-amber-50">
+                                <ShieldCheck className="w-5 h-5" />
+                             </div>
+                             <div className="flex-1">
+                                <p className="text-[10px] font-black text-amber-700 uppercase tracking-[0.2em] mb-1.5 opacity-80">🔒 Customer Contact Protected</p>
+                                <p className="text-xs font-bold text-gray-800 leading-snug">
+                                  {activeOrder.contactMessage || "For privacy and safety reasons, customer contact information is protected. Please contact ItzoFood Support."}
+                                </p>
+                             </div>
+                          </div>
+                        )}
 
                         {/* Customer Instructions Panel */}
                         {activeOrder?.note && (
@@ -1079,7 +1126,7 @@ export default function DeliveryHomeV2({ tab = 'feed' }) {
                              <div className="w-10 h-10 bg-white rounded-2xl flex items-center justify-center text-orange-500 shadow-sm shrink-0 border border-orange-50">
                                 <Package className="w-5 h-5" />
                              </div>
-                             <div className="flex-1">
+                             <div className="flex-1 text-left">
                                 <p className="text-[10px] font-black text-orange-600 uppercase tracking-[0.2em] mb-1.5 opacity-80">Drop Message</p>
                                 <p className="text-sm font-bold text-gray-950 leading-relaxed capitalize">"{activeOrder.note}"</p>
                              </div>

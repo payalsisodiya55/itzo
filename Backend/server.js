@@ -52,6 +52,14 @@ const startServer = async () => {
         // 1. Connect to Database (MongoDB)
         await connectDB();
 
+        // 1.5 Initialize Settings Cache
+        try {
+            const { initSettingsCache } = await import('./src/modules/common/utils/settingsCache.js');
+            await initSettingsCache();
+        } catch (err) {
+            logger.error(`Settings cache initialization error: ${err.message}`);
+        }
+
         // 2. Create HTTP server from Express app
         const httpServer = http.createServer(app);
 

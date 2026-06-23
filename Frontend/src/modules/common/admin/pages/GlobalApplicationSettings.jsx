@@ -60,6 +60,27 @@ const InputField = ({ label, name, value, onChange, placeholder, info }) => {
   );
 };
 
+const ToggleField = ({ label, name, checked, onChange, info }) => {
+  return (
+    <div className="flex items-start justify-between p-4 bg-gray-50/50 rounded-xl border border-gray-100 mb-4">
+      <div className="flex flex-col gap-1 pr-4">
+        <span className="text-xs font-bold text-gray-700 uppercase tracking-tight">{label}</span>
+        {info && <span className="text-[11px] text-gray-500 font-medium">{info}</span>}
+      </div>
+      <label className="relative inline-flex items-center cursor-pointer select-none">
+        <input 
+          type="checkbox" 
+          name={name} 
+          checked={!!checked} 
+          onChange={(e) => onChange(name, e.target.checked)} 
+          className="sr-only peer" 
+        />
+        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+      </label>
+    </div>
+  );
+};
+
 const ImageUploadBox = ({ title, size, preview, onUpload, onClear }) => {
   const fileInputRef = useRef(null);
   return (
@@ -184,6 +205,10 @@ const GlobalApplicationSettings = () => {
     fssai: "",
     panNumber: "",
     cinNumber: "",
+    enableFemaleContactProtection: true,
+    companySupportNumber: "",
+    companyWhatsappNumber: "",
+    privacyMessage: "",
   });
 
   const fetchSettings = async () => {
@@ -207,6 +232,10 @@ const GlobalApplicationSettings = () => {
           fssai: settings.fssai || "",
           panNumber: settings.panNumber || "",
           cinNumber: settings.cinNumber || "",
+          enableFemaleContactProtection: settings.enableFemaleContactProtection !== undefined ? !!settings.enableFemaleContactProtection : true,
+          companySupportNumber: settings.companySupportNumber || "",
+          companyWhatsappNumber: settings.companyWhatsappNumber || "",
+          privacyMessage: settings.privacyMessage || "",
         });
 
         if (settings.adminLogo?.url) setAdminLogoPreview(settings.adminLogo.url);
@@ -271,6 +300,10 @@ const GlobalApplicationSettings = () => {
         fssai: formData.fssai,
         panNumber: formData.panNumber,
         cinNumber: formData.cinNumber,
+        enableFemaleContactProtection: formData.enableFemaleContactProtection,
+        companySupportNumber: formData.companySupportNumber,
+        companyWhatsappNumber: formData.companyWhatsappNumber,
+        privacyMessage: formData.privacyMessage,
         
         // Send URLs to clear them if preview is null
         adminLogoUrl: adminLogoPreview ? (adminLogoPreview.startsWith('blob:') ? undefined : adminLogoPreview) : "",
@@ -394,6 +427,33 @@ const GlobalApplicationSettings = () => {
               <InputField label="Customer Support Email (/contact page)" name="customerSupportEmail" value={formData.customerSupportEmail} onChange={handleChange} placeholder="support@itzofood.com" />
               <InputField label="Partnership Email (/contact page)" name="partnershipEmail" value={formData.partnershipEmail} onChange={handleChange} placeholder="partners@itzofood.com" />
               <InputField label="Help & Support Email (Help page)" name="helpAndSupportEmail" value={formData.helpAndSupportEmail} onChange={handleChange} placeholder="support@itzofood.com" />
+           </div>
+        </SectionCard>
+
+        {/* Customer Privacy Settings */}
+        <SectionCard title="Customer Privacy Settings">
+           <div className="space-y-6">
+              <ToggleField 
+                 label="Enable Female Contact Protection" 
+                 name="enableFemaleContactProtection" 
+                 checked={formData.enableFemaleContactProtection} 
+                 onChange={handleChange} 
+                 info="If enabled, delivery partners will not see contact numbers for female customers and will be routed to Support instead."
+              />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 mt-4">
+                 <InputField label="Company Support Number" name="companySupportNumber" value={formData.companySupportNumber} onChange={handleChange} placeholder="+91XXXXXXXXXX" />
+                 <InputField label="Company WhatsApp Number" name="companyWhatsappNumber" value={formData.companyWhatsappNumber} onChange={handleChange} placeholder="+91XXXXXXXXXX" />
+              </div>
+              <div className="mt-4">
+                 <label className="block text-xs font-semibold text-gray-500 mb-1.5">Privacy Message for Riders</label>
+                 <textarea 
+                    name="privacyMessage" 
+                    value={formData.privacyMessage || ''} 
+                    onChange={(e) => handleChange('privacyMessage', e.target.value)} 
+                    placeholder="Customer contact is protected. Please contact ItzoFood Support."
+                    className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 bg-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-colors shadow-sm min-h-[100px]"
+                 />
+              </div>
            </div>
         </SectionCard>
 

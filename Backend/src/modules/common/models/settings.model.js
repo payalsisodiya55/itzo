@@ -129,6 +129,10 @@ const globalSettingsSchema = new mongoose.Schema(
             url: { type: String, default: '' },
             publicId: { type: String, default: '' }
         },
+        enableFemaleContactProtection: { type: Boolean, default: true },
+        companySupportNumber: { type: String, default: '+919999999999' },
+        companyWhatsappNumber: { type: String, default: '+919999999999' },
+        privacyMessage: { type: String, default: 'For privacy and safety reasons, customer contact information is protected. Please contact ItzoFood Support.' },
         themeColor: { type: String, default: '#0a0a0a' },
         modules: {
             food: { type: Boolean, default: true },

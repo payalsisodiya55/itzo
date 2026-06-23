@@ -4,6 +4,7 @@ import {
   sendNotificationToOwner,
   sendNotificationToOwners,
 } from "../../../../core/notifications/firebase.service.js";
+import { getSettingsSync } from '../../../common/utils/settingsCache.js';
 import { getIO, rooms } from '../../../../config/socket.js';
 import { addOrderJob } from '../../../../queues/producers/order.producer.js';
 
@@ -70,6 +71,27 @@ export function sanitizeOrderForExternal(orderDoc) {
   o.orderMongoId = (o._id || orderDoc?._id || "").toString();
   // Ensure orderId field for UI always contains the pretty ID
   o.orderId = o.order_id || o.orderMongoId; 
+
+  // Female customer privacy mask
+  const userGender = o.userId?.gender || "";
+  const isFemale = String(userGender).toLowerCase() === 'female';
+  const settings = getSettingsSync();
+
+  if (isFemale && settings.enableFemaleContactProtection) {
+    o.customerPhone = null;
+    o.userPhone = null;
+    o.isContactProtected = true;
+    o.contactMessage = settings.privacyMessage || "For privacy and safety reasons, customer contact information is protected. Please contact ItzoFood Support.";
+    o.companySupportNumber = settings.companySupportNumber || "";
+    o.companyWhatsappNumber = settings.companyWhatsappNumber || "";
+
+    if (o.deliveryAddress) {
+      o.deliveryAddress.phone = null;
+    }
+  } else {
+    o.isContactProtected = false;
+  }
+
   return o;
 }
 
@@ -208,6 +230,16 @@ export function buildDeliverySocketPayload(orderDoc, restaurantDoc = null) {
     .map((v) => String(v || '').trim())
     .filter(Boolean);
 
+  const userGender = order?.userId?.gender || "";
+  const isFemale = String(userGender).toLowerCase() === 'female';
+  const settings = getSettingsSync();
+  const isProtected = isFemale && settings.enableFemaleContactProtection;
+
+  const sanitizedDeliveryAddress = { ...deliveryAddress };
+  if (isProtected) {
+    sanitizedDeliveryAddress.phone = null;
+  }
+
   return {
     orderMongoId:
       orderDoc?._id?.toString?.() || order?._id?.toString?.() || order?._id,
@@ -252,12 +284,16 @@ export function buildDeliverySocketPayload(orderDoc, restaurantDoc = null) {
       city: restaurantLocation?.city || restaurant?.city || "",
       state: restaurantLocation?.state || restaurant?.state || "",
     },
-    deliveryAddress: order?.deliveryAddress,
+    deliveryAddress: sanitizedDeliveryAddress,
     customerAddress: customerAddressParts.length ? customerAddressParts.join(', ') : "",
     customerName: order?.customerName || order?.deliveryAddress?.fullName || order?.deliveryAddress?.name || order?.userId?.name || "",
-    customerPhone: order?.customerPhone || order?.deliveryAddress?.phone || order?.userId?.phone || "",
+    customerPhone: isProtected ? null : (order?.customerPhone || order?.deliveryAddress?.phone || order?.userId?.phone || ""),
     userName: order?.customerName || order?.deliveryAddress?.fullName || order?.deliveryAddress?.name || order?.userId?.name || "",
-    userPhone: order?.customerPhone || order?.deliveryAddress?.phone || order?.userId?.phone || "",
+    userPhone: isProtected ? null : (order?.customerPhone || order?.deliveryAddress?.phone || order?.userId?.phone || ""),
+    isContactProtected: isProtected,
+    contactMessage: isProtected ? (settings.privacyMessage || "For privacy and safety reasons, customer contact information is protected. Please contact ItzoFood Support.") : undefined,
+    companySupportNumber: isProtected ? (settings.companySupportNumber || "") : undefined,
+    companyWhatsappNumber: isProtected ? (settings.companyWhatsappNumber || "") : undefined,
     note: order?.note || "",
     riderEarning: order?.riderEarning || 0,
     earnings: order?.riderEarning || order?.pricing?.deliveryFee || 0,

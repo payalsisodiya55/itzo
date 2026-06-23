@@ -2,6 +2,7 @@ import { GlobalSettings } from '../models/settings.model.js';
 import { sendResponse } from '../../../utils/response.js';
 import fs from 'fs';
 import { uploadImageBufferDetailed, uploadBufferDetailed, uploadFileDetailed } from '../../../services/cloudinary.service.js';
+import { updateSettingsCache } from '../utils/settingsCache.js';
 
 export async function getGlobalSettings(req, res, next) {
     try {
@@ -52,7 +53,8 @@ export async function updateGlobalSettings(req, res, next) {
             legalName, gstin, fssai, panNumber, cinNumber,
             adminLogoUrl, adminFaviconUrl, userLogoUrl, userFaviconUrl, deliveryLogoUrl, deliveryFaviconUrl, restaurantLogoUrl, restaurantFaviconUrl, sellerLogoUrl, sellerFaviconUrl,
             themeColor, modules, landingHeroTitle, landingHeroSubtitle, landingVideoUrl, landingPosterUrl, userLoginVideoUrl,
-            socialLinkedinUrl, socialInstagramUrl, socialYoutubeUrl, socialFacebookUrl, socialTwitterUrl, playStoreLink, appStoreLink
+            socialLinkedinUrl, socialInstagramUrl, socialYoutubeUrl, socialFacebookUrl, socialTwitterUrl, playStoreLink, appStoreLink,
+            enableFemaleContactProtection, companySupportNumber, companyWhatsappNumber, privacyMessage
         } = data;
         
         console.log("Updating global settings with data:", data);
@@ -78,6 +80,10 @@ export async function updateGlobalSettings(req, res, next) {
         if (companyName) settings.companyName = companyName;
         if (email) settings.email = email;
         if (customerSupportEmail !== undefined) settings.customerSupportEmail = customerSupportEmail;
+        if (enableFemaleContactProtection !== undefined) settings.enableFemaleContactProtection = enableFemaleContactProtection;
+        if (companySupportNumber !== undefined) settings.companySupportNumber = companySupportNumber;
+        if (companyWhatsappNumber !== undefined) settings.companyWhatsappNumber = companyWhatsappNumber;
+        if (privacyMessage !== undefined) settings.privacyMessage = privacyMessage;
         if (partnershipEmail !== undefined) settings.partnershipEmail = partnershipEmail;
         if (helpAndSupportEmail !== undefined) settings.helpAndSupportEmail = helpAndSupportEmail;
         if (phoneCountryCode || phoneNumber) {
@@ -226,6 +232,7 @@ export async function updateGlobalSettings(req, res, next) {
         }
 
         await settings.save();
+        updateSettingsCache(settings);
         return sendResponse(res, 200, 'Global settings updated successfully', settings);
     } catch (error) {
         next(error);
