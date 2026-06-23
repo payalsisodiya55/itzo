@@ -110,6 +110,7 @@ const ShippingPolicy = lazy(() => import("@food/pages/admin/settings/ShippingPol
 const CancellationPolicy = lazy(() => import("@food/pages/admin/settings/CancellationPolicy"));
 const ReactRegistration = lazy(() => import("@food/pages/admin/settings/ReactRegistration"));
 const RestaurantConsultingSettings = lazy(() => import("@food/pages/admin/settings/RestaurantConsultingSettings"));
+const LoginGrowthSettings = lazy(() => import("@food/pages/admin/settings/LoginGrowthSettings"));
 // System Settings
 const ThirdParty = lazy(() => import("@food/pages/admin/system/ThirdParty"));
 const FirebaseNotification = lazy(() => import("@food/pages/admin/system/FirebaseNotification"));
@@ -390,6 +391,7 @@ export default function AdminRouter() {
             <Route path="pages-social-media/cancellation" element={<CancellationPolicy />} />
             <Route path="pages-social-media/react-registration" element={<ReactRegistration />} />
             <Route path="pages-social-media/consulting" element={<RestaurantConsultingSettings />} />
+            <Route path="pages-social-media/login-growth" element={<LoginGrowthSettings />} />
             
             <Route path="3rd-party-configurations/party" element={<ThirdParty />} />
             <Route path="3rd-party-configurations/firebase" element={<FirebaseNotification />} />

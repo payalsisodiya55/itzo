@@ -5,7 +5,8 @@ import {
     getAdminPageByKey,
     upsertLegalPage,
     upsertAboutPage,
-    upsertConsultingPage
+    upsertConsultingPage,
+    upsertLoginGrowthPage
 } from '../services/pageContent.service.js';
 
 const parseKeyFromParam = (req) => String(req.params?.key || '').trim().toLowerCase();
@@ -15,7 +16,7 @@ export const getPublicPageController = async (req, res, next) => {
         const key = parseKeyFromParam(req);
         let role = req.query?.role;
         if (!role) {
-            role = (key === 'about') ? 'all' : 'user';
+            role = (key === 'about' || key === 'login_growth') ? 'all' : 'user';
         }
         const result = await getPublicPageByKey(key, role);
         return sendResponse(res, 200, 'Page fetched successfully', result.data);
@@ -29,7 +30,7 @@ export const getAdminPageController = async (req, res, next) => {
         const key = parseKeyFromParam(req);
         let role = req.query?.role;
         if (!role) {
-            role = (key === 'about') ? 'all' : 'user';
+            role = (key === 'about' || key === 'login_growth') ? 'all' : 'user';
         }
         const result = await getAdminPageByKey(key, role);
         return sendResponse(res, 200, 'Page fetched successfully', result.data);
@@ -50,6 +51,10 @@ export const upsertAdminPageController = async (req, res, next) => {
         }
         if (key === 'consulting') {
             const result = await upsertConsultingPage(req.body ?? {}, updatedBy, role);
+            return sendResponse(res, 200, 'Page updated successfully', result.data);
+        }
+        if (key === 'login_growth') {
+            const result = await upsertLoginGrowthPage(req.body ?? {}, updatedBy);
             return sendResponse(res, 200, 'Page updated successfully', result.data);
         }
         if (['terms', 'privacy', 'refund', 'shipping', 'cancellation'].includes(key)) {

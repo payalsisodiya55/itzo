@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Routes, Route, Navigate, Link, useLocation, useNavigate } from "react-router-dom"
-import { Phone, Lock, ArrowRight, ShieldCheck, Loader2, UserRound, Mail, ChevronDown, ArrowLeft } from "lucide-react"
+import { Phone, Lock, ArrowRight, ShieldCheck, Loader2, UserRound, Mail, ChevronDown, ArrowLeft, CheckCircle2, ShieldAlert } from "lucide-react"
 import { toast } from "sonner"
-import { authAPI, userAPI } from "@food/api"
+import api, { authAPI, userAPI } from "@food/api"
+import { API_ENDPOINTS } from "@food/api/config"
 import { isModuleAuthenticated, setAuthData } from "@food/utils/auth"
 import { loadBusinessSettings, getCachedSettings, getAppLogo, getCompanyName, setAppType } from "@common/utils/businessSettings"
 
@@ -20,6 +21,30 @@ const defaultBackgroundImages = [
   gourmetBanner,
   collectionsBanner
 ];
+
+const defaultUserGrowth = {
+  headline: "Order Smarter. Save More.",
+  subheadline: "Real Restaurant Prices. No Hidden Charges.",
+  benefits: [
+    "Actual Restaurant Menu Pricing",
+    "No Artificial Menu Markup",
+    "Transparent Delivery Charges",
+    "Affordable Food Delivery",
+    "Hyperlocal Delivery",
+    "Better Pricing Than Traditional Apps"
+  ],
+  comparison: {
+    traditionalAppsText: "Menu Price + Markup + Fees",
+    itzoFoodText: "Actual Menu Price + Delivery Fee"
+  },
+  keyAdvantages: [
+    "Lower Food Costs",
+    "More Restaurant Choices",
+    "Transparent Billing",
+    "Better Local Economy Support"
+  ],
+  privacyMessage: "Your Privacy Matters: Female customer contact information remains protected and is never shared directly with delivery partners."
+}
 
 export default function UnifiedOTPFastLogin() {
   const [backgroundImages, setBackgroundImages] = useState(defaultBackgroundImages)
@@ -47,6 +72,10 @@ export default function UnifiedOTPFastLogin() {
   const [companyName, setCompanyName] = useState(() => getCompanyName())
   const location = useLocation()
   const navigate = useNavigate()
+
+  const [growthData, setGrowthData] = useState(null)
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [keyboardInset, setKeyboardInset] = useState(0)
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -76,6 +105,47 @@ export default function UnifiedOTPFastLogin() {
     }
     fetchSettings()
   }, [])
+
+  useEffect(() => {
+    const fetchGrowthData = async () => {
+      try {
+        const res = await api.get(`${API_ENDPOINTS.ADMIN.LOGIN_GROWTH_PUBLIC}?role=all`)
+        if (res.data.success && res.data.data) {
+          setGrowthData(res.data.data)
+        }
+      } catch (err) {
+        console.error("Failed to load onboarding benefits:", err)
+      }
+    }
+    fetchGrowthData()
+  }, [])
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % 3)
+    }, 4500)
+    return () => clearInterval(timer)
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.visualViewport) return undefined
+
+    const updateKeyboardInset = () => {
+      const viewport = window.visualViewport
+      const inset = Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop)
+      setKeyboardInset(inset > 0 ? inset : 0)
+    }
+
+    updateKeyboardInset()
+    window.visualViewport.addEventListener("resize", updateKeyboardInset)
+    window.visualViewport.addEventListener("scroll", updateKeyboardInset)
+
+    return () => {
+      window.visualViewport.removeEventListener("resize", updateKeyboardInset)
+      window.visualViewport.removeEventListener("scroll", updateKeyboardInset)
+    }
+  }, [])
+
   const searchParams = new URLSearchParams(location.search)
   const referralCode = searchParams.get("ref") || ""
   
@@ -331,79 +401,128 @@ export default function UnifiedOTPFastLogin() {
 
   ]
 
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-neutral-950 flex flex-col md:flex-row md:items-center md:justify-center relative transition-colors duration-1000 md:p-4">
-      {/* Background decoration */}
-      <div className="fixed inset-0 z-0 hidden md:block opacity-30 bg-black">
-        {backgroundVideo ? (
-           <video 
-              src={backgroundVideo} 
-              autoPlay 
-              loop 
-              muted 
-              playsInline 
-              className="absolute inset-0 w-full h-full object-cover blur-sm"
-           />
-        ) : (
-           <AnimatePresence mode="popLayout">
-             {backgroundImages.map((img, index) => (
-               index === currentBg && (
-                 <motion.div
-                   key={index}
-                   initial={{ opacity: 0, scale: 1.05 }}
-                   animate={{ opacity: 1, scale: 1 }}
-                   exit={{ opacity: 0, scale: 1.05 }}
-                   transition={{ duration: 1.5, ease: "easeInOut" }}
-                   className="absolute inset-0 w-full h-full"
-                 >
-                   <img src={img} alt={`background ${index}`} className="w-full h-full object-cover blur-sm" />
-                 </motion.div>
-               )
-             ))}
-           </AnimatePresence>
-        )}
-        <div className="absolute inset-0 bg-white/70 dark:bg-black/90 z-10" />
-      </div>
+  const uData = (typeof growthData !== 'undefined' ? growthData?.user : null) || defaultUserGrowth;
 
-      {/* Banner (Mobile Only) */}
-      <div className="absolute top-0 left-0 right-0 h-[50vh] md:hidden z-0 bg-black">
-        {backgroundVideo ? (
-           <video 
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-neutral-950 flex flex-col md:flex-row md:items-stretch relative transition-colors duration-1000 font-sans">
+      
+      {/* Left Section: Consumer Growth Showcase (Desktop only) */}
+      <div className="hidden md:flex md:w-1/2 flex-col justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 px-12 xl:px-20 py-16 text-white relative overflow-y-auto shrink-0">
+        
+        {/* Background video or images for visual flair */}
+        <div className="absolute inset-0 opacity-10">
+          {backgroundVideo ? (
+            <video 
               src={backgroundVideo} 
               autoPlay 
               loop 
               muted 
               playsInline 
               className="absolute inset-0 w-full h-full object-cover"
-           />
-        ) : (
-           <AnimatePresence mode="popLayout">
-             {backgroundImages.map((img, index) => (
-               index === currentBg && (
-                 <motion.div
-                   key={index}
-                   initial={{ opacity: 0, scale: 1.05 }}
-                   animate={{ opacity: 1, scale: 1 }}
-                   exit={{ opacity: 0, scale: 1.05 }}
-                   transition={{ duration: 1.5, ease: "easeInOut" }}
-                   className="absolute inset-0 w-full h-full"
-                 >
-                   <img src={img} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
-                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                 </motion.div>
-               )
-             ))}
-           </AnimatePresence>
-        )}
-        {backgroundVideo && <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />}
+            />
+          ) : (
+            <img src={backgroundImages[currentBg]} alt="bg" className="w-full h-full object-cover blur-sm" />
+          )}
+        </div>
+
+        <div className="max-w-[500px] mx-auto space-y-8 animate-in fade-in slide-in-from-left-6 duration-500 relative z-10">
+          <div>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#FE5502]/10 text-[#FE5502] border border-[#FE5502]/20 uppercase tracking-widest">
+              ItzoFood Savings
+            </span>
+            <h2 className="text-3xl xl:text-4xl font-extrabold tracking-tight text-white mb-3 mt-4 leading-tight">
+              {uData.headline}
+            </h2>
+            <p className="text-slate-300 text-sm xl:text-base font-medium">
+              {uData.subheadline}
+            </p>
+          </div>
+
+          {/* Pricing comparison */}
+          <div className="bg-white/5 rounded-3xl p-6 border border-white/10 shadow-2xl space-y-5">
+            <div className="text-sm font-bold text-slate-300 pb-2 border-b border-white/10 uppercase tracking-wider">Smart Pricing Comparison</div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-4">
+                <span className="text-[10px] text-red-300 font-bold uppercase tracking-wider block mb-1">Traditional Apps</span>
+                <span className="text-xs font-semibold text-red-400 leading-relaxed">{uData.comparison?.traditionalAppsText || "Menu Price + Markup + Fees"}</span>
+              </div>
+              <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-4">
+                <span className="text-[10px] text-emerald-300 font-bold uppercase tracking-wider block mb-1">ItzoFood</span>
+                <span className="text-xs font-semibold text-emerald-400 leading-relaxed">{uData.comparison?.itzoFoodText || "Actual Menu Price + Delivery Fee"}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Benefits checklist */}
+          <div className="space-y-4 pt-2">
+            <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Consumer Advantages</h4>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-3">
+              {uData.benefits?.map((benefit, i) => (
+                <div key={i} className="flex items-start gap-2">
+                  <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" />
+                  <span className="text-sm text-slate-200 font-medium">{benefit}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Female Privacy callout */}
+          <div className="bg-amber-500/10 border border-amber-500/20 rounded-3xl p-5 flex items-start gap-3">
+            <ShieldAlert className="h-6 w-6 text-amber-500 shrink-0 mt-0.5" />
+            <div>
+              <span className="text-xs text-amber-300 font-bold block mb-1">Safe & Private Delivery</span>
+              <p className="text-xs text-slate-300 font-medium leading-relaxed">
+                {uData.privacyMessage || "Your Privacy Matters: Female customer contact information remains protected and is never shared directly with delivery partners."}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="w-full max-w-[420px] bg-white dark:bg-neutral-900 rounded-none md:rounded-2xl shadow-[0_-8px_30px_rgb(0,0,0,0.12)] md:shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.5)] relative z-20 border-t md:border border-gray-100 dark:border-neutral-800 mt-[50vh] md:mt-0 flex-1 md:flex-initial flex flex-col">
-        <div className="p-6 md:p-8 space-y-6 flex-1">
+      {/* Right Section: Form Container (Mobile/Desktop) */}
+      <div className="w-full md:w-1/2 flex-1 flex flex-col items-center justify-center bg-white dark:bg-neutral-900 relative z-20 px-4 py-8">
+        
+        {/* Banner (Mobile Only) */}
+        <div className="absolute top-0 left-0 right-0 h-[35vh] md:hidden z-0 bg-black">
+          {backgroundVideo ? (
+            <video 
+              src={backgroundVideo} 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          ) : (
+            <AnimatePresence mode="popLayout">
+              {backgroundImages.map((img, index) => (
+                index === currentBg && (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, scale: 1.05 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.05 }}
+                    transition={{ duration: 1.5, ease: "easeInOut" }}
+                    className="absolute inset-0 w-full h-full"
+                  >
+                    <img src={img} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  </motion.div>
+                )
+              ))}
+            </AnimatePresence>
+          )}
+          {backgroundVideo && <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />}
+        </div>
+
+        {/* Card Container */}
+        <div className="w-full max-w-[420px] bg-white dark:bg-neutral-900 rounded-t-3xl md:rounded-2xl shadow-[0_-8px_30px_rgb(0,0,0,0.12)] md:shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.5)] border-t md:border border-gray-100 dark:border-neutral-800 mt-[30vh] md:mt-0 flex flex-col p-6 md:p-8 space-y-6 relative z-10 animate-in fade-in slide-in-from-bottom-6 duration-500">
+          
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <button 
                 onClick={() => navigate(-1)} 
+                type="button"
                 className="p-2 -ml-2 rounded-full hover:bg-gray-100 dark:hover:bg-neutral-800 transition-colors text-gray-600 dark:text-gray-300"
                 aria-label="Go back"
               >
@@ -465,7 +584,7 @@ export default function UnifiedOTPFastLogin() {
                         setName(e.target.value)
                         if (nameError) setNameError("")
                       }}
-                      className={`block w-full pl-10 pr-4 py-3 h-12 md:h-14 bg-white dark:bg-neutral-900 text-gray-900 dark:text-white border border-gray-300 dark:border-neutral-700 rounded-xl focus:border-[#FE5502] focus:outline-none transition-all placeholder:text-gray-400 text-lg ${nameError ? "border-red-500" : ""}`}
+                      className={`block w-full pl-10 pr-4 py-3 h-12 md:h-14 bg-white dark:bg-neutral-950 text-gray-900 dark:text-white border border-gray-300 dark:border-neutral-700 rounded-xl focus:border-[#FE5502] focus:outline-none transition-all placeholder:text-gray-400 text-lg ${nameError ? "border-red-500" : ""}`}
                       placeholder="Your full name"
                     />
                   </div>
@@ -577,7 +696,56 @@ export default function UnifiedOTPFastLogin() {
             </button>
           </form>
 
+          {/* Mobile Benefit Carousel */}
+          {!keyboardInset && (
+            <div className="md:hidden w-full pt-1">
+              <div className="bg-slate-50 dark:bg-neutral-900/60 border border-slate-100 dark:border-neutral-800 rounded-2xl p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-bold text-[#FE5502] uppercase tracking-wider">Itzo Savings</span>
+                  <div className="flex gap-1">
+                    {[0, 1, 2].map((idx) => (
+                      <div
+                        key={idx}
+                        className={`h-1.5 rounded-full transition-all duration-300 ${
+                          currentSlide === idx ? "w-4 bg-[#FE5502]" : "w-1.5 bg-slate-200 dark:bg-neutral-700"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
 
+                <div className="relative overflow-hidden min-h-[76px] flex items-center">
+                  {currentSlide === 0 && (
+                    <div className="w-full space-y-0.5 animate-in fade-in slide-in-from-right-4 duration-300">
+                      <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200">{uData.headline}</h4>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400">{uData.subheadline}</p>
+                    </div>
+                  )}
+
+                  {currentSlide === 1 && (
+                    <div className="w-full space-y-1 animate-in fade-in slide-in-from-right-4 duration-300">
+                      <span className="text-[9px] text-slate-400 font-bold block">SAVINGS DETAIL</span>
+                      <div className="flex items-center justify-between bg-white dark:bg-neutral-800 px-3 py-1.5 rounded-lg border border-slate-100 dark:border-neutral-700 text-[10px]">
+                        <span className="font-semibold text-slate-600 dark:text-slate-300">{uData.comparison?.itzoFoodText}</span>
+                        <span className="font-bold text-emerald-600 dark:text-emerald-400">No Markup</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {currentSlide === 2 && (
+                    <div className="w-full space-y-1 animate-in fade-in slide-in-from-right-4 duration-300">
+                      <span className="text-[9px] text-amber-600 dark:text-amber-500 font-bold flex items-center gap-1">
+                        <ShieldAlert className="h-3.5 w-3.5" /> Private & Secure Delivery
+                      </span>
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight">
+                        Female contact info remains protected & is never shared with riders.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="text-center text-[11px] md:text-xs text-gray-400 dark:text-gray-500 pt-4 pb-2 border-t border-gray-100 dark:border-neutral-800 mt-6">
             <p className="mb-2">By continuing, you agree to our</p>

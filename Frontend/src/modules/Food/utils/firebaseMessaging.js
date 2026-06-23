@@ -723,7 +723,11 @@ export async function registerWebPushForCurrentModule(pathname = window.location
       const supported = await isSupported().catch(() => false);
       if (!supported) return;
 
-      const registration = await navigator.serviceWorker.register("/firebase-messaging-sw.js");
+      let swUrl = "/firebase-messaging-sw.js";
+      if (firebasePublicEnv && firebasePublicEnv.apiKey) {
+        swUrl += `?firebaseConfig=${encodeURIComponent(JSON.stringify(firebasePublicEnv))}`;
+      }
+      const registration = await navigator.serviceWorker.register(swUrl);
       pushDebugLog(PUSH_DEBUG_PREFIX, "Service worker registered for push", {
         scope: registration.scope,
         moduleName,

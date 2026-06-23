@@ -107,55 +107,73 @@ async function loadFirebaseWebConfig() {
   return null;
 }
 
-(async () => {
-  const config = await loadFirebaseWebConfig();
-  if (!config || !config.apiKey || !config.projectId || !config.appId || !config.messagingSenderId) {
-    return;
+const handleBackgroundMessage = async (payload) => {
+  pushDebugLog(PUSH_DEBUG_PREFIX, "Received Firebase background message", { payload });
+  
+  const visibleClient = await hasVisibleClientForTarget(payload);
+  
+  if (!visibleClient) {
+    const title = payload?.notification?.title || payload?.data?.title || "New Notification";
+    const body = payload?.notification?.body || payload?.data?.body || "";
+    const image =
+      payload?.notification?.image ||
+      payload?.data?.image ||
+      payload?.data?.imageUrl ||
+      undefined;
+    const notificationKey = getNotificationKey(payload);
+    
+    pushDebugLog(PUSH_DEBUG_PREFIX, "Showing service worker notification", {
+      title,
+      body,
+      image,
+      notificationKey,
+    });
+
+    self.registration.showNotification(title, {
+      body,
+      icon: "/favicon.ico",
+      image,
+      tag: notificationKey,
+      renotify: false,
+      silent: false,
+      requireInteraction: false,
+      vibrate: [200, 100, 200, 100, 300],
+      data: payload?.data || {},
+    });
   }
 
-  firebase.initializeApp(config);
-  pushDebugLog(PUSH_DEBUG_PREFIX, "Firebase messaging service worker initialized");
-  const messaging = firebase.messaging();
+  // Always notify clients regardless of visibility
+  await notifyOpenClients(payload);
+};
 
-  messaging.onBackgroundMessage(async (payload) => {
-    pushDebugLog(PUSH_DEBUG_PREFIX, "Received Firebase background message", { payload });
-    
-    const visibleClient = await hasVisibleClientForTarget(payload);
-    
-    if (!visibleClient) {
-      const title = payload?.notification?.title || payload?.data?.title || "New Notification";
-      const body = payload?.notification?.body || payload?.data?.body || "";
-      const image =
-        payload?.notification?.image ||
-        payload?.data?.image ||
-        payload?.data?.imageUrl ||
-        undefined;
-      const notificationKey = getNotificationKey(payload);
-      
-      pushDebugLog(PUSH_DEBUG_PREFIX, "Showing service worker notification", {
-        title,
-        body,
-        image,
-        notificationKey,
-      });
-  
-      self.registration.showNotification(title, {
-        body,
-        icon: "/favicon.ico",
-        image,
-        tag: notificationKey,
-        renotify: false,
-        silent: false,
-        requireInteraction: false,
-        vibrate: [200, 100, 200, 100, 300],
-        data: payload?.data || {},
-      });
+let syncConfig = null;
+try {
+  const urlParams = new URL(self.location.href).searchParams;
+  const configStr = urlParams.get("firebaseConfig");
+  if (configStr) {
+    syncConfig = JSON.parse(decodeURIComponent(configStr));
+  }
+} catch (e) {}
+
+if (syncConfig && syncConfig.apiKey && syncConfig.projectId && syncConfig.appId && syncConfig.messagingSenderId) {
+  firebase.initializeApp(syncConfig);
+  pushDebugLog(PUSH_DEBUG_PREFIX, "Firebase messaging service worker initialized synchronously");
+  const messaging = firebase.messaging();
+  messaging.onBackgroundMessage(handleBackgroundMessage);
+} else {
+  (async () => {
+    const config = await loadFirebaseWebConfig();
+    if (!config || !config.apiKey || !config.projectId || !config.appId || !config.messagingSenderId) {
+      return;
     }
 
-    // Always notify clients regardless of visibility
-    await notifyOpenClients(payload);
-  });
-})();
+    firebase.initializeApp(config);
+    pushDebugLog(PUSH_DEBUG_PREFIX, "Firebase messaging service worker initialized asynchronously");
+    const messaging = firebase.messaging();
+
+    messaging.onBackgroundMessage(handleBackgroundMessage);
+  })();
+}
 
 self.addEventListener("push", (event) => {
   if (!event.data) return;

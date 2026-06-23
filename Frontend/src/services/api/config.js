@@ -50,6 +50,8 @@ export const API_ENDPOINTS = {
     SHIPPING_PUBLIC: "/food/pages/shipping",
     CANCELLATION: "/food/admin/pages-social-media/cancellation",
     CANCELLATION_PUBLIC: "/food/pages/cancellation",
+    LOGIN_GROWTH: "/food/admin/pages-social-media/login_growth",
+    LOGIN_GROWTH_PUBLIC: "/food/pages/login_growth",
     FEEDBACK_CREATE: "", FEEDBACK_EXPERIENCE: "/food/admin/feedback-experiences", FEEDBACK_EXPERIENCE_CREATE: "/food/restaurant/feedback-experience", FEEDBACK_EXPERIENCE_BY_ID: "",
     SAFETY_EMERGENCY: "/food/admin/safety-emergency-reports",
     // User creates reports via USER context; kept for legacy imports.

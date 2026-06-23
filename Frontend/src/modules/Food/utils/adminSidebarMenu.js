@@ -275,6 +275,7 @@ export const adminSidebarMenu = [
       { type: "link", label: "Shipping Policy", permissionKey: "shipping", path: "/ecs/food/pages-social-media/shipping", icon: "Truck" },
       { type: "link", label: "Cancellation Policy", permissionKey: "cancellation", path: "/ecs/food/pages-social-media/cancellation", icon: "X" },
       { type: "link", label: "Restaurant Consulting", permissionKey: "consulting", path: "/ecs/food/pages-social-media/consulting", icon: "Briefcase" },
+      { type: "link", label: "Login Growth Settings", permissionKey: "login_growth", path: "/ecs/food/pages-social-media/login-growth", icon: "TrendingUp" },
     ],
   },
 ];
