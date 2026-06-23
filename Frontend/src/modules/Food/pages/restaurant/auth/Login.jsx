@@ -147,11 +147,11 @@ export default function RestaurantLogin() {
       {/* Form Section */}
       <div className="w-full lg:w-1/2 flex-1 flex flex-col items-center justify-center px-4 sm:px-8 py-10 sm:py-16 bg-white rounded-t-[40px] lg:rounded-none lg:rounded-l-[40px] shadow-[0_-20px_40px_rgba(0,0,0,0.3)] lg:shadow-[-20px_0_40px_rgba(0,0,0,0.1)] -mt-12 lg:mt-0 relative z-10">
         <div id="login-content" className="w-full max-w-[400px] flex flex-col items-center">
-          <div className="w-24 h-24 sm:w-28 sm:h-28 bg-white rounded-full shadow-xl flex items-center justify-center border-4 border-slate-50 mb-6 -mt-20 lg:-mt-0 lg:mb-8 overflow-hidden p-3">
+          <div className="w-24 h-24 sm:w-28 sm:h-28 bg-white rounded-full shadow-xl flex items-center justify-center border-4 border-slate-50 mb-6 -mt-20 lg:-mt-0 lg:mb-8 overflow-hidden p-1.5">
             <img 
-              src="/itzo-logo-transparent.png" 
+              src="/itzo-logo.jpg" 
               alt="Itzo Logo" 
-              className="w-full h-full object-contain"
+              className="w-full h-full object-contain scale-110"
             />
           </div>
 
