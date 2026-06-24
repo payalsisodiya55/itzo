@@ -76,54 +76,54 @@ export default function JobDetails() {
     <div className="min-h-screen bg-slate-50 font-sans flex flex-col">
       <Navbar />
 
-      <div className="pt-24 pb-12 bg-white border-b border-slate-200">
+      <div className="pt-20 md:pt-24 pb-6 md:pb-10 bg-white border-b border-slate-200">
         <div className="max-w-4xl mx-auto px-4">
-          <Link to="/food/careers" className="inline-flex items-center text-slate-500 hover:text-slate-900 font-medium mb-8 transition-colors">
+          <Link to="/food/careers" className="inline-flex items-center text-slate-500 hover:text-slate-900 font-medium mb-4 md:mb-6 transition-colors">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Careers
           </Link>
 
-          <div className="flex flex-col md:flex-row md:items-start justify-between gap-8">
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 md:gap-8">
             <div className="flex-1">
-              <div className="flex flex-wrap items-center gap-2 mb-4">
-                <span className="bg-orange-50 text-orange-600 px-3 py-1 text-sm font-semibold rounded-md uppercase tracking-wider">
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <span className="bg-orange-50 text-orange-600 px-3 py-1 text-xs md:text-sm font-semibold rounded-md uppercase tracking-wider">
                   {job.department}
                 </span>
                 <span className="text-slate-400">&bull;</span>
-                <span className="text-slate-500 text-sm font-medium">Posted {new Date(job.publishDate).toLocaleDateString()}</span>
+                <span className="text-slate-500 text-xs md:text-sm font-medium">Posted {new Date(job.publishDate).toLocaleDateString()}</span>
               </div>
               
-              <h1 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
+              <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 md:mb-6 leading-tight">
                 {job.title}
               </h1>
 
-              <div className="flex flex-wrap items-center gap-6 text-slate-600">
+              <div className="flex flex-wrap items-center gap-4 md:gap-6 text-slate-600 text-sm md:text-base">
                 <div className="flex items-center">
-                  <MapPin className="w-5 h-5 mr-2 text-slate-400" />
+                  <MapPin className="w-4 h-4 md:w-5 md:h-5 mr-2 text-slate-400" />
                   <span className="font-medium">{job.location}</span>
                 </div>
                 <div className="flex items-center">
-                  <Briefcase className="w-5 h-5 mr-2 text-slate-400" />
+                  <Briefcase className="w-4 h-4 md:w-5 md:h-5 mr-2 text-slate-400" />
                   <span className="font-medium">{job.employmentType}</span>
                 </div>
                 <div className="flex items-center">
-                  <DollarSign className="w-5 h-5 mr-2 text-slate-400" />
+                  <DollarSign className="w-4 h-4 md:w-5 md:h-5 mr-2 text-slate-400" />
                   <span className="font-medium">{job.salaryRange}</span>
                 </div>
                 <div className="flex items-center">
-                  <Clock className="w-5 h-5 mr-2 text-slate-400" />
+                  <Clock className="w-4 h-4 md:w-5 md:h-5 mr-2 text-slate-400" />
                   <span className="font-medium">{job.experienceRequired} Experience</span>
                 </div>
               </div>
             </div>
 
             {job.applicationFormLink && (
-              <div className="shrink-0 w-full md:w-auto">
+              <div className="shrink-0 w-full md:w-auto mt-2 md:mt-0">
                 <a 
                   href={job.applicationFormLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex w-full md:w-auto items-center justify-center px-8 py-4 border border-transparent text-lg font-bold rounded-full shadow-md text-white bg-orange-500 hover:bg-orange-600 transition-all active:scale-95"
+                  className="inline-flex w-full md:w-auto items-center justify-center px-6 md:px-8 py-3 md:py-4 border border-transparent text-base md:text-lg font-bold rounded-full shadow-md text-white bg-orange-500 hover:bg-orange-600 transition-all active:scale-95"
                 >
                   Apply Now
                 </a>
@@ -133,32 +133,32 @@ export default function JobDetails() {
         </div>
       </div>
 
-      <div className="flex-grow py-12">
+      <div className="flex-grow py-6 md:py-10">
         <div className="max-w-4xl mx-auto px-4">
           
           {job.posterImage && (
-            <div className="mb-12 rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-white">
+            <div className="mb-6 md:mb-10 rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-white">
               <img src={job.posterImage} alt={job.title} className="w-full h-auto object-cover" />
             </div>
           )}
 
-          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 md:p-12">
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-12">
             
-            <section className="mb-12">
-              <h2 className="text-2xl font-bold text-slate-900 mb-4">About the Role</h2>
-              <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed whitespace-pre-wrap">
+            <section className="mb-8 md:mb-10">
+              <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-3 md:mb-4">About the Role</h2>
+              <div className="prose prose-slate max-w-none text-sm md:text-base text-slate-600 leading-relaxed whitespace-pre-wrap">
                 {job.detailedDescription}
               </div>
             </section>
 
             {job.responsibilities && job.responsibilities.length > 0 && (
-              <section className="mb-12">
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">What You'll Do</h2>
-                <ul className="space-y-4">
+              <section className="mb-8 md:mb-10">
+                <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-4 md:mb-6">What You'll Do</h2>
+                <ul className="space-y-3">
                   {job.responsibilities.map((item, index) => (
                     <li key={index} className="flex items-start">
-                      <ChevronRight className="w-6 h-6 text-orange-500 mr-2 shrink-0" />
-                      <span className="text-slate-600 mt-0.5">{item}</span>
+                      <ChevronRight className="w-5 h-5 text-orange-500 mr-2 shrink-0 mt-0.5" />
+                      <span className="text-sm md:text-base text-slate-600 mt-0.5">{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -166,13 +166,13 @@ export default function JobDetails() {
             )}
 
             {job.requirements && job.requirements.length > 0 && (
-              <section className="mb-12">
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">What We're Looking For</h2>
-                <ul className="space-y-4">
+              <section className="mb-8 md:mb-10">
+                <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-4 md:mb-6">What We're Looking For</h2>
+                <ul className="space-y-3">
                   {job.requirements.map((item, index) => (
                     <li key={index} className="flex items-start">
-                      <ChevronRight className="w-6 h-6 text-orange-500 mr-2 shrink-0" />
-                      <span className="text-slate-600 mt-0.5">{item}</span>
+                      <ChevronRight className="w-5 h-5 text-orange-500 mr-2 shrink-0 mt-0.5" />
+                      <span className="text-sm md:text-base text-slate-600 mt-0.5">{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -180,13 +180,13 @@ export default function JobDetails() {
             )}
 
             {job.benefits && job.benefits.length > 0 && (
-              <section className="mb-12">
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">Perks & Benefits</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <section className="mb-8 md:mb-10">
+                <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-4 md:mb-6">Perks & Benefits</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                   {job.benefits.map((item, index) => (
-                    <div key={index} className="flex items-start bg-slate-50 p-4 rounded-xl border border-slate-100">
-                      <CheckCircle2 className="w-5 h-5 text-emerald-500 mr-3 shrink-0 mt-0.5" />
-                      <span className="text-slate-700 font-medium">{item}</span>
+                    <div key={index} className="flex items-start bg-slate-50 p-3 md:p-4 rounded-xl border border-slate-100">
+                      <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-emerald-500 mr-3 shrink-0 mt-0.5" />
+                      <span className="text-sm md:text-base text-slate-700 font-medium">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -208,13 +208,13 @@ export default function JobDetails() {
           </div>
           
           {job.applicationFormLink && (
-            <div className="mt-12 text-center">
-              <h3 className="text-2xl font-bold text-slate-900 mb-6">Ready to join us?</h3>
+            <div className="mt-6 md:mt-10 text-center">
+              <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-3 md:mb-4">Ready to join us?</h3>
               <a 
                 href={job.applicationFormLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full md:w-auto items-center justify-center px-10 py-4 border border-transparent text-lg font-bold rounded-full shadow-md text-white bg-orange-500 hover:bg-orange-600 transition-all active:scale-95"
+                className="inline-flex w-full md:w-auto items-center justify-center px-6 md:px-10 py-3 md:py-4 border border-transparent text-base md:text-lg font-bold rounded-full shadow-md text-white bg-orange-500 hover:bg-orange-600 transition-all active:scale-95"
               >
                 Apply for this job
               </a>
