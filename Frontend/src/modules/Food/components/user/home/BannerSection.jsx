@@ -115,14 +115,14 @@ const BannerSection = memo(({
                       <div className="relative h-full w-full flex items-center justify-between px-2 sm:px-6">
                         {/* Left Side: Text Content */}
                         <div className="relative z-10 flex flex-col justify-center h-full text-white w-[60%] sm:w-[65%] mt-2 pl-4 sm:pl-8">
-                          <div className="flex items-center gap-1.5 mb-1">
+                          <h3 className="text-xl sm:text-2xl lg:text-3xl font-black leading-[1.1] mb-1 text-white uppercase italic drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]">
+                            {bannerData?.title && <TypewriterText text={bannerData.title} isActive={isActive} delay={0.1} />}
+                          </h3>
+                          <div className="flex items-center gap-1.5 mb-3">
                             <span className="text-[10px] sm:text-xs font-black italic tracking-wider text-orange-200 uppercase flex items-center gap-1">
-                              <TypewriterText text={bannerData?.title || "A SIX IS HIT! 🏏"} isActive={isActive} delay={0.1} />
+                              {bannerData?.subtitle && <TypewriterText text={bannerData.subtitle} isActive={isActive} delay={0.4} />}
                             </span>
                           </div>
-                          <h3 className="text-xl sm:text-2xl lg:text-3xl font-black leading-[1.1] mb-3 text-white uppercase italic drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]">
-                            <TypewriterText text={bannerData?.subtitle || "66% OFF FOR 10 MIN!"} isActive={isActive} delay={0.4} />
-                          </h3>
                           <motion.div
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={
@@ -138,7 +138,7 @@ const BannerSection = memo(({
                             className="w-fit"
                           >
                             <button className="bg-[#FE5502] hover:bg-[#E44D02] shadow-[0_4px_12px_rgba(254,85,2,0.5)] flex items-center gap-1 px-4 py-2 rounded-xl text-white font-bold transition-all transform hover:scale-105 active:scale-95">
-                              {bannerData?.action || "Order Now"} <span className="font-black tracking-tighter">&gt;&gt;</span>
+                              {bannerData?.ctaText || bannerData?.action || "Order Now"} <span className="font-black tracking-tighter">&gt;&gt;</span>
                             </button>
                           </motion.div>
                         </div>
@@ -178,6 +178,10 @@ const BannerSection = memo(({
           className="absolute inset-0 z-20 h-full w-full border-0 p-0 bg-transparent text-left"
           onClick={() => {
             const bannerData = heroBannersData[currentBannerIndex];
+            if (bannerData?.ctaLink) {
+              navigate(bannerData.ctaLink);
+              return;
+            }
             const linkedRestaurants = bannerData?.linkedRestaurants || [];
             if (linkedRestaurants.length > 0) {
               const firstRestaurant = linkedRestaurants[0];

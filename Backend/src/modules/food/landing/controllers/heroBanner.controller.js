@@ -88,7 +88,11 @@ export const updateHeroBannerController = async (req, res, next) => {
         }
 
         const updated = await updateHeroBanner(id, {
-            zoneId: req.body?.zoneId
+            zoneId: req.body?.zoneId,
+            title: req.body?.title,
+            subtitle: req.body?.subtitle,
+            ctaText: req.body?.ctaText,
+            ctaLink: req.body?.ctaLink
         });
 
         return sendResponse(res, 200, 'Hero banner updated', updated);

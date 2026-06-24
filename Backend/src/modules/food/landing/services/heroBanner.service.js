@@ -80,6 +80,18 @@ export const updateHeroBanner = async (id, updates = {}) => {
     if (Object.prototype.hasOwnProperty.call(updates, 'zoneId')) {
         payload.zoneId = typeof updates.zoneId === 'string' ? updates.zoneId.trim() : '';
     }
+    if (Object.prototype.hasOwnProperty.call(updates, 'title')) {
+        payload.title = updates.title;
+    }
+    if (Object.prototype.hasOwnProperty.call(updates, 'subtitle')) {
+        payload.subtitle = updates.subtitle;
+    }
+    if (Object.prototype.hasOwnProperty.call(updates, 'ctaText')) {
+        payload.ctaText = updates.ctaText;
+    }
+    if (Object.prototype.hasOwnProperty.call(updates, 'ctaLink')) {
+        payload.ctaLink = updates.ctaLink;
+    }
 
     const updated = await FoodHeroBanner.findByIdAndUpdate(id, payload, {
         new: true
