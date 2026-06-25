@@ -168,3 +168,51 @@ export async function sendJobApplicationAcknowledgementEmail(to, applicantName, 
     }
 }
 
+/**
+ * Send acknowledgment email to a licensing request applicant.
+ * @param {string} to - Recipient email
+ * @param {string} ownerName - The owner's name
+ * @param {string} restaurantName - The restaurant's name
+ * @param {string} vendor - The selected consultant vendor
+ * @returns {Promise<boolean>}
+ */
+export async function sendLicensingAcknowledgementEmail(to, ownerName, restaurantName, vendor) {
+    const trans = getTransporter();
+    if (!trans) {
+        logger.warn('Licensing acknowledgment email skipped: SMTP not configured');
+        return false;
+    }
+    const from = config.emailFrom || config.emailUser;
+    const subject = `Licensing Support Request Received – ItzoFood`;
+    const html = `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 500px; margin: 0 auto; padding: 20px;">
+  <h2 style="color: #ea580c;">Hello ${ownerName},</h2>
+  <p>Thank you for submitting a licensing support request for <strong>${restaurantName}</strong> on ItzoFood.</p>
+  <p>We have forwarded your details to our trusted licensing partner, <strong>${vendor}</strong>. A representative from their team will contact you shortly on your registered contact details to assist you with the licensing and compliance onboarding process.</p>
+  <p>If you have any questions in the meantime, feel free to reach out to us.</p>
+  <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+  <p style="color: #999; font-size: 12px;">Best Regards,<br>ItzoFood Consulting & Licensing Team</p>
+</body>
+</html>`;
+    const text = `Hello ${ownerName},\n\nThank you for submitting a licensing support request for ${restaurantName} on ItzoFood.\n\nWe have forwarded your details to our trusted licensing partner, ${vendor}. A representative from their team will contact you shortly to assist with your licensing and compliance onboarding.\n\nBest Regards,\nItzoFood Consulting Team`;
+
+    try {
+        await trans.sendMail({
+            from: typeof from === 'string' && from.includes('<') ? from : `ItzoFood Consulting <${from}>`,
+            to,
+            subject,
+            text,
+            html
+        });
+        logger.info(`Licensing acknowledgement email sent to ${to}`);
+        return true;
+    } catch (err) {
+        logger.error(`Failed to send licensing acknowledgement email to ${to}:`, err.message);
+        return false;
+    }
+}
+
+

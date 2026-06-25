@@ -286,4 +286,12 @@ export const adminSidebarMenu = [
       { type: "link", label: "Login Growth Settings", permissionKey: "login_growth", path: "/ecs/food/pages-social-media/login-growth", icon: "TrendingUp" },
     ],
   },
+  {
+    type: "section",
+    label: "CONSULTING",
+    permissionKey: "pages_social_media",
+    items: [
+      { type: "link", label: "Licensing Requests", permissionKey: "consulting", path: "/ecs/food/consulting/licensing-requests", icon: "FileText" },
+    ],
+  },
 ];

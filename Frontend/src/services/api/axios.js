@@ -61,6 +61,18 @@ function getModuleFromUrl(url = "") {
 
 function getModuleFromConfig(config) {
   if (config?.contextModule) return config.contextModule;
+  
+  const url = String(config?.url || "").toLowerCase();
+  const method = String(config?.method || "").toLowerCase();
+  
+  // Custom routing: GET, PATCH, and DELETE requests to licensing-request belong to admin module; POST belongs to public user
+  if (url.includes("/licensing-request")) {
+    if (method === "post") {
+      return "user";
+    }
+    return "admin";
+  }
+
   return getModuleFromUrl(config?.url);
 }
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import FooterSection from '../components/FooterSection';
+import LicensingSupportModal from './LicensingSupportModal';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from "@food/api";
 import { API_ENDPOINTS } from "@food/api/config";
@@ -71,6 +72,10 @@ export default function RestaurantConsulting() {
   const [loading, setLoading] = useState(true);
   const [pageData, setPageData] = useState(defaultConsultingData);
   const [openAccordion, setOpenAccordion] = useState(null);
+  
+  // Licensing support modal state
+  const [isLicensingModalOpen, setIsLicensingModalOpen] = useState(false);
+  const [preFillData, setPreFillData] = useState(null);
 
   // User/restaurant form state
   const [restaurantName, setRestaurantName] = useState('');
@@ -131,8 +136,19 @@ export default function RestaurantConsulting() {
 
   const handleInquirySubmit = (e) => {
     e.preventDefault();
-    // Safely redirect to licensing assistance Google Form in new tab
-    window.open(pageData.applyFormUrl, '_blank', 'noopener,noreferrer');
+    // Pre-fill modal fields using what the user already typed in the hero form
+    setPreFillData({
+      restaurantName,
+      ownerName: contactName,
+      city,
+      mobile,
+      email,
+      selectedLicenses: [
+        ...(hasFssai ? [] : ['FSSAI License']),
+        ...(hasGst ? [] : ['GST Registration'])
+      ]
+    });
+    setIsLicensingModalOpen(true);
   };
 
   const toggleAccordion = (index) => {
@@ -388,10 +404,14 @@ export default function RestaurantConsulting() {
                     Status: <span className={showApplyCta ? "text-rose-500" : "text-green-600"}>{showApplyCta ? "Not Available" : "Required"}</span>
                   </div>
                   {(isFssai || isGst) && (
-                    <a
-                      href={pageData.applyFormUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setPreFillData({
+                          selectedLicenses: [isFssai ? 'FSSAI License' : 'GST Registration']
+                        });
+                        setIsLicensingModalOpen(true);
+                      }}
                       className={`text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 transition-all ${
                         showApplyCta 
                           ? "bg-rose-500 text-white shadow-sm hover:bg-rose-600" 
@@ -400,7 +420,7 @@ export default function RestaurantConsulting() {
                     >
                       <span>{pageData.applyButtonLabel}</span>
                       <ExternalLink className="w-3 h-3" />
-                    </a>
+                    </button>
                   )}
                 </div>
               </motion.div>
@@ -561,20 +581,28 @@ export default function RestaurantConsulting() {
               <span>Register Restaurant</span>
               <ArrowRight className="w-4 h-4" />
             </a>
-            <a 
-              href={pageData.applyFormUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button 
+              type="button"
+              onClick={() => {
+                setPreFillData(null);
+                setIsLicensingModalOpen(true);
+              }}
               className="w-full sm:w-auto bg-rose-700/40 hover:bg-rose-700/60 border border-white/20 text-white font-extrabold py-4 px-8 rounded-full transition-all text-base tracking-wide flex items-center justify-center gap-2"
             >
               <span>{pageData.applyButtonLabel}</span>
               <ExternalLink className="w-4 h-4" />
-            </a>
+            </button>
           </div>
         </div>
       </section>
 
       <FooterSection />
+      
+      <LicensingSupportModal 
+        isOpen={isLicensingModalOpen} 
+        onClose={() => setIsLicensingModalOpen(false)} 
+        preFillData={preFillData} 
+      />
     </div>
   );
 }

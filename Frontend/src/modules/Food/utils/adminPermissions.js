@@ -95,7 +95,14 @@ const isModuleDashboardPath = (pathname = "", rootKey = "") => {
 
 export const hasPermissionEntry = (permissions, permissionKey, action = "view") => {
   const normalizedAction = normalizeAction(action);
-  const entry = permissions?.[permissionKey];
+  let entry = permissions?.[permissionKey];
+  if (!entry && permissionKey) {
+    const parts = permissionKey.split("::");
+    if (parts.length > 1) {
+      const parentKey = parts.slice(0, -1).join("::");
+      entry = permissions?.[parentKey];
+    }
+  }
   if (!permissionKey || !entry) return false;
   if (normalizedAction === "view") return entry.view === true;
   return entry.view === true && entry[normalizedAction] === true;

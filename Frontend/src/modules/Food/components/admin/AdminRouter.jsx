@@ -99,6 +99,8 @@ const JobsList = lazy(() => import("@food/pages/admin/careers/JobsList"));
 const AddEditJob = lazy(() => import("@food/pages/admin/careers/AddEditJob"));
 const JobApplicationsList = lazy(() => import("@food/pages/admin/careers/JobApplicationsList"));
 const JobApplicationDetails = lazy(() => import("@food/pages/admin/careers/JobApplicationDetails"));
+const LicensingRequestsList = lazy(() => import("@food/pages/admin/settings/LicensingRequestsList"));
+const LicensingRequestDetails = lazy(() => import("@food/pages/admin/settings/LicensingRequestDetails"));
 
 // Business Settings
 const EmailTemplate = lazy(() => import("@food/pages/admin/settings/EmailTemplate"));
@@ -398,6 +400,10 @@ export default function AdminRouter() {
             <Route path="pages-social-media/react-registration" element={<ReactRegistration />} />
             <Route path="pages-social-media/consulting" element={<RestaurantConsultingSettings />} />
             <Route path="pages-social-media/login-growth" element={<LoginGrowthSettings />} />
+
+            {/* CONSULTING & LICENSING */}
+            <Route path="consulting/licensing-requests" element={<LicensingRequestsList />} />
+            <Route path="consulting/licensing-requests/:id" element={<LicensingRequestDetails />} />
             
             <Route path="3rd-party-configurations/party" element={<ThirdParty />} />
             <Route path="3rd-party-configurations/firebase" element={<FirebaseNotification />} />
