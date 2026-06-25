@@ -26,6 +26,8 @@ import subscriptionRoutes from '../modules/food/subscriptions/routes/subscriptio
 
 import commonSettingsRoutes from '../modules/common/routes/settings.routes.js';
 import { getGlobalSettings as getPublicSettings } from '../modules/common/controllers/settings.controller.js';
+import jobApplicationRoutes from '../modules/food/admin/routes/jobApplication.route.js';
+
 
 const router = express.Router();
 
@@ -50,6 +52,9 @@ router.use('/v1/food/search', searchRoutes);
 router.get('/v1/food/dining/categories/public', getPublicDiningCategories);
 router.get('/v1/food/dining/restaurants/public', getPublicDiningRestaurants);
 router.use('/v1/uploads', uploadRoutes);
+router.use('/v1/job-applications', jobApplicationRoutes);
+router.use('/job-applications', jobApplicationRoutes);
+
 
 // Mark business-settings/public as truly public (must be before protected admin block)
 // Global Settings routes

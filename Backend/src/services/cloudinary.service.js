@@ -131,3 +131,53 @@ export const uploadFileDetailed = async (
         });
     });
 };
+
+/**
+ * Generates a secure, signed private download URL for restricted Cloudinary PDF assets.
+ * Handles legacy URLs that were uploaded under the 'image' resource type.
+ */
+export const getSecurePdfUrl = (url) => {
+    if (!url || typeof url !== 'string') return url;
+
+    // Only target legacy PDF uploads that are under /image/upload/
+    if (url.includes('/image/upload/') && url.toLowerCase().endsWith('.pdf')) {
+        try {
+            // Extract public ID from the URL:
+            // Format: https://res.cloudinary.com/cloud_name/image/upload/v12345678/folder/subfolder/public_id.pdf
+            const match = url.match(/\/image\/upload\/(?:v\d+\/)?(.+?)\.pdf$/i);
+            if (match && match[1]) {
+                const publicId = decodeURIComponent(match[1]);
+                return cloudinary.utils.private_download_url(publicId, 'pdf', {
+                    resource_type: 'image',
+                    type: 'upload',
+                    expires_at: Math.floor(Date.now() / 1000) + 3600 // 1 hour expiration
+                });
+            }
+        } catch (error) {
+            console.error('Error generating secure PDF URL:', error);
+        }
+    }
+    return url;
+};
+
+/**
+ * Wraps an application document (or plain object) and signs all PDF document URLs
+ * to bypass restricted Cloudinary delivery policies.
+ */
+export const signApplicationUrls = (application) => {
+    if (!application) return application;
+
+    // If it's a mongoose document, convert to plain object
+    const appObj = typeof application.toObject === 'function' ? application.toObject() : application;
+
+    if (appObj.resumeUrl) {
+        appObj.resumeUrl = getSecurePdfUrl(appObj.resumeUrl);
+    }
+    if (appObj.coverLetterUrl) {
+        appObj.coverLetterUrl = getSecurePdfUrl(appObj.coverLetterUrl);
+    }
+    if (appObj.additionalFiles && Array.isArray(appObj.additionalFiles)) {
+        appObj.additionalFiles = appObj.additionalFiles.map(url => getSecurePdfUrl(url));
+    }
+    return appObj;
+};

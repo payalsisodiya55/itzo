@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Briefcase, Search, Edit, Trash2, Plus, Eye } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@food/components/ui/dialog";
 import axiosInstance from "@food/api";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
 export default function JobsList() {

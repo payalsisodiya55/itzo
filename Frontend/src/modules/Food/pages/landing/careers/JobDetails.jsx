@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, MapPin, Briefcase, DollarSign, Clock, ChevronRight, CheckCircle2 } from 'lucide-react';
+const JobApplicationModal = React.lazy(() => import('./JobApplicationModal'));
+
 import Navbar from '../components/Navbar';
 import FooterSection from '../components/FooterSection';
 import axiosInstance from '@food/api';
@@ -12,6 +14,8 @@ export default function JobDetails() {
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   useEffect(() => {
     // Scroll to top on mount
@@ -117,18 +121,15 @@ export default function JobDetails() {
               </div>
             </div>
 
-            {job.applicationFormLink && (
               <div className="shrink-0 w-full md:w-auto mt-2 md:mt-0">
-                <a 
-                  href={job.applicationFormLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button 
+                  onClick={() => setIsModalOpen(true)}
                   className="inline-flex w-full md:w-auto items-center justify-center px-6 md:px-8 py-3 md:py-4 border border-transparent text-base md:text-lg font-bold rounded-full shadow-md text-white bg-orange-500 hover:bg-orange-600 transition-all active:scale-95"
                 >
                   Apply Now
-                </a>
+                </button>
               </div>
-            )}
+
           </div>
         </div>
       </div>
@@ -207,24 +208,29 @@ export default function JobDetails() {
 
           </div>
           
-          {job.applicationFormLink && (
             <div className="mt-6 md:mt-10 text-center">
               <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-3 md:mb-4">Ready to join us?</h3>
-              <a 
-                href={job.applicationFormLink}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button 
+                onClick={() => setIsModalOpen(true)}
                 className="inline-flex w-full md:w-auto items-center justify-center px-6 md:px-10 py-3 md:py-4 border border-transparent text-base md:text-lg font-bold rounded-full shadow-md text-white bg-orange-500 hover:bg-orange-600 transition-all active:scale-95"
               >
                 Apply for this job
-              </a>
+              </button>
             </div>
-          )}
+
 
         </div>
       </div>
 
+      <React.Suspense fallback={null}>
+        <JobApplicationModal 
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          job={job}
+        />
+      </React.Suspense>
       <FooterSection />
     </div>
+
   );
 }

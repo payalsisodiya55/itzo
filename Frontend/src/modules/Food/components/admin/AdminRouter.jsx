@@ -97,6 +97,9 @@ const AddEmployee = lazy(() => import("@food/pages/admin/employees/AddEmployee")
 const EmployeeList = lazy(() => import("@food/pages/admin/employees/EmployeeList"));
 const JobsList = lazy(() => import("@food/pages/admin/careers/JobsList"));
 const AddEditJob = lazy(() => import("@food/pages/admin/careers/AddEditJob"));
+const JobApplicationsList = lazy(() => import("@food/pages/admin/careers/JobApplicationsList"));
+const JobApplicationDetails = lazy(() => import("@food/pages/admin/careers/JobApplicationDetails"));
+
 // Business Settings
 const EmailTemplate = lazy(() => import("@food/pages/admin/settings/EmailTemplate"));
 const ThemeSettings = lazy(() => import("@food/pages/admin/settings/ThemeSettings"));
@@ -376,6 +379,9 @@ export default function AdminRouter() {
             <Route path="careers" element={<JobsList />} />
             <Route path="careers/add" element={<AddEditJob />} />
             <Route path="careers/edit/:id" element={<AddEditJob />} />
+            <Route path="careers/applications" element={<JobApplicationsList />} />
+            <Route path="careers/applications/:id" element={<JobApplicationDetails />} />
+
 
             {/* SYSTEM & BUSINESS SETTINGS */}
             <Route path="email-template" element={<EmailTemplate />} />

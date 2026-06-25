@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { ArrowLeft, Save, Plus, Trash2, Upload } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import axiosInstance from "@food/api";
 
 export default function AddEditJob() {

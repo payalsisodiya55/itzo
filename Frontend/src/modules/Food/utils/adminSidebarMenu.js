@@ -252,7 +252,15 @@ export const adminSidebarMenu = [
     items: [
       { type: "link", label: "Roles & Permissions", permissionKey: "roles", path: "/ecs/food/employee-role", icon: "Lock" },
       { type: "link", label: "Employee List", permissionKey: "list", path: "/ecs/food/employees", icon: "Users" },
-      { type: "link", label: "Careers / Job Openings", permissionKey: "list", path: "/ecs/food/careers", icon: "Briefcase" },
+    ],
+  },
+  {
+    type: "section",
+    label: "CAREERS",
+    permissionKey: "staff_management",
+    items: [
+      { type: "link", label: "Jobs", permissionKey: "list", path: "/ecs/food/careers", icon: "Briefcase" },
+      { type: "link", label: "Job Applications", permissionKey: "list", path: "/ecs/food/careers/applications", icon: "FileText" },
     ],
   },
   {

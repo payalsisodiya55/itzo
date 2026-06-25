@@ -120,3 +120,51 @@ export async function sendEmployeeCredentialsEmail(to, password, roleName, login
         return false;
     }
 }
+
+/**
+ * Send acknowledgment email to a job applicant.
+ * @param {string} to - Recipient email
+ * @param {string} applicantName - The candidate's name
+ * @param {string} jobTitle - The title of the job applied for
+ * @returns {Promise<boolean>}
+ */
+export async function sendJobApplicationAcknowledgementEmail(to, applicantName, jobTitle) {
+    const trans = getTransporter();
+    if (!trans) {
+        logger.warn('Job application acknowledgement email skipped: SMTP not configured');
+        return false;
+    }
+    const from = config.emailFrom || config.emailUser;
+    const subject = `Application Received: ${jobTitle} – ItzoFood`;
+    const html = `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 500px; margin: 0 auto; padding: 20px;">
+  <h2 style="color: #ea580c;">Hello ${applicantName},</h2>
+  <p>Thank you for applying for the <strong>${jobTitle}</strong> position at ItzoFood!</p>
+  <p>We have successfully received your application and resume. Our recruitment team is currently reviewing all submissions to identify candidates whose qualifications best match our needs.</p>
+  <p>If your profile is shortlisted, someone from our team will contact you to discuss the next steps in the interview process.</p>
+  <p>We appreciate your interest in joining ItzoFood and wish you the best of luck!</p>
+  <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+  <p style="color: #999; font-size: 12px;">Best Regards,<br>ItzoFood Careers Team</p>
+</body>
+</html>`;
+    const text = `Hello ${applicantName},\n\nThank you for applying for the ${jobTitle} position at ItzoFood!\n\nWe have successfully received your application. If your profile matches, someone from our team will reach out to you.\n\nBest Regards,\nItzoFood Careers Team`;
+
+    try {
+        await trans.sendMail({
+            from: typeof from === 'string' && from.includes('<') ? from : `ItzoFood Careers <${from}>`,
+            to,
+            subject,
+            text,
+            html
+        });
+        logger.info(`Job application acknowledgement email sent to ${to}`);
+        return true;
+    } catch (err) {
+        logger.error(`Failed to send job application acknowledgement email to ${to}:`, err.message);
+        return false;
+    }
+}
+

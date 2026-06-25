@@ -222,6 +222,8 @@ router.patch('/employees/:id/status', checkPermission('food::staff_management::l
 router.delete('/employees/:id', checkPermission('food::staff_management::list', 'delete'), employeeController.deleteEmployee);
 // ----- Careers / Job Openings -----
 import jobRoutes from './job.route.js';
+import jobApplicationRoutes from './jobApplication.route.js';
 router.use('/careers/jobs', jobRoutes);
+router.use('/careers/applications', jobApplicationRoutes);
 
 export default router;
