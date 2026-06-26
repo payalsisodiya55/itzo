@@ -2932,7 +2932,9 @@ export async function cancelOrder(orderId, userId, reason, refundTo) {
     refundTo === "wallet" || refundTo === "gateway" ? refundTo : "gateway";
 
   const elapsedMs = Date.now() - new Date(order.createdAt).getTime();
-  const isWithinRefundWindow = elapsedMs <= USER_CANCEL_FULL_REFUND_WINDOW_MS;
+  const isWithinRefundWindow =
+    elapsedMs <= USER_CANCEL_FULL_REFUND_WINDOW_MS ||
+    ["created", "placed"].includes(orderStatus);
 
   if (isWalletPaid) {
     if (isWithinRefundWindow) {
