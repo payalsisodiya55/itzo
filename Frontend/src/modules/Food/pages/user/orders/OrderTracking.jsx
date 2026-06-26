@@ -815,6 +815,10 @@ export default function OrderTracking() {
   const backPath = isQuickOrder ? "/quick" : "/food/user"
   const ordersContext = useOptionalOrders()
   const getOrderById = ordersContext?.getOrderById || (() => null)
+  const getOrderByIdRef = useRef(getOrderById)
+  useEffect(() => {
+    getOrderByIdRef.current = getOrderById
+  }, [getOrderById])
   const { profile, getDefaultAddress } = useProfile()
   const { location: userLiveLocation } = useUserLocation()
 
@@ -1299,7 +1303,7 @@ export default function OrderTracking() {
 
       // Check context immediately to avoid loaders if data exists locally
       if (isInitial) {
-        const rawContext = isQuickOrder ? null : getOrderById(orderId);
+        const rawContext = isQuickOrder ? null : getOrderByIdRef.current(orderId);
         if (rawContext) {
           setOrder(transformOrderForTracking(rawContext));
           setLoading(false);
@@ -1377,7 +1381,7 @@ export default function OrderTracking() {
       isSubscribed = false;
       isInitialPollRequestedRef.current = null;
     };
-  }, [getOrderById, isQuickOrder, orderId, fetchOrderDetailsWithFallback, resolveOrderFromList]);
+  }, [isQuickOrder, orderId, fetchOrderDetailsWithFallback, resolveOrderFromList]);
 
   // Interval Manager (dynamically adapts based on socket connection state independently)
   useEffect(() => {
