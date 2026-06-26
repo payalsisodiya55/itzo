@@ -1294,7 +1294,7 @@ export default function OrderTracking() {
       if (terminalPollStopRef.current && !isInitial) return;
 
       const now = Date.now();
-      if (isInitial && now - lastPollExecutionRef.current < 1000) return;
+      if (isInitial && now - lastPollExecutionRef.current < 1000 && order) return;
       if (isInitial) lastPollExecutionRef.current = now;
 
       // Check context immediately to avoid loaders if data exists locally
@@ -1312,26 +1312,19 @@ export default function OrderTracking() {
         let finalOrderData = null;
 
         if (isInitial && !isQuickOrder) {
-          const detailPromise = fetchOrderDetailsWithFallback({ force: true })
-            .then((res) => {
-              response = res;
-              const payload = extractOrderDetailsPayload(res);
-              if (!payload) throw new Error("detail lookup returned empty payload");
-              return payload;
-            });
-
-          const listPromise = resolveOrderFromList(orderId).then((matchedOrder) => {
-            if (!matchedOrder) throw new Error("order not found in list");
-            return matchedOrder;
-          });
-
           try {
-            finalOrderData = await Promise.any([detailPromise, listPromise]);
-          } catch {
             response = await fetchOrderDetailsWithFallback({ force: true });
-            finalOrderData = extractOrderDetailsPayload(response) || NO_RESULT;
-            if (finalOrderData === NO_RESULT) {
-              finalOrderData = await resolveOrderFromList(orderId) || null;
+            finalOrderData = extractOrderDetailsPayload(response);
+            if (!finalOrderData) throw new Error("detail lookup returned empty payload");
+          } catch (err) {
+            // Propagate forbidden immediately to avoid unnecessary backend queries
+            if (err?.response?.status === 403) {
+              throw err;
+            }
+            try {
+              finalOrderData = await resolveOrderFromList(orderId);
+            } catch (listErr) {
+              throw err;
             }
           }
         } else {
@@ -1340,11 +1333,6 @@ export default function OrderTracking() {
         }
 
         if (!isSubscribed) return;
-
-        if (!finalOrderData && isInitial) {
-          const matchedOrder = await resolveOrderFromList(orderId);
-          if (matchedOrder) finalOrderData = matchedOrder;
-        }
 
         if (finalOrderData) {
           setOrder(prev => {
@@ -1362,23 +1350,13 @@ export default function OrderTracking() {
         }
 
         if (isInitial && !order) {
-          setError(response.data?.message || 'Order not found');
+          setError(response?.data?.message || 'Order not found');
           terminalPollStopRef.current = true;
         }
       } catch (err) {
         if (isInitial && !order) {
-          try {
-            const matchedOrder = await resolveOrderFromList(orderId);
-            if (matchedOrder) {
-              if (!isSubscribed) return;
-              setOrder(prev => transformOrderForTracking(matchedOrder, prev));
-              setError(null);
-              setLoading(false);
-              return;
-            }
-          } catch {}
           if (!isSubscribed) return;
-          setError(err.response?.data?.message || 'Failed to fetch order details');
+          setError(err.response?.data?.message || err.message || 'Failed to fetch order details');
           terminalPollStopRef.current = true;
         }
       } finally {
@@ -1397,6 +1375,7 @@ export default function OrderTracking() {
 
     return () => {
       isSubscribed = false;
+      isInitialPollRequestedRef.current = null;
     };
   }, [getOrderById, isQuickOrder, orderId, fetchOrderDetailsWithFallback, resolveOrderFromList]);
 
