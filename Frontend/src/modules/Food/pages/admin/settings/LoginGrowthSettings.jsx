@@ -40,8 +40,17 @@ export default function LoginGrowthSettings() {
       monthlyProfit: "",
       yearlyProfit: ""
     },
-    consultingServices: []
+    consultingServices: [],
+    benefitImage1: "",
+    benefitImage2: ""
   })
+
+  const restFileInput1Ref = useRef(null)
+  const restFileInput2Ref = useRef(null)
+  const [restBenefitImage1Preview, setRestBenefitImage1Preview] = useState(null)
+  const [restBenefitImage2Preview, setRestBenefitImage2Preview] = useState(null)
+  const [restBenefitImage1File, setRestBenefitImage1File] = useState(null)
+  const [restBenefitImage2File, setRestBenefitImage2File] = useState(null)
 
   const [deliveryData, setDeliveryData] = useState({
     headline: "",
@@ -50,8 +59,17 @@ export default function LoginGrowthSettings() {
     partnerWelfare: [],
     operationalBenefits: [],
     driverMarketingBanner: "",
-    ctaText: ""
+    ctaText: "",
+    benefitImage1: "",
+    benefitImage2: ""
   })
+
+  const delFileInput1Ref = useRef(null)
+  const delFileInput2Ref = useRef(null)
+  const [delBenefitImage1Preview, setDelBenefitImage1Preview] = useState(null)
+  const [delBenefitImage2Preview, setDelBenefitImage2Preview] = useState(null)
+  const [delBenefitImage1File, setDelBenefitImage1File] = useState(null)
+  const [delBenefitImage2File, setDelBenefitImage2File] = useState(null)
 
   const fileInput1Ref = useRef(null)
   const fileInput2Ref = useRef(null)
@@ -100,8 +118,12 @@ export default function LoginGrowthSettings() {
                 monthlyProfit: data.restaurant.additionalMessaging?.monthlyProfit || "",
                 yearlyProfit: data.restaurant.additionalMessaging?.yearlyProfit || ""
               },
-              consultingServices: Array.isArray(data.restaurant.consultingServices) ? data.restaurant.consultingServices : []
+              consultingServices: Array.isArray(data.restaurant.consultingServices) ? data.restaurant.consultingServices : [],
+              benefitImage1: data.restaurant.benefitImage1 || "",
+              benefitImage2: data.restaurant.benefitImage2 || ""
             })
+            if (data.restaurant.benefitImage1) setRestBenefitImage1Preview(data.restaurant.benefitImage1)
+            if (data.restaurant.benefitImage2) setRestBenefitImage2Preview(data.restaurant.benefitImage2)
           }
           if (data.delivery) {
             setDeliveryData({
@@ -111,8 +133,12 @@ export default function LoginGrowthSettings() {
               partnerWelfare: Array.isArray(data.delivery.partnerWelfare) ? data.delivery.partnerWelfare : [],
               operationalBenefits: Array.isArray(data.delivery.operationalBenefits) ? data.delivery.operationalBenefits : [],
               driverMarketingBanner: data.delivery.driverMarketingBanner || "",
-              ctaText: data.delivery.ctaText || ""
+              ctaText: data.delivery.ctaText || "",
+              benefitImage1: data.delivery.benefitImage1 || "",
+              benefitImage2: data.delivery.benefitImage2 || ""
             })
+            if (data.delivery.benefitImage1) setDelBenefitImage1Preview(data.delivery.benefitImage1)
+            if (data.delivery.benefitImage2) setDelBenefitImage2Preview(data.delivery.benefitImage2)
           }
           if (data.user) {
             setUserData({
@@ -145,6 +171,29 @@ export default function LoginGrowthSettings() {
     try {
       setSaving(true)
 
+      let restImg1Url = restaurantData.benefitImage1 || ""
+      let restImg2Url = restaurantData.benefitImage2 || ""
+
+      if (restBenefitImage1File) {
+        const res = await uploadAPI.uploadMedia(restBenefitImage1File, { folder: "business/growth" })
+        if (res.data.success) {
+          restImg1Url = res.data.data.url
+        }
+      }
+
+      if (restBenefitImage2File) {
+        const res = await uploadAPI.uploadMedia(restBenefitImage2File, { folder: "business/growth" })
+        if (res.data.success) {
+          restImg2Url = res.data.data.url
+        }
+      }
+
+      const updatedRestaurantData = {
+        ...restaurantData,
+        benefitImage1: restImg1Url,
+        benefitImage2: restImg2Url
+      }
+
       let img1Url = userData.benefitImage1 || ""
       let img2Url = userData.benefitImage2 || ""
 
@@ -168,11 +217,34 @@ export default function LoginGrowthSettings() {
         benefitImage2: img2Url
       }
 
+      let delImg1Url = deliveryData.benefitImage1 || ""
+      let delImg2Url = deliveryData.benefitImage2 || ""
+
+      if (delBenefitImage1File) {
+        const res = await uploadAPI.uploadMedia(delBenefitImage1File, { folder: "business/growth" })
+        if (res.data.success) {
+          delImg1Url = res.data.data.url
+        }
+      }
+
+      if (delBenefitImage2File) {
+        const res = await uploadAPI.uploadMedia(delBenefitImage2File, { folder: "business/growth" })
+        if (res.data.success) {
+          delImg2Url = res.data.data.url
+        }
+      }
+
+      const updatedDeliveryData = {
+        ...deliveryData,
+        benefitImage1: delImg1Url,
+        benefitImage2: delImg2Url
+      }
+
       const response = await api.put(
         API_ENDPOINTS.ADMIN.LOGIN_GROWTH,
         {
-          restaurant: restaurantData,
-          delivery: deliveryData,
+          restaurant: updatedRestaurantData,
+          delivery: updatedDeliveryData,
           user: updatedUserData,
           role: "all"
         },
@@ -180,8 +252,12 @@ export default function LoginGrowthSettings() {
       )
       if (response.data.success) {
         toast.success('Login growth settings updated successfully')
+        setRestBenefitImage1File(null)
+        setRestBenefitImage2File(null)
         setBenefitImage1File(null)
         setBenefitImage2File(null)
+        setDelBenefitImage1File(null)
+        setDelBenefitImage2File(null)
         fetchPageData()
       }
     } catch (error) {
@@ -215,7 +291,7 @@ export default function LoginGrowthSettings() {
     }))
   }
 
-  const handleImageSelect = (e, index) => {
+  const handleImageSelect = (e, target) => {
     const file = e.target.files[0]
     if (!file) return
     
@@ -226,12 +302,24 @@ export default function LoginGrowthSettings() {
 
     const reader = new FileReader()
     reader.onloadend = () => {
-      if (index === 1) {
+      if (target === "user1") {
         setBenefitImage1Preview(reader.result)
         setBenefitImage1File(file)
-      } else {
+      } else if (target === "user2") {
         setBenefitImage2Preview(reader.result)
         setBenefitImage2File(file)
+      } else if (target === "del1") {
+        setDelBenefitImage1Preview(reader.result)
+        setDelBenefitImage1File(file)
+      } else if (target === "del2") {
+        setDelBenefitImage2Preview(reader.result)
+        setDelBenefitImage2File(file)
+      } else if (target === "rest1") {
+        setRestBenefitImage1Preview(reader.result)
+        setRestBenefitImage1File(file)
+      } else if (target === "rest2") {
+        setRestBenefitImage2Preview(reader.result)
+        setRestBenefitImage2File(file)
       }
     }
     reader.readAsDataURL(file)
@@ -494,6 +582,88 @@ export default function LoginGrowthSettings() {
                 </CardContent>
               </Card>
             </div>
+
+            <Card className="border border-slate-200 shadow-sm rounded-2xl overflow-hidden mt-6">
+              <CardHeader className="bg-slate-50 border-b border-slate-100 p-6">
+                <CardTitle className="text-xl font-bold text-slate-950">Onboarding Benefit Images</CardTitle>
+                <CardDescription>Upload two promotional benefit images shown on the restaurant partner login page.</CardDescription>
+              </CardHeader>
+              <CardContent className="p-6">
+                <div className="grid md:grid-cols-2 gap-8">
+                  {/* Image 1 */}
+                  <div className="space-y-4">
+                    <Label className="font-semibold text-slate-800">Benefit Image 1</Label>
+                    <div className="relative aspect-video rounded-xl border border-dashed border-slate-300 bg-slate-50 hover:border-[#FE5502] transition-colors cursor-pointer flex items-center justify-center overflow-hidden group min-h-[160px]">
+                      {restBenefitImage1Preview ? (
+                        <>
+                          <img src={restBenefitImage1Preview} alt="Restaurant Benefit 1" className="w-full h-full object-cover" />
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setRestBenefitImage1Preview(null);
+                              setRestBenefitImage1File(null);
+                              setRestaurantData(prev => ({ ...prev, benefitImage1: "" }));
+                            }}
+                            className="absolute top-2 right-2 p-1.5 rounded-lg bg-red-50 text-red-500 shadow-sm border border-red-100 hover:bg-red-100"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </>
+                      ) : (
+                        <div onClick={() => restFileInput1Ref.current?.click()} className="flex flex-col items-center gap-2 text-slate-400">
+                          <Plus className="h-8 w-8 text-slate-300" />
+                          <span className="text-xs font-semibold">Upload Image 1</span>
+                        </div>
+                      )}
+                      <input
+                        type="file"
+                        ref={restFileInput1Ref}
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => handleImageSelect(e, "rest1")}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Image 2 */}
+                  <div className="space-y-4">
+                    <Label className="font-semibold text-slate-800">Benefit Image 2</Label>
+                    <div className="relative aspect-video rounded-xl border border-dashed border-slate-300 bg-slate-50 hover:border-[#FE5502] transition-colors cursor-pointer flex items-center justify-center overflow-hidden group min-h-[160px]">
+                      {restBenefitImage2Preview ? (
+                        <>
+                          <img src={restBenefitImage2Preview} alt="Restaurant Benefit 2" className="w-full h-full object-cover" />
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setRestBenefitImage2Preview(null);
+                              setRestBenefitImage2File(null);
+                              setRestaurantData(prev => ({ ...prev, benefitImage2: "" }));
+                            }}
+                            className="absolute top-2 right-2 p-1.5 rounded-lg bg-red-50 text-red-500 shadow-sm border border-red-100 hover:bg-red-100"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </>
+                      ) : (
+                        <div onClick={() => restFileInput2Ref.current?.click()} className="flex flex-col items-center gap-2 text-slate-400">
+                          <Plus className="h-8 w-8 text-slate-300" />
+                          <span className="text-xs font-semibold">Upload Image 2</span>
+                        </div>
+                      )}
+                      <input
+                        type="file"
+                        ref={restFileInput2Ref}
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => handleImageSelect(e, "rest2")}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         )}
 
@@ -659,6 +829,88 @@ export default function LoginGrowthSettings() {
                 </CardContent>
               </Card>
             </div>
+
+            <Card className="border border-slate-200 shadow-sm rounded-2xl overflow-hidden mt-6">
+              <CardHeader className="bg-slate-50 border-b border-slate-100 p-6">
+                <CardTitle className="text-xl font-bold text-slate-950">Onboarding Benefit Images</CardTitle>
+                <CardDescription>Upload two promotional benefit images shown on the delivery partner login page.</CardDescription>
+              </CardHeader>
+              <CardContent className="p-6">
+                <div className="grid md:grid-cols-2 gap-8">
+                  {/* Image 1 */}
+                  <div className="space-y-4">
+                    <Label className="font-semibold text-slate-800">Benefit Image 1</Label>
+                    <div className="relative aspect-video rounded-xl border border-dashed border-slate-300 bg-slate-50 hover:border-[#FE5502] transition-colors cursor-pointer flex items-center justify-center overflow-hidden group min-h-[160px]">
+                      {delBenefitImage1Preview ? (
+                        <>
+                          <img src={delBenefitImage1Preview} alt="Delivery Benefit 1" className="w-full h-full object-cover" />
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setDelBenefitImage1Preview(null);
+                              setDelBenefitImage1File(null);
+                              setDeliveryData(prev => ({ ...prev, benefitImage1: "" }));
+                            }}
+                            className="absolute top-2 right-2 p-1.5 rounded-lg bg-red-50 text-red-500 shadow-sm border border-red-100 hover:bg-red-100"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </>
+                      ) : (
+                        <div onClick={() => delFileInput1Ref.current?.click()} className="flex flex-col items-center gap-2 text-slate-400">
+                          <Plus className="h-8 w-8 text-slate-300" />
+                          <span className="text-xs font-semibold">Upload Image 1</span>
+                        </div>
+                      )}
+                      <input
+                        type="file"
+                        ref={delFileInput1Ref}
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => handleImageSelect(e, "del1")}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Image 2 */}
+                  <div className="space-y-4">
+                    <Label className="font-semibold text-slate-800">Benefit Image 2</Label>
+                    <div className="relative aspect-video rounded-xl border border-dashed border-slate-300 bg-slate-50 hover:border-[#FE5502] transition-colors cursor-pointer flex items-center justify-center overflow-hidden group min-h-[160px]">
+                      {delBenefitImage2Preview ? (
+                        <>
+                          <img src={delBenefitImage2Preview} alt="Delivery Benefit 2" className="w-full h-full object-cover" />
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setDelBenefitImage2Preview(null);
+                              setDelBenefitImage2File(null);
+                              setDeliveryData(prev => ({ ...prev, benefitImage2: "" }));
+                            }}
+                            className="absolute top-2 right-2 p-1.5 rounded-lg bg-red-50 text-red-500 shadow-sm border border-red-100 hover:bg-red-100"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </>
+                      ) : (
+                        <div onClick={() => delFileInput2Ref.current?.click()} className="flex flex-col items-center gap-2 text-slate-400">
+                          <Plus className="h-8 w-8 text-slate-300" />
+                          <span className="text-xs font-semibold">Upload Image 2</span>
+                        </div>
+                      )}
+                      <input
+                        type="file"
+                        ref={delFileInput2Ref}
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => handleImageSelect(e, "del2")}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         )}
 
@@ -784,7 +1036,7 @@ export default function LoginGrowthSettings() {
                         ref={fileInput1Ref}
                         accept="image/*"
                         className="hidden"
-                        onChange={(e) => handleImageSelect(e, 1)}
+                        onChange={(e) => handleImageSelect(e, "user1")}
                       />
                     </div>
                   </div>
@@ -820,7 +1072,7 @@ export default function LoginGrowthSettings() {
                         ref={fileInput2Ref}
                         accept="image/*"
                         className="hidden"
-                        onChange={(e) => handleImageSelect(e, 2)}
+                        onChange={(e) => handleImageSelect(e, "user2")}
                       />
                     </div>
                   </div>

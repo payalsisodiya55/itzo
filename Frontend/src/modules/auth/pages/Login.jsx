@@ -480,7 +480,7 @@ export default function UnifiedOTPFastLogin() {
       </div>
 
       {/* Right Section: Form Container (Mobile/Desktop) */}
-      <div className="w-full md:w-1/2 flex-1 flex flex-col items-center justify-center bg-white dark:bg-neutral-900 relative z-20 px-4 py-8">
+      <div className="w-full md:w-1/2 flex-1 flex flex-col items-center justify-center bg-white dark:bg-neutral-900 relative z-20 px-4 py-8 overflow-y-auto scroll-smooth scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-neutral-800 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: "touch" }}>
         
         {/* Banner (Mobile Only) */}
         <div className="absolute top-0 left-0 right-0 h-[35vh] md:hidden z-0 bg-black">
@@ -749,18 +749,38 @@ export default function UnifiedOTPFastLogin() {
 
           {/* Benefit Images (Uploaded dynamically by Admin) */}
           {!keyboardInset && (uData?.benefitImage1 || uData?.benefitImage2) && (
-            <div className="w-full pt-2 flex flex-col gap-3">
-              {uData.benefitImage1 && (
-                <div className="w-full rounded-xl overflow-hidden border border-slate-100 dark:border-neutral-800 shadow-sm bg-slate-50 dark:bg-neutral-900">
-                  <img src={uData.benefitImage1} alt="Benefit 1" className="w-full h-auto object-contain block" />
-                </div>
-              )}
-              {uData.benefitImage2 && (
-                <div className="w-full rounded-xl overflow-hidden border border-slate-100 dark:border-neutral-800 shadow-sm bg-slate-50 dark:bg-neutral-900">
-                  <img src={uData.benefitImage2} alt="Benefit 2" className="w-full h-auto object-contain block" />
-                </div>
-              )}
-            </div>
+            <>
+              <style>{`
+                .custom-scrollbar {
+                  -webkit-overflow-scrolling: touch;
+                }
+                .custom-scrollbar::-webkit-scrollbar {
+                  width: 5px;
+                }
+                .custom-scrollbar::-webkit-scrollbar-track {
+                  background: transparent;
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb {
+                  background: rgba(254, 85, 2, 0.3);
+                  border-radius: 10px;
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                  background: rgba(254, 85, 2, 0.6);
+                }
+              `}</style>
+              <div className="w-full pt-2 max-h-[300px] overflow-y-auto custom-scrollbar pr-1 flex flex-col gap-3 scroll-smooth" style={{ WebkitOverflowScrolling: "touch" }}>
+                {uData.benefitImage1 && (
+                  <div className="w-full rounded-xl overflow-hidden border border-slate-100 dark:border-neutral-800 shadow-sm bg-slate-50 dark:bg-neutral-900 flex items-center justify-center">
+                    <img src={uData.benefitImage1} alt="Benefit 1" className="w-full max-h-[220px] object-contain block" />
+                  </div>
+                )}
+                {uData.benefitImage2 && (
+                  <div className="w-full rounded-xl overflow-hidden border border-slate-100 dark:border-neutral-800 shadow-sm bg-slate-50 dark:bg-neutral-900 flex items-center justify-center">
+                    <img src={uData.benefitImage2} alt="Benefit 2" className="w-full max-h-[220px] object-contain block" />
+                  </div>
+                )}
+              </div>
+            </>
           )}
 
           <div className="text-center text-[11px] md:text-xs text-gray-400 dark:text-gray-500 pt-4 pb-2 border-t border-gray-100 dark:border-neutral-800 mt-6">

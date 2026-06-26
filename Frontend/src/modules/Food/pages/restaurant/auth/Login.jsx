@@ -189,12 +189,9 @@ export default function RestaurantLogin() {
   const rData = growthData?.restaurant || defaultRestaurantGrowth;
 
   return (
-    <div
-      className="min-h-[100dvh] bg-[#111] lg:bg-slate-900 flex flex-col lg:flex-row overflow-y-auto overscroll-contain font-sans"
-      style={{ paddingBottom: keyboardInset ? `${keyboardInset + 24}px` : undefined }}
-    >
+    <div className="min-h-[100dvh] bg-[#111] lg:bg-slate-900 flex flex-col lg:flex-row overflow-hidden font-sans">
       {/* Left Section: Onboard Growth Showcase (Desktop only) */}
-      <div className="hidden lg:flex lg:w-1/2 flex-col justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 px-12 xl:px-20 py-16 text-white overflow-y-auto min-h-screen shrink-0 relative">
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 px-12 xl:px-20 py-16 text-white overflow-y-auto min-h-screen shrink-0 relative" style={{ WebkitOverflowScrolling: "touch" }}>
         <div className="max-w-[540px] mx-auto space-y-8 animate-in fade-in slide-in-from-left-6 duration-500">
           <div>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#FE5502]/10 text-[#FE5502] border border-[#FE5502]/20 uppercase tracking-widest">
@@ -270,18 +267,20 @@ export default function RestaurantLogin() {
         </div>
       </div>
 
-      {/* Hero Image Section (Mobile only - hidden on desktop) */}
-      <div className="w-full lg:hidden flex items-center justify-center bg-[#111] pt-8 pb-16 shrink-0">
-        <img 
-          src="/packaging-promo.jpg" 
-          alt="ITZO Packaging" 
-          className="w-full max-w-[600px] h-auto object-contain drop-shadow-2xl"
-        />
-      </div>
-
       {/* Form Section */}
-      <div className="w-full lg:w-1/2 flex-1 flex flex-col items-center justify-center px-4 sm:px-8 py-10 sm:py-16 bg-white rounded-t-[40px] lg:rounded-none lg:rounded-l-[40px] shadow-[0_-20px_40px_rgba(0,0,0,0.3)] lg:shadow-[-20px_0_40px_rgba(0,0,0,0.1)] -mt-12 lg:mt-0 relative z-10">
-        <div id="login-content" className="w-full max-w-[400px] flex flex-col items-center">
+      <div className="w-full lg:w-1/2 flex-1 flex flex-col items-center justify-center px-4 sm:px-8 py-10 sm:py-16 bg-white rounded-t-[40px] lg:rounded-none lg:rounded-l-[40px] shadow-[0_-20px_40px_rgba(0,0,0,0.3)] lg:shadow-[-20px_0_40px_rgba(0,0,0,0.1)] relative z-20 overflow-y-auto scroll-smooth scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent" style={{ WebkitOverflowScrolling: "touch" }}>
+        
+        {/* Hero Image Section (Mobile only - hidden on desktop) */}
+        <div className="absolute top-0 left-0 right-0 h-[35vh] lg:hidden z-0 bg-[#111] flex items-center justify-center overflow-hidden">
+          <img 
+            src="/packaging-promo.jpg" 
+            alt="ITZO Packaging" 
+            className="w-full max-w-[600px] h-full object-contain drop-shadow-2xl"
+          />
+        </div>
+
+        {/* Card Container */}
+        <div id="login-content" className="w-full max-w-[400px] flex flex-col items-center mt-[30vh] lg:mt-0 relative z-10">
           <div className="w-24 h-24 sm:w-28 sm:h-28 bg-white rounded-full shadow-xl flex items-center justify-center border-4 border-slate-50 mb-6 -mt-20 lg:-mt-0 lg:mb-8 overflow-hidden p-1.5">
             <img 
               src="/itzo-logo.jpg" 
@@ -398,6 +397,42 @@ export default function RestaurantLogin() {
                   </div>
                 </div>
               </div>
+            )}
+
+            {/* Benefit Images (Uploaded dynamically by Admin) */}
+            {!keyboardInset && (rData?.benefitImage1 || rData?.benefitImage2) && (
+              <>
+                <style>{`
+                  .custom-scrollbar {
+                    -webkit-overflow-scrolling: touch;
+                  }
+                  .custom-scrollbar::-webkit-scrollbar {
+                    width: 5px;
+                  }
+                  .custom-scrollbar::-webkit-scrollbar-track {
+                    background: transparent;
+                  }
+                  .custom-scrollbar::-webkit-scrollbar-thumb {
+                    background: rgba(254, 85, 2, 0.3);
+                    border-radius: 10px;
+                  }
+                  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                    background: rgba(254, 85, 2, 0.6);
+                  }
+                `}</style>
+                <div className="w-full pt-2 max-h-[300px] overflow-y-auto custom-scrollbar pr-1 flex flex-col gap-3 scroll-smooth" style={{ WebkitOverflowScrolling: "touch" }}>
+                  {rData.benefitImage1 && (
+                    <div className="w-full rounded-2xl overflow-hidden border border-slate-100 shadow-sm bg-slate-50 flex items-center justify-center">
+                      <img src={rData.benefitImage1} alt="Benefit 1" className="w-full max-h-[220px] object-contain block" />
+                    </div>
+                  )}
+                  {rData.benefitImage2 && (
+                    <div className="w-full rounded-2xl overflow-hidden border border-slate-100 shadow-sm bg-slate-50 flex items-center justify-center">
+                      <img src={rData.benefitImage2} alt="Benefit 2" className="w-full max-h-[220px] object-contain block" />
+                    </div>
+                  )}
+                </div>
+              </>
             )}
 
             <div className={`text-center pt-4 pb-2 ${keyboardInset ? "hidden" : ""}`}>
