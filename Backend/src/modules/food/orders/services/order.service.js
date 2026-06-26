@@ -3253,6 +3253,12 @@ export async function updateOrderStatusRestaurant(
     restaurantId: new mongoose.Types.ObjectId(restaurantId),
   });
   if (!order) throw new NotFoundError("Order not found");
+
+  const terminalStatuses = ["cancelled", "cancelled_by_user", "cancelled_by_restaurant", "cancelled_by_admin", "delivered"];
+  if (terminalStatuses.includes(String(order.orderStatus).toLowerCase().trim())) {
+    throw new ValidationError("Order has already been cancelled or completed.");
+  }
+
   const from = order.orderStatus;
   order.orderStatus = orderStatus;
   pushStatusHistory(order, {
@@ -4157,6 +4163,11 @@ export async function confirmPickupDelivery(
     throw new ForbiddenError("Not your order");
   }
 
+  const terminalStatuses = ["cancelled", "cancelled_by_user", "cancelled_by_restaurant", "cancelled_by_admin", "delivered"];
+  if (terminalStatuses.includes(String(order.orderStatus).toLowerCase().trim())) {
+    throw new ValidationError("Order has already been cancelled or completed.");
+  }
+
   const from = order.orderStatus;
   order.orderStatus = "picked_up";
   order.deliveryState = {
@@ -4193,6 +4204,11 @@ export async function confirmReachedDropDelivery(orderId, deliveryPartnerId) {
   if (!order) throw new NotFoundError("Order not found");
   if (!isOrderAssignedToDeliveryPartner(order, deliveryPartnerId)) {
     throw new ForbiddenError("Not your order");
+  }
+
+  const terminalStatuses = ["cancelled", "cancelled_by_user", "cancelled_by_restaurant", "cancelled_by_admin", "delivered"];
+  if (terminalStatuses.includes(String(order.orderStatus).toLowerCase().trim())) {
+    throw new ValidationError("Order has already been cancelled or completed.");
   }
 
   if (order.deliveryVerification?.dropOtp?.verified) {
@@ -4302,6 +4318,11 @@ export async function completeDelivery(orderId, deliveryPartnerId, body = {}) {
   if (!order) throw new NotFoundError("Order not found");
   if (!isOrderAssignedToDeliveryPartner(order, deliveryPartnerId)) {
     throw new ForbiddenError("Not your order");
+  }
+
+  const terminalStatuses = ["cancelled", "cancelled_by_user", "cancelled_by_restaurant", "cancelled_by_admin", "delivered"];
+  if (terminalStatuses.includes(String(order.orderStatus).toLowerCase().trim())) {
+    throw new ValidationError("Order has already been cancelled or completed.");
   }
 
   const { otp, ratings, paymentMode } = body;
