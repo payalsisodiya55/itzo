@@ -42,6 +42,26 @@ const foodLandingSettingsSchema = new mongoose.Schema(
         showGourmet: {
             type: Boolean,
             default: true
+        },
+        benefitsSectionEnabled: {
+            type: Boolean,
+            default: false
+        },
+        benefitsImage: {
+            type: String,
+            default: ''
+        },
+        benefitsImagePublicId: {
+            type: String,
+            default: ''
+        },
+        benefitsImageAlt: {
+            type: String,
+            default: ''
+        },
+        benefitsImageLink: {
+            type: String,
+            default: ''
         }
     },
     {

@@ -129,6 +129,13 @@ const globalSettingsSchema = new mongoose.Schema(
             url: { type: String, default: '' },
             publicId: { type: String, default: '' }
         },
+        benefitsSectionEnabled: { type: Boolean, default: false },
+        benefitsImage: {
+            url: { type: String, default: '' },
+            publicId: { type: String, default: '' }
+        },
+        benefitsImageAlt: { type: String, default: '' },
+        benefitsImageLink: { type: String, default: '' },
         enableFemaleContactProtection: { type: Boolean, default: true },
         companySupportNumber: { type: String, default: '+919999999999' },
         companyWhatsappNumber: { type: String, default: '+919999999999' },

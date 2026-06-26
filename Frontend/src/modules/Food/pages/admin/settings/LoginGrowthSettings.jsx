@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { toast } from "sonner"
-import api from "@food/api"
+import api, { uploadAPI } from "@food/api"
 import { API_ENDPOINTS } from "@food/api/config"
 import { Button } from "@food/components/ui/button"
 import { Input } from "@food/components/ui/input"
@@ -53,6 +53,13 @@ export default function LoginGrowthSettings() {
     ctaText: ""
   })
 
+  const fileInput1Ref = useRef(null)
+  const fileInput2Ref = useRef(null)
+  const [benefitImage1Preview, setBenefitImage1Preview] = useState(null)
+  const [benefitImage2Preview, setBenefitImage2Preview] = useState(null)
+  const [benefitImage1File, setBenefitImage1File] = useState(null)
+  const [benefitImage2File, setBenefitImage2File] = useState(null)
+
   const [userData, setUserData] = useState({
     headline: "",
     subheadline: "",
@@ -62,7 +69,9 @@ export default function LoginGrowthSettings() {
       itzoFoodText: ""
     },
     keyAdvantages: [],
-    privacyMessage: ""
+    privacyMessage: "",
+    benefitImage1: "",
+    benefitImage2: ""
   })
 
   useEffect(() => {
@@ -115,8 +124,12 @@ export default function LoginGrowthSettings() {
                 itzoFoodText: data.user.comparison?.itzoFoodText || ""
               },
               keyAdvantages: Array.isArray(data.user.keyAdvantages) ? data.user.keyAdvantages : [],
-              privacyMessage: data.user.privacyMessage || ""
+              privacyMessage: data.user.privacyMessage || "",
+              benefitImage1: data.user.benefitImage1 || "",
+              benefitImage2: data.user.benefitImage2 || ""
             })
+            if (data.user.benefitImage1) setBenefitImage1Preview(data.user.benefitImage1)
+            if (data.user.benefitImage2) setBenefitImage2Preview(data.user.benefitImage2)
           }
         }
       }
@@ -131,18 +144,44 @@ export default function LoginGrowthSettings() {
   const handleSave = async () => {
     try {
       setSaving(true)
+
+      let img1Url = userData.benefitImage1 || ""
+      let img2Url = userData.benefitImage2 || ""
+
+      if (benefitImage1File) {
+        const res = await uploadAPI.uploadMedia(benefitImage1File, { folder: "business/growth" })
+        if (res.data.success) {
+          img1Url = res.data.data.url
+        }
+      }
+
+      if (benefitImage2File) {
+        const res = await uploadAPI.uploadMedia(benefitImage2File, { folder: "business/growth" })
+        if (res.data.success) {
+          img2Url = res.data.data.url
+        }
+      }
+
+      const updatedUserData = {
+        ...userData,
+        benefitImage1: img1Url,
+        benefitImage2: img2Url
+      }
+
       const response = await api.put(
         API_ENDPOINTS.ADMIN.LOGIN_GROWTH,
         {
           restaurant: restaurantData,
           delivery: deliveryData,
-          user: userData,
+          user: updatedUserData,
           role: "all"
         },
         { contextModule: "admin" }
       )
       if (response.data.success) {
         toast.success('Login growth settings updated successfully')
+        setBenefitImage1File(null)
+        setBenefitImage2File(null)
         fetchPageData()
       }
     } catch (error) {
@@ -174,6 +213,28 @@ export default function LoginGrowthSettings() {
       ...prev,
       [field]: prev[field].filter((_, i) => i !== index)
     }))
+  }
+
+  const handleImageSelect = (e, index) => {
+    const file = e.target.files[0]
+    if (!file) return
+    
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("Image size exceeds 10MB limit")
+      return
+    }
+
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      if (index === 1) {
+        setBenefitImage1Preview(reader.result)
+        setBenefitImage1File(file)
+      } else {
+        setBenefitImage2Preview(reader.result)
+        setBenefitImage2File(file)
+      }
+    }
+    reader.readAsDataURL(file)
   }
 
   if (loading) {
@@ -681,6 +742,88 @@ export default function LoginGrowthSettings() {
                     rows={3}
                     className="rounded-xl border-slate-200 focus-visible:ring-[#FE5502]"
                   />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border border-slate-200 shadow-sm rounded-2xl overflow-hidden">
+              <CardHeader className="bg-slate-50 border-b border-slate-100 p-6">
+                <CardTitle className="text-xl font-bold text-slate-950">Onboarding Benefit Images</CardTitle>
+                <CardDescription>Upload two promotional benefit images shown on the customer login page.</CardDescription>
+              </CardHeader>
+              <CardContent className="p-6">
+                <div className="grid md:grid-cols-2 gap-8">
+                  {/* Image 1 */}
+                  <div className="space-y-4">
+                    <Label className="font-semibold text-slate-800">Benefit Image 1</Label>
+                    <div className="relative aspect-video rounded-xl border border-dashed border-slate-300 bg-slate-50 hover:border-[#FE5502] transition-colors cursor-pointer flex items-center justify-center overflow-hidden group min-h-[160px]">
+                      {benefitImage1Preview ? (
+                        <>
+                          <img src={benefitImage1Preview} alt="Benefit 1" className="w-full h-full object-cover" />
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setBenefitImage1Preview(null);
+                              setBenefitImage1File(null);
+                              setUserData(prev => ({ ...prev, benefitImage1: "" }));
+                            }}
+                            className="absolute top-2 right-2 p-1.5 rounded-lg bg-red-50 text-red-500 shadow-sm border border-red-100 hover:bg-red-100"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </>
+                      ) : (
+                        <div onClick={() => fileInput1Ref.current?.click()} className="flex flex-col items-center gap-2 text-slate-400">
+                          <Plus className="h-8 w-8 text-slate-300" />
+                          <span className="text-xs font-semibold">Upload Image 1</span>
+                        </div>
+                      )}
+                      <input
+                        type="file"
+                        ref={fileInput1Ref}
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => handleImageSelect(e, 1)}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Image 2 */}
+                  <div className="space-y-4">
+                    <Label className="font-semibold text-slate-800">Benefit Image 2</Label>
+                    <div className="relative aspect-video rounded-xl border border-dashed border-slate-300 bg-slate-50 hover:border-[#FE5502] transition-colors cursor-pointer flex items-center justify-center overflow-hidden group min-h-[160px]">
+                      {benefitImage2Preview ? (
+                        <>
+                          <img src={benefitImage2Preview} alt="Benefit 2" className="w-full h-full object-cover" />
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setBenefitImage2Preview(null);
+                              setBenefitImage2File(null);
+                              setUserData(prev => ({ ...prev, benefitImage2: "" }));
+                            }}
+                            className="absolute top-2 right-2 p-1.5 rounded-lg bg-red-50 text-red-500 shadow-sm border border-red-100 hover:bg-red-100"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </>
+                      ) : (
+                        <div onClick={() => fileInput2Ref.current?.click()} className="flex flex-col items-center gap-2 text-slate-400">
+                          <Plus className="h-8 w-8 text-slate-300" />
+                          <span className="text-xs font-semibold">Upload Image 2</span>
+                        </div>
+                      )}
+                      <input
+                        type="file"
+                        ref={fileInput2Ref}
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => handleImageSelect(e, 2)}
+                      />
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>

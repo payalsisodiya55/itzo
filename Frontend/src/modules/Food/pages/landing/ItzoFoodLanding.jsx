@@ -6,6 +6,7 @@ import HeroSection from './components/HeroSection';
 const BetterFoodSection = lazy(() => import('./components/BetterFoodSection'));
 const AppFeaturesSection = lazy(() => import('./components/AppFeaturesSection'));
 const GoldSection = lazy(() => import('./components/GoldSection'));
+const BenefitsSection = lazy(() => import('./components/BenefitsSection'));
 const FeaturedOpeningsSection = lazy(() => import('./components/FeaturedOpeningsSection'));
 const CTASection = lazy(() => import('./components/CTASection'));
 const FooterSection = lazy(() => import('./components/FooterSection'));
@@ -26,6 +27,7 @@ export default function ItzoFoodLanding() {
         <BetterFoodSection />
         <AppFeaturesSection />
         <GoldSection />
+        <BenefitsSection />
         <FeaturedOpeningsSection />
         <CTASection />
         <FooterSection />

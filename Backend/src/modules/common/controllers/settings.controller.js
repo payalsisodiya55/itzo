@@ -1,6 +1,7 @@
 import { GlobalSettings } from '../models/settings.model.js';
 import { sendResponse } from '../../../utils/response.js';
 import fs from 'fs';
+import { v2 as cloudinary } from 'cloudinary';
 import { uploadImageBufferDetailed, uploadBufferDetailed, uploadFileDetailed } from '../../../services/cloudinary.service.js';
 import { updateSettingsCache } from '../utils/settingsCache.js';
 
@@ -54,7 +55,8 @@ export async function updateGlobalSettings(req, res, next) {
             adminLogoUrl, adminFaviconUrl, userLogoUrl, userFaviconUrl, deliveryLogoUrl, deliveryFaviconUrl, restaurantLogoUrl, restaurantFaviconUrl, sellerLogoUrl, sellerFaviconUrl,
             themeColor, modules, landingHeroTitle, landingHeroSubtitle, landingVideoUrl, landingPosterUrl, userLoginVideoUrl,
             socialLinkedinUrl, socialInstagramUrl, socialYoutubeUrl, socialFacebookUrl, socialTwitterUrl, playStoreLink, appStoreLink,
-            enableFemaleContactProtection, companySupportNumber, companyWhatsappNumber, privacyMessage
+            enableFemaleContactProtection, companySupportNumber, companyWhatsappNumber, privacyMessage,
+            benefitsSectionEnabled, benefitsImageAlt, benefitsImageLink
         } = data;
         
         console.log("Updating global settings with data:", data);
@@ -110,6 +112,15 @@ export async function updateGlobalSettings(req, res, next) {
         if (socialTwitterUrl !== undefined) settings.socialTwitterUrl = socialTwitterUrl;
         if (playStoreLink !== undefined) settings.playStoreLink = playStoreLink;
         if (appStoreLink !== undefined) settings.appStoreLink = appStoreLink;
+        if (benefitsSectionEnabled !== undefined) {
+            settings.benefitsSectionEnabled = benefitsSectionEnabled === true || benefitsSectionEnabled === 'true';
+        }
+        if (benefitsImageAlt !== undefined) {
+            settings.benefitsImageAlt = String(benefitsImageAlt || '').trim();
+        }
+        if (benefitsImageLink !== undefined) {
+            settings.benefitsImageLink = String(benefitsImageLink || '').trim();
+        }
 
         // Update URLs if provided
         const mediaFields = [
@@ -118,15 +129,29 @@ export async function updateGlobalSettings(req, res, next) {
             'sellerLogo', 'sellerFavicon',
             'userLoginBanner1', 'userLoginBanner2', 'userLoginBanner3', 'userLoginBanner4', 'userLoginBanner5', 'userLoginVideo',
             'landingPoster', 'landingVideo', 'landingPizzaImage', 'landingTomatoImage', 'landingQrCodeImage',
-            'landingAppStoreBadge', 'landingPlayStoreBadge', 'landingFooterLogo', 'landingNavbarLogo'
+            'landingAppStoreBadge', 'landingPlayStoreBadge', 'landingFooterLogo', 'landingNavbarLogo',
+            'benefitsImage'
         ];
         mediaFields.forEach(field => {
             const urlKey = `${field}Url`;
             if (data[urlKey] !== undefined) {
-                settings[field] = {
-                    url: String(data[urlKey] || '').trim(),
-                    publicId: settings[field]?.publicId || ''
-                };
+                const newUrl = String(data[urlKey] || '').trim();
+                if (newUrl === '' && settings[field]?.publicId) {
+                    const isVideo = field === 'landingVideo' || field === 'userLoginVideo';
+                    cloudinary.uploader.destroy(
+                        settings[field].publicId, 
+                        { resource_type: isVideo ? 'video' : 'image' }
+                    ).catch(() => {});
+                    settings[field] = {
+                        url: '',
+                        publicId: ''
+                    };
+                } else {
+                    settings[field] = {
+                        url: newUrl,
+                        publicId: settings[field]?.publicId || ''
+                    };
+                }
                 settings.markModified(field);
             }
         });
@@ -158,7 +183,8 @@ export async function updateGlobalSettings(req, res, next) {
                 landingAppStoreBadge: 10 * 1024 * 1024,
                 landingPlayStoreBadge: 10 * 1024 * 1024,
                 landingFooterLogo: 10 * 1024 * 1024,
-                landingNavbarLogo: 10 * 1024 * 1024
+                landingNavbarLogo: 10 * 1024 * 1024,
+                benefitsImage: 10 * 1024 * 1024
             };
 
             for (const [fieldName, maxBytes] of Object.entries(limits)) {
@@ -200,7 +226,8 @@ export async function updateGlobalSettings(req, res, next) {
                 { name: 'landingAppStoreBadge', folder: 'business/landing' },
                 { name: 'landingPlayStoreBadge', folder: 'business/landing' },
                 { name: 'landingFooterLogo', folder: 'business/landing' },
-                { name: 'landingNavbarLogo', folder: 'business/landing' }
+                { name: 'landingNavbarLogo', folder: 'business/landing' },
+                { name: 'benefitsImage', folder: 'business/landing' }
             ];
 
             for (const field of mediaUploadFields) {
@@ -220,13 +247,21 @@ export async function updateGlobalSettings(req, res, next) {
                             result = await uploadImageBufferDetailed(fileObj.buffer, field.folder);
                         }
                     }
+                    
+                    // Cleanup old asset if it exists
+                    if (settings[field.name]?.publicId) {
+                        const isVideo = field.name === 'landingVideo' || field.name === 'userLoginVideo';
+                        cloudinary.uploader.destroy(
+                            settings[field.name].publicId,
+                            { resource_type: isVideo ? 'video' : 'image' }
+                        ).catch(() => {});
+                    }
+
                     settings[field.name] = {
                         url: result.secure_url,
                         publicId: result.public_id
                     };
                     settings.markModified(field.name);
-
-                    // Clean up handled later in finally block
                 }
             }
         }

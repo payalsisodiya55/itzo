@@ -147,6 +147,9 @@ const ItzoFoodLandingSettings = () => {
   const [landingNavbarLogoPreview, setLandingNavbarLogoPreview] = useState(null);
   const [landingNavbarLogoFile, setLandingNavbarLogoFile] = useState(null);
 
+  const [benefitsImagePreview, setBenefitsImagePreview] = useState(null);
+  const [benefitsImageFile, setBenefitsImageFile] = useState(null);
+
   const [formData, setFormData] = useState({
     landingHeroTitle: "ItzoFood",
     landingHeroSubtitle: "Discover upto 30% off on your favourite meals & drinks in your city",
@@ -157,6 +160,9 @@ const ItzoFoodLandingSettings = () => {
     socialTwitterUrl: "",
     playStoreLink: "",
     appStoreLink: "",
+    benefitsSectionEnabled: false,
+    benefitsImageAlt: "",
+    benefitsImageLink: "",
   });
 
   const fetchSettings = async () => {
@@ -176,6 +182,9 @@ const ItzoFoodLandingSettings = () => {
           socialTwitterUrl: settings.socialTwitterUrl || "",
           playStoreLink: settings.playStoreLink || "",
           appStoreLink: settings.appStoreLink || "",
+          benefitsSectionEnabled: settings.benefitsSectionEnabled || false,
+          benefitsImageAlt: settings.benefitsImageAlt || "",
+          benefitsImageLink: settings.benefitsImageLink || "",
         });
 
         if (settings.landingPoster?.url) setLandingPosterPreview(settings.landingPoster.url);
@@ -187,6 +196,7 @@ const ItzoFoodLandingSettings = () => {
         if (settings.landingPlayStoreBadge?.url) setLandingPlayStoreBadgePreview(settings.landingPlayStoreBadge.url);
         if (settings.landingFooterLogo?.url) setLandingFooterLogoPreview(settings.landingFooterLogo.url);
         if (settings.landingNavbarLogo?.url) setLandingNavbarLogoPreview(settings.landingNavbarLogo.url);
+        if (settings.benefitsImage?.url) setBenefitsImagePreview(settings.benefitsImage.url);
       }
     } catch (err) {
       console.error('Fetch error:', err);
@@ -220,6 +230,9 @@ const ItzoFoodLandingSettings = () => {
         socialTwitterUrl: formData.socialTwitterUrl.trim(),
         playStoreLink: formData.playStoreLink.trim(),
         appStoreLink: formData.appStoreLink.trim(),
+        benefitsSectionEnabled: formData.benefitsSectionEnabled,
+        benefitsImageAlt: formData.benefitsImageAlt.trim(),
+        benefitsImageLink: formData.benefitsImageLink.trim(),
       };
 
       const files = {};
@@ -232,6 +245,11 @@ const ItzoFoodLandingSettings = () => {
       if (landingPlayStoreBadgeFile) files.landingPlayStoreBadge = landingPlayStoreBadgeFile;
       if (landingFooterLogoFile) files.landingFooterLogo = landingFooterLogoFile;
       if (landingNavbarLogoFile) files.landingNavbarLogo = landingNavbarLogoFile;
+      if (benefitsImageFile) files.benefitsImage = benefitsImageFile;
+
+      if (benefitsImagePreview === null) {
+        dataToSend.benefitsImageUrl = '';
+      }
 
       const response = await adminAPI.updateBusinessSettings(dataToSend, files);
       const updatedSettings = response?.data?.data || response?.data;
@@ -343,6 +361,45 @@ const ItzoFoodLandingSettings = () => {
               onUpload={(file) => handleImageUpload(file, setLandingTomatoFile, setLandingTomatoPreview)}
               onClear={() => { setLandingTomatoPreview(null); setLandingTomatoFile(null); }}
             />
+          </div>
+        </SectionCard>
+
+        {/* Benefits Section */}
+        <SectionCard title="Benefits Section">
+          <div className="space-y-8">
+            <div className="flex items-center justify-between border-b border-gray-100 pb-6">
+              <div className="flex flex-col">
+                <span className="text-sm font-semibold text-gray-700">Show Benefits Section</span>
+                <span className="text-xs text-gray-500">Enable or disable the benefits section on the landing page</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => handleChange('benefitsSectionEnabled', !formData.benefitsSectionEnabled)}
+                className={cn(
+                  "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2",
+                  formData.benefitsSectionEnabled ? "bg-orange-600" : "bg-gray-200"
+                )}
+              >
+                <span
+                  className={cn(
+                    "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out",
+                    formData.benefitsSectionEnabled ? "translate-x-5" : "translate-x-0"
+                  )}
+                />
+              </button>
+            </div>
+
+            <div className="max-w-md">
+              <MediaUploadBox
+                type="image"
+                title="Benefits Banner Image"
+                size="HD, <10MB"
+                maxSizeMB={10}
+                preview={benefitsImagePreview}
+                onUpload={(file) => handleImageUpload(file, setBenefitsImageFile, setBenefitsImagePreview)}
+                onClear={() => { setBenefitsImagePreview(null); setBenefitsImageFile(null); }}
+              />
+            </div>
           </div>
         </SectionCard>
 

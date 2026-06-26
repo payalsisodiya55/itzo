@@ -747,6 +747,22 @@ export default function UnifiedOTPFastLogin() {
             </div>
           )}
 
+          {/* Benefit Images (Uploaded dynamically by Admin) */}
+          {!keyboardInset && (uData?.benefitImage1 || uData?.benefitImage2) && (
+            <div className="w-full pt-2 flex flex-col gap-3">
+              {uData.benefitImage1 && (
+                <div className="w-full rounded-xl overflow-hidden border border-slate-100 dark:border-neutral-800 shadow-sm bg-slate-50 dark:bg-neutral-900">
+                  <img src={uData.benefitImage1} alt="Benefit 1" className="w-full h-auto object-contain block" />
+                </div>
+              )}
+              {uData.benefitImage2 && (
+                <div className="w-full rounded-xl overflow-hidden border border-slate-100 dark:border-neutral-800 shadow-sm bg-slate-50 dark:bg-neutral-900">
+                  <img src={uData.benefitImage2} alt="Benefit 2" className="w-full h-auto object-contain block" />
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="text-center text-[11px] md:text-xs text-gray-400 dark:text-gray-500 pt-4 pb-2 border-t border-gray-100 dark:border-neutral-800 mt-6">
             <p className="mb-2">By continuing, you agree to our</p>
             <div className="flex justify-center gap-1.5 flex-wrap">
