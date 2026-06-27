@@ -237,8 +237,9 @@ export default function Home() {
   }, [activeTab]);
 
   const activeBannerImages = useMemo(() => {
+    // Override API images with the custom transparent PNGs requested by the user
     if (banners?.data?.length > 0) {
-      return banners.data.map((b) => b.imageUrl);
+      return banners.data.map((_, i) => defaultBannersImages[i % defaultBannersImages.length]);
     }
     return defaultBannersImages;
   }, [banners?.data]);

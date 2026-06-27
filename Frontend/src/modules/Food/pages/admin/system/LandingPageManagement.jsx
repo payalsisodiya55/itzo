@@ -61,6 +61,125 @@ const formatRestaurantId = (restaurant) => {
   return `REST${lastDigits}`
 }
 
+const BannerHeaderFormBlock = ({
+  banner,
+  index,
+  api,
+  getAuthConfig,
+  fetchBanners,
+  setErrorSafely,
+  setSuccess
+}) => {
+  const [draft, setDraft] = useState({
+    title: banner.title || "",
+    subtitle: banner.subtitle || "",
+    ctaText: banner.ctaText || "",
+    ctaLink: banner.ctaLink || ""
+  });
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    setDraft({
+      title: banner.title || "",
+      subtitle: banner.subtitle || "",
+      ctaText: banner.ctaText || "",
+      ctaLink: banner.ctaLink || ""
+    });
+  }, [banner]);
+
+  const handleSave = async () => {
+    try {
+      setSaving(true);
+      const response = await api.patch(
+        `/food/hero-banners/${banner._id}`,
+        {
+          title: draft.title,
+          subtitle: draft.subtitle,
+          ctaText: draft.ctaText,
+          ctaLink: draft.ctaLink,
+        },
+        getAuthConfig()
+      );
+
+      if (response.data.success) {
+        setSuccess(`Header details for Slot ${index + 1} updated successfully!`);
+        await fetchBanners();
+        setTimeout(() => setSuccess(null), 3000);
+      }
+    } catch (err) {
+      setErrorSafely(err.response?.data?.message || 'Failed to update header details.');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="border border-slate-200 rounded-lg p-4 bg-slate-50/50">
+      <h4 className="text-sm font-bold text-slate-800 mb-3 font-sans flex items-center justify-between">
+        <span>Banner Slot {index + 1} ({banner.isActive ? 'Active' : 'Inactive'})</span>
+        <span className="text-xs text-slate-400 font-normal">ID: {banner._id}</span>
+      </h4>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="text-xs font-semibold text-slate-700 block mb-1">Title / Headline</label>
+          <Input
+            type="text"
+            placeholder="e.g., A SIX IS HIT! 🏏"
+            value={draft.title}
+            onChange={(e) => setDraft(prev => ({ ...prev, title: e.target.value }))}
+            className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-blue-100"
+          />
+        </div>
+        <div>
+          <label className="text-xs font-semibold text-slate-700 block mb-1">Subtitle / Promotion Text</label>
+          <Input
+            type="text"
+            placeholder="e.g., 66% OFF FOR 10 MIN!"
+            value={draft.subtitle}
+            onChange={(e) => setDraft(prev => ({ ...prev, subtitle: e.target.value }))}
+            className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-blue-100"
+          />
+        </div>
+        <div>
+          <label className="text-xs font-semibold text-slate-700 block mb-1">Button Text (CTA)</label>
+          <Input
+            type="text"
+            placeholder="e.g., Order Now"
+            value={draft.ctaText}
+            onChange={(e) => setDraft(prev => ({ ...prev, ctaText: e.target.value }))}
+            className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-blue-100"
+          />
+        </div>
+        <div>
+          <label className="text-xs font-semibold text-slate-700 block mb-1">Button Link (CTA Link)</label>
+          <Input
+            type="text"
+            placeholder="e.g., /restaurants/some-restaurant"
+            value={draft.ctaLink}
+            onChange={(e) => setDraft(prev => ({ ...prev, ctaLink: e.target.value }))}
+            className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-blue-100"
+          />
+        </div>
+      </div>
+      <div className="flex justify-end mt-4">
+        <Button
+          onClick={handleSave}
+          disabled={saving}
+          className="inline-flex h-9 items-center justify-center rounded-lg bg-orange-500 hover:bg-orange-600 text-white px-4 text-xs font-semibold transition disabled:opacity-50"
+        >
+          {saving ? (
+            <>
+              <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
+              Saving...
+            </>
+          ) : (
+            'Save Changes'
+          )}
+        </Button>
+      </div>
+    </div>
+  );
+};
 
 export default function LandingPageManagement() {
   const [activeTab, setActiveTab] = useState('banners')
@@ -1578,21 +1697,6 @@ export default function LandingPageManagement() {
                           <div className="flex items-center gap-2 flex-wrap">
                             <button
                               onClick={() => {
-                                setEditingBanner(banner)
-                                setBannerEditDraft({
-                                  title: banner.title || "",
-                                  subtitle: banner.subtitle || "",
-                                  ctaText: banner.ctaText || "",
-                                  ctaLink: banner.ctaLink || ""
-                                })
-                              }}
-                              className="px-3 py-1.5 rounded text-sm font-medium bg-blue-100 text-blue-800 hover:bg-blue-200 flex items-center gap-1"
-                            >
-                              <Edit className="w-4 h-4" />
-                              Edit Details
-                            </button>
-                            <button
-                              onClick={() => {
                                 setSelectedBannerId(banner._id)
                                 setSelectedRestaurantIds(banner.linkedRestaurants?.map(r => r._id || r) || [])
                                 setShowRestaurantModal(true)
@@ -1681,6 +1785,29 @@ export default function LandingPageManagement() {
                   ))}
                 </div>
               )}
+            </div>
+
+            {/* Edit Header Details Section */}
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mt-6">
+              <h2 className="text-lg font-bold text-slate-900 mb-2 font-sans">Edit Header Details</h2>
+              <p className="text-slate-600 text-xs mb-6">
+                Customize the headline text, promotion subtitle, and button options shown on the header of the user route `/food/user` for each banner slot.
+              </p>
+              
+              <div className="space-y-6">
+                {banners.map((banner, index) => (
+                  <BannerHeaderFormBlock
+                    key={banner._id}
+                    banner={banner}
+                    index={index}
+                    api={api}
+                    getAuthConfig={getAuthConfig}
+                    fetchBanners={fetchBanners}
+                    setErrorSafely={setErrorSafely}
+                    setSuccess={setSuccess}
+                  />
+                ))}
+              </div>
             </div>
           </>
         )}
@@ -2461,85 +2588,7 @@ export default function LandingPageManagement() {
           </DialogContent>
         </Dialog>
         
-        {/* Edit Banner Details Modal */}
-        <Dialog open={!!editingBanner} onOpenChange={(open) => !open && setEditingBanner(null)}>
-          <DialogContent className="max-w-md max-h-[85vh] overflow-y-auto flex flex-col p-6">
-            <DialogHeader className="pb-4 border-b border-slate-200">
-              <DialogTitle className="text-xl font-bold text-slate-900 font-sans">Edit Banner Details</DialogTitle>
-              <DialogDescription className="text-slate-600 mt-1">
-                Customize the headline text, promotion subtitle, and button options shown on the banner image.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4 py-4">
-              <div>
-                <Label htmlFor="edit-banner-title">Title / Headline</Label>
-                <Input
-                  id="edit-banner-title"
-                  type="text"
-                  placeholder="e.g., A SIX IS HIT! 🏏"
-                  value={bannerEditDraft.title}
-                  onChange={(e) => setBannerEditDraft(prev => ({ ...prev, title: e.target.value }))}
-                  className="mt-1"
-                />
-              </div>
-              <div>
-                <Label htmlFor="edit-banner-subtitle">Subtitle / Promotion Text</Label>
-                <Input
-                  id="edit-banner-subtitle"
-                  type="text"
-                  placeholder="e.g., 66% OFF FOR 10 MIN!"
-                  value={bannerEditDraft.subtitle}
-                  onChange={(e) => setBannerEditDraft(prev => ({ ...prev, subtitle: e.target.value }))}
-                  className="mt-1"
-                />
-              </div>
-              <div>
-                <Label htmlFor="edit-banner-ctatext">Button Text (CTA)</Label>
-                <Input
-                  id="edit-banner-ctatext"
-                  type="text"
-                  placeholder="e.g., Order Now"
-                  value={bannerEditDraft.ctaText}
-                  onChange={(e) => setBannerEditDraft(prev => ({ ...prev, ctaText: e.target.value }))}
-                  className="mt-1"
-                />
-              </div>
-              <div>
-                <Label htmlFor="edit-banner-ctalink">Button Link (CTA Link)</Label>
-                <Input
-                  id="edit-banner-ctalink"
-                  type="text"
-                  placeholder="e.g., /restaurants/some-restaurant"
-                  value={bannerEditDraft.ctaLink}
-                  onChange={(e) => setBannerEditDraft(prev => ({ ...prev, ctaLink: e.target.value }))}
-                  className="mt-1"
-                />
-              </div>
-            </div>
-            <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
-              <Button
-                variant="outline"
-                onClick={() => setEditingBanner(null)}
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={handleSaveBannerDetails}
-                disabled={savingBannerDetails}
-                className="bg-orange-500 hover:bg-orange-600 text-white min-w-[120px]"
-              >
-                {savingBannerDetails ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Saving...
-                  </>
-                ) : (
-                  'Save Changes'
-                )}
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+
 
       </div >
     </div >
