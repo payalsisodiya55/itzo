@@ -191,7 +191,12 @@ export default function HubFinance() {
 
   const invoiceSummary = useMemo(() => {
     const earnings = invoiceOrders.reduce((sum, order) => sum + (order.payout || order.restaurantEarning || 0), 0)
-    const gross = invoiceOrders.reduce((sum, order) => sum + (order.totalAmount || order.orderTotal || 0), 0)
+    const gross = invoiceOrders.reduce((sum, order) => {
+      const orderPreTaxTotal = Array.isArray(order.items) && order.items.length > 0
+        ? order.items.reduce((itemSum, item) => itemSum + (Number(item.price || 0) * Number(item.quantity || 1)), 0)
+        : (order.orderTotal || order.totalAmount || 0);
+      return sum + orderPreTaxTotal;
+    }, 0)
     return { earnings, gross, count: invoiceOrders.length }
   }, [invoiceOrders])
 
@@ -1243,7 +1248,11 @@ export default function HubFinance() {
                         </div>
                         <div className="text-right">
                           <p className="text-sm font-semibold text-gray-900">
-                            ₹{(order.totalAmount || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                            ₹{(
+                              Array.isArray(order.items) && order.items.length > 0
+                                ? order.items.reduce((sum, item) => sum + (Number(item.price || 0) * Number(item.quantity || 1)), 0)
+                                : (order.orderTotal || order.totalAmount || 0)
+                            ).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                           </p>
                           <p className="text-xs text-gray-500">Total</p>
                         </div>
