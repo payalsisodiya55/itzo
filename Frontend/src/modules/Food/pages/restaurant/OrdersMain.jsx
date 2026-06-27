@@ -155,7 +155,9 @@ function CompletedOrders({ onSelectOrder, refreshToken = 0 }) {
             itemsSummary: buildOrderItemsSummary(order.items),
             photoUrl: getOrderPreviewItem(order.items)?.image || null,
             photoAlt: getOrderPreviewItem(order.items)?.name || "Order",
-            amount: order.pricing?.total || order.total || 0,
+            amount: Array.isArray(order.items) && order.items.length > 0
+              ? order.items.reduce((sum, item) => sum + (Number(item.price || 0) * Number(item.quantity || 1)), 0)
+              : (order.pricing?.total || order.total || 0),
             paymentMethod: order.paymentMethod || order.payment?.method || null,
           }));
 
@@ -361,7 +363,9 @@ function CancelledOrders({ onSelectOrder, refreshToken = 0 }) {
             itemsSummary: buildOrderItemsSummary(order.items),
             photoUrl: getOrderPreviewItem(order.items)?.image || null,
             photoAlt: getOrderPreviewItem(order.items)?.name || "Order",
-            amount: order.pricing?.total || order.total || 0,
+            amount: Array.isArray(order.items) && order.items.length > 0
+              ? order.items.reduce((sum, item) => sum + (Number(item.price || 0) * Number(item.quantity || 1)), 0)
+              : (order.pricing?.total || order.total || 0),
             paymentMethod: order.paymentMethod || order.payment?.method || null,
           }));
 
@@ -987,26 +991,6 @@ export default function OrdersMain() {
 
     const rawItems = Array.isArray(orderLike.items) ? orderLike.items : [];
     const visibleItems = getRestaurantVisibleItems(rawItems);
-    const hasFilteredMixedItems = visibleItems.length > 0 && visibleItems.length !== rawItems.length;
-
-    if (hasFilteredMixedItems) {
-      const visibleItemsTotal = visibleItems.reduce((sum, item) => {
-        const price = Number(item?.price || 0);
-        const qty = Number(item?.quantity || 0);
-        return sum + (Number.isFinite(price) ? price : 0) * (Number.isFinite(qty) ? qty : 0);
-      }, 0);
-
-      return Number.isFinite(visibleItemsTotal) ? visibleItemsTotal : 0;
-    }
-
-    const directTotal = Number(orderLike.total);
-    if (Number.isFinite(directTotal) && directTotal > 0) return directTotal;
-
-    const pricingTotal = Number(orderLike.pricing?.total);
-    if (Number.isFinite(pricingTotal) && pricingTotal > 0) return pricingTotal;
-
-    const amountDue = Number(orderLike.payment?.amountDue);
-    if (Number.isFinite(amountDue) && amountDue > 0) return amountDue;
 
     const itemsTotal = visibleItems.reduce((sum, item) => {
       const price = Number(item?.price || 0);
