@@ -64,7 +64,8 @@ export default function Checkout() {
           name: item.name,
           price: item.price,
           quantity: item.quantity,
-          image: item.image
+          image: item.image,
+          isVeg: item.isVeg
         })),
         address: selectedAddress,
         paymentMethod: defaultPayment,
