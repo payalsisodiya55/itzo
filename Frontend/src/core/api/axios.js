@@ -30,6 +30,8 @@ axiosInstance.interceptors.request.use(
             token = localStorage.getItem('auth_admin');
         } else if (pagePath.startsWith('/delivery')) {
             token = localStorage.getItem('auth_delivery');
+        } else if (pagePath.startsWith('/hrms')) {
+            token = localStorage.getItem('auth_hrms');
         } else if (pagePath.startsWith('/customer')) {
             token = getCustomerToken();
         }
@@ -45,7 +47,7 @@ axiosInstance.interceptors.request.use(
         }
 
         // 3. Final default: if we are on a general page and STILL no token, try customer token
-        if (!token && !pagePath.startsWith('/ecs') && !pagePath.startsWith('/seller') && !pagePath.startsWith('/delivery')) {
+        if (!token && !pagePath.startsWith('/ecs') && !pagePath.startsWith('/seller') && !pagePath.startsWith('/delivery') && !pagePath.startsWith('/hrms')) {
             token = getCustomerToken();
         }
 
@@ -88,7 +90,9 @@ axiosInstance.interceptors.response.use(
                     ? 'admin'
                     : path.startsWith('/delivery')
                         ? 'delivery'
-                        : 'customer';
+                        : path.startsWith('/hrms')
+                            ? 'hrms'
+                            : 'customer';
             const requestModule = requestUrl.startsWith('/seller')
                 ? 'seller'
                 : requestUrl.startsWith('/ecs')
@@ -109,6 +113,7 @@ axiosInstance.interceptors.response.use(
                 seller: ['auth_seller', 'seller_accessToken', 'token'],
                 admin: ['auth_admin', 'admin_accessToken', 'token'],
                 delivery: ['auth_delivery', 'delivery_accessToken', 'token'],
+                hrms: ['auth_hrms'],
                 customer: ['auth_customer', 'user_accessToken', 'accessToken', 'token'],
             };
             const keysToClear = moduleStorageKeys[currentModule] || ['token'];
@@ -117,6 +122,7 @@ axiosInstance.interceptors.response.use(
             if (currentModule === 'seller') window.location.href = '/seller/auth';
             else if (currentModule === 'admin') window.location.href = '/ecs/login';
             else if (currentModule === 'delivery') window.location.href = '/delivery/auth';
+            else if (currentModule === 'hrms') window.location.href = '/hrms/login';
             else window.location.href = '/user/auth/login';
         }
         return Promise.reject(error);

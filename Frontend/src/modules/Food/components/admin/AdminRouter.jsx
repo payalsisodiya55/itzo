@@ -146,6 +146,7 @@ const AdminLogin = lazy(() => import("@food/pages/admin/auth/AdminLogin"));
 const AdminSignup = lazy(() => import("@food/pages/admin/auth/AdminSignup"));
 const AdminForgotPassword = lazy(() => import("@food/pages/admin/auth/AdminForgotPassword"));
 const QuickCommerceAdminRoutes = lazy(() => import("@/modules/quickCommerce/admin/routes"));
+const HrmsRouter = lazy(() => import("@food/pages/admin/hrms/HrmsRouter"));
 
 
 const GlobalApplicationSettings = lazy(() => import("@/modules/common/admin/pages/GlobalApplicationSettings"));
@@ -255,6 +256,9 @@ export default function AdminRouter() {
 
 
 
+
+          {/* HRMS Enterprise Module */}
+          <Route path="hrms/*" element={<HrmsRouter />} />
 
           {/* Global Application Settings (Common Module) */}
           <Route path="global-settings">

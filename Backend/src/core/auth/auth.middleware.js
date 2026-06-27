@@ -6,7 +6,10 @@ import { FoodAdmin } from '../admin/admin.model.js';
 import { AdminRole } from '../admin/role.model.js';
 
 export const requireAdmin = (req, res, next) => {
-    if (req.user?.role !== 'ADMIN') {
+    if (req.user?.role === 'HRMS_EMPLOYEE') {
+        return sendError(res, 403, 'HRMS Employee access denied for ECS panel');
+    }
+    if (req.user?.role !== 'ADMIN' && req.user?.role !== 'SUPER_ADMIN') {
         return sendError(res, 403, 'Admin access required');
     }
     next();
@@ -87,8 +90,13 @@ export const checkPermission = (permissionKey, action) => {
             }
 
             // 1. ADMIN Bypass
-            if (user.role === 'ADMIN') {
+            if (user.role === 'ADMIN' || user.role === 'SUPER_ADMIN') {
                 return next();
+            }
+
+            // 1.5 HRMS_EMPLOYEE explicit block
+            if (user.role === 'HRMS_EMPLOYEE') {
+                return sendError(res, 403, 'HRMS Employee access denied for ECS endpoints');
             }
 
             // 2. EMPLOYEE strict check

@@ -247,6 +247,18 @@ export const adminSidebarMenu = [
   },
   {
     type: "section",
+    label: "HRMS (ENTERPRISE)",
+    permissionKey: "hrms",
+    items: [
+      { type: "link", label: "Dashboard", permissionKey: "dashboard", path: "/ecs/hrms/dashboard", icon: "LayoutDashboard" },
+      { type: "link", label: "Employee Management", permissionKey: "employees", path: "/ecs/hrms/employees", icon: "Users" },
+      { type: "link", label: "Attendance & Leaves", permissionKey: "attendance", path: "/ecs/hrms/attendance", icon: "CalendarCheck" },
+      { type: "link", label: "Payroll & Expenses", permissionKey: "payroll", path: "/ecs/hrms/payroll", icon: "CreditCard" },
+      { type: "link", label: "Settings", permissionKey: "settings", path: "/ecs/hrms/settings", icon: "Settings" },
+    ],
+  },
+  {
+    type: "section",
     label: "STAFF MANAGEMENT",
     permissionKey: "staff_management",
     items: [

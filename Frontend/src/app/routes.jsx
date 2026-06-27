@@ -23,6 +23,7 @@ const FoodApp = lazy(() => import('../modules/Food/routes'))
 const AuthApp = lazy(() => import('../modules/auth/routes'))
 const QuickCommerceApp = lazy(() => import('../modules/quickCommerce/routes'))
 const SellerApp = lazy(() => import('../modules/seller/routes'))
+const HrmsEmployeeApp = lazy(() => import('../modules/hrms/routes/index.jsx'))
 
 
 const FoodUserLayout = lazy(() => import('../modules/Food/components/user/UserLayout'))
@@ -281,6 +282,13 @@ const AppRoutes = () => {
         <Route path="/seller" element={<SellerAppWrapper />} />
         <Route path="/seller/auth" element={<SellerAuthEntry />} />
         <Route path="/seller/*" element={<SellerAppWrapper />} />
+
+        {/* HRMS Employee Portal */}
+        <Route path="/hrms/*" element={
+          <Suspense fallback={<PageLoader />}>
+            <HrmsEmployeeApp />
+          </Suspense>
+        } />
 
         {/* Global Admin Portal - wrap lazy router in Suspense to avoid blank/crash on direct admin URLs */}
         <Route

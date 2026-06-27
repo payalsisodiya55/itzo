@@ -28,6 +28,7 @@ import commonSettingsRoutes from '../modules/common/routes/settings.routes.js';
 import { getGlobalSettings as getPublicSettings } from '../modules/common/controllers/settings.controller.js';
 import jobApplicationRoutes from '../modules/food/admin/routes/jobApplication.route.js';
 import licensingRoutes from '../modules/food/licensing/routes/licensingRoutes.js';
+import hrmsRoutes from '../modules/hrms/routes/index.routes.js';
 
 
 const router = express.Router();
@@ -76,6 +77,9 @@ router.use('/v1/fcm-tokens', fcmRoutes);
 router.use('/fcm-tokens', fcmRoutes);
 router.use('/v1/quick-commerce', quickCommerceRoutes);
 router.use('/v1/seller', sellerRoutes);
+
+// HRMS Enterprise Module
+router.use('/v1/hrms', hrmsRoutes);
 
 
 // router.get('/v1/env/public', getPublicEnvController);

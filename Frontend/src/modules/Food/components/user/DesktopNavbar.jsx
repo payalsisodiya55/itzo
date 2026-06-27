@@ -355,7 +355,7 @@ export default function DesktopNavbar({ showLogo = true }) {
                             {/* Quick Tab */}
                             <Link
                                 to="/quick"
-                                className={`hidden flex-col items-center gap-1 px-2 py-1 transition-colors relative group ${isQuick
+                                className={`flex flex-col items-center gap-1 px-2 py-1 transition-colors relative group ${isQuick
                                     ? "text-[#FE5502] dark:text-[#FE5502]"
                                     : "text-gray-600 dark:text-gray-400 hover:text-[#FE5502] dark:hover:text-[#FE5502]"
                                     }`}

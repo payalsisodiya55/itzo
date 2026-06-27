@@ -673,6 +673,7 @@ export const getProfile = async (userId, role) => {
       break;
     case ROLES.ADMIN:
     case "EMPLOYEE":
+    case "HRMS_EMPLOYEE":
       profile = normalizeAdminProfile(await getAdminProfileDocument(id));
       break;
     case ROLES.RESTAURANT:
