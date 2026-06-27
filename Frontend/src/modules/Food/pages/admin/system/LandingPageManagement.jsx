@@ -72,18 +72,14 @@ const BannerHeaderFormBlock = ({
 }) => {
   const [draft, setDraft] = useState({
     title: banner.title || "",
-    subtitle: banner.subtitle || "",
-    ctaText: banner.ctaText || "",
-    ctaLink: banner.ctaLink || ""
+    subtitle: banner.subtitle || ""
   });
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     setDraft({
       title: banner.title || "",
-      subtitle: banner.subtitle || "",
-      ctaText: banner.ctaText || "",
-      ctaLink: banner.ctaLink || ""
+      subtitle: banner.subtitle || ""
     });
   }, [banner]);
 
@@ -95,8 +91,8 @@ const BannerHeaderFormBlock = ({
         {
           title: draft.title,
           subtitle: draft.subtitle,
-          ctaText: draft.ctaText,
-          ctaLink: draft.ctaLink,
+          ctaText: "",
+          ctaLink: "",
         },
         getAuthConfig()
       );
@@ -137,26 +133,6 @@ const BannerHeaderFormBlock = ({
             placeholder="e.g., 66% OFF FOR 10 MIN!"
             value={draft.subtitle}
             onChange={(e) => setDraft(prev => ({ ...prev, subtitle: e.target.value }))}
-            className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-blue-100"
-          />
-        </div>
-        <div>
-          <label className="text-xs font-semibold text-slate-700 block mb-1">Button Text (CTA)</label>
-          <Input
-            type="text"
-            placeholder="e.g., Order Now"
-            value={draft.ctaText}
-            onChange={(e) => setDraft(prev => ({ ...prev, ctaText: e.target.value }))}
-            className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-blue-100"
-          />
-        </div>
-        <div>
-          <label className="text-xs font-semibold text-slate-700 block mb-1">Button Link (CTA Link)</label>
-          <Input
-            type="text"
-            placeholder="e.g., /restaurants/some-restaurant"
-            value={draft.ctaLink}
-            onChange={(e) => setDraft(prev => ({ ...prev, ctaLink: e.target.value }))}
             className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-blue-100"
           />
         </div>

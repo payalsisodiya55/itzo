@@ -138,6 +138,7 @@ export default function HomeHeader({
   quickThemeColor,
   onQuickTabIntent,
   bannerComponent,
+  embedded = false,
 }) {
   const navigate = useNavigate();
   const [isListening, setIsListening] = useState(false);
@@ -163,6 +164,7 @@ export default function HomeHeader({
     return () => window.removeEventListener("notificationsUpdated", sync);
   }, []);
 
+  const isFoodActive = routerLocation.pathname.startsWith('/food');
   const theme = activeTab === "quick" ? quickTheme(quickThemeColor) : foodTheme(vegMode);
   const isFood = activeTab === "food";
   const walletPath = isFood ? "/food/user/wallet" : "/quick/wallet";
@@ -435,6 +437,43 @@ export default function HomeHeader({
           </Link>
         </div>
       </div>
+
+      {/* Mobile-only Food / Quick Toggle Buttons */}
+      {!embedded && (
+        <div className="px-5 pt-3 pb-1 relative z-10 sm:hidden">
+          <div className="grid grid-cols-2 gap-3">
+            {/* Food Button */}
+            <motion.button
+              whileTap={{ scale: 0.96 }}
+              onClick={() => navigate('/food/user')}
+              className={cn(
+                "flex flex-col items-center justify-center py-2 px-4 rounded-[12px] transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.06)] border border-transparent",
+                isFoodActive
+                  ? "bg-[#FE5502] text-white shadow-[0_6px_20px_rgba(254,85,2,0.25)] font-bold"
+                  : "bg-[#F1F5F9]/95 text-slate-600 border-transparent font-medium"
+              )}
+            >
+              <span className="text-[18px] mb-0.5" role="img" aria-label="burger">🍔</span>
+              <span className="text-[10px] tracking-[0.5px] uppercase">FOOD</span>
+            </motion.button>
+
+            {/* Quick Commerce Button */}
+            <motion.button
+              whileTap={{ scale: 0.96 }}
+              onClick={() => navigate('/quick')}
+              className={cn(
+                "flex flex-col items-center justify-center py-2 px-4 rounded-[12px] transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.06)] border border-transparent",
+                !isFoodActive
+                  ? "bg-[#FE5502] text-white shadow-[0_6px_20px_rgba(254,85,2,0.25)] font-bold"
+                  : "bg-[#F1F5F9]/95 text-slate-600 border-transparent font-medium"
+              )}
+            >
+              <span className="text-[18px] mb-0.5" role="img" aria-label="box">📦</span>
+              <span className="text-[10px] tracking-[0.5px] uppercase">QUICK COMMERCE</span>
+            </motion.button>
+          </div>
+        </div>
+      )}
 
       {/* Hidden because there is only one tab and it is redundant as per request
       <div className="px-3 pt-1 flex items-end justify-start gap-1 relative z-10">

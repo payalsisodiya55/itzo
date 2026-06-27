@@ -123,24 +123,6 @@ const BannerSection = memo(({
                               {bannerData?.subtitle && <TypewriterText text={bannerData.subtitle} isActive={isActive} delay={0.4} />}
                             </span>
                           </div>
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={
-                              isActive
-                                ? { opacity: 1, scale: 1, y: [0, -4, 0, -2, 0] }
-                                : { opacity: 0, scale: 0.8, y: 0 }
-                            }
-                            transition={{
-                              opacity: { delay: 0.8, duration: 0.4 },
-                              scale: { delay: 0.8, duration: 0.4, type: "spring" },
-                              y: { delay: 1.5, duration: 1.2, ease: "easeInOut", repeat: Infinity, repeatDelay: 2.5 }
-                            }}
-                            className="w-fit"
-                          >
-                            <button className="bg-[#FE5502] hover:bg-[#E44D02] shadow-[0_4px_12px_rgba(254,85,2,0.5)] flex items-center gap-1 px-4 py-2 rounded-xl text-white font-bold transition-all transform hover:scale-105 active:scale-95">
-                              {bannerData?.ctaText || bannerData?.action || "Order Now"} <span className="font-black tracking-tighter">&gt;&gt;</span>
-                            </button>
-                          </motion.div>
                         </div>
 
                         {/* Right Side: Image Content */}
