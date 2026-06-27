@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react"
 import { Eye, Printer, ArrowUpDown } from "lucide-react"
 
 const getStatusColor = (status) => {
-  if (status === "Expired") return "bg-blue-100 text-blue-700"
+  if (status === "Expired") return "bg-orange-100 text-orange-700"
   if (status === "Active") return "bg-emerald-100 text-emerald-700"
   if (status === "Pending") return "bg-amber-100 text-amber-700"
   return "bg-slate-100 text-slate-700"
@@ -176,7 +176,7 @@ export default function SubscriptionOrdersTable({ orders, visibleColumns, onView
                       </button>
                       <button 
                         onClick={() => onPrintOrder(order)}
-                        className="p-1.5 rounded text-primary hover:bg-blue-50 transition-colors"
+                        className="p-1.5 rounded text-primary hover:bg-orange-50 transition-colors"
                         title="Print Order"
                       >
                         <Printer className="w-4 h-4" />

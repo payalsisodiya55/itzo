@@ -320,7 +320,7 @@ export default function RestaurantProfile({ isOpen, onClose }) {
                       {userData.email}
                     </p>
                   )}
-                  <div className="flex items-center gap-1.5 bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full w-fit">
+                  <div className="flex items-center gap-1.5 bg-orange-50 text-orange-700 px-2.5 py-1 rounded-full w-fit">
                     <ShieldCheck className="w-3.5 h-3.5" />
                     <span className="text-xs font-bold uppercase tracking-wider">
                       {userData.role}

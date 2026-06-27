@@ -125,7 +125,7 @@ export default function Wallet() {
       case "deduction":
         return <ArrowUpCircle className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-red-600 dark:text-red-400" />
       case "refund":
-        return <RefreshCw className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-primary dark:text-blue-400" />
+        return <RefreshCw className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-primary dark:text-orange-400" />
       default:
         return null
     }
@@ -138,7 +138,7 @@ export default function Wallet() {
       case "deduction":
         return "text-red-600 dark:text-red-400"
       case "refund":
-        return "text-primary dark:text-blue-400"
+        return "text-primary dark:text-orange-400"
       default:
         return "text-gray-600 dark:text-gray-400"
     }

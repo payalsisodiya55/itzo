@@ -84,11 +84,11 @@ export default function JobApplicationDetails() {
   const getStatusColor = (status) => {
     switch (status) {
       case "Applied":
-        return "bg-blue-100 text-blue-800 border-blue-200";
+        return "bg-orange-100 text-orange-800 border-orange-200";
       case "Shortlisted":
-        return "bg-purple-100 text-purple-800 border-purple-200";
+        return "bg-orange-100 text-orange-800 border-orange-200";
       case "Interview Scheduled":
-        return "bg-indigo-100 text-indigo-800 border-indigo-200";
+        return "bg-orange-100 text-orange-800 border-orange-200";
       case "Rejected":
         return "bg-rose-100 text-rose-800 border-rose-200";
       case "Hired":
@@ -295,7 +295,7 @@ export default function JobApplicationDetails() {
                   {application.certifications && application.certifications.length > 0 ? (
                     <div className="flex flex-wrap gap-2">
                       {application.certifications.map((cert, idx) => (
-                        <span key={idx} className="bg-blue-50 text-blue-600 font-semibold px-2.5 py-1 rounded-lg border border-blue-100">
+                        <span key={idx} className="bg-orange-50 text-primary font-semibold px-2.5 py-1 rounded-lg border border-orange-100">
                           {cert}
                         </span>
                       ))}

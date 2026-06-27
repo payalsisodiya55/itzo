@@ -83,7 +83,7 @@ const AdminAuth = () => {
         <div className="flex min-h-screen items-center justify-center bg-[#f3f6ff] p-6 font-['Outfit',_sans-serif]">
             {/* Background Decorations */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-indigo-50 opacity-40 rounded-full blur-[120px]"></div>
+                <div className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-orange-50 opacity-40 rounded-full blur-[120px]"></div>
                 <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-white opacity-60 rounded-full blur-[100px]"></div>
             </div>
 
@@ -107,7 +107,7 @@ const AdminAuth = () => {
                         >
                             <div className="space-y-3">
                                 <motion.h1
-                                    className="text-5xl font-black text-indigo-900 tracking-tight"
+                                    className="text-5xl font-black text-orange-900 tracking-tight"
                                     layoutId="auth-title"
                                 >
                                     {isLogin ? 'Login' : 'Sign Up'}
@@ -128,7 +128,7 @@ const AdminAuth = () => {
                                             exit={{ height: 0, opacity: 0, y: -10 }}
                                             className="group relative"
                                         >
-                                            <div className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors">
+                                            <div className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors">
                                                 <User size={20} />
                                             </div>
                                             <input
@@ -138,14 +138,14 @@ const AdminAuth = () => {
                                                 value={formData.name}
                                                 onChange={handleChange}
                                                 placeholder="Full Name"
-                                                className="w-full pl-14 pr-5 py-5 bg-[#f8f9ff] border-2 border-transparent rounded-[24px] text-sm font-bold text-gray-700 outline-none focus:bg-white focus:border-indigo-100 focus:ring-8 focus:ring-indigo-50/50 transition-all placeholder:text-gray-300"
+                                                className="w-full pl-14 pr-5 py-5 bg-[#f8f9ff] border-2 border-transparent rounded-[24px] text-sm font-bold text-gray-700 outline-none focus:bg-white focus:border-orange-100 focus:ring-8 focus:ring-orange-50/50 transition-all placeholder:text-gray-300"
                                             />
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
 
                                 <div className="group relative">
-                                    <div className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors">
+                                    <div className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors">
                                         <Mail size={20} />
                                     </div>
                                     <input
@@ -155,12 +155,12 @@ const AdminAuth = () => {
                                         value={formData.email}
                                         onChange={handleChange}
                                         placeholder="Username or email"
-                                        className="w-full pl-14 pr-5 py-5 bg-[#f8f9ff] border-2 border-transparent rounded-[24px] text-sm font-bold text-gray-700 outline-none focus:bg-white focus:border-indigo-100 focus:ring-8 focus:ring-indigo-50/50 transition-all placeholder:text-gray-300"
+                                        className="w-full pl-14 pr-5 py-5 bg-[#f8f9ff] border-2 border-transparent rounded-[24px] text-sm font-bold text-gray-700 outline-none focus:bg-white focus:border-orange-100 focus:ring-8 focus:ring-orange-50/50 transition-all placeholder:text-gray-300"
                                     />
                                 </div>
 
                                 <div className="group relative">
-                                    <div className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors">
+                                    <div className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors">
                                         <Lock size={20} />
                                     </div>
                                     <input
@@ -173,14 +173,14 @@ const AdminAuth = () => {
                                         value={formData.password}
                                         onChange={handleChange}
                                         placeholder="6 digit / letter PIN"
-                                        className="w-full pl-14 pr-5 py-5 bg-[#f8f9ff] border-2 border-transparent rounded-[24px] text-sm font-bold text-gray-700 outline-none focus:bg-white focus:border-indigo-100 focus:ring-8 focus:ring-indigo-50/50 transition-all placeholder:text-gray-300"
+                                        className="w-full pl-14 pr-5 py-5 bg-[#f8f9ff] border-2 border-transparent rounded-[24px] text-sm font-bold text-gray-700 outline-none focus:bg-white focus:border-orange-100 focus:ring-8 focus:ring-orange-50/50 transition-all placeholder:text-gray-300"
                                     />
                                 </div>
 
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className="w-full bg-indigo-600 text-white rounded-[24px] py-5 text-base font-black shadow-2xl shadow-indigo-200 hover:bg-indigo-700 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-3"
+                                    className="w-full bg-primary text-white rounded-[24px] py-5 text-base font-black shadow-2xl shadow-indigo-200 hover:bg-primary-hover hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-3"
                                 >
                                     {isLoading ? (
                                         <motion.div
@@ -204,7 +204,7 @@ const AdminAuth = () => {
                 {/* Right Side: Illustration & Curve */}
                 <div className="hidden md:flex w-[55%] relative bg-[#f8f9ff] overflow-hidden items-center justify-center">
                     <div className="absolute top-8 right-8 z-30">
-                        <div className="w-20 h-20 rounded-2xl bg-white/85 backdrop-blur-sm border border-indigo-100 shadow-[0_12px_30px_rgba(79,70,229,0.18)] flex items-center justify-center overflow-hidden">
+                        <div className="w-20 h-20 rounded-2xl bg-white/85 backdrop-blur-sm border border-orange-100 shadow-[0_12px_30px_rgba(79,70,229,0.18)] flex items-center justify-center overflow-hidden">
                             {logoUrl ? (
                                 <img
                                     src={logoUrl}
@@ -212,7 +212,7 @@ const AdminAuth = () => {
                                     className="w-14 h-14 md:w-20 md:h-20 object-contain"
                                 />
                             ) : (
-                                <ShieldCheck size={30} className="text-indigo-600" />
+                                <ShieldCheck size={30} className="text-primary" />
                             )}
                         </div>
                     </div>
@@ -226,7 +226,7 @@ const AdminAuth = () => {
                     {/* Lottie Animation Scene */}
                     <div className="relative z-10 w-full h-full flex flex-col items-center justify-center p-20">
                         {/* Glow Effect Backdrop */}
-                        <div className="absolute w-64 h-64 bg-indigo-400/20 rounded-full blur-[80px]" />
+                        <div className="absolute w-64 h-64 bg-orange-400/20 rounded-full blur-[80px]" />
 
                         <motion.div
                             initial={{ scale: 0.8, opacity: 0 }}

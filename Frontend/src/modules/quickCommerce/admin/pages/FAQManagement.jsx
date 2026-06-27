@@ -56,8 +56,8 @@ const FAQManagement = () => {
 
     // Categories State
     const [categories, setCategories] = useState([
-        { id: 1, name: 'Customer', color: 'sky' },
-        { id: 2, name: 'Seller', color: 'indigo' },
+        { id: 1, name: 'Customer', color: 'orange' },
+        { id: 2, name: 'Seller', color: 'orange' },
         { id: 3, name: 'Delivery', color: 'amber' },
         { id: 4, name: 'Orders', color: 'emerald' },
     ]);
@@ -208,7 +208,7 @@ const FAQManagement = () => {
                         onClick={() => setIsCategoryModalOpen(true)}
                         className="flex items-center gap-2 px-5 py-3 bg-white ring-1 ring-slate-200 text-slate-700 rounded-2xl text-xs font-bold hover:bg-slate-50 transition-all shadow-sm"
                     >
-                        <Layers className="h-4 w-4 text-sky-500" />
+                        <Layers className="h-4 w-4 text-primary" />
                         CATEGORIES
                     </button>
                     <button
@@ -225,7 +225,7 @@ const FAQManagement = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
                     { label: 'Total FAQs', value: faqs.length, icon: MessageSquare, bg: 'bg-pink-50', iconColor: 'text-pink-600' },
-                    { label: 'Total Views', value: faqs.reduce((acc, f) => acc + f.views, 0).toLocaleString(), icon: TrendingUp, bg: 'bg-sky-50', iconColor: 'text-sky-600' },
+                    { label: 'Total Views', value: faqs.reduce((acc, f) => acc + f.views, 0).toLocaleString(), icon: TrendingUp, bg: 'bg-orange-50', iconColor: 'text-primary' },
                     { label: 'Published', value: faqs.filter(f => f.status === 'published').length, icon: CheckCircle2, bg: 'bg-emerald-50', iconColor: 'text-emerald-600' },
                     { label: 'Drafts', value: faqs.filter(f => f.status === 'draft').length, icon: Edit3, bg: 'bg-amber-50', iconColor: 'text-amber-600' },
                 ].map((stat, i) => (
@@ -349,7 +349,7 @@ const FAQManagement = () => {
                                                             <button
                                                                 onClick={() => handleToggleStatus(faq)}
                                                                 title={faq.status === 'published' ? 'Set as Draft' : 'Publish Now'}
-                                                                className="p-2 transition-all text-slate-400 hover:text-sky-500 hover:bg-sky-50 rounded-lg"
+                                                                className="p-2 transition-all text-slate-400 hover:text-primary-hover hover:bg-orange-50 rounded-lg"
                                                             >
                                                                 {faq.status === 'published' ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                                             </button>
@@ -522,14 +522,14 @@ const FAQManagement = () => {
                         ))}
                     </div>
                     <div className="relative group">
-                        <Plus className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 group-focus-within:text-sky-500" />
+                        <Plus className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 group-focus-within:text-primary" />
                         <input
                             type="text"
                             value={newCategoryName}
                             onChange={(e) => setNewCategoryName(e.target.value)}
                             onKeyPress={(e) => e.key === 'Enter' && handleAddCategory()}
                             placeholder="New Category Label..."
-                            className="w-full pl-11 pr-4 py-4 bg-white ring-1 ring-slate-200 rounded-2xl text-[10px] font-black uppercase tracking-widest outline-none focus:ring-2 focus:ring-sky-500/10 transition-all"
+                            className="w-full pl-11 pr-4 py-4 bg-white ring-1 ring-slate-200 rounded-2xl text-[10px] font-black uppercase tracking-widest outline-none focus:ring-2 focus:ring-primary/10 transition-all"
                         />
                     </div>
                     <button onClick={handleAddCategory} className="w-full py-4 bg-primary text-primary-foreground rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-primary/90 hover:shadow-primary/20 transition-all">GENERATE NEW CATEGORY</button>

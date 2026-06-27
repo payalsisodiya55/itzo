@@ -252,7 +252,7 @@ const Level2Categories = () => {
         </div>
         <button
           onClick={openAddModal}
-          className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+          className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-hover transition-colors">
           <Plus className="w-5 h-5" />
           Add New Category
         </button>
@@ -275,7 +275,7 @@ const Level2Categories = () => {
               placeholder="Search categories..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+              className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
             />
           </div>
           <div className="flex items-center gap-2 min-w-[200px]">
@@ -283,7 +283,7 @@ const Level2Categories = () => {
             <select
               value={filterHeader}
               onChange={(e) => setFilterHeader(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
+              className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
               <option value="all">All Header Categories</option>
               {headerCategories.map((h) => (
                 <option key={h._id || h.id} value={h._id || h.id}>
@@ -301,7 +301,7 @@ const Level2Categories = () => {
                 <th className="py-3 px-4 text-left">
                   <input
                     type="checkbox"
-                    className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    className="rounded border-gray-300 text-primary focus:ring-primary"
                     checked={
                       selectedItems.length > 0 &&
                       selectedItems.length === filteredCategories.length
@@ -350,7 +350,7 @@ const Level2Categories = () => {
                     <td className="py-3 px-4">
                       <input
                         type="checkbox"
-                        className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                        className="rounded border-gray-300 text-primary focus:ring-primary"
                         checked={selectedItems.includes(cat._id)}
                         onChange={() => handleSelect(cat._id)}
                       />
@@ -390,7 +390,7 @@ const Level2Categories = () => {
                     <td className="py-3 px-4 text-right space-x-2">
                       <button
                         onClick={() => openEditModal(cat)}
-                        className="p-1 text-gray-500 hover:text-indigo-600 transition-colors">
+                        className="p-1 text-gray-500 hover:text-primary-hover transition-colors">
                         <Edit className="w-5 h-5" />
                       </button>
                       <button
@@ -435,7 +435,7 @@ const Level2Categories = () => {
                 <div className="flex justify-center">
                   <div
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-24 h-24 rounded-full bg-gray-50 border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer hover:border-indigo-500 overflow-hidden transition-colors">
+                    className="w-24 h-24 rounded-full bg-gray-50 border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer hover:border-primary-hover overflow-hidden transition-colors">
                     {previewUrl ? (
                       <img
                         src={previewUrl}
@@ -469,7 +469,7 @@ const Level2Categories = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, parentId: e.target.value })
                     }
-                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
                     <option value="">Select Header Category</option>
                     {headerCategories.map((h) => (
                       <option key={h._id || h.id} value={h._id || h.id}>
@@ -489,7 +489,7 @@ const Level2Categories = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                     placeholder="e.g., Laptops"
                   />
                 </div>
@@ -504,7 +504,7 @@ const Level2Categories = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, slug: e.target.value })
                     }
-                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                     placeholder="e.g., laptops"
                   />
                 </div>
@@ -518,7 +518,7 @@ const Level2Categories = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, status: e.target.value })
                     }
-                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
                   </select>
@@ -534,7 +534,7 @@ const Level2Categories = () => {
                 <button
                   onClick={handleSave}
                   disabled={isSaving}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium disabled:opacity-50 flex items-center gap-2">
+                  className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover font-medium disabled:opacity-50 flex items-center gap-2">
                   {isSaving && (
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   )}

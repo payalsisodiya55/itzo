@@ -129,7 +129,7 @@ const CATEGORY_METADATA = {
     theme: {
       gradient: "linear-gradient(to bottom, #7209B7, #B5179E)",
       shadow: "shadow-purple-500/20",
-      accent: "text-purple-900",
+      accent: "text-orange-900",
     },
     banner: {
       title: "TECH FEST",
@@ -142,7 +142,7 @@ const CATEGORY_METADATA = {
     theme: {
       gradient: "linear-gradient(to bottom, #4CC9F0, #A0E7E5)",
       shadow: "shadow-blue-500/20",
-      accent: "text-blue-900",
+      accent: "text-orange-900",
     },
     banner: {
       title: "LITTLE ONE",
@@ -164,7 +164,7 @@ const CATEGORY_METADATA = {
     theme: {
       gradient: "linear-gradient(to bottom, #4361EE, #4895EF)",
       shadow: "shadow-indigo-500/20",
-      accent: "text-indigo-900",
+      accent: "text-orange-900",
     },
     banner: { title: "SPORTS", subtitle: "GEAR", floatingElements: "confetti" },
   },
@@ -205,7 +205,7 @@ const categories = [
     theme: {
       gradient: "linear-gradient(to bottom, #7209B7, #B5179E)",
       shadow: "shadow-purple-500/20",
-      accent: "text-purple-900",
+      accent: "text-orange-900",
     },
     banner: {
       title: "TECH FEST",
@@ -253,7 +253,7 @@ const categories = [
     theme: {
       gradient: "linear-gradient(to bottom, #4CC9F0, #A0E7E5)",
       shadow: "shadow-blue-500/20",
-      accent: "text-blue-900",
+      accent: "text-orange-900",
     },
     banner: {
       title: "LITTLE ONE",
@@ -285,7 +285,7 @@ const categories = [
     theme: {
       gradient: "linear-gradient(to bottom, #4361EE, #4895EF)",
       shadow: "shadow-indigo-500/20",
-      accent: "text-indigo-900",
+      accent: "text-orange-900",
     },
     banner: {
       title: "SPORTS",
@@ -995,7 +995,7 @@ const Home = ({ embedded = false, onThemeChange, embeddedHeaderColor = null }) =
                       className="w-[125px] md:w-[155px] lg:w-[175px] shrink-0 snap-start">
                       <ProductCard
                         product={product}
-                        className="bg-white rounded-[20px] shadow-[0_8px_20px_-8px_rgba(0,0,0,0.1)] border-blue-50/50 transition-all"
+                        className="bg-white rounded-[20px] shadow-[0_8px_20px_-8px_rgba(0,0,0,0.1)] border-orange-50/50 transition-all"
                         compact={true}
                         curvedInfo={true}
                       />
@@ -1175,7 +1175,7 @@ const Home = ({ embedded = false, onThemeChange, embeddedHeaderColor = null }) =
           {sectionsForRenderer.length > 0 && (
             <div
               className={cn(
-                "container mx-auto px-4 md:px-8 lg:px-[50px] bg-[#F0F9FF] rounded-none pt-4 pb-10 mt-[-28px] mb-10 relative z-[1] border-x-2 border-b-2 border-sky-200/50 shadow-sm overflow-hidden",
+                "container mx-auto px-4 md:px-8 lg:px-[50px] bg-[#F0F9FF] rounded-none pt-4 pb-10 mt-[-28px] mb-10 relative z-[1] border-x-2 border-b-2 border-orange-200/50 shadow-sm overflow-hidden",
               )}>
               {/* Animated Top Border Glow */}
               <motion.div
@@ -1188,7 +1188,7 @@ const Home = ({ embedded = false, onThemeChange, embeddedHeaderColor = null }) =
                   repeat: Infinity,
                   ease: "linear"
                 }}
-                className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-sky-400/80 to-transparent"
+                className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-orange-400/80 to-transparent"
               />
 
               <SectionRenderer

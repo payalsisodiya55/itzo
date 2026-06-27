@@ -178,7 +178,7 @@ export default function DeliveryEarnings() {
     return (
       <div className="p-4 lg:p-6 bg-slate-50 min-h-screen w-full max-w-full overflow-x-hidden flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
           <p className="text-gray-600">Loading delivery earnings...</p>
         </div>
       </div>
@@ -211,7 +211,7 @@ export default function DeliveryEarnings() {
                 <p className="text-sm text-slate-600 mb-1">Total Delivery Boys</p>
                 <p className="text-2xl font-bold text-slate-900">{summary.totalDeliveryPartners || 0}</p>
               </div>
-              <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-lg bg-orange-100 flex items-center justify-center">
                 <DollarSign className="w-6 h-6 text-primary" />
               </div>
             </div>
@@ -233,8 +233,8 @@ export default function DeliveryEarnings() {
                 <p className="text-sm text-slate-600 mb-1">Total Orders</p>
                 <p className="text-2xl font-bold text-slate-900">{summary.totalOrders || 0}</p>
               </div>
-              <div className="w-12 h-12 rounded-lg bg-purple-100 flex items-center justify-center">
-                <FileText className="w-6 h-6 text-purple-600" />
+              <div className="w-12 h-12 rounded-lg bg-orange-100 flex items-center justify-center">
+                <FileText className="w-6 h-6 text-primary" />
               </div>
             </div>
           </div>

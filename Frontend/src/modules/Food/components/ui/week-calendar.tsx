@@ -135,7 +135,7 @@ export function WeekCalendar({ selectedDate, onDateChange, onClose }: WeekCalend
                   ? 'bg-green-500 text-white font-semibold' 
                   : 'hover:bg-gray-100'
                 }
-                ${isToday && !isSelected ? 'bg-blue-50 text-primary font-medium' : ''}
+                ${isToday && !isSelected ? 'bg-orange-50 text-primary font-medium' : ''}
               `}
             >
               {date.getDate()}

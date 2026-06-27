@@ -85,7 +85,7 @@ export default function QuickHomeView({
   const stats = [
     { label: "Blink Delivery", value: "9 Mins", icon: <Zap size={14} />, color: "from-amber-400 to-orange-500" },
     { label: "Quality Assured", value: "Verified", icon: <ShieldCheck size={14} />, color: "from-emerald-400 to-green-600" },
-    { label: "Pro Priority", value: "Active", icon: <TrendingUp size={14} />, color: "from-blue-400 to-indigo-600" },
+    { label: "Pro Priority", value: "Active", icon: <TrendingUp size={14} />, color: "from-orange-400 to-orange-600" },
   ];
 
   useEffect(() => {
@@ -284,7 +284,7 @@ export default function QuickHomeView({
 
       {/* Background Orbs */}
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
-        <div className="absolute top-1/4 left-1/4 w-1/4 h-1/4 bg-blue-50 dark:bg-blue-900/10 rounded-full blur-[120px] opacity-30" />
+        <div className="absolute top-1/4 left-1/4 w-1/4 h-1/4 bg-orange-50 dark:bg-orange-900/10 rounded-full blur-[120px] opacity-30" />
       </div>
     </div>
   );

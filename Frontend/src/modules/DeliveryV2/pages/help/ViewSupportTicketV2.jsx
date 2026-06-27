@@ -47,7 +47,7 @@ export const ViewSupportTicketV2 = () => {
       case "open": return "text-orange-600 bg-orange-50";
       case "resolved": return "text-green-600 bg-green-50";
       case "closed": return "text-gray-600 bg-gray-50";
-      default: return "text-primary bg-blue-50";
+      default: return "text-primary bg-orange-50";
     }
   };
 

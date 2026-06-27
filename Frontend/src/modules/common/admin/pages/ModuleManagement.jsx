@@ -122,7 +122,7 @@ const ModuleManagement = () => {
   if (loading) {
      return (
        <div className="min-h-screen flex items-center justify-center bg-gray-50">
-         <Loader2 className="w-10 h-10 text-indigo-600 animate-spin" />
+         <Loader2 className="w-10 h-10 text-primary animate-spin" />
        </div>
      );
   }
@@ -146,7 +146,7 @@ const ModuleManagement = () => {
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-3xl border border-gray-100 shadow-xl overflow-hidden">
           <div className="p-8 border-b border-gray-50 bg-gray-50/30 flex items-center gap-3">
-             <LayoutGrid className="text-indigo-500" size={20} />
+             <LayoutGrid className="text-primary" size={20} />
              <h2 className="text-sm font-bold text-gray-700 uppercase tracking-tight">Active Modules</h2>
           </div>
           
@@ -172,11 +172,11 @@ const ModuleManagement = () => {
 
             </div>
 
-            <div className="mt-12 bg-indigo-50 rounded-2xl p-6 flex items-start gap-4 border border-indigo-100">
-               <AlertCircle className="text-indigo-500 flex-shrink-0 mt-0.5" size={20} />
+            <div className="mt-12 bg-orange-50 rounded-2xl p-6 flex items-start gap-4 border border-orange-100">
+               <AlertCircle className="text-primary flex-shrink-0 mt-0.5" size={20} />
                <div className="space-y-1">
-                  <h4 className="text-sm font-bold text-indigo-900">Important Note</h4>
-                  <p className="text-xs text-indigo-700 leading-relaxed">
+                  <h4 className="text-sm font-bold text-orange-900">Important Note</h4>
+                  <p className="text-xs text-orange-700 leading-relaxed">
                     Disabling a module will hide it from the customer app and admin dashboard navigation. This action is reversible at any time.
                   </p>
                </div>
@@ -190,7 +190,7 @@ const ModuleManagement = () => {
          <button 
            onClick={handleSave} 
            disabled={saving} 
-           className="bg-indigo-600 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-[0_15px_40px_rgba(79,70,229,0.4)] hover:bg-indigo-700 active:scale-90 transition-all disabled:opacity-50"
+           className="bg-primary text-white w-16 h-16 rounded-full flex items-center justify-center shadow-[0_15px_40px_rgba(79,70,229,0.4)] hover:bg-primary-hover active:scale-90 transition-all disabled:opacity-50"
          >
             {saving ? <Loader2 size={24} className="animate-spin" /> : <Save size={24} />}
          </button>

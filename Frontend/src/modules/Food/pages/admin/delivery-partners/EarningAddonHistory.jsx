@@ -204,7 +204,7 @@ export default function EarningAddonHistory() {
 
   const getStatusBadge = (status) => {
     const statusConfig = {
-      pending: { bg: "bg-blue-100", text: "text-blue-700", label: "Pending", icon: Clock },
+      pending: { bg: "bg-orange-100", text: "text-orange-700", label: "Pending", icon: Clock },
       credited: { bg: "bg-green-100", text: "text-green-700", label: "Credited", icon: CheckCircle },
       failed: { bg: "bg-red-100", text: "text-red-700", label: "Failed", icon: XCircle },
       cancelled: { bg: "bg-gray-100", text: "text-gray-700", label: "Cancelled", icon: XCircle },
@@ -268,7 +268,7 @@ export default function EarningAddonHistory() {
               <button
                 onClick={handleCheckAllCompletions}
                 disabled={isCheckingCompletions}
-                className="px-4 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary disabled:bg-blue-300 disabled:cursor-not-allowed flex items-center gap-2 transition-all"
+                className="px-4 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary disabled:bg-orange-300 disabled:cursor-not-allowed flex items-center gap-2 transition-all"
                 title="Check all delivery partners for completed offers"
               >
                 <RefreshCw className={`w-4 h-4 ${isCheckingCompletions ? 'animate-spin' : ''}`} />
@@ -525,7 +525,7 @@ export default function EarningAddonHistory() {
               <div className="space-y-3">
                 {/* Deliveryman Info */}
                 <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-xl border border-slate-200">
-                  <div className="p-2 bg-blue-100 rounded-lg">
+                  <div className="p-2 bg-orange-100 rounded-lg">
                     <User className="w-5 h-5 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -539,8 +539,8 @@ export default function EarningAddonHistory() {
 
                 {/* Offer Info */}
                 <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-xl border border-slate-200">
-                  <div className="p-2 bg-purple-100 rounded-lg">
-                    <Package className="w-5 h-5 text-purple-600" />
+                  <div className="p-2 bg-orange-100 rounded-lg">
+                    <Package className="w-5 h-5 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-1">Offer</p>

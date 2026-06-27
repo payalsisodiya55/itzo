@@ -48,7 +48,7 @@ export default function MasterLandingPage() {
       {/* Decorative Background Elements */}
       <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-white to-transparent pointer-events-none z-0" />
       <div className="absolute top-[-100px] right-[-100px] w-96 h-96 bg-orange-200/40 blur-[100px] rounded-full pointer-events-none z-0" />
-      <div className="absolute top-[200px] left-[-100px] w-80 h-80 bg-blue-200/40 blur-[100px] rounded-full pointer-events-none z-0" />
+      <div className="absolute top-[200px] left-[-100px] w-80 h-80 bg-orange-200/40 blur-[100px] rounded-full pointer-events-none z-0" />
 
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200/50 shadow-sm">
@@ -158,8 +158,8 @@ export default function MasterLandingPage() {
                 </div>
               </div>
               <div className="flex flex-col items-center text-center gap-4 group">
-                <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                  <Clock className="w-7 h-7 text-blue-500" />
+                <div className="w-16 h-16 bg-orange-50 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <Clock className="w-7 h-7 text-primary" />
                 </div>
                 <div>
                   <h4 className="font-bold text-lg mb-2 text-gray-900">Instant Service</h4>

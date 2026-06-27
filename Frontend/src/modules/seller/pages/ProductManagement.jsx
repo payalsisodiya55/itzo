@@ -393,7 +393,7 @@ const ProductManagement = () => {
               Product List
               <Badge
                 variant="primary"
-                className="text-[9px] px-1.5 py-0 font-bold tracking-wider uppercase bg-blue-100 text-blue-700">
+                className="text-[9px] px-1.5 py-0 font-bold tracking-wider uppercase bg-orange-100 text-orange-700">
                 Live
               </Badge>
             </h1>
@@ -418,8 +418,8 @@ const ProductManagement = () => {
             label: "All Items",
             val: stats.total,
             icon: HiOutlineCube,
-            color: "text-indigo-600",
-            bg: "bg-indigo-50",
+            color: "text-primary",
+            bg: "bg-orange-50",
             status: "All",
           },
           {
@@ -453,7 +453,7 @@ const ProductManagement = () => {
               className={cn(
                 "cursor-pointer rounded-lg transition-all duration-300",
                 filterStatus === stat.status
-                  ? "ring-2 ring-indigo-500 shadow-lg"
+                  ? "ring-2 ring-primary shadow-lg"
                   : "hover:shadow-md",
               )}>
               <MagicCard
@@ -820,7 +820,7 @@ const ProductManagement = () => {
                     <div className="flex items-center space-x-2 mt-0.5">
                       <Badge
                         variant="primary"
-                        className="text-[7px] font-bold uppercase tracking-widest px-1 bg-blue-100 text-blue-700">
+                        className="text-[7px] font-bold uppercase tracking-widest px-1 bg-orange-100 text-orange-700">
                         SELLER
                       </Badge>
                       <HiOutlineChevronRight className="h-2.5 w-2.5 text-slate-300" />

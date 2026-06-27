@@ -76,8 +76,8 @@ export const PayoutV2 = () => {
         return {
           icon: Clock,
           color: 'text-primary',
-          bgColor: 'bg-blue-50',
-          borderColor: 'border-blue-200'
+          bgColor: 'bg-orange-50',
+          borderColor: 'border-orange-200'
         };
       case 'denied':
       case 'rejected':

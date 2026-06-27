@@ -172,7 +172,7 @@ const CustomerDetail = () => {
                         onClick={handleRefresh}
                         className="flex items-center gap-2 px-5 py-3 bg-white ring-1 ring-slate-200 text-slate-700 rounded-2xl text-xs font-bold hover:bg-slate-50 transition-all shadow-sm"
                     >
-                        <RotateCw className={cn("h-4 w-4 text-sky-500", isRefreshing && "animate-spin")} />
+                        <RotateCw className={cn("h-4 w-4 text-primary", isRefreshing && "animate-spin")} />
                         REFRESH
                     </button>
                     <button
@@ -210,15 +210,15 @@ const CustomerDetail = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                                 {[
                                     { label: 'Total Spend', value: `₹${(customer.totalSpent || 0).toLocaleString()}`, trend: 'Lifetime', icon: IndianRupee, color: 'emerald' },
-                                    { label: 'Orders Placed', value: customer.totalOrders || 0, trend: 'Lifetime', icon: ShoppingBag, color: 'blue' },
-                                    { label: 'Average Spend', value: `₹${customer.totalOrders > 0 ? Math.round(customer.totalSpent / customer.totalOrders).toLocaleString() : 0}`, trend: 'Per Order', icon: TrendingUp, color: 'indigo' },
+                                    { label: 'Orders Placed', value: customer.totalOrders || 0, trend: 'Lifetime', icon: ShoppingBag, color: 'orange' },
+                                    { label: 'Average Spend', value: `₹${customer.totalOrders > 0 ? Math.round(customer.totalSpent / customer.totalOrders).toLocaleString() : 0}`, trend: 'Per Order', icon: TrendingUp, color: 'orange' },
                                     { label: 'Account Status', value: (customer.status || '').toUpperCase(), trend: 'Current', icon: CheckCircle2, color: 'fuchsia' },
                                 ].map((stat, i) => (
                                     <div key={i} className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col items-center justify-center text-center">
                                         <div className={cn("p-2 rounded-full mb-2",
                                             stat.color === 'emerald' && 'bg-emerald-100 text-emerald-600',
-                                            stat.color === 'blue' && 'bg-blue-100 text-primary',
-                                            stat.color === 'indigo' && 'bg-indigo-100 text-indigo-600',
+                                            stat.color === 'orange' && 'bg-orange-100 text-primary',
+                                            stat.color === 'orange' && 'bg-orange-100 text-primary',
                                             stat.color === 'fuchsia' && 'bg-fuchsia-100 text-fuchsia-600',
                                         )}>
                                             <stat.icon className="h-4 w-4" />
@@ -235,7 +235,7 @@ const CustomerDetail = () => {
 
                 {/* Quick Stats */}
                 <div className="space-y-4">
-                    <Card className="p-6 !bg-sky-600 text-white rounded-xl border-none shadow-lg shadow-sky-200 relative overflow-hidden group">
+                    <Card className="p-6 !bg-primary text-white rounded-xl border-none shadow-lg shadow-sky-200 relative overflow-hidden group">
                         <div className="relative z-10">
                             <p className="text-[10px] font-black opacity-90 uppercase tracking-widest mb-1">Lifetime Value</p>
                             <h4 className="text-3xl font-black text-white">₹{(customer.totalSpent || 0).toLocaleString()}</h4>
@@ -273,7 +273,7 @@ const CustomerDetail = () => {
                     <Card className="border-none shadow-xl ring-1 ring-slate-100 bg-white rounded-xl p-4">
                         <div className="flex items-center justify-between mb-8">
                             <h4 className="text-xs font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
-                                <MapIcon className="h-4 w-4 text-sky-500" />
+                                <MapIcon className="h-4 w-4 text-primary" />
                                 Saved Addresses
                             </h4>
                         </div>
@@ -287,7 +287,7 @@ const CustomerDetail = () => {
                                     return (
                                         <div key={addr._id || addr.id || idx} className={cn(
                                             "p-5 rounded-2xl ring-1 transition-all",
-                                            isDefault ? "bg-slate-50 ring-slate-200 shadow-sm" : "bg-white ring-slate-100 hover:ring-sky-100"
+                                            isDefault ? "bg-slate-50 ring-slate-200 shadow-sm" : "bg-white ring-slate-100 hover:ring-orange-100"
                                         )}>
                                             <div className="flex items-center justify-between mb-2">
                                                 <Badge variant={isDefault ? 'primary' : 'secondary'} className="text-[9px] font-black">
@@ -312,23 +312,23 @@ const CustomerDetail = () => {
                     <Card className="border-none shadow-xl ring-1 ring-slate-100 bg-white rounded-xl overflow-hidden">
                         <div className="p-4 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
                             <h4 className="text-xs font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
-                                <History className="h-4 w-4 text-sky-500" />
+                                <History className="h-4 w-4 text-primary" />
                                 Recent Orders
                             </h4>
                             <div className="flex items-center gap-3">
                                 <div className="relative group">
-                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3 w-3 text-slate-400 group-focus-within:text-sky-500" />
+                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3 w-3 text-slate-400 group-focus-within:text-primary" />
                                     <input
                                         type="text"
                                         placeholder="Search Orders..."
                                         value={orderSearch}
                                         onChange={(e) => setOrderSearch(e.target.value)}
-                                        className="pl-8 pr-4 py-2 bg-slate-50 border-none rounded-xl text-[10px] font-bold outline-none ring-1 ring-transparent focus:ring-sky-500/20 w-40"
+                                        className="pl-8 pr-4 py-2 bg-slate-50 border-none rounded-xl text-[10px] font-bold outline-none ring-1 ring-transparent focus:ring-primary/20 w-40"
                                     />
                                 </div>
                                 <button
                                     onClick={handleExportCSV}
-                                    className="text-[10px] font-black text-sky-600 uppercase hover:underline"
+                                    className="text-[10px] font-black text-primary uppercase hover:underline"
                                 >
                                     Export CSV
                                 </button>
@@ -345,7 +345,7 @@ const CustomerDetail = () => {
                                         >
                                             <td className="px-4 py-5">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="p-2 bg-slate-50 rounded-xl group-hover:bg-white group-hover:shadow-sm transition-all text-slate-400 group-hover:text-sky-500">
+                                                    <div className="p-2 bg-slate-50 rounded-xl group-hover:bg-white group-hover:shadow-sm transition-all text-slate-400 group-hover:text-primary">
                                                         <Package className="h-4 w-4" />
                                                     </div>
                                                     <div>
@@ -383,7 +383,7 @@ const CustomerDetail = () => {
                             <div className="p-4 bg-slate-50/50 flex justify-center border-t border-slate-50">
                                 <button
                                     onClick={() => setVisibleOrders(safeOrders.length)}
-                                    className="text-[10px] font-black text-sky-600 uppercase hover:underline flex items-center gap-2"
+                                    className="text-[10px] font-black text-primary uppercase hover:underline flex items-center gap-2"
                                 >
                                     SHOW ALL ORDERS
                                     <ChevronRight className="h-3 w-3" />
@@ -397,13 +397,13 @@ const CustomerDetail = () => {
                 <div className="space-y-6">
                     <Card className="border-none shadow-xl ring-1 ring-slate-100 bg-white rounded-xl p-4">
                         <h4 className="text-xs font-black text-slate-900 uppercase tracking-widest mb-6 flex items-center gap-2">
-                            <MessageSquare className="h-4 w-4 text-sky-500" />
+                            <MessageSquare className="h-4 w-4 text-primary" />
                             Internal Notes
                         </h4>
                         <textarea
                             value={notes}
                             onChange={(e) => setNotes(e.target.value)}
-                            className="w-full bg-slate-50 p-6 rounded-2xl min-h-[140px] text-sm font-bold text-slate-600 leading-relaxed italic border border-slate-100 outline-none focus:bg-white focus:ring-2 focus:ring-sky-500/10 transition-all"
+                            className="w-full bg-slate-50 p-6 rounded-2xl min-h-[140px] text-sm font-bold text-slate-600 leading-relaxed italic border border-slate-100 outline-none focus:bg-white focus:ring-2 focus:ring-primary/10 transition-all"
                         />
                         <button
                             onClick={handleSaveNotes}
@@ -418,7 +418,7 @@ const CustomerDetail = () => {
                         <div className="space-y-4">
                             <button
                                 onClick={() => setIsNotifModalOpen(true)}
-                                className="w-full py-4 bg-sky-600 hover:bg-sky-500 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all shadow-xl shadow-sky-900/20 flex items-center justify-center gap-2"
+                                className="w-full py-4 bg-primary hover:bg-primary-hover text-white rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all shadow-xl shadow-sky-900/20 flex items-center justify-center gap-2"
                             >
                                 <MessageSquare className="h-4 w-4" />
                                 SEND NOTIFICATION
@@ -445,7 +445,7 @@ const CustomerDetail = () => {
                                 type="text"
                                 value={editForm.name}
                                 onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                                className="w-full px-5 py-3.5 bg-slate-50 border-none rounded-2xl text-sm font-bold outline-none focus:ring-2 focus:ring-sky-500/10 transition-all shadow-sm"
+                                className="w-full px-5 py-3.5 bg-slate-50 border-none rounded-2xl text-sm font-bold outline-none focus:ring-2 focus:ring-primary/10 transition-all shadow-sm"
                             />
                         </div>
                         <div>
@@ -454,11 +454,11 @@ const CustomerDetail = () => {
                                 type="text"
                                 value={editForm.phone}
                                 onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
-                                className="w-full px-5 py-3.5 bg-slate-50 border-none rounded-2xl text-sm font-bold outline-none focus:ring-2 focus:ring-sky-500/10 transition-all shadow-sm"
+                                className="w-full px-5 py-3.5 bg-slate-50 border-none rounded-2xl text-sm font-bold outline-none focus:ring-2 focus:ring-primary/10 transition-all shadow-sm"
                             />
                         </div>
                     </div>
-                    <button type="submit" className="w-full py-4 bg-sky-600 hover:bg-sky-500 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all shadow-lg active:scale-95">
+                    <button type="submit" className="w-full py-4 bg-primary hover:bg-primary-hover text-white rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all shadow-lg active:scale-95">
                         SAVE CHANGES
                     </button>
                 </form>
@@ -466,9 +466,9 @@ const CustomerDetail = () => {
 
             <Modal isOpen={isNotifModalOpen} onClose={() => setIsNotifModalOpen(false)} title="Send Notification">
                 <div className="space-y-6">
-                    <div className="p-4 bg-sky-50 rounded-2xl flex items-start gap-3">
-                        <Bell className="h-5 w-5 text-sky-500 shrink-0 mt-0.5" />
-                        <p className="text-xs font-bold text-sky-700 leading-relaxed">
+                    <div className="p-4 bg-orange-50 rounded-2xl flex items-start gap-3">
+                        <Bell className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                        <p className="text-xs font-bold text-orange-700 leading-relaxed">
                             We will send notifications via app and SMS immediately.
                         </p>
                     </div>
@@ -478,7 +478,7 @@ const CustomerDetail = () => {
                             value={notifMessage}
                             onChange={(e) => setNotifMessage(e.target.value)}
                             placeholder="Type your message here..."
-                            className="w-full px-5 py-5 bg-slate-50 border-none rounded-2xl text-sm font-bold outline-none focus:ring-2 focus:ring-sky-500/10 transition-all shadow-sm min-h-[120px]"
+                            className="w-full px-5 py-5 bg-slate-50 border-none rounded-2xl text-sm font-bold outline-none focus:ring-2 focus:ring-primary/10 transition-all shadow-sm min-h-[120px]"
                         />
                     </div>
                     <button

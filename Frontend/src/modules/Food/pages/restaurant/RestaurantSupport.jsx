@@ -30,7 +30,7 @@ const STATUS_OPTIONS = [
 
 const getStatusStyle = (status) => {
   if (status === "resolved") return "bg-emerald-100 text-emerald-700 border-emerald-200"
-  if (status === "in-progress") return "bg-blue-100 text-blue-700 border-blue-200"
+  if (status === "in-progress") return "bg-orange-100 text-orange-700 border-orange-200"
   return "bg-amber-100 text-amber-700 border-amber-200"
 }
 
@@ -134,9 +134,9 @@ export default function RestaurantSupport() {
             <p className="text-xs text-amber-700">Open</p>
             <p className="text-lg font-bold text-amber-800">{stats.open}</p>
           </div>
-          <div className="rounded-xl border border-blue-200 bg-blue-50 p-3">
-            <p className="text-xs text-blue-700">In progress</p>
-            <p className="text-lg font-bold text-blue-800">{stats.inProgress}</p>
+          <div className="rounded-xl border border-orange-200 bg-orange-50 p-3">
+            <p className="text-xs text-orange-700">In progress</p>
+            <p className="text-lg font-bold text-orange-800">{stats.inProgress}</p>
           </div>
           <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3">
             <p className="text-xs text-emerald-700">Resolved</p>
@@ -264,9 +264,9 @@ export default function RestaurantSupport() {
                     </p>
                   ) : null}
                   {ticket.adminResponse ? (
-                    <div className="mt-3 rounded-lg border border-blue-200 bg-blue-50 p-2.5">
-                      <p className="text-[11px] font-semibold text-blue-700 uppercase">ECS Response</p>
-                      <p className="text-sm text-blue-900 mt-1 whitespace-pre-wrap">{ticket.adminResponse}</p>
+                    <div className="mt-3 rounded-lg border border-orange-200 bg-orange-50 p-2.5">
+                      <p className="text-[11px] font-semibold text-orange-700 uppercase">ECS Response</p>
+                      <p className="text-sm text-orange-900 mt-1 whitespace-pre-wrap">{ticket.adminResponse}</p>
                     </div>
                   ) : null}
                 </div>

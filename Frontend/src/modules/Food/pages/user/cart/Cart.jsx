@@ -1103,7 +1103,7 @@ export default function Cart() {
       name: 'Quick Wallet',
       description: 'Pay from your wallet',
       icon: <Wallet className="w-5 h-5" />,
-      color: 'bg-blue-50 text-primary dark:bg-blue-900/40 dark:text-blue-400',
+      color: 'bg-orange-50 text-primary dark:bg-orange-900/40 dark:text-orange-400',
       selectedColor: 'bg-primary text-white',
       subInfo: `Bal: ${RUPEE_SYMBOL}${walletBalance.toFixed(0)}`,
       disabled: walletBalance < total,
@@ -2704,7 +2704,7 @@ export default function Cart() {
                           <>
                             <span className="text-base text-gray-400 dark:text-gray-500 line-through font-medium">{RUPEE_SYMBOL}{totalBeforeDiscount.toFixed(2)}</span>
                             <span className="text-base font-bold text-gray-900 dark:text-white">{RUPEE_SYMBOL}{total.toFixed(2)}</span>
-                            <span className="text-[11px] bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded text-center ml-1 font-semibold border border-blue-200 dark:border-blue-800">
+                            <span className="text-[11px] bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300 px-2 py-0.5 rounded text-center ml-1 font-semibold border border-orange-200 dark:border-orange-800">
                               You saved {RUPEE_SYMBOL}{savings.toFixed(0)}
                             </span>
                           </>

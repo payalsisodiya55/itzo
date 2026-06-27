@@ -168,10 +168,10 @@ const ShopByStorePage = () => {
         <section className="mb-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           {/* Left: big summer–style hero */}
           <div className="lg:col-span-5">
-            <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-sky-100 via-amber-50 to-rose-50 border border-slate-100 shadow-xl h-full flex flex-col">
+            <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-orange-100 via-amber-50 to-rose-50 border border-slate-100 shadow-xl h-full flex flex-col">
               <div className="p-6 md:p-8 flex-1 flex flex-col justify-between relative z-10">
                 <div>
-                  <p className="text-xs font-black uppercase tracking-[0.3em] text-sky-500 mb-2">
+                  <p className="text-xs font-black uppercase tracking-[0.3em] text-primary mb-2">
                     {activeStore.categoryIds?.length || 0}+ categories
                   </p>
                   <h2 className="text-2xl md:text-3xl font-[1000] text-slate-900 leading-tight mb-2">
@@ -187,7 +187,7 @@ const ShopByStorePage = () => {
                   <span>Tap a block on the right to see products instantly</span>
                 </div>
               </div>
-              <div className="absolute -right-10 bottom-0 w-40 h-40 md:w-52 md:h-52 bg-sky-300/40 rounded-full blur-3xl" />
+              <div className="absolute -right-10 bottom-0 w-40 h-40 md:w-52 md:h-52 bg-orange-300/40 rounded-full blur-3xl" />
               <div className="absolute -left-10 -top-10 w-40 h-40 md:w-52 md:h-52 bg-amber-200/40 rounded-full blur-3xl" />
             </div>
           </div>
@@ -208,9 +208,9 @@ const ShopByStorePage = () => {
                 return (
                   <div
                     key={key}
-                    className="relative rounded-[1.5rem] bg-gradient-to-b from-sky-50 to-amber-100 shadow-md border border-amber-100 overflow-hidden cursor-pointer group hover:-translate-y-1 transition-all"
+                    className="relative rounded-[1.5rem] bg-gradient-to-b from-orange-50 to-amber-100 shadow-md border border-amber-100 overflow-hidden cursor-pointer group hover:-translate-y-1 transition-all"
                   >
-                    <div className="absolute inset-x-0 top-0 h-16 bg-sky-200/40" />
+                    <div className="absolute inset-x-0 top-0 h-16 bg-orange-200/40" />
                     <div className="relative p-3 flex flex-col items-center text-center gap-2">
                       <div className="h-16 w-full rounded-2xl overflow-hidden bg-white shadow-inner">
                         <img

@@ -261,7 +261,7 @@ const HeaderCategories = () => {
         </div>
         <button
           onClick={openAddModal}
-          className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+          className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-hover transition-colors">
           <Plus className="w-5 h-5" />
           Add New Header
         </button>
@@ -284,7 +284,7 @@ const HeaderCategories = () => {
               placeholder="Search header categories..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+              className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
             />
           </div>
         </div>
@@ -296,7 +296,7 @@ const HeaderCategories = () => {
                 <th className="w-12 py-3 px-4 text-left">
                   <input
                     type="checkbox"
-                    className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    className="rounded border-gray-300 text-primary focus:ring-primary"
                     checked={
                       selectedItems.length > 0 &&
                       categories.length > 0 &&
@@ -349,7 +349,7 @@ const HeaderCategories = () => {
                     <td className="py-3 px-4">
                       <input
                         type="checkbox"
-                        className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                        className="rounded border-gray-300 text-primary focus:ring-primary"
                         checked={selectedItems.includes(cat._id || cat.id)}
                         onChange={() => handleSelect(cat._id || cat.id)}
                       />
@@ -357,7 +357,7 @@ const HeaderCategories = () => {
                     <td className="py-3 px-4">
                       <div className="w-10 h-10 rounded-lg bg-gray-100 overflow-hidden flex items-center justify-center border border-gray-200">
                         {cat.iconId && iconComponents[cat.iconId] ? (
-                          <div className="w-6 h-6 text-indigo-600 flex items-center justify-center">
+                          <div className="w-6 h-6 text-primary flex items-center justify-center">
                             {(() => {
                               const IconComp = iconComponents[cat.iconId];
                               return <IconComp fontSize="medium" />;
@@ -365,7 +365,7 @@ const HeaderCategories = () => {
                           </div>
                         ) : cat.iconId && getIconSvg(cat.iconId) ? (
                           <div
-                            className="w-6 h-6 text-indigo-600"
+                            className="w-6 h-6 text-primary"
                             dangerouslySetInnerHTML={{
                               __html: getIconSvg(cat.iconId),
                             }}
@@ -402,7 +402,7 @@ const HeaderCategories = () => {
                     <td className="py-3 px-4 text-right space-x-2">
                       <button
                         onClick={() => openEditModal(cat)}
-                        className="p-1 text-gray-500 hover:text-indigo-600 transition-colors">
+                        className="p-1 text-gray-500 hover:text-primary-hover transition-colors">
                         <Edit className="w-5 h-5" />
                       </button>
                       <button
@@ -467,9 +467,9 @@ const HeaderCategories = () => {
                   <div className="flex gap-4">
                     {/* SVG Icon Display */}
                     <div className="flex flex-col items-center gap-2">
-                      <div className="w-24 h-24 rounded-full bg-linear-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 flex items-center justify-center">
+                      <div className="w-24 h-24 rounded-full bg-linear-to-br from-orange-50 to-orange-50 border-2 border-orange-200 flex items-center justify-center">
                         {formData.iconId && iconComponents[formData.iconId] ? (
-                          <div className="w-12 h-12 text-indigo-600 flex items-center justify-center">
+                          <div className="w-12 h-12 text-primary flex items-center justify-center">
                             {(() => {
                               const IconComp = iconComponents[formData.iconId];
                               return <IconComp fontSize="large" />;
@@ -477,19 +477,19 @@ const HeaderCategories = () => {
                           </div>
                         ) : formData.iconId && getIconSvg(formData.iconId) ? (
                           <div
-                            className="w-12 h-12 text-indigo-600"
+                            className="w-12 h-12 text-primary"
                             dangerouslySetInnerHTML={{
                               __html: getIconSvg(formData.iconId),
                             }}
                           />
                         ) : (
-                          <Sparkles className="w-10 h-10 text-indigo-300" />
+                          <Sparkles className="w-10 h-10 text-orange-300" />
                         )}
                       </div>
                       <button
                         type="button"
                         onClick={() => setIsIconSelectorOpen(true)}
-                        className="px-3 py-1.5 text-sm bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                        className="px-3 py-1.5 text-sm bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors">
                         {formData.iconId ? 'Change Icon' : 'Select Icon'}
                       </button>
                     </div>
@@ -503,7 +503,7 @@ const HeaderCategories = () => {
                     <div className="flex flex-col items-center gap-2">
                       <div
                         onClick={() => fileInputRef.current?.click()}
-                        className="w-24 h-24 rounded-full bg-gray-50 border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer hover:border-indigo-500 overflow-hidden transition-colors">
+                        className="w-24 h-24 rounded-full bg-gray-50 border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer hover:border-primary-hover overflow-hidden transition-colors">
                         {previewUrl ? (
                           <img
                             src={previewUrl}
@@ -572,7 +572,7 @@ const HeaderCategories = () => {
                           headerColor: e.target.value,
                         })
                       }
-                      className="w-28 px-2 py-2 rounded-lg border border-gray-300 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                      className="w-28 px-2 py-2 rounded-lg border border-gray-300 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                       placeholder="#FF1E1E"
                     />
                   </div>
@@ -588,7 +588,7 @@ const HeaderCategories = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                     placeholder="e.g., Electronics"
                   />
                 </div>
@@ -603,7 +603,7 @@ const HeaderCategories = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, slug: e.target.value })
                     }
-                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                     placeholder="e.g., electronics"
                   />
                 </div>
@@ -617,7 +617,7 @@ const HeaderCategories = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, status: e.target.value })
                     }
-                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
                   </select>
@@ -634,7 +634,7 @@ const HeaderCategories = () => {
                       onChange={(e) =>
                         setFormData({ ...formData, adminCommission: parseFloat(e.target.value) || 0 })
                       }
-                      className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                      className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                       placeholder="0"
                       min="0"
                       max="100"
@@ -650,7 +650,7 @@ const HeaderCategories = () => {
                       onChange={(e) =>
                         setFormData({ ...formData, handlingFees: parseFloat(e.target.value) || 0 })
                       }
-                      className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                      className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                       placeholder="0"
                       min="0"
                     />
@@ -667,7 +667,7 @@ const HeaderCategories = () => {
                 <button
                   onClick={handleSave}
                   disabled={isSaving}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium disabled:opacity-50 flex items-center gap-2">
+                  className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover font-medium disabled:opacity-50 flex items-center gap-2">
                   {isSaving && (
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   )}

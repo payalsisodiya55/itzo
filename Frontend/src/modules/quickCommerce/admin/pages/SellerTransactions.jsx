@@ -183,7 +183,7 @@ const SellerTransactions = () => {
                 {[
                     { label: 'Total Sales', value: `₹${stats.totalGross.toLocaleString()}`, icon: ShoppingBag, bg: 'bg-emerald-50', color: 'text-emerald-600' },
                     { label: 'Our Share', value: `₹${stats.totalCommission.toLocaleString()}`, icon: Percent, bg: 'bg-orange-50', color: 'text-orange-600' },
-                    { label: 'Total Paid Out', value: `₹${stats.totalPayouts.toLocaleString()}`, icon: Banknote, bg: 'bg-blue-50', color: 'text-primary' },
+                    { label: 'Total Paid Out', value: `₹${stats.totalPayouts.toLocaleString()}`, icon: Banknote, bg: 'bg-orange-50', color: 'text-primary' },
                     { label: 'Pending Total', value: `₹${stats.pendingSettlements.toLocaleString()}`, icon: Clock, bg: 'bg-amber-50', color: 'text-amber-600' },
                 ].map((stat, i) => (
                     <Card key={i} className="px-5 py-4 border-none shadow-sm ring-1 ring-slate-100 hover:ring-orange-200 transition-all bg-white group overflow-hidden relative">
@@ -282,7 +282,7 @@ const SellerTransactions = () => {
                                         <div className="flex items-center gap-3">
                                             <div className={cn(
                                                 "h-10 w-10 rounded-xl flex items-center justify-center shadow-sm",
-                                                txn.type === 'sale' ? "bg-blue-50 text-primary" : txn.type === 'payout' ? "bg-emerald-50 text-emerald-600" : "bg-rose-50 text-rose-600"
+                                                txn.type === 'sale' ? "bg-orange-50 text-primary" : txn.type === 'payout' ? "bg-emerald-50 text-emerald-600" : "bg-rose-50 text-rose-600"
                                             )}>
                                                 {txn.type === 'sale' ? <ShoppingCart className="h-5 w-5" /> : txn.type === 'payout' ? <ArrowUpRight className="h-5 w-5" /> : <Undo2 className="h-5 w-5" />}
                                             </div>

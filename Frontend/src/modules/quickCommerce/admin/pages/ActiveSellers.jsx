@@ -123,7 +123,7 @@ const ActiveSellers = () => {
             label: 'Location ready',
             val: stats.withLocation,
             icon: HiOutlineMapPin,
-            tone: 'text-sky-600 bg-sky-50',
+            tone: 'text-primary bg-orange-50',
           },
           {
             label: 'Docs added',

@@ -431,7 +431,7 @@ export default function DiningReservations() {
 
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                         <div className="relative group">
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-primary transition-colors" />
                             <input
                                 type="text"
                                 id="reservation-search"
@@ -469,7 +469,7 @@ export default function DiningReservations() {
                         transition={{ duration: 0.3 }}
                         className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 relative overflow-hidden group hover:shadow-md transition-shadow"
                     >
-                        <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50/50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110" />
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-orange-50/50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110" />
                         <div className="flex items-center gap-4 relative">
                             <div className="bg-primary p-3 rounded-xl text-white shadow-lg shadow-blue-200">
                                 <Users className="w-6 h-6" />
@@ -920,11 +920,11 @@ export default function DiningReservations() {
                                                     <td className="px-6 py-4">
                                                         <div className="flex flex-col gap-1">
                                                             <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
-                                                                <Calendar className="w-4 h-4 text-blue-500" />
+                                                                <Calendar className="w-4 h-4 text-primary" />
                                                                 {new Date(booking.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })}
                                                             </div>
                                                             <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
-                                                                <Clock className="w-4 h-4 text-blue-500" />
+                                                                <Clock className="w-4 h-4 text-primary" />
                                                                 {booking.timeSlot}
                                                             </div>
                                                         </div>
@@ -941,7 +941,7 @@ export default function DiningReservations() {
                                                                 String(booking.status || "").toLowerCase() === 'confirmed' ? 'bg-amber-100 text-amber-700' :
                                                                 String(booking.status || "").toLowerCase() === 'accepted' ? 'bg-emerald-100 text-emerald-700' :
                                                                 String(booking.status || "").toLowerCase() === 'checked-in' ? 'bg-orange-100 text-orange-700' :
-                                                                String(booking.status || "").toLowerCase() === 'completed' ? 'bg-blue-100 text-blue-700' :
+                                                                String(booking.status || "").toLowerCase() === 'completed' ? 'bg-orange-100 text-orange-700' :
                                                                 'bg-rose-100 text-rose-700'
                                                             }`}>
                                                                 {booking.status}
@@ -985,7 +985,7 @@ export default function DiningReservations() {
                                                             {booking.specialRequest && (
                                                                 <button
                                                                     title={booking.specialRequest}
-                                                                    className="p-2 text-primary hover:bg-blue-50 rounded-lg transition-colors border border-blue-100 bg-blue-50/50"
+                                                                    className="p-2 text-primary hover:bg-orange-50 rounded-lg transition-colors border border-orange-100 bg-orange-50/50"
                                                                 >
                                                                     <MessageSquare className="w-4 h-4" />
                                                                 </button>
@@ -1025,7 +1025,7 @@ export default function DiningReservations() {
                                                     String(booking.status || "").toLowerCase() === 'confirmed' ? 'bg-amber-100 text-amber-700' :
                                                     String(booking.status || "").toLowerCase() === 'accepted' ? 'bg-emerald-100 text-emerald-700' :
                                                     String(booking.status || "").toLowerCase() === 'checked-in' ? 'bg-orange-100 text-orange-700' :
-                                                    String(booking.status || "").toLowerCase() === 'completed' ? 'bg-blue-100 text-blue-700' :
+                                                    String(booking.status || "").toLowerCase() === 'completed' ? 'bg-orange-100 text-orange-700' :
                                                     'bg-rose-100 text-rose-700'
                                                 }`}>
                                                     {booking.status}
@@ -1034,27 +1034,27 @@ export default function DiningReservations() {
 
                                             <div className="grid grid-cols-2 gap-3 p-3 bg-slate-50 rounded-xl mb-4">
                                                 <div className="flex items-center gap-2">
-                                                    <Calendar className="w-4 h-4 text-blue-500" />
+                                                    <Calendar className="w-4 h-4 text-primary" />
                                                     <span className="text-xs font-bold text-slate-700">
                                                         {new Date(booking.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })}
                                                     </span>
                                                 </div>
                                                 <div className="flex items-center gap-2">
-                                                    <Clock className="w-4 h-4 text-blue-500" />
+                                                    <Clock className="w-4 h-4 text-primary" />
                                                     <span className="text-xs font-bold text-slate-700">{booking.timeSlot}</span>
                                                 </div>
                                                 <div className="flex items-center gap-2">
-                                                    <Users className="w-4 h-4 text-blue-500" />
+                                                    <Users className="w-4 h-4 text-primary" />
                                                     <span className="text-xs font-bold text-slate-700">{booking.guests} Guests</span>
                                                 </div>
                                                 <div className="flex items-center gap-2">
-                                                    <Phone className="w-4 h-4 text-blue-500" />
+                                                    <Phone className="w-4 h-4 text-primary" />
                                                     <span className="text-xs font-bold text-slate-700 truncate">{getBookerPhone(booking) || 'No phone'}</span>
                                                 </div>
                                             </div>
 
                                             {booking.specialRequest && (
-                                                <div className="flex items-start gap-2 p-3 bg-blue-50 text-blue-700 rounded-xl mb-4 text-xs font-medium border border-blue-100">
+                                                <div className="flex items-start gap-2 p-3 bg-orange-50 text-orange-700 rounded-xl mb-4 text-xs font-medium border border-orange-100">
                                                     <MessageSquare className="w-4 h-4 mt-0.5 shrink-0" />
                                                     <p>{booking.specialRequest}</p>
                                                 </div>

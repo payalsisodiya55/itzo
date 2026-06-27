@@ -184,7 +184,7 @@ export default function WithdrawMethod() {
                                 <span className={`px-2 py-0.5 rounded text-xs font-semibold ${
                                   field.required
                                     ? "bg-red-100 text-red-700"
-                                    : "bg-blue-100 text-blue-700"
+                                    : "bg-orange-100 text-orange-700"
                                 }`}>
                                   {field.required ? "Required" : "Optional"}
                                 </span>

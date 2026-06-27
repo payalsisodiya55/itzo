@@ -118,7 +118,7 @@ const ActiveDeliveryBoys = () => {
     };
 
     const stats = [
-        { label: 'Total Riders', value: riders.length, color: 'indigo', icon: Users, description: 'Total fleet size' },
+        { label: 'Total Riders', value: riders.length, color: 'orange', icon: Users, description: 'Total fleet size' },
         { label: 'Available', value: riders.filter(r => r.status === 'available').length, color: 'emerald', icon: UserCheck, description: 'Ready for orders' },
         { label: 'Busy (On Task)', value: riders.filter(r => r.status === 'busy').length, color: 'amber', icon: Activity, description: 'Currently delivering' },
         { label: 'Top Earners', value: riders.filter(r => r.rating >= 4.5).length, color: 'rose', icon: Trophy, description: 'High performance' },
@@ -148,7 +148,7 @@ const ActiveDeliveryBoys = () => {
                             </div>
                             <div className={cn(
                                 "p-3 rounded-2xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-lg",
-                                stat.color === 'indigo' ? "bg-indigo-500/10 text-indigo-600 shadow-indigo-100" :
+                                stat.color === 'orange' ? "bg-primary/10 text-primary shadow-indigo-100" :
                                     stat.color === 'emerald' ? "bg-emerald-500/10 text-emerald-600 shadow-emerald-100" :
                                         stat.color === 'amber' ? "bg-amber-500/10 text-amber-600 shadow-amber-100" :
                                             "bg-rose-500/10 text-rose-600 shadow-rose-100"
@@ -265,7 +265,7 @@ const ActiveDeliveryBoys = () => {
                                             <div className="bg-slate-50 p-3 rounded-2xl">
                                                 <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1.5">Total Success</p>
                                                 <div className="flex items-center gap-1.5">
-                                                    <ShieldCheck className="h-3.5 w-3.5 text-blue-500" />
+                                                    <ShieldCheck className="h-3.5 w-3.5 text-primary" />
                                                     <span className="text-xs font-black text-slate-900">{rider.totalOrders} Deliv.</span>
                                                 </div>
                                             </div>
@@ -294,7 +294,7 @@ const ActiveDeliveryBoys = () => {
                                             </button>
                                             <button
                                                 onClick={() => handleAction('edit', rider)}
-                                                className="p-2.5 bg-slate-100 text-slate-600 rounded-xl hover:bg-indigo-50 hover:text-indigo-600 transition-all"
+                                                className="p-2.5 bg-slate-100 text-slate-600 rounded-xl hover:bg-orange-50 hover:text-primary-hover transition-all"
                                             >
                                                 <Pencil className="h-4 w-4" />
                                             </button>
@@ -406,7 +406,7 @@ const ActiveDeliveryBoys = () => {
                                     </div>
                                     <div className="text-center border-l border-slate-200">
                                         <p className="text-[9px] font-black text-slate-400 uppercase mb-1">Total Deliveries</p>
-                                        <span className="text-lg font-black text-slate-900 text-indigo-600">{viewingRider.totalOrders}</span>
+                                        <span className="text-lg font-black text-slate-900 text-primary">{viewingRider.totalOrders}</span>
                                     </div>
                                     <div className="text-center border-l border-slate-200">
                                         <p className="text-[9px] font-black text-slate-400 uppercase mb-1">Wallet Creds</p>

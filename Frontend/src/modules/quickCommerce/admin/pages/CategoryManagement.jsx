@@ -267,7 +267,7 @@ const CategoryManagement = () => {
                     <div
                         className={cn(
                             "flex items-center justify-between p-2.5 rounded-xl transition-all mb-1.5 group relative overflow-hidden",
-                            level === 0 ? "bg-white shadow-sm ring-1 ring-gray-100 mt-3 border-l-4 border-indigo-500" : "hover:bg-gray-100/50",
+                            level === 0 ? "bg-white shadow-sm ring-1 ring-gray-100 mt-3 border-l-4 border-primary" : "hover:bg-gray-100/50",
                             expanded.includes(id) ? "bg-gray-50 ring-1 ring-gray-100" : ""
                         )}
                     >
@@ -294,7 +294,7 @@ const CategoryManagement = () => {
                                 ) : (
                                     <div className={cn(
                                         "h-8 w-8 rounded-lg flex items-center justify-center shadow-sm transition-transform duration-300 group-hover:scale-105",
-                                        level === 0 ? "bg-indigo-50 text-indigo-600 ring-2 ring-indigo-50" :
+                                        level === 0 ? "bg-orange-50 text-primary ring-2 ring-orange-50" :
                                             level === 1 ? "bg-emerald-50 text-emerald-600" : "bg-amber-50 text-amber-600"
                                     )}>
                                         {level === 0 ? <FolderOpen className="h-4 w-4" /> :
@@ -462,20 +462,20 @@ const CategoryManagement = () => {
                         </div>
                     </Card>
 
-                    <Card className="lg:col-span-1 border-none shadow-sm ring-1 ring-indigo-50 bg-gradient-to-tr from-indigo-50 to-white p-4 flex flex-col justify-between overflow-hidden relative">
+                    <Card className="lg:col-span-1 border-none shadow-sm ring-1 ring-orange-50 bg-gradient-to-tr from-orange-50 to-white p-4 flex flex-col justify-between overflow-hidden relative">
                         <div className="z-10">
-                            <p className="ds-label text-indigo-400 mb-1">
+                            <p className="ds-label text-orange-400 mb-1">
                                 {activeView === 'tree' ? 'Total Groups' : 'Subcategories'}
                             </p>
-                            <h4 className="ds-stat-medium text-indigo-900 line-height-none">
+                            <h4 className="ds-stat-medium text-orange-900 line-height-none">
                                 {isLoading ? '...' : (activeView === 'tree' ? filteredCategories.length : filteredSubcategories.length)}
                             </h4>
-                            <p className="text-[10px] font-semibold text-indigo-400 mt-1">Working Fine</p>
+                            <p className="text-[10px] font-semibold text-orange-400 mt-1">Working Fine</p>
                         </div>
                         {activeView === 'tree' ? (
-                            <FolderOpen className="absolute -right-2 -bottom-2 h-16 w-16 text-indigo-500/5 rotate-12" />
+                            <FolderOpen className="absolute -right-2 -bottom-2 h-16 w-16 text-primary/5 rotate-12" />
                         ) : (
-                            <Tag className="absolute -right-2 -bottom-2 h-16 w-16 text-indigo-500/5 rotate-12" />
+                            <Tag className="absolute -right-2 -bottom-2 h-16 w-16 text-primary/5 rotate-12" />
                         )}
                     </Card>
                 </div>
@@ -513,7 +513,7 @@ const CategoryManagement = () => {
                                 <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Subcategory Management</h3>
                                 <button
                                     onClick={() => openModal('subcategory')}
-                                    className="text-[10px] font-black text-indigo-600 hover:text-indigo-700 uppercase tracking-widest flex items-center gap-2"
+                                    className="text-[10px] font-black text-primary hover:text-primary-hover uppercase tracking-widest flex items-center gap-2"
                                 >
                                     <Plus className="h-3 w-3" />
                                     Quick Register
@@ -552,7 +552,7 @@ const CategoryManagement = () => {
                                                         </div>
                                                     </td>
                                                     <td className="px-6 py-4">
-                                                        <Badge variant="outline" className="text-[9px] font-bold bg-indigo-50/50 text-indigo-600 border-indigo-100">
+                                                        <Badge variant="outline" className="text-[9px] font-bold bg-orange-50/50 text-primary border-orange-100">
                                                             {sub.parentCategory || 'Unknown'}
                                                         </Badge>
                                                     </td>
@@ -565,7 +565,7 @@ const CategoryManagement = () => {
                                                         <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                                             <button
                                                                 onClick={() => openModal('subcategory', sub.parentId, sub)}
-                                                                className="p-1.5 hover:bg-white text-slate-400 hover:text-indigo-600 rounded-lg transition-all shadow-sm ring-1 ring-slate-100 bg-white/50"
+                                                                className="p-1.5 hover:bg-white text-slate-400 hover:text-primary-hover rounded-lg transition-all shadow-sm ring-1 ring-slate-100 bg-white/50"
                                                             >
                                                                 <Edit className="h-3.5 w-3.5" />
                                                             </button>
@@ -595,7 +595,7 @@ const CategoryManagement = () => {
 
                             <div className="space-y-4">
                                 {[
-                                    { step: '1', title: 'Headers', desc: 'Main navigation groups (e.g., Grocery).', color: 'bg-indigo-500' },
+                                    { step: '1', title: 'Headers', desc: 'Main navigation groups (e.g., Grocery).', color: 'bg-primary' },
                                     { step: '2', title: 'Categories', desc: 'Departmental folders (e.g., Dairy).', color: 'bg-emerald-500' },
                                     { step: '3', title: 'Subcategories', desc: 'Specific item groups (e.g., Milk).', color: 'bg-amber-500' }
                                 ].map((item, i) => (
@@ -611,7 +611,7 @@ const CategoryManagement = () => {
                                 ))}
                             </div>
                         </div>
-                        <div className="absolute -right-4 -bottom-4 h-32 w-32 bg-indigo-500/10 rounded-full blur-3xl" />
+                        <div className="absolute -right-4 -bottom-4 h-32 w-32 bg-primary/10 rounded-full blur-3xl" />
                     </Card>
                 </div>
             </div>

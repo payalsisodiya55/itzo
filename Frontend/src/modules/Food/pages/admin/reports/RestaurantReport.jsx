@@ -237,7 +237,7 @@ export default function RestaurantReport() {
               <button 
                 onClick={handleFilterApply}
                 className={`px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary transition-all flex items-center gap-2 relative ${
-                  activeFiltersCount > 0 ? "ring-2 ring-blue-300" : ""
+                  activeFiltersCount > 0 ? "ring-2 ring-orange-300" : ""
                 }`}
               >
                 <Filter className="w-4 h-4" />

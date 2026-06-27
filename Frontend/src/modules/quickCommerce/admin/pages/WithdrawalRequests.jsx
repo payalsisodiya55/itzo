@@ -177,7 +177,7 @@ const WithdrawalRequests = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[
                     { label: 'Total Pending', value: `₹${(stats.sellerPendingToDistribute || 0).toLocaleString()}`, icon: Clock, color: 'amber', bg: 'bg-amber-50', iconColor: 'text-amber-500' },
-                    { label: 'Pending Payout', value: `₹${(stats.unpaidWithdrawalPayout || 0).toLocaleString()}`, icon: Banknote, color: 'blue', bg: 'bg-blue-50', iconColor: 'text-blue-500' },
+                    { label: 'Pending Payout', value: `₹${(stats.unpaidWithdrawalPayout || 0).toLocaleString()}`, icon: Banknote, color: 'orange', bg: 'bg-orange-50', iconColor: 'text-primary' },
                     { label: 'Settled Today', value: stats.sellers.processed + stats.delivery.processed, icon: CheckCircle2, color: 'emerald', bg: 'bg-emerald-50', iconColor: 'text-emerald-500' },
                 ].map((stat, i) => (
                     <Card key={i} className="p-6 border-none shadow-sm ring-1 ring-slate-100 bg-white">
@@ -276,7 +276,7 @@ const WithdrawalRequests = () => {
                                             <div className="flex items-center gap-4">
                                                 <div className={cn(
                                                     "h-12 w-12 rounded-2xl flex items-center justify-center shadow-inner",
-                                                    activeTab === 'sellers' ? "bg-indigo-50 text-indigo-600" : "bg-emerald-50 text-emerald-600"
+                                                    activeTab === 'sellers' ? "bg-orange-50 text-primary" : "bg-emerald-50 text-emerald-600"
                                                 )}>
                                                     {activeTab === 'sellers' ? <Building2 className="h-6 w-6" /> : <Truck className="h-6 w-6" />}
                                                 </div>
@@ -379,7 +379,7 @@ const WithdrawalRequests = () => {
                         <div className="flex items-center gap-6 p-6 bg-slate-50 rounded-xl border border-slate-100">
                             <div className={cn(
                                 "h-20 w-20 rounded-xl flex items-center justify-center shadow-xl",
-                                activeTab === 'sellers' ? "bg-indigo-600 text-white" : "bg-emerald-600 text-white"
+                                activeTab === 'sellers' ? "bg-primary text-white" : "bg-emerald-600 text-white"
                             )}>
                                 {activeTab === 'sellers' ? <Building2 className="h-10 w-10" /> : <Truck className="h-10 w-10" />}
                             </div>

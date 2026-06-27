@@ -1263,7 +1263,7 @@ export default function HubMenu() {
                         <div className="flex flex-col gap-2">
                           <button
                             onClick={() => handleEditAddon(addon)}
-                            className="p-2 bg-blue-100 text-primary rounded-lg hover:bg-blue-200 transition-colors"
+                            className="p-2 bg-orange-100 text-primary rounded-lg hover:bg-orange-200 transition-colors"
                             title="Edit add-on"
                           >
                             <Edit className="h-4 w-4" />

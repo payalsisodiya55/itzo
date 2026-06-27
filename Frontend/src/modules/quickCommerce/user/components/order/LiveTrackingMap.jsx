@@ -473,7 +473,7 @@ const LiveTrackingMap = memo(({
                 <button className="h-8 w-8 rounded-full bg-green-50 flex items-center justify-center text-[#0c831f] hover:bg-green-100 transition-colors">
                   <Phone size={14} />
                 </button>
-                <button className="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center text-primary hover:bg-blue-100 transition-colors">
+                <button className="h-8 w-8 rounded-full bg-orange-50 flex items-center justify-center text-primary hover:bg-orange-100 transition-colors">
                   <MessageSquare size={14} />
                 </button>
               </div>

@@ -345,7 +345,7 @@ export default function FeeSettings() {
                               <div className="flex items-center justify-center gap-2">
                                 <button
                                   onClick={() => handleEditRule(index)}
-                                  className="p-1.5 text-primary hover:bg-blue-50 rounded transition-colors"
+                                  className="p-1.5 text-primary hover:bg-orange-50 rounded transition-colors"
                                   title="Edit"
                                 >
                                   <Edit className="w-4 h-4" />

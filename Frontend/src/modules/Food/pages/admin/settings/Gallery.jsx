@@ -246,7 +246,7 @@ export default function Gallery() {
                       key={index}
                       className="flex flex-col items-center cursor-pointer hover:opacity-80 transition-opacity group relative"
                     >
-                      <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-2">
+                      <div className="w-16 h-16 bg-orange-100 rounded-lg flex items-center justify-center mb-2">
                         {file.type?.startsWith("image/") ? (
                           <Image className="w-8 h-8 text-primary" />
                         ) : (

@@ -146,7 +146,7 @@ export default function RatingsReviews() {
         </div>
         <button
           onClick={() => navigate("/restaurant/feedback?tab=reviews")}
-          className="flex items-center gap-1 text-primary text-sm font-normal hover:text-blue-700 transition-colors"
+          className="flex items-center gap-1 text-primary text-sm font-normal hover:text-primary-hover transition-colors"
         >
           <span>View order ratings</span>
           <ChevronRight className="w-4 h-4" />
@@ -214,7 +214,7 @@ export default function RatingsReviews() {
           <div className="flex items-center gap-3">
             <button
               onClick={handleThankYou}
-              className="flex-1 flex items-center justify-center gap-2 border-2 border-primary bg-white rounded-lg py-3 px-4 hover:bg-blue-50 transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 border-2 border-primary bg-white rounded-lg py-3 px-4 hover:bg-orange-50 transition-colors"
             >
               <ThumbsUp className="w-5 h-5 text-primary" />
               <span className="text-primary text-sm font-semibold">Yes, thank you</span>

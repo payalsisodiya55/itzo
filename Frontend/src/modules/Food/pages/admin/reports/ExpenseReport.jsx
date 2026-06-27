@@ -205,7 +205,7 @@ export default function ExpenseReport() {
                 <button 
                   onClick={handleFilterApply}
                   className={`px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary transition-all flex items-center gap-2 relative ${
-                    activeFiltersCount > 0 ? "ring-2 ring-blue-300" : ""
+                    activeFiltersCount > 0 ? "ring-2 ring-orange-300" : ""
                   }`}
                 >
                   <Filter className="w-4 h-4" />
@@ -338,7 +338,7 @@ export default function ExpenseReport() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <a
                           href={`#order-${expense.orderId}`}
-                          className="text-sm font-medium text-primary hover:text-blue-800 hover:underline"
+                          className="text-sm font-medium text-primary hover:text-orange-800 hover:underline"
                         >
                           {expense.orderId}
                         </a>

@@ -102,7 +102,7 @@ export default function CampaignOrderReport() {
   const getStatusBadge = (status) => {
     const statusColors = {
       Delivered: "bg-green-100 text-green-800",
-      Pending: "bg-blue-100 text-blue-800",
+      Pending: "bg-orange-100 text-orange-800",
       Canceled: "bg-red-100 text-red-800",
       "In Progress": "bg-yellow-100 text-yellow-800",
       Failed: "bg-orange-100 text-orange-800",
@@ -201,7 +201,7 @@ export default function CampaignOrderReport() {
               <button 
                 onClick={handleFilterApply}
                 className={`px-4 py-2 text-xs font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all flex items-center gap-2 relative ${
-                  activeFiltersCount > 0 ? "ring-2 ring-blue-300" : ""
+                  activeFiltersCount > 0 ? "ring-2 ring-orange-300" : ""
                 }`}
               >
                 <Filter className="w-3.5 h-3.5" />
@@ -232,7 +232,7 @@ export default function CampaignOrderReport() {
           {/* In progress orders */}
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 px-3 py-3">
             <div className="flex flex-col items-center text-center">
-              <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mb-2">
+              <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center mb-2">
                 <RefreshCw className="w-6 h-6 text-primary" />
               </div>
               <p className="text-lg font-bold text-slate-900 mb-0.5">{emptyCampaignOrderStats.inProgressOrders}</p>
@@ -243,7 +243,7 @@ export default function CampaignOrderReport() {
           {/* On the way */}
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 px-3 py-3">
             <div className="flex flex-col items-center text-center">
-              <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mb-2">
+              <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center mb-2">
                 <Truck className="w-6 h-6 text-primary" />
               </div>
               <p className="text-lg font-bold text-slate-900 mb-0.5">{emptyCampaignOrderStats.onTheWay}</p>
@@ -419,7 +419,7 @@ export default function CampaignOrderReport() {
                     </td>
                     <td className="px-3 py-2 whitespace-nowrap text-center">
                       <div className="flex items-center justify-center gap-1.5">
-                        <button className="p-1 text-primary hover:text-blue-800 hover:bg-blue-50 rounded transition-colors">
+                        <button className="p-1 text-primary hover:text-orange-800 hover:bg-orange-50 rounded transition-colors">
                           <Eye className="w-3.5 h-3.5" />
                         </button>
                         <button className="p-1 text-slate-600 hover:text-slate-800 hover:bg-slate-50 rounded transition-colors">

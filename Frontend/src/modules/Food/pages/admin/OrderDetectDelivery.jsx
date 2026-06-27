@@ -438,7 +438,7 @@ export default function OrderDetectDelivery() {
               <p className="text-sm text-slate-500 mb-1">Total Orders</p>
               <p className="text-2xl font-bold text-slate-900">{stats.total}</p>
             </div>
-            <div className="p-3 bg-blue-50 rounded-lg">
+            <div className="p-3 bg-orange-50 rounded-lg">
               <Package className="w-6 h-6 text-primary" />
             </div>
           </div>
@@ -449,7 +449,7 @@ export default function OrderDetectDelivery() {
               <p className="text-sm text-slate-500 mb-1">Ordered</p>
               <p className="text-2xl font-bold text-primary">{stats.ordered}</p>
             </div>
-            <div className="p-3 bg-blue-50 rounded-lg">
+            <div className="p-3 bg-orange-50 rounded-lg">
               <Clock className="w-6 h-6 text-primary" />
             </div>
           </div>
@@ -480,10 +480,10 @@ export default function OrderDetectDelivery() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-slate-500 mb-1">Delivery Boy Assigned</p>
-              <p className="text-2xl font-bold text-purple-600">{stats.deliveryBoyAssigned}</p>
+              <p className="text-2xl font-bold text-primary">{stats.deliveryBoyAssigned}</p>
             </div>
-            <div className="p-3 bg-purple-50 rounded-lg">
-              <Truck className="w-6 h-6 text-purple-600" />
+            <div className="p-3 bg-orange-50 rounded-lg">
+              <Truck className="w-6 h-6 text-primary" />
             </div>
           </div>
         </div>
@@ -502,10 +502,10 @@ export default function OrderDetectDelivery() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-slate-500 mb-1">Order ID Accepted</p>
-              <p className="text-2xl font-bold text-indigo-600">{stats.orderIdAccepted}</p>
+              <p className="text-2xl font-bold text-primary">{stats.orderIdAccepted}</p>
             </div>
-            <div className="p-3 bg-indigo-50 rounded-lg">
-              <CheckCircle className="w-6 h-6 text-indigo-600" />
+            <div className="p-3 bg-orange-50 rounded-lg">
+              <CheckCircle className="w-6 h-6 text-primary" />
             </div>
           </div>
         </div>

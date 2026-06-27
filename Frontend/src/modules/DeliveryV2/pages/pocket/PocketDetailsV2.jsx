@@ -110,7 +110,7 @@ export const PocketDetailsV2 = () => {
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">Trips & Earnings History</p>
           </div>
         </div>
-        <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-primary border border-blue-100">
+        <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center text-primary border border-orange-100">
           <Receipt className="w-5 h-5" />
         </div>
       </div>

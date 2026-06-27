@@ -2114,14 +2114,14 @@ export default function OrderTracking() {
 
         {customerDeliveryOtp && orderStatus !== 'delivered' && orderStatus !== 'cancelled' && (
           <motion.div
-            className="bg-blue-50 rounded-xl p-4 shadow-sm border border-blue-100"
+            className="bg-orange-50 rounded-xl p-4 shadow-sm border border-orange-100"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.28 }}
           >
-            <p className="text-xs font-semibold text-blue-700 uppercase tracking-wide">Delivery OTP</p>
-            <p className="text-2xl font-extrabold text-blue-900 mt-1 tracking-widest">{customerDeliveryOtp}</p>
-            <p className="text-xs text-blue-700 mt-1">Share this 4-digit OTP with your delivery partner at drop-off.</p>
+            <p className="text-xs font-semibold text-orange-700 uppercase tracking-wide">Delivery OTP</p>
+            <p className="text-2xl font-extrabold text-orange-900 mt-1 tracking-widest">{customerDeliveryOtp}</p>
+            <p className="text-xs text-orange-700 mt-1">Share this 4-digit OTP with your delivery partner at drop-off.</p>
           </motion.div>
         )}
 
@@ -2144,7 +2144,7 @@ export default function OrderTracking() {
         >
           <div className="flex items-center gap-4">
             <div className={`w-14 h-14 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0 shadow-sm border border-gray-100 ${
-              currentStatus.iconType === 'rider' ? 'bg-blue-50' : 
+              currentStatus.iconType === 'rider' ? 'bg-orange-50' : 
               currentStatus.iconType === 'cancelled' ? 'bg-red-50' : 
               currentStatus.iconType === 'delivered' ? 'bg-green-50' : 
               'bg-red-50'
@@ -2202,7 +2202,7 @@ export default function OrderTracking() {
                   index !== visibleDeliveryPartners.length - 1 ? 'border-b border-dashed border-gray-200' : ''
                 }`}
               >
-                <div className="w-12 h-12 rounded-full bg-blue-50 overflow-hidden flex items-center justify-center flex-shrink-0 border border-blue-100 p-1">
+                <div className="w-12 h-12 rounded-full bg-orange-50 overflow-hidden flex items-center justify-center flex-shrink-0 border border-orange-100 p-1">
                   <img
                     src={getPartnerDisplayAvatar(partner?.avatar, partner?.name)}
                     alt={partner?.name || 'Rider'}
@@ -2219,7 +2219,7 @@ export default function OrderTracking() {
                       {partner?.name || 'Delivery Partner'}
                     </p>
                     {hasMultipleDeliveryPartners && (
-                      <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-700">
+                      <span className="inline-flex items-center rounded-full bg-orange-50 px-2 py-0.5 text-[11px] font-semibold text-orange-700">
                         {partner?.label || 'Pickup rider'}
                       </span>
                     )}
@@ -2243,7 +2243,7 @@ export default function OrderTracking() {
                   )}
                 </div>
                 <motion.button
-                  className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center"
+                  className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center"
                   onClick={(e) => handleCallRider(partner?.phone, e)}
                   whileTap={{ scale: 0.9 }}
                 >
@@ -2252,8 +2252,8 @@ export default function OrderTracking() {
               </div>
             ))}
             {order?.note && !isDeliveredOrder && (
-              <div className="bg-blue-50/50 p-3 mx-4 mb-4 rounded-lg flex items-start gap-2 border border-blue-100">
-                <MessageSquare className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+              <div className="bg-orange-50/50 p-3 mx-4 mb-4 rounded-lg flex items-start gap-2 border border-orange-100">
+                <MessageSquare className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                 <div className="flex-1">
                   <p className="text-[10px] font-bold text-primary uppercase tracking-wider mb-0.5">Instruction for Rider</p>
                   <p className="text-xs text-gray-700 leading-relaxed font-medium">"{order.note}"</p>
@@ -2416,7 +2416,7 @@ export default function OrderTracking() {
               {pickupSources.map((source, index) => {
                 const isQuick = source.pickupType === 'quick'
                 const badgeClasses = isQuick
-                  ? 'bg-sky-50 text-sky-700 border-sky-200'
+                  ? 'bg-orange-50 text-orange-700 border-orange-200'
                   : 'bg-red-50 text-orange-700 border-orange-200'
 
                 return (
@@ -2425,7 +2425,7 @@ export default function OrderTracking() {
                     className="rounded-2xl border border-gray-100 bg-gray-50/80 p-4"
                   >
                     <div className="flex items-start gap-3">
-                      <div className={`inline-flex h-12 w-12 items-center justify-center rounded-full ${isQuick ? 'bg-sky-100' : 'bg-red-100'} flex-shrink-0`}>
+                      <div className={`inline-flex h-12 w-12 items-center justify-center rounded-full ${isQuick ? 'bg-orange-100' : 'bg-red-100'} flex-shrink-0`}>
                         <div
                           dangerouslySetInnerHTML={{ __html: SAFE_RESTAURANT_PIN }}
                           className="w-7 h-7 [&_svg]:w-full [&_svg]:h-full [&_svg]:block"
@@ -2440,11 +2440,11 @@ export default function OrderTracking() {
                       </div>
                       {source.phone ? (
                         <motion.button
-                          className={`w-10 h-10 rounded-full flex items-center justify-center ${isQuick ? 'bg-sky-50' : 'bg-red-50'}`}
+                          className={`w-10 h-10 rounded-full flex items-center justify-center ${isQuick ? 'bg-orange-50' : 'bg-red-50'}`}
                           onClick={(e) => handleCallPickupSource(source.phone, e)}
                           whileTap={{ scale: 0.9 }}
                         >
-                          <Phone className={`w-5 h-5 ${isQuick ? 'text-sky-600' : 'text-[#FE5502]'}`} />
+                          <Phone className={`w-5 h-5 ${isQuick ? 'text-primary' : 'text-[#FE5502]'}`} />
                         </motion.button>
                       ) : null}
                     </div>

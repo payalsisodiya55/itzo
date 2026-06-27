@@ -130,7 +130,7 @@ const DeliveryTracking = () => {
         value: deliveries.filter((d) => d.status === "On the Way").length,
         icon: HiOutlineTruck,
         color: "text-primary",
-        bg: "bg-blue-50",
+        bg: "bg-orange-50",
       },
       {
         label: "At Store",
@@ -172,7 +172,7 @@ const DeliveryTracking = () => {
               Delivery Tracking
               <Badge
                 variant="primary"
-                className="text-[9px] px-1.5 py-0 font-bold tracking-wider uppercase bg-blue-100 text-blue-700">
+                className="text-[9px] px-1.5 py-0 font-bold tracking-wider uppercase bg-orange-100 text-orange-700">
                 Live Fleet
               </Badge>
             </h1>

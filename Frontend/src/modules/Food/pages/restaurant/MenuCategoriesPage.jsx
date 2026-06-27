@@ -302,7 +302,7 @@ export default function MenuCategoriesPage() {
                           {category?.foodTypeScope || "Both"}
                         </span>
                         {isGlobal && (
-                          <span className="inline-flex items-center rounded-full border border-sky-200 bg-sky-50 px-2.5 py-1 text-[11px] font-semibold text-sky-700">
+                          <span className="inline-flex items-center rounded-full border border-orange-200 bg-orange-50 px-2.5 py-1 text-[11px] font-semibold text-orange-700">
                             <Globe className="mr-1 h-3.5 w-3.5" />
                             Global
                           </span>
@@ -336,7 +336,7 @@ export default function MenuCategoriesPage() {
                     {status !== "approved" && (
                       <button
                         onClick={() => openEditModal(category)}
-                        className="rounded-xl bg-blue-50 p-2 text-blue-700 hover:bg-blue-100 transition-colors"
+                        className="rounded-xl bg-orange-50 p-2 text-orange-700 hover:bg-orange-100 transition-colors"
                       >
                         <Edit2 className="h-4 w-4" />
                       </button>

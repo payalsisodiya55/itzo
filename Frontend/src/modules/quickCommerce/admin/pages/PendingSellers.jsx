@@ -136,7 +136,7 @@ const PendingSellers = () => {
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {[
-          { label: 'Pending requests', val: stats.total, icon: HiOutlineDocumentText, color: 'text-primary', bg: 'bg-blue-50' },
+          { label: 'Pending requests', val: stats.total, icon: HiOutlineDocumentText, color: 'text-primary', bg: 'bg-orange-50' },
           { label: 'Received today', val: stats.today, icon: HiOutlineCalendarDays, color: 'text-emerald-600', bg: 'bg-emerald-50' },
           { label: 'Doc-ready', val: stats.complete, icon: HiOutlineShieldCheck, color: 'text-amber-600', bg: 'bg-amber-50' },
         ].map((stat) => (
@@ -201,7 +201,7 @@ const PendingSellers = () => {
                     <td className="px-6 py-4">
                       <div className="flex flex-wrap gap-1.5">
                         {docs.length ? docs.map((doc) => (
-                          <span key={doc} className="px-2 py-0.5 bg-blue-50 text-primary text-[8px] font-bold rounded-full ring-1 ring-blue-100 uppercase">{doc}</span>
+                          <span key={doc} className="px-2 py-0.5 bg-orange-50 text-primary text-[8px] font-bold rounded-full ring-1 ring-orange-100 uppercase">{doc}</span>
                         )) : <span className="text-xs font-medium text-slate-400">No docs yet</span>}
                       </div>
                     </td>

@@ -72,7 +72,7 @@ export default function MixedOrderEligibility() {
       {/* Header Section */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center">
             <Settings2 className="w-6 h-6 text-white" />
           </div>
           <h1 className="text-2xl font-bold text-slate-900">Mixed Order Eligibility</h1>
@@ -95,7 +95,7 @@ export default function MixedOrderEligibility() {
               <Button
                 onClick={handleSave}
                 disabled={saving || loading}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white flex items-center gap-2"
+                className="bg-primary hover:bg-primary-hover text-white flex items-center gap-2"
               >
                 {saving ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -108,7 +108,7 @@ export default function MixedOrderEligibility() {
 
             {loading ? (
               <div className="flex items-center justify-center py-12">
-                <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
               </div>
             ) : (
               <div className="space-y-8">
@@ -125,7 +125,7 @@ export default function MixedOrderEligibility() {
                   {/* Distance Limit */}
                   <div className="space-y-3">
                     <div className="flex items-center gap-2 text-slate-800">
-                      <Ruler className="w-4 h-4 text-indigo-500" />
+                      <Ruler className="w-4 h-4 text-primary" />
                       <label className="font-semibold text-sm">Pickup Distance Limit (KM)</label>
                     </div>
                     <div className="relative">
@@ -135,7 +135,7 @@ export default function MixedOrderEligibility() {
                         onChange={handleDistanceChange}
                         min="0"
                         step="0.1"
-                        className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium text-lg"
+                        className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all font-medium text-lg"
                         placeholder="2.0"
                       />
                       <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium">km</div>
@@ -148,7 +148,7 @@ export default function MixedOrderEligibility() {
                   {/* Angle Limit */}
                   <div className="space-y-3">
                     <div className="flex items-center gap-2 text-slate-800">
-                      <Compass className="w-4 h-4 text-indigo-500" />
+                      <Compass className="w-4 h-4 text-primary" />
                       <label className="font-semibold text-sm">Direction Angle Limit (Degrees)</label>
                     </div>
                     <div className="relative">

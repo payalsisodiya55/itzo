@@ -279,7 +279,7 @@ export default function TaxReport() {
                 <p className="text-2xl font-bold text-red-600">{stats.totalTax}</p>
               </div>
               <div className="w-14 h-14 rounded-lg bg-pink-100 flex items-center justify-center">
-                <FileText className="w-8 h-8 text-purple-600" />
+                <FileText className="w-8 h-8 text-primary" />
               </div>
             </div>
           </div>
@@ -333,8 +333,8 @@ export default function TaxReport() {
           {reports.length === 0 ? (
             <div className="py-20 text-center">
               <div className="flex flex-col items-center justify-center">
-                <div className="w-20 h-20 rounded-lg bg-purple-100 flex items-center justify-center mb-4">
-                  <FileText className="w-12 h-12 text-purple-600" />
+                <div className="w-20 h-20 rounded-lg bg-orange-100 flex items-center justify-center mb-4">
+                  <FileText className="w-12 h-12 text-primary" />
                 </div>
                 <p className="text-lg font-semibold text-slate-700 mb-2">No Tax Report Generated</p>
                 <p className="text-sm text-slate-500 max-w-md">
@@ -382,7 +382,7 @@ export default function TaxReport() {
                       <td className="px-4 py-3 text-center">
                         <button 
                           onClick={() => handleViewDetails(report)}
-                          className="text-primary hover:text-blue-800 text-sm font-medium"
+                          className="text-primary hover:text-orange-800 text-sm font-medium"
                         >
                           View
                         </button>

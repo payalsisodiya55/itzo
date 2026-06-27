@@ -103,7 +103,7 @@ export default function SellerPendingApproval() {
               {
                 label: "Status",
                 value: isRejected ? "Rejected" : "Pending review",
-                tone: isRejected ? "bg-rose-50 text-rose-700" : "bg-sky-50 text-sky-700",
+                tone: isRejected ? "bg-rose-50 text-rose-700" : "bg-orange-50 text-orange-700",
               },
             ].map((item) => (
               <div key={item.label} className="rounded-3xl border border-slate-100 bg-slate-50 p-5">

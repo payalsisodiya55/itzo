@@ -257,7 +257,7 @@ export default function TransactionReport() {
             <button 
               onClick={handleFilterApply}
               className={`px-3 py-1.5 text-xs font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all whitespace-nowrap relative ${
-                activeFiltersCount > 0 ? "ring-2 ring-blue-300" : ""
+                activeFiltersCount > 0 ? "ring-2 ring-orange-300" : ""
               }`}
             >
               Filter
@@ -337,7 +337,7 @@ export default function TransactionReport() {
             <div className="rounded-lg shadow-sm border border-slate-200 p-3" style={{ backgroundColor: '#f1f5f9' }}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center">
                     <img src={restaurantEarningIcon} alt="Restaurant Earning" className="w-6 h-6" />
                   </div>
                   <div className="flex items-center gap-2">

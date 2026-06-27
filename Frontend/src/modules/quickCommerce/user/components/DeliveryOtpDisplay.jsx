@@ -164,15 +164,15 @@ const DeliveryOtpDisplay = ({ orderId }) => {
         {/* Delivery Person Nearby Indicator */}
         {/* Requirement 4.4: Show visual indicator that delivery person is nearby */}
         {otpData.deliveryPersonNearby && (
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+          <div className="bg-orange-50 border border-orange-200 rounded-xl p-3 flex items-center gap-3">
+            <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
               <MapPin className="w-5 h-5 text-primary" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-blue-900 uppercase tracking-wider">
+              <p className="text-xs font-bold text-orange-900 uppercase tracking-wider">
                 Delivery Partner Nearby
               </p>
-              <p className="text-xs text-blue-700">
+              <p className="text-xs text-orange-700">
                 Within 0-120 meters of your location
               </p>
             </div>
@@ -186,14 +186,14 @@ const DeliveryOtpDisplay = ({ orderId }) => {
           className={`border rounded-2xl p-6 text-center transition-colors duration-300 ${
             isExpiringSoon
               ? "bg-amber-50 border-amber-300"
-              : "bg-gradient-to-br from-purple-50 to-blue-50 border-purple-200"
+              : "bg-gradient-to-br from-orange-50 to-orange-50 border-orange-200"
           }`}
         >
           <div className="flex items-center justify-center gap-2 mb-2">
-            <Shield className={`w-5 h-5 ${isExpiringSoon ? "text-amber-600" : "text-purple-600"}`} />
+            <Shield className={`w-5 h-5 ${isExpiringSoon ? "text-amber-600" : "text-primary"}`} />
             <p
               className={`text-xs font-bold uppercase tracking-wider ${
-                isExpiringSoon ? "text-amber-800" : "text-purple-800"
+                isExpiringSoon ? "text-amber-800" : "text-orange-800"
               }`}
             >
               Delivery OTP
@@ -204,14 +204,14 @@ const DeliveryOtpDisplay = ({ orderId }) => {
           {/* Requirement 4.3: Font size at least 24 points */}
           <div
             className={`text-5xl font-black font-mono tracking-[0.3em] mb-3 ${
-              isExpiringSoon ? "text-amber-950" : "text-purple-950"
+              isExpiringSoon ? "text-amber-950" : "text-orange-950"
             }`}
             style={{ fontSize: "48px" }} // 36pt = 48px (exceeds 24pt requirement)
           >
             {otpData.otp}
           </div>
 
-          <p className={`text-xs ${isExpiringSoon ? "text-amber-700" : "text-purple-700"}`}>
+          <p className={`text-xs ${isExpiringSoon ? "text-amber-700" : "text-orange-700"}`}>
             Share this code with your delivery partner
           </p>
         </div>

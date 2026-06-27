@@ -1438,7 +1438,7 @@ export default function RestaurantsList() {
                 <p className="text-sm font-medium text-slate-600 mb-1">Total restaurants</p>
                 <p className="text-2xl font-bold text-slate-900">{totalRestaurants}</p>
               </div>
-              <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-lg bg-orange-100 flex items-center justify-center">
                 <img src={locationIcon} alt="Location" className="w-8 h-8" />
               </div>
             </div>
@@ -1674,7 +1674,7 @@ export default function RestaurantsList() {
                           <div className="flex items-center justify-center gap-2">
                             <button
                               onClick={() => handleViewDetails(restaurant)}
-                              className="p-1.5 rounded text-primary hover:bg-blue-50 transition-colors"
+                              className="p-1.5 rounded text-primary hover:bg-orange-50 transition-colors"
                               title="View Details"
                             >
                               <Eye className="w-4 h-4" />
@@ -1992,8 +1992,8 @@ export default function RestaurantsList() {
                         <h4 className="text-sm font-bold text-slate-900 uppercase tracking-widest">Owner Information</h4>
                       </div>
                       <div className="space-y-4">
-                        <div className="flex items-start gap-4 p-4 rounded-2xl bg-blue-50/30 border border-blue-100/30">
-                          <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center shrink-0">
+                        <div className="flex items-start gap-4 p-4 rounded-2xl bg-orange-50/30 border border-orange-100/30">
+                          <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center shrink-0">
                             <User className="w-5 h-5 text-primary" />
                           </div>
                           <div>
@@ -2015,12 +2015,12 @@ export default function RestaurantsList() {
                           </div>
                         </div>
                         {(r?.ownerEmail || r?.email) && (
-                          <div className="flex items-start gap-4 p-4 rounded-2xl bg-indigo-50/30 border border-indigo-100/30">
-                            <div className="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center shrink-0">
-                              <Mail className="w-5 h-5 text-indigo-600" />
+                          <div className="flex items-start gap-4 p-4 rounded-2xl bg-orange-50/30 border border-orange-100/30">
+                            <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center shrink-0">
+                              <Mail className="w-5 h-5 text-primary" />
                             </div>
                             <div>
-                              <p className="text-[10px] text-indigo-600 font-bold uppercase tracking-wider mb-0.5">User Id</p>
+                              <p className="text-[10px] text-primary font-bold uppercase tracking-wider mb-0.5">User Id</p>
                               <p className="text-base font-bold text-slate-800">{r.ownerEmail || r.email}</p>
                             </div>
                           </div>
@@ -2033,7 +2033,7 @@ export default function RestaurantsList() {
                       <div className="flex items-center justify-between mb-4">
                         <h4 className="text-lg font-semibold text-slate-900">Location & Contact</h4>
                         {isEditingLocation ? (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-indigo-200 bg-indigo-50 text-indigo-700 text-xs font-semibold">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-orange-200 bg-orange-50 text-orange-700 text-xs font-semibold">
                             <Settings className="w-3.5 h-3.5" />
                             Editable Below
                           </span>
@@ -2052,7 +2052,7 @@ export default function RestaurantsList() {
                           </div>
                         )}
                         {isEditingLocation && (
-                          <p className="text-xs text-indigo-700 font-medium bg-indigo-50 border border-indigo-100 rounded-lg px-3 py-2">
+                          <p className="text-xs text-orange-700 font-medium bg-orange-50 border border-orange-100 rounded-lg px-3 py-2">
                             Location editor is shown at the bottom of this details modal.
                           </p>
                         )}
@@ -2142,7 +2142,7 @@ export default function RestaurantsList() {
                               href={profileImgUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 text-primary hover:text-blue-700"
+                              className="inline-flex items-center gap-2 text-primary hover:text-primary-hover"
                             >
                               <ImageIcon className="w-4 h-4" />
                               <span>View Profile Image</span>
@@ -2303,7 +2303,7 @@ export default function RestaurantsList() {
                               {panDocumentUrl && (
                                 <div className="md:col-span-2">
                                   <p className="text-xs text-slate-500 mb-2">PAN Document</p>
-                                  <a href={panDocumentUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:text-blue-700">
+                                  <a href={panDocumentUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:text-primary-hover">
                                     <ImageIcon className="w-4 h-4" />
                                     <span>View PAN Document</span>
                                     <ExternalLink className="w-3 h-3" />
@@ -2351,7 +2351,7 @@ export default function RestaurantsList() {
                               {gstDocumentUrl && (
                                 <div className="md:col-span-2">
                                   <p className="text-xs text-slate-500 mb-2">GST Document</p>
-                                  <a href={gstDocumentUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:text-blue-700">
+                                  <a href={gstDocumentUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:text-primary-hover">
                                     <ImageIcon className="w-4 h-4" />
                                     <span>View GST Document</span>
                                     <ExternalLink className="w-3 h-3" />
@@ -2387,7 +2387,7 @@ export default function RestaurantsList() {
                               {fssaiDocumentUrl && (
                                 <div className="md:col-span-2">
                                   <p className="text-xs text-slate-500 mb-2">FSSAI Document</p>
-                                  <a href={fssaiDocumentUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:text-blue-700">
+                                  <a href={fssaiDocumentUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:text-primary-hover">
                                     <ImageIcon className="w-4 h-4" />
                                     <span>View FSSAI Document</span>
                                     <ExternalLink className="w-3 h-3" />
@@ -2506,7 +2506,7 @@ export default function RestaurantsList() {
                             <p className="text-xs text-slate-500 mb-2">Cuisines (at registration)</p>
                             <div className="flex flex-wrap gap-2">
                               {r.onboarding.step2.cuisines.map((cuisine, idx) => (
-                                <span key={idx} className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">
+                                <span key={idx} className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">
                                   {cuisine}
                                 </span>
                               ))}
@@ -2530,7 +2530,7 @@ export default function RestaurantsList() {
                             <p className="text-xs text-slate-500 mb-2">Open Days (at registration)</p>
                             <div className="flex flex-wrap gap-2">
                               {r.onboarding.step2.openDays.map((day, idx) => (
-                                <span key={idx} className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium capitalize">
+                                <span key={idx} className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium capitalize">
                                   {day}
                                 </span>
                               ))}
@@ -2636,8 +2636,8 @@ export default function RestaurantsList() {
                   {isEditingLocation && (
                     <div className="pt-6 border-t border-slate-200">
                       <h4 className="text-lg font-semibold text-slate-900 mb-4">Location Editor</h4>
-                      <div className="space-y-3 border border-indigo-100 bg-indigo-50/40 rounded-xl p-4">
-                        <p className="text-xs text-indigo-700 font-semibold">
+                      <div className="space-y-3 border border-orange-100 bg-orange-50/40 rounded-xl p-4">
+                        <p className="text-xs text-orange-700 font-semibold">
                           Update restaurant location using dropdown (accurate) + select service zone.
                         </p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -2726,10 +2726,10 @@ export default function RestaurantsList() {
                           </div>
 
                           <div className="md:col-span-2">
-                            <div className="overflow-hidden rounded-2xl border border-indigo-100 bg-white shadow-[0_12px_32px_rgba(79,70,229,0.08)]">
+                            <div className="overflow-hidden rounded-2xl border border-orange-100 bg-white shadow-[0_12px_32px_rgba(79,70,229,0.08)]">
                               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 px-4 py-3">
                                 <div>
-                                  <p className="text-[11px] font-black uppercase tracking-[0.2em] text-indigo-500">
+                                  <p className="text-[11px] font-black uppercase tracking-[0.2em] text-primary">
                                     Zone Preview
                                   </p>
                                   <h5 className="mt-1 text-sm font-semibold text-slate-900">
@@ -2756,8 +2756,8 @@ export default function RestaurantsList() {
 
                                 {locationMapLoading && (
                                   <div className="absolute inset-0 flex items-center justify-center bg-white/72 backdrop-blur-[2px]">
-                                    <div className="flex items-center gap-2 rounded-full border border-indigo-100 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm">
-                                      <Loader2 className="h-4 w-4 animate-spin text-indigo-600" />
+                                    <div className="flex items-center gap-2 rounded-full border border-orange-100 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm">
+                                      <Loader2 className="h-4 w-4 animate-spin text-primary" />
                                       Loading map preview...
                                     </div>
                                   </div>
@@ -2784,7 +2784,7 @@ export default function RestaurantsList() {
                                   Drag the orange pin or tap anywhere on the map to change the saved restaurant location.
                                 </p>
                                 {locationZoneHint && (
-                                  <p className="mt-1 text-[12px] font-semibold text-indigo-600">
+                                  <p className="mt-1 text-[12px] font-semibold text-primary">
                                     {locationZoneHint}
                                   </p>
                                 )}
@@ -2799,7 +2799,7 @@ export default function RestaurantsList() {
                         <button
                           onClick={handleSaveLocation}
                           disabled={savingLocation}
-                          className={`inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold text-white ${savingLocation ? "bg-indigo-300 cursor-not-allowed" : "bg-indigo-600 hover:bg-indigo-700"}`}
+                          className={`inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold text-white ${savingLocation ? "bg-orange-300 cursor-not-allowed" : "bg-primary hover:bg-primary-hover"}`}
                         >
                           {savingLocation ? "Saving..." : "Save Location"}
                         </button>

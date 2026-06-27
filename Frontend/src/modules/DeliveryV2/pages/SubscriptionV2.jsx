@@ -230,9 +230,9 @@ export default function SubscriptionV2() {
   const getPlanIcon = (unit) => {
     switch (unit) {
       case 'DAY': return <Zap className="w-5 h-5 text-amber-500" />;
-      case 'WEEK': return <Star className="w-5 h-5 text-blue-500" />;
+      case 'WEEK': return <Star className="w-5 h-5 text-primary" />;
       case 'MONTH': return <Trophy className="w-5 h-5 text-orange-500" />;
-      default: return <Crown className="w-5 h-5 text-purple-500" />;
+      default: return <Crown className="w-5 h-5 text-primary" />;
     }
   }
 
@@ -585,7 +585,7 @@ export default function SubscriptionV2() {
                           initial={{ opacity: 0, scale: 0.98 }} 
                           animate={{ opacity: 1, scale: 1 }} 
                           exit={{ opacity: 0, scale: 0.98 }}
-                          className={`flex items-center gap-2.5 px-4 py-3 rounded-xl border ${topupAmount && parseFloat(topupAmount) < requiredRecharge ? 'bg-rose-50 border-rose-100 text-rose-700' : 'bg-blue-50 border-blue-100 text-blue-700'}`}
+                          className={`flex items-center gap-2.5 px-4 py-3 rounded-xl border ${topupAmount && parseFloat(topupAmount) < requiredRecharge ? 'bg-rose-50 border-rose-100 text-rose-700' : 'bg-orange-50 border-orange-100 text-orange-700'}`}
                         >
                           {topupAmount && parseFloat(topupAmount) < requiredRecharge ? (
                             <AlertCircle className="w-4 h-4 shrink-0" />

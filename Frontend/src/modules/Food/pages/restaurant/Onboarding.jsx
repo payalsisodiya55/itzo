@@ -2480,7 +2480,7 @@ export default function RestaurantOnboarding() {
                 onClick={() => setIsEditing(true)}
                 variant="outline"
                 size="sm"
-                className="text-xs bg-blue-50 border-blue-300 text-blue-700 hover:bg-blue-100 flex items-center gap-1.5"
+                className="text-xs bg-orange-50 border-orange-300 text-orange-700 hover:bg-orange-100 flex items-center gap-1.5"
                 title="Edit Details"
               >
                 <Sparkles className="w-3 h-3" />

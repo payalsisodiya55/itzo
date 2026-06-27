@@ -118,7 +118,7 @@ const AdvancedAnalytics = () => {
             {/* Goals Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
-                    { label: 'Gross Revenue', value: '₹5,42,000', trend: '+12.5%', icon: HiOutlineBanknotes, color: 'indigo' },
+                    { label: 'Gross Revenue', value: '₹5,42,000', trend: '+12.5%', icon: HiOutlineBanknotes, color: 'orange' },
                     { label: 'Total Orders', value: '1,248', trend: '+8.2%', icon: HiOutlineShoppingBag, color: 'emerald' },
                     { label: 'Active Sellers', value: '84', trend: '+2', icon: HiOutlineUsers, color: 'amber' },
                     { label: 'Avg Order Value', value: '₹434', trend: '-2.1%', icon: HiOutlineBolt, color: 'rose' },
@@ -126,7 +126,7 @@ const AdvancedAnalytics = () => {
                     <Card key={i} className="p-6 border-none shadow-xl ring-1 ring-slate-100 bg-white group hover:scale-[1.02] transition-all">
                         <div className="flex items-center justify-between mb-4">
                             <div className={cn("p-2.5 rounded-2xl",
-                                goal.color === 'indigo' && "bg-indigo-50 text-indigo-600",
+                                goal.color === 'orange' && "bg-orange-50 text-primary",
                                 goal.color === 'emerald' && "bg-emerald-50 text-emerald-600",
                                 goal.color === 'amber' && "bg-amber-50 text-amber-600",
                                 goal.color === 'rose' && "bg-rose-50 text-rose-600",
@@ -144,7 +144,7 @@ const AdvancedAnalytics = () => {
                         <h3 className="text-2xl font-black text-slate-900 leading-none">{goal.value}</h3>
                         <div className="mt-4 h-1 w-full bg-slate-50 rounded-full overflow-hidden">
                             <div className={cn("h-full rounded-full animate-progress",
-                                goal.color === 'indigo' && "bg-indigo-500",
+                                goal.color === 'orange' && "bg-primary",
                                 goal.color === 'emerald' && "bg-emerald-500",
                                 goal.color === 'amber' && "bg-amber-500",
                                 goal.color === 'rose' && "bg-rose-500",
@@ -165,11 +165,11 @@ const AdvancedAnalytics = () => {
                         </div>
                         <div className="flex items-center gap-4">
                             <div className="flex items-center gap-2">
-                                <div className="h-2.5 w-2.5 rounded-full bg-indigo-500" />
+                                <div className="h-2.5 w-2.5 rounded-full bg-primary" />
                                 <span className="text-[10px] font-black text-slate-600">REVENUE</span>
                             </div>
                             <div className="flex items-center gap-2">
-                                <div className="h-2.5 w-2.5 rounded-full bg-indigo-100" />
+                                <div className="h-2.5 w-2.5 rounded-full bg-orange-100" />
                                 <span className="text-[10px] font-black text-slate-600">BENCHMARK</span>
                             </div>
                         </div>
@@ -264,7 +264,7 @@ const AdvancedAnalytics = () => {
                             <h4 className="text-sm font-black text-slate-900 uppercase tracking-tight">Delivery Load Pulse</h4>
                             <p className="text-[10px] font-bold text-slate-400 mt-0.5">Peak traffic hours monitoring.</p>
                         </div>
-                        <HiOutlineClock className="h-5 w-5 text-indigo-500" />
+                        <HiOutlineClock className="h-5 w-5 text-primary" />
                     </div>
                     <div className="space-y-6">
                         {hourlyHeatmap.map((item, i) => (
@@ -325,7 +325,7 @@ const AdvancedAnalytics = () => {
                 <Card className="border-none shadow-xl ring-1 ring-slate-100 bg-white rounded-[32px] p-8">
                     <div className="flex items-center justify-between mb-8">
                         <h4 className="text-sm font-black text-slate-900 uppercase tracking-tight">Top Growth Regions</h4>
-                        <HiOutlineGlobeAsiaAustralia className="h-5 w-5 text-sky-500" />
+                        <HiOutlineGlobeAsiaAustralia className="h-5 w-5 text-primary" />
                     </div>
                     <div className="space-y-3">
                         {[

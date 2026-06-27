@@ -259,7 +259,7 @@ export default function DisbursementReportRestaurants() {
                 <button 
                   onClick={handleFilterApply}
                   className={`px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary transition-all flex items-center gap-2 relative ${
-                    activeFiltersCount > 0 ? "ring-2 ring-blue-300" : ""
+                    activeFiltersCount > 0 ? "ring-2 ring-orange-300" : ""
                   }`}
                 >
                   <Filter className="w-4 h-4" />
@@ -412,13 +412,13 @@ export default function DisbursementReportRestaurants() {
                         <span className="text-sm text-slate-700">{disbursement.paymentMethod}</span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+                        <span className="px-3 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700">
                           {disbursement.status}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-center">
                         <button
-                          className="p-1.5 rounded text-primary hover:bg-blue-50 transition-colors"
+                          className="p-1.5 rounded text-primary hover:bg-orange-50 transition-colors"
                           title="View Details"
                         >
                           <Eye className="w-4 h-4" />

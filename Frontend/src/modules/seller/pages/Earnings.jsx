@@ -124,18 +124,18 @@ const Earnings = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <BlurFade delay={0.2}>
-          <Card className="bg-gradient-to-br from-indigo-600 to-blue-700 text-white border-none shadow-lg h-full">
+          <Card className="bg-gradient-to-br from-orange-600 to-orange-700 text-white border-none shadow-lg h-full">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-indigo-100 font-medium">Total Net Earnings</p>
+                <p className="text-orange-100 font-medium">Total Net Earnings</p>
                 <h3 className="text-4xl font-bold mt-2">₹{Number(data?.balances?.totalNetEarnings ?? 0).toLocaleString()}</h3>
-                <p className="text-xs text-indigo-200 mt-2">After all deductions</p>
+                <p className="text-xs text-orange-200 mt-2">After all deductions</p>
               </div>
               <div className="p-3 bg-white/20 rounded-xl">
                 <DollarSign className="h-8 w-8 text-white" />
               </div>
             </div>
-            <div className="mt-8 flex items-center text-indigo-100 bg-white/10 w-fit px-3 py-1 rounded-full text-sm">
+            <div className="mt-8 flex items-center text-orange-100 bg-white/10 w-fit px-3 py-1 rounded-full text-sm">
               <TrendingUp className="mr-2" />
               <span>Real-time earnings data</span>
             </div>
@@ -203,8 +203,8 @@ const Earnings = () => {
                   ₹{Number(data?.balances?.totalWithdrawn ?? 0).toLocaleString()}
                 </h2>
               </div>
-              <div className="p-2 bg-indigo-50 rounded-lg">
-                <Banknote className="h-5 w-5 text-indigo-500" />
+              <div className="p-2 bg-orange-50 rounded-lg">
+                <Banknote className="h-5 w-5 text-primary" />
               </div>
             </div>
           </Card>
@@ -233,7 +233,7 @@ const Earnings = () => {
         <Card className="p-6 border-none shadow-md bg-white">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
-              <BarChart3 className="h-5 w-5 text-indigo-500" />
+              <BarChart3 className="h-5 w-5 text-primary" />
               Monthly Revenue Performance
             </h3>
           </div>

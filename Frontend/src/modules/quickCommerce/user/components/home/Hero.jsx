@@ -37,7 +37,7 @@ const banners = [
         badgeColor: "bg-primary text-white",
         title: "Healthy",
         highlight: "Choices",
-        highlightColor: "text-cyan-300",
+        highlightColor: "text-orange-300",
         subtitle: "Everything you need for a balanced and healthy diet.",
         cta: "Start Healthy"
     }

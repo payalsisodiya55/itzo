@@ -380,7 +380,7 @@ export default function EmailTemplate() {
                     </div>
                   )}
                   {formData.socialMediaLinks.twitter && (
-                    <div className="w-8 h-8 rounded-full bg-blue-400 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-orange-400 flex items-center justify-center">
                       <Twitter className="w-4 h-4 text-white" />
                     </div>
                   )}

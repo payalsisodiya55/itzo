@@ -327,7 +327,7 @@ export default function DeliverymanReviews() {
                       )}
                       {visibleColumns.deliveryman && (
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <a href={`/ecs/delivery-partners/${review.deliverymanId}`} className="text-sm font-medium text-primary hover:text-blue-700">
+                          <a href={`/ecs/delivery-partners/${review.deliverymanId}`} className="text-sm font-medium text-primary hover:text-primary-hover">
                             {review.deliveryman}
                           </a>
                         </td>
@@ -341,7 +341,7 @@ export default function DeliverymanReviews() {
                       )}
                       {visibleColumns.customer && (
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <a href={`/ecs/users/${review.customerId}`} className="text-sm font-medium text-primary hover:text-blue-700">
+                          <a href={`/ecs/users/${review.customerId}`} className="text-sm font-medium text-primary hover:text-primary-hover">
                             {review.customer}
                           </a>
                         </td>
@@ -469,28 +469,28 @@ export default function DeliverymanReviews() {
 
               {/* Deliveryman & Customer */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-blue-50 rounded-lg p-4">
+                <div className="bg-orange-50 rounded-lg p-4">
                   <p className="text-xs text-primary mb-1">Deliveryman</p>
                   <a 
                     href={`/ecs/delivery-partners/${selectedReview.deliverymanId}`}
-                    className="text-sm font-semibold text-blue-700 hover:text-blue-800"
+                    className="text-sm font-semibold text-orange-700 hover:text-orange-800"
                   >
                     {selectedReview.deliveryman}
                   </a>
                   {selectedReview.deliverymanPhone && (
-                    <p className="text-xs text-blue-500 mt-1">{selectedReview.deliverymanPhone}</p>
+                    <p className="text-xs text-primary mt-1">{selectedReview.deliverymanPhone}</p>
                   )}
                 </div>
-                <div className="bg-purple-50 rounded-lg p-4">
-                  <p className="text-xs text-purple-600 mb-1">Customer</p>
+                <div className="bg-orange-50 rounded-lg p-4">
+                  <p className="text-xs text-primary mb-1">Customer</p>
                   <a 
                     href={`/ecs/users/${selectedReview.customerId}`}
-                    className="text-sm font-semibold text-purple-700 hover:text-purple-800"
+                    className="text-sm font-semibold text-orange-700 hover:text-orange-800"
                   >
                     {selectedReview.customer}
                   </a>
                   {selectedReview.customerPhone && (
-                    <p className="text-xs text-purple-500 mt-1">{selectedReview.customerPhone}</p>
+                    <p className="text-xs text-primary mt-1">{selectedReview.customerPhone}</p>
                   )}
                 </div>
               </div>

@@ -87,7 +87,7 @@ const AdminDashboard = () => {
             value: overview.totalUsers?.toLocaleString() || '0',
             icon: Users,
             color: 'text-primary',
-            bg: 'bg-blue-50',
+            bg: 'bg-orange-50',
             trend: usersGrowth,
             description: 'Active this month'
         },
@@ -95,8 +95,8 @@ const AdminDashboard = () => {
             label: 'Active Sellers',
             value: overview.activeSellers?.toLocaleString() || '0',
             icon: Store,
-            color: 'text-purple-600',
-            bg: 'bg-purple-50',
+            color: 'text-primary',
+            bg: 'bg-orange-50',
             trend: sellersGrowth,
             description: 'Verified stores'
         },

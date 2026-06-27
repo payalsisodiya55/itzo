@@ -56,8 +56,8 @@ const Transactions = () => {
       label: "Total Revenue",
       value: `₹${(data?.balances?.totalRevenue || 0).toLocaleString()}`,
       icon: HiOutlineCreditCard,
-      color: "text-indigo-600",
-      bg: "bg-indigo-50",
+      color: "text-primary",
+      bg: "bg-orange-50",
     },
   ];
 
@@ -151,7 +151,7 @@ const Transactions = () => {
               Transaction Ledger
               <Badge
                 variant="primary"
-                className="text-[10px] sm:text-xs px-1.5 py-0 font-bold tracking-wider uppercase bg-blue-100 text-blue-700">
+                className="text-[10px] sm:text-xs px-1.5 py-0 font-bold tracking-wider uppercase bg-orange-100 text-orange-700">
                 Audit Trail
               </Badge>
             </h1>

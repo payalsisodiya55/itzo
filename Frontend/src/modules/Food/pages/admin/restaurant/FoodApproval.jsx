@@ -341,7 +341,7 @@ export default function FoodApproval() {
                             {request.itemName || '-'}
                           </td>
                           <td className="px-3 py-3 whitespace-nowrap text-sm text-gray-700 capitalize text-center">
-                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${request.entityType === 'addon' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'}`}>
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${request.entityType === 'addon' ? 'bg-orange-100 text-orange-700' : 'bg-orange-100 text-orange-700'}`}>
                                 {request.entityType || 'food'}
                             </span>
                           </td>
@@ -419,13 +419,13 @@ export default function FoodApproval() {
           {selectedRequest && (
             <div className="p-6 space-y-6">
               {/* Restaurant Info */}
-              <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-100/50 flex items-center justify-between">
+              <div className="p-4 bg-orange-50/50 rounded-xl border border-orange-100/50 flex items-center justify-between">
                 <div>
-                   <h3 className="font-bold text-xs text-blue-700 uppercase tracking-wider mb-1">Restaurant</h3>
+                   <h3 className="font-bold text-xs text-orange-700 uppercase tracking-wider mb-1">Restaurant</h3>
                    <p className="text-sm font-semibold text-gray-900">{selectedRequest.restaurantName || '-'}</p>
                    <p className="text-xs text-gray-500">ID: {selectedRequest.restaurantId || '-'}</p>
                 </div>
-                <div className="px-3 py-1 bg-white rounded-full border border-blue-100 text-[10px] font-bold text-primary">
+                <div className="px-3 py-1 bg-white rounded-full border border-orange-100 text-[10px] font-bold text-primary">
                     {selectedRequest.entityType?.toUpperCase()}
                 </div>
               </div>

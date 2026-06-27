@@ -115,8 +115,8 @@ const Analytics = () => {
       value: statsData?.overview?.totalOrders || "0",
       trend: statsData?.overview?.ordersTrend || "0%",
       icon: HiOutlineShoppingBag,
-      color: "text-indigo-600",
-      bg: "bg-indigo-50",
+      color: "text-primary",
+      bg: "bg-orange-50",
     },
     {
       label: "Avg Order Value",
@@ -636,7 +636,7 @@ const Analytics = () => {
 
             <div className="mt-8 grid grid-cols-3 gap-4 border-t border-slate-50 pt-8">
               <div className="text-center">
-                <div className="h-10 w-10 bg-blue-50 text-primary rounded-xl flex items-center justify-center mx-auto mb-2">
+                <div className="h-10 w-10 bg-orange-50 text-primary rounded-xl flex items-center justify-center mx-auto mb-2">
                   <HiOutlineMapPin className="h-5 w-5" />
                 </div>
                 <p className="text-[10px] font-black text-slate-900 tracking-tight">
@@ -703,11 +703,11 @@ const Analytics = () => {
                   {selectedProduct.revenue}
                 </p>
               </div>
-              <div className="p-4 bg-blue-50 rounded-2xl">
-                <p className="text-[10px] font-black text-blue-700 uppercase tracking-widest">
+              <div className="p-4 bg-orange-50 rounded-2xl">
+                <p className="text-[10px] font-black text-orange-700 uppercase tracking-widest">
                   Units Sold
                 </p>
-                <p className="text-xl font-black text-blue-900">
+                <p className="text-xl font-black text-orange-900">
                   {selectedProduct.sales}
                 </p>
               </div>

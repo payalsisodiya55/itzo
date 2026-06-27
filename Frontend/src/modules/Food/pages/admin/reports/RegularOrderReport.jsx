@@ -24,10 +24,10 @@ const debugError = (...args) => {}
 
 const statusMeta = {
   Scheduled: { label: "Scheduled Orders", color: "text-amber-600", bg: "bg-amber-50", icon: scheduledIcon },
-  Pending: { label: "Pending Orders", color: "text-primary", bg: "bg-blue-50", icon: pendingIcon },
-  Accepted: { label: "Accepted Orders", color: "text-sky-600", bg: "bg-sky-50", icon: acceptedIcon },
-  Processing: { label: "Processing Orders", color: "text-indigo-600", bg: "bg-indigo-50", icon: processingIcon },
-  "Food On The Way": { label: "Food On The Way", color: "text-cyan-600", bg: "bg-cyan-50", icon: onTheWayIcon },
+  Pending: { label: "Pending Orders", color: "text-primary", bg: "bg-orange-50", icon: pendingIcon },
+  Accepted: { label: "Accepted Orders", color: "text-primary", bg: "bg-orange-50", icon: acceptedIcon },
+  Processing: { label: "Processing Orders", color: "text-primary", bg: "bg-orange-50", icon: processingIcon },
+  "Food On The Way": { label: "Food On The Way", color: "text-primary", bg: "bg-orange-50", icon: onTheWayIcon },
   Delivered: { label: "Delivered", color: "text-emerald-600", bg: "bg-emerald-50", icon: deliveredIcon },
   Canceled: { label: "Canceled", color: "text-red-600", bg: "bg-red-50", icon: canceledIcon },
   "Payment Failed": { label: "Payment Failed", color: "text-orange-600", bg: "bg-orange-50", icon: paymentFailedIcon },
@@ -344,7 +344,7 @@ export default function RegularOrderReport() {
     return (
       <div className="p-2 lg:p-3 bg-slate-50 min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
           <p className="text-gray-600">Loading orders...</p>
         </div>
       </div>
@@ -454,7 +454,7 @@ export default function RegularOrderReport() {
             <button 
               onClick={handleFilterApply}
               className={`px-3 py-1.5 text-xs font-medium rounded-lg bg-primary text-white hover:bg-primary/90 transition-all whitespace-nowrap relative ${
-                activeFiltersCount > 0 ? "ring-2 ring-blue-300" : ""
+                activeFiltersCount > 0 ? "ring-2 ring-orange-300" : ""
               }`}
             >
               Filter

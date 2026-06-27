@@ -163,7 +163,7 @@ export default function SearchingDeliveryMan() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-primary border border-blue-100">
+          <span className="inline-flex items-center rounded-full bg-orange-50 px-3 py-1 text-xs font-medium text-primary border border-orange-100">
             Unassigned Orders: {count}
           </span>
         </div>

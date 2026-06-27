@@ -99,7 +99,7 @@ export default function DisbursementPage({
   const getStatusColor = (status) => {
     const statusLower = status.toLowerCase()
     if (statusLower === "pending") {
-      return "bg-blue-100 text-blue-700"
+      return "bg-orange-100 text-orange-700"
     }
     if (statusLower === "processing") {
       return "bg-yellow-100 text-yellow-700"

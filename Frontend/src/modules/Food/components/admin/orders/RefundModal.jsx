@@ -79,7 +79,7 @@ export default function RefundModal({ isOpen, onOpenChange, order, onConfirm, is
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-xl font-bold text-slate-900">
-            <Wallet className="w-5 h-5 text-purple-600" />
+            <Wallet className="w-5 h-5 text-primary" />
             {isWalletPayment ? "Wallet Refund" : "Refund"}
           </DialogTitle>
           <DialogDescription className="text-slate-600">
@@ -108,7 +108,7 @@ export default function RefundModal({ isOpen, onOpenChange, order, onConfirm, is
                 className={`w-full rounded-lg border-2 py-2.5 pl-11 pr-4 transition-colors focus:outline-none focus:ring-2 ${
                   error
                     ? "border-red-300 focus:border-red-500 focus:ring-red-200"
-                    : "border-slate-300 focus:border-purple-500 focus:ring-purple-200"
+                    : "border-slate-300 focus:border-primary focus:ring-orange-200"
                 } ${isProcessing || !supportsCustomAmount ? "cursor-not-allowed bg-slate-100" : "bg-white"}`}
               />
             </div>
@@ -139,9 +139,9 @@ export default function RefundModal({ isOpen, onOpenChange, order, onConfirm, is
                   disabled={isProcessing || refundMethodLocked}
                   className={`rounded-lg border px-4 py-3 text-left transition ${
                     refundTo === "gateway"
-                      ? "border-purple-500 bg-purple-50 text-purple-900"
+                      ? "border-primary bg-orange-50 text-orange-900"
                       : "border-slate-200 bg-white text-slate-700"
-                  } ${isProcessing || refundMethodLocked ? "cursor-not-allowed opacity-70" : "hover:border-purple-300"}`}
+                  } ${isProcessing || refundMethodLocked ? "cursor-not-allowed opacity-70" : "hover:border-orange-300"}`}
                 >
                   <p className="text-sm font-semibold">Original payment method</p>
                   <p className="mt-1 text-xs text-slate-500">Refund through Razorpay to the original source.</p>
@@ -154,9 +154,9 @@ export default function RefundModal({ isOpen, onOpenChange, order, onConfirm, is
                   disabled={isProcessing || refundMethodLocked}
                   className={`rounded-lg border px-4 py-3 text-left transition ${
                     refundTo === "wallet"
-                      ? "border-purple-500 bg-purple-50 text-purple-900"
+                      ? "border-primary bg-orange-50 text-orange-900"
                       : "border-slate-200 bg-white text-slate-700"
-                  } ${isProcessing || refundMethodLocked ? "cursor-not-allowed opacity-70" : "hover:border-purple-300"}`}
+                  } ${isProcessing || refundMethodLocked ? "cursor-not-allowed opacity-70" : "hover:border-orange-300"}`}
                 >
                   <p className="text-sm font-semibold">Wallet</p>
                   <p className="mt-1 text-xs text-slate-500">Refund to the customer wallet balance.</p>
@@ -165,8 +165,8 @@ export default function RefundModal({ isOpen, onOpenChange, order, onConfirm, is
             </div>
           ) : null}
 
-          <div className="rounded-lg border border-purple-200 bg-purple-50 p-3">
-            <p className="text-sm text-purple-800">
+          <div className="rounded-lg border border-orange-200 bg-orange-50 p-3">
+            <p className="text-sm text-orange-800">
               <span className="font-semibold">Note:</span>{" "}
               {isWalletPayment
                 ? "Wallet orders are refunded back to the customer's wallet."
@@ -189,7 +189,7 @@ export default function RefundModal({ isOpen, onOpenChange, order, onConfirm, is
           <Button
             onClick={handleConfirm}
             disabled={isProcessing || !refundAmount || parseFloat(refundAmount) <= 0}
-            className="bg-purple-600 px-4 py-2 text-white hover:bg-purple-700"
+            className="bg-primary px-4 py-2 text-white hover:bg-primary-hover"
           >
             {isProcessing ? "Processing..." : "Refund"}
           </Button>

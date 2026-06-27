@@ -144,7 +144,7 @@ const FleetTrackingTable = () => {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center justify-center gap-3 text-slate-600">
-                      <span className="text-xs font-semibold bg-indigo-50 text-indigo-700 px-2 py-1 rounded border border-indigo-100">
+                      <span className="text-xs font-semibold bg-orange-50 text-orange-700 px-2 py-1 rounded border border-orange-100">
                         {item.seller.name}
                       </span>
                       <HiOutlineArrowRight className="text-slate-300" />
@@ -279,7 +279,7 @@ const FleetTrackingTable = () => {
 
                 <div className="space-y-4">
                   <div className="flex items-center gap-4 text-sm">
-                    <div className="h-10 w-10 bg-blue-50 text-primary rounded-xl flex items-center justify-center shrink-0">
+                    <div className="h-10 w-10 bg-orange-50 text-primary rounded-xl flex items-center justify-center shrink-0">
                       <HiOutlinePhone className="h-5 w-5" />
                     </div>
                     <div>
@@ -292,7 +292,7 @@ const FleetTrackingTable = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-4 text-sm">
-                    <div className="h-10 w-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center shrink-0">
+                    <div className="h-10 w-10 bg-orange-50 text-primary rounded-xl flex items-center justify-center shrink-0">
                       <HiOutlineTruck className="h-5 w-5" />
                     </div>
                     <div>

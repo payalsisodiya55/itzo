@@ -114,11 +114,11 @@ export default function JobApplicationsList() {
   const getStatusBadge = (status) => {
     switch (status) {
       case "Applied":
-        return "bg-blue-50 text-blue-600 border border-blue-100";
+        return "bg-orange-50 text-primary border border-orange-100";
       case "Shortlisted":
-        return "bg-purple-50 text-purple-600 border border-purple-100";
+        return "bg-orange-50 text-primary border border-orange-100";
       case "Interview Scheduled":
-        return "bg-indigo-50 text-indigo-600 border border-indigo-100";
+        return "bg-orange-50 text-primary border border-orange-100";
       case "Rejected":
         return "bg-rose-50 text-rose-600 border border-rose-100";
       case "Hired":
@@ -149,9 +149,9 @@ export default function JobApplicationsList() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {[
             { label: "Total Applications", value: stats.total, color: "text-slate-900", bg: "bg-white" },
-            { label: "Today's Applications", value: stats.today, color: "text-blue-600", bg: "bg-blue-50/50" },
+            { label: "Today's Applications", value: stats.today, color: "text-primary", bg: "bg-orange-50/50" },
             { label: "Pending Review", value: stats.pending, color: "text-amber-600", bg: "bg-amber-50/50" },
-            { label: "Shortlisted", value: stats.shortlisted, color: "text-purple-600", bg: "bg-purple-50/50" },
+            { label: "Shortlisted", value: stats.shortlisted, color: "text-primary", bg: "bg-orange-50/50" },
             { label: "Rejected", value: stats.rejected, color: "text-rose-600", bg: "bg-rose-50/50" },
             { label: "Hired", value: stats.hired, color: "text-emerald-600", bg: "bg-emerald-50/50" },
           ].map((card, idx) => (

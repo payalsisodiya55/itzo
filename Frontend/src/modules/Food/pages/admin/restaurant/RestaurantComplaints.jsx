@@ -197,7 +197,7 @@ export default function RestaurantComplaints() {
       case 'pending':
         return 'bg-yellow-100 text-yellow-800'
       case 'in_progress':
-        return 'bg-blue-100 text-blue-800'
+        return 'bg-orange-100 text-orange-800'
       case 'resolved':
         return 'bg-green-100 text-green-800'
       case 'rejected':
@@ -303,9 +303,9 @@ export default function RestaurantComplaints() {
                 </div>
                 <p className="text-sm text-gray-700 mb-3">{complaint.description}</p>
                 {complaint.restaurantResponse && (
-                  <div className="bg-blue-50 rounded p-3 mb-3">
-                    <p className="text-xs font-semibold text-blue-700 mb-1">Restaurant Response:</p>
-                    <p className="text-sm text-blue-800">{complaint.restaurantResponse}</p>
+                  <div className="bg-orange-50 rounded p-3 mb-3">
+                    <p className="text-xs font-semibold text-orange-700 mb-1">Restaurant Response:</p>
+                    <p className="text-sm text-orange-800">{complaint.restaurantResponse}</p>
                   </div>
                 )}
                 {complaint.adminResponse && (

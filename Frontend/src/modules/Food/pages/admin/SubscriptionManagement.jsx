@@ -488,7 +488,7 @@ export default function SubscriptionManagement() {
                                                 {canEditPlan && (
                                                     <button 
                                                         onClick={() => handleOpenModal(plan)}
-                                                        className="p-2 text-slate-400 hover:text-primary hover:bg-blue-50 rounded-lg transition-all"
+                                                        className="p-2 text-slate-400 hover:text-primary hover:bg-orange-50 rounded-lg transition-all"
                                                     >
                                                         <Edit3 className="w-4 h-4" />
                                                     </button>
@@ -559,7 +559,7 @@ export default function SubscriptionManagement() {
                                 {overviewData?.activeSubscribers?.restaurants || 0} Restaurants | {overviewData?.activeSubscribers?.deliveryPartners || 0} Delivery
                             </p>
                         </div>
-                        <div className="p-2.5 rounded-lg bg-blue-50 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                        <div className="p-2.5 rounded-lg bg-orange-50 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
                             <Activity className="w-5 h-5" />
                         </div>
                     </div>
@@ -580,7 +580,7 @@ export default function SubscriptionManagement() {
                                 Spend: ₹{overviewData?.oneDayPassSpend || 0} (Not counted in revenue)
                             </p>
                         </div>
-                        <div className="p-2.5 rounded-lg bg-purple-50 text-purple-600 transition-colors group-hover:bg-purple-600 group-hover:text-white">
+                        <div className="p-2.5 rounded-lg bg-orange-50 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
                             <Truck className="w-5 h-5" />
                         </div>
                     </div>
@@ -618,7 +618,7 @@ export default function SubscriptionManagement() {
                             </h3>
                             <p className="text-[10px] text-slate-400 mt-1">Weekly + Monthly plans</p>
                         </div>
-                        <div className="p-2.5 rounded-lg bg-indigo-50 text-indigo-600 transition-colors group-hover:bg-indigo-600 group-hover:text-white">
+                        <div className="p-2.5 rounded-lg bg-orange-50 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
                             <Code className="w-5 h-5" />
                         </div>
                     </div>
@@ -904,7 +904,7 @@ export default function SubscriptionManagement() {
                                                     </a>
                                                     <span className="text-[10px] text-slate-500">{item.userEmail || item.userPhone || ''}</span>
                                                     <span className={`inline-block w-fit px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider mt-1 ${
-                                                        item.userType === 'RESTAURANT' ? 'bg-orange-50 text-[#FE5502]' : 'bg-blue-50 text-primary'
+                                                        item.userType === 'RESTAURANT' ? 'bg-orange-50 text-[#FE5502]' : 'bg-orange-50 text-primary'
                                                     }`}>
                                                         {item.userType === 'RESTAURANT' ? 'Restaurant' : 'Delivery boy'}
                                                     </span>
@@ -1112,7 +1112,7 @@ export default function SubscriptionManagement() {
                                 <label className="text-sm font-semibold text-slate-700">Payment Behavior</label>
                                 <div className={`h-[42px] px-4 rounded-xl text-[10px] font-black tracking-wider flex items-center justify-center border transition-colors ${
                                     formData.durationUnit === 'DAY' 
-                                        ? 'bg-blue-50 text-primary border-blue-100' 
+                                        ? 'bg-orange-50 text-primary border-orange-100' 
                                         : 'bg-orange-50 text-[#FE5502] border-orange-100'
                                 }`}>
                                     {formData.durationUnit === 'DAY' ? 'ONE-TIME CHECKOUT' : 'RECURRING SUBSCRIPTION'}

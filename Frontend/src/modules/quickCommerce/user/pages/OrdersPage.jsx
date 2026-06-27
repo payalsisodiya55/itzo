@@ -211,7 +211,7 @@ const OrdersPage = () => {
                           ? "border-emerald-100 bg-emerald-50 text-emerald-700"
                           : legacy === "cancelled"
                             ? "border-rose-100 bg-rose-50 text-rose-700"
-                            : "border-sky-100 bg-sky-50 text-sky-700"
+                            : "border-orange-100 bg-orange-50 text-orange-700"
                       }`}
                     >
                       <span className="flex h-4 w-4 items-center justify-center rounded-full bg-white/80">
@@ -222,7 +222,7 @@ const OrdersPage = () => {
                               ? "text-emerald-600"
                               : legacy === "cancelled"
                                 ? "text-rose-500"
-                                : "text-sky-500"
+                                : "text-primary"
                           }
                         />
                       </span>

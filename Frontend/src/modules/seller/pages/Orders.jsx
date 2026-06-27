@@ -322,8 +322,8 @@ const Orders = () => {
         label: "Total Orders",
         value: safeOrders.length,
         icon: HiOutlineArchiveBoxXMark,
-        color: "text-indigo-600",
-        bg: "bg-indigo-50",
+        color: "text-primary",
+        bg: "bg-orange-50",
       },
       {
         label: "Pending",
@@ -339,7 +339,7 @@ const Orders = () => {
           .length,
         icon: HiOutlineCheck,
         color: "text-primary",
-        bg: "bg-blue-50",
+        bg: "bg-orange-50",
       },
       {
         label: "Delivered",
@@ -520,7 +520,7 @@ const Orders = () => {
               Order Management
               <Badge
                 variant="primary"
-                className="text-[10px] px-1.5 py-0 font-bold tracking-wider uppercase bg-blue-100 text-blue-700">
+                className="text-[10px] px-1.5 py-0 font-bold tracking-wider uppercase bg-orange-100 text-orange-700">
                 Real-time
               </Badge>
             </h1>
@@ -1094,11 +1094,11 @@ const Orders = () => {
                   <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
                     {/* Summary Grid */}
                     <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                      <div className="p-3 sm:p-4 rounded-2xl bg-indigo-50 border border-indigo-100">
-                        <p className="text-[10px] sm:text-xs font-bold text-indigo-400 uppercase tracking-widest mb-1">
+                      <div className="p-3 sm:p-4 rounded-2xl bg-orange-50 border border-orange-100">
+                        <p className="text-[10px] sm:text-xs font-bold text-orange-400 uppercase tracking-widest mb-1">
                           Total Revenue
                         </p>
-                        <p className="text-base sm:text-xl font-black text-indigo-700 truncate">
+                        <p className="text-base sm:text-xl font-black text-orange-700 truncate">
                           ₹
                           {safeOrders
                             .reduce((acc, o) => acc + o.total, 0)
@@ -1242,7 +1242,7 @@ const Orders = () => {
                         </div>
                         <div>
                           <h4 className="text-xs font-black text-slate-600 uppercase tracking-widest mb-2 flex items-center gap-2">
-                            <HiOutlineTruck className="h-3 w-3 text-blue-500" />{" "}
+                            <HiOutlineTruck className="h-3 w-3 text-primary" />{" "}
                             Driver Status
                           </h4>
                           <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100 shadow-sm">

@@ -212,7 +212,7 @@ export default function FoodReport() {
                 <button 
                   onClick={handleFilterApply}
                   className={`px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary transition-all flex items-center gap-2 relative ${
-                    activeFiltersCount > 0 ? "ring-2 ring-blue-300" : ""
+                    activeFiltersCount > 0 ? "ring-2 ring-orange-300" : ""
                   }`}
                 >
                   <Filter className="w-4 h-4" />
@@ -278,7 +278,7 @@ export default function FoodReport() {
                     <div key={data.year} className="flex-1 flex flex-col items-center h-full">
                       <div className="w-full flex items-end justify-center h-full">
                         <div
-                          className="w-5 bg-blue-400 rounded-t transition-all hover:bg-primary"
+                          className="w-5 bg-orange-400 rounded-t transition-all hover:bg-primary"
                           style={{ 
                             height: `${height}px`, 
                             minHeight: height > 0 ? '4px' : '0'
@@ -304,7 +304,7 @@ export default function FoodReport() {
           
           {/* Legend */}
           <div className="flex items-center gap-2 mt-6">
-            <div className="w-4 h-4 bg-blue-400 rounded"></div>
+            <div className="w-4 h-4 bg-orange-400 rounded"></div>
             <span className="text-sm text-slate-600">Total Amount Sold</span>
           </div>
         </div>

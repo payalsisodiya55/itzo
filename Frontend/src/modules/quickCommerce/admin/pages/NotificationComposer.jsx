@@ -35,9 +35,9 @@ const NotificationComposer = () => {
     const [lastOrder, setLastOrder] = useState('any');
 
     const segments = [
-        { id: 'all', label: 'All Users', count: '12,504', description: 'Universal Reach', icon: HiOutlineUsers, color: 'blue' },
+        { id: 'all', label: 'All Users', count: '12,504', description: 'Universal Reach', icon: HiOutlineUsers, color: 'orange' },
         { id: 'lapsed', label: 'Lapsed Customers', count: '3,210', description: 'No order in 30 days', icon: HiOutlineClock, color: 'amber' },
-        { id: 'power', label: 'Power Users', count: '850', description: '10+ orders monthly', icon: HiOutlineSparkles, color: 'purple' },
+        { id: 'power', label: 'Power Users', count: '850', description: '10+ orders monthly', icon: HiOutlineSparkles, color: 'orange' },
         { id: 'new', label: 'Recent Signups', count: '1,420', description: 'Last 7 days', icon: HiOutlineCheckCircle, color: 'emerald' },
     ];
 
@@ -165,12 +165,12 @@ const NotificationComposer = () => {
                     </Card>
 
                     {/* Tips Card */}
-                    <Card className="ds-card-compact bg-blue-50 border-blue-100">
+                    <Card className="ds-card-compact bg-orange-50 border-orange-100">
                         <div className="flex gap-3">
                             <HiOutlineExclamationCircle className="ds-icon-lg text-primary flex-shrink-0" />
                             <div>
-                                <h4 className="ds-h4 text-blue-900 mb-1">Best Practices</h4>
-                                <ul className="ds-body text-blue-700 space-y-1">
+                                <h4 className="ds-h4 text-orange-900 mb-1">Best Practices</h4>
+                                <ul className="ds-body text-orange-700 space-y-1">
                                     <li>• Keep titles under 40 characters for better visibility</li>
                                     <li>• Use emojis sparingly to grab attention</li>
                                     <li>• Test with different audience segments</li>

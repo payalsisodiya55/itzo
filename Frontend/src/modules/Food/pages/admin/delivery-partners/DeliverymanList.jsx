@@ -748,7 +748,7 @@ availableCashLimit: deliveryman.availableCashLimit || 0,
                               )}
                               <button 
                                 onClick={() => handleView(dm)}
-                                className="p-1.5 rounded bg-blue-50 text-primary hover:bg-blue-100 transition-colors" 
+                                className="p-1.5 rounded bg-orange-50 text-primary hover:bg-orange-100 transition-colors" 
                                 title="View Details"
                               >
                                 <Eye className="w-4 h-4" />
@@ -830,7 +830,7 @@ availableCashLimit: deliveryman.availableCashLimit || 0,
                     <div>
                       <label className="text-xs font-semibold text-slate-500 uppercase">Status</label>
                       <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium mt-1 ${
-                        viewDetails.status === 'pending' ? 'bg-blue-100 text-blue-700' :
+                        viewDetails.status === 'pending' ? 'bg-orange-100 text-orange-700' :
                         viewDetails.status === 'approved' || viewDetails.status === 'active' ? 'bg-green-100 text-green-700' :
                         viewDetails.status === 'blocked' ? 'bg-red-100 text-red-700' :
                         'bg-slate-100 text-slate-700'
@@ -1012,7 +1012,7 @@ availableCashLimit: deliveryman.availableCashLimit || 0,
                                 href={viewDetails.documents.aadhar.document} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-sm text-primary hover:text-blue-700"
+                                className="inline-flex items-center gap-1 text-sm text-primary hover:text-primary-hover"
                               >
                                 <ExternalLink className="w-3 h-3" /> View Document
                               </a>
@@ -1034,7 +1034,7 @@ availableCashLimit: deliveryman.availableCashLimit || 0,
                                 href={viewDetails.documents.pan.document} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-sm text-primary hover:text-blue-700"
+                                className="inline-flex items-center gap-1 text-sm text-primary hover:text-primary-hover"
                               >
                                 <ExternalLink className="w-3 h-3" /> View Document
                               </a>
@@ -1061,7 +1061,7 @@ availableCashLimit: deliveryman.availableCashLimit || 0,
                                 href={viewDetails.documents.drivingLicense.document} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-sm text-primary hover:text-blue-700"
+                                className="inline-flex items-center gap-1 text-sm text-primary hover:text-primary-hover"
                               >
                                 <ExternalLink className="w-3 h-3" /> View Document
                               </a>
@@ -1083,7 +1083,7 @@ availableCashLimit: deliveryman.availableCashLimit || 0,
                                 href={viewDetails.documents.vehicleRC.document} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-sm text-primary hover:text-blue-700"
+                                className="inline-flex items-center gap-1 text-sm text-primary hover:text-primary-hover"
                               >
                                 <ExternalLink className="w-3 h-3" /> View Document
                               </a>

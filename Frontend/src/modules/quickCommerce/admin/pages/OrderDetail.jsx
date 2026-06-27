@@ -51,10 +51,10 @@ const getStatusStyles = (status) => {
     const normalizedStatus = String(status || 'pending').trim().toLowerCase();
     switch (normalizedStatus) {
         case 'pending': return 'bg-amber-100 text-amber-700 border-amber-200';
-        case 'confirmed': return 'bg-blue-100 text-blue-700 border-blue-200';
-        case 'packed': return 'bg-indigo-100 text-indigo-700 border-indigo-200';
-        case 'ready_for_pickup': return 'bg-blue-100 text-blue-700 border-blue-200';
-        case 'out_for_delivery': return 'bg-purple-100 text-purple-700 border-purple-200';
+        case 'confirmed': return 'bg-orange-100 text-orange-700 border-orange-200';
+        case 'packed': return 'bg-orange-100 text-orange-700 border-orange-200';
+        case 'ready_for_pickup': return 'bg-orange-100 text-orange-700 border-orange-200';
+        case 'out_for_delivery': return 'bg-orange-100 text-orange-700 border-orange-200';
         case 'delivered': return 'bg-emerald-100 text-emerald-700 border-emerald-200';
         case 'cancelled': return 'bg-rose-100 text-rose-700 border-rose-200';
         default: return 'bg-slate-100 text-slate-700 border-slate-200';
@@ -291,10 +291,10 @@ export default function OrderDetail() {
                     <Card className="border-none shadow-xl ring-1 ring-slate-100 bg-white rounded-xl overflow-hidden">
                         <div className="p-6 border-b border-slate-50 bg-slate-50/30 flex items-center justify-between">
                             <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest flex items-center gap-3">
-                                <Box className="h-4 w-4 text-indigo-500" />
+                                <Box className="h-4 w-4 text-primary" />
                                 Items in Order
                             </h3>
-                            <Badge className="bg-indigo-50 text-indigo-700 border-none text-[9px] font-black">{orderItems.length} ITEMS</Badge>
+                            <Badge className="bg-orange-50 text-orange-700 border-none text-[9px] font-black">{orderItems.length} ITEMS</Badge>
                         </div>
                         <div className="p-0 overflow-x-auto">
                             <table className="w-full text-left border-collapse">
@@ -402,7 +402,7 @@ export default function OrderDetail() {
                             Customer Node Information
                         </h4>
                         <div className="flex items-center gap-4">
-                            <div className="h-16 w-16 bg-indigo-50 rounded-2xl flex items-center justify-center font-black text-indigo-600 uppercase">
+                            <div className="h-16 w-16 bg-orange-50 rounded-2xl flex items-center justify-center font-black text-primary uppercase">
                                 {order.customer?.name?.split(' ').map((name) => name[0]).join('') || 'C'}
                             </div>
                             <div className="text-left">

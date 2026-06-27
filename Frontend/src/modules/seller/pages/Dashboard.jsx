@@ -112,7 +112,7 @@ const Dashboard = () => {
       change: "+8.2%",
       changeType: "increase",
       icon: ShoppingBag,
-      iconBg: "bg-blue-50",
+      iconBg: "bg-orange-50",
       iconColor: "text-primary",
       description: "vs last month",
     },
@@ -122,8 +122,8 @@ const Dashboard = () => {
       change: "+2",
       changeType: "increase",
       icon: Package,
-      iconBg: "bg-purple-50",
-      iconColor: "text-purple-600",
+      iconBg: "bg-orange-50",
+      iconColor: "text-primary",
       description: "per order",
     },
     {
@@ -757,12 +757,12 @@ const Dashboard = () => {
                         getStatusColor(selectedOrder.status) === "warning"
                           ? "bg-amber-100 text-amber-700 focus:ring-amber-200"
                           : getStatusColor(selectedOrder.status) === "info"
-                            ? "bg-blue-100 text-blue-700 focus:ring-blue-200"
+                            ? "bg-orange-100 text-orange-700 focus:ring-orange-200"
                             : getStatusColor(selectedOrder.status) === "primary"
-                              ? "bg-indigo-100 text-indigo-700 focus:ring-indigo-200"
+                              ? "bg-orange-100 text-orange-700 focus:ring-orange-200"
                               : getStatusColor(selectedOrder.status) ===
                                   "secondary"
-                                ? "bg-purple-100 text-purple-700 focus:ring-purple-200"
+                                ? "bg-orange-100 text-orange-700 focus:ring-orange-200"
                                 : getStatusColor(selectedOrder.status) ===
                                     "success"
                                   ? "bg-emerald-100 text-emerald-700 focus:ring-emerald-200"

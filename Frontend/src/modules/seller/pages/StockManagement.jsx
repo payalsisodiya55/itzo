@@ -107,7 +107,7 @@ const StockManagement = () => {
     }, [activeView, filterStatus]);
 
     const stats = useMemo(() => [
-        { label: 'Total Inventory', value: inventory.reduce((acc, item) => acc + item.stock, 0), icon: HiOutlineCube, color: 'text-indigo-600', bg: 'bg-indigo-50', status: 'All' },
+        { label: 'Total Inventory', value: inventory.reduce((acc, item) => acc + item.stock, 0), icon: HiOutlineCube, color: 'text-primary', bg: 'bg-orange-50', status: 'All' },
         { label: 'Low Stock Items', value: inventory.filter(i => i.stock > 0 && i.stock <= i.threshold).length, icon: HiOutlineExclamationTriangle, color: 'text-amber-600', bg: 'bg-amber-50', status: 'Low Stock' },
         { label: 'Out of Stock', value: inventory.filter(i => i.stock === 0).length, icon: HiOutlineArchiveBoxXMark, color: 'text-rose-600', bg: 'bg-rose-50', status: 'Out of Stock' },
         { label: 'Stock Valuation', value: `₹${inventory.reduce((acc, item) => acc + (item.stock * item.price), 0).toLocaleString()}`, icon: HiOutlineArrowsUpDown, color: 'text-emerald-600', bg: 'bg-emerald-50', status: 'In Stock' }
@@ -385,7 +385,7 @@ const StockManagement = () => {
                                         <div className={cn(
                                             "h-12 w-12 rounded-2xl flex items-center justify-center shadow-sm",
                                             log.type === 'Restock' ? "bg-emerald-50 text-emerald-600" :
-                                                log.type === 'Sale' ? "bg-indigo-50 text-indigo-600" : "bg-rose-50 text-rose-600"
+                                                log.type === 'Sale' ? "bg-orange-50 text-primary" : "bg-rose-50 text-rose-600"
                                         )}>
                                             {log.type === 'Restock' ? <HiOutlinePlus className="h-6 w-6" /> :
                                                 log.type === 'Sale' ? <HiOutlineCube className="h-6 w-6" /> : <HiOutlineMinus className="h-6 w-6" />}
@@ -396,7 +396,7 @@ const StockManagement = () => {
                                                 <Badge className={cn(
                                                     "text-[9px] font-bold px-1.5 py-0",
                                                     log.type === 'Restock' ? "bg-emerald-100 text-emerald-700" :
-                                                        log.type === 'Sale' ? "bg-indigo-100 text-indigo-700" : "bg-rose-100 text-rose-700"
+                                                        log.type === 'Sale' ? "bg-orange-100 text-orange-700" : "bg-rose-100 text-rose-700"
                                                 )}>
                                                     {log.type.toUpperCase()}
                                                 </Badge>

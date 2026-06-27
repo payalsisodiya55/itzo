@@ -461,7 +461,7 @@ export default function BillingCharges() {
       <Card className="rounded-3xl border border-slate-200 bg-white shadow-sm">
         <div className="border-b border-slate-100 px-6 py-5">
           <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900">
-            <Truck className="h-5 w-5 text-sky-600" />
+            <Truck className="h-5 w-5 text-primary" />
             Delivery Boy Commission Rules
           </h2>
           <p className="mt-1 text-sm text-slate-500">
@@ -476,7 +476,7 @@ export default function BillingCharges() {
               value={ruleForm.name}
               onChange={(e) => setRuleForm((prev) => ({ ...prev, name: e.target.value }))}
               placeholder="Rule name"
-              className="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-sky-500 xl:col-span-2"
+              className="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-primary xl:col-span-2"
             />
             <input
               type="number"
@@ -485,7 +485,7 @@ export default function BillingCharges() {
               value={ruleForm.minDistance}
               onChange={(e) => setRuleForm((prev) => ({ ...prev, minDistance: e.target.value }))}
               placeholder="Min km"
-              className="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-sky-500"
+              className="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-primary"
             />
             <input
               type="number"
@@ -495,7 +495,7 @@ export default function BillingCharges() {
               disabled={ruleForm.maxDistanceUnlimited}
               onChange={(e) => setRuleForm((prev) => ({ ...prev, maxDistance: e.target.value }))}
               placeholder="Max km"
-              className="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-sky-500 disabled:bg-slate-50"
+              className="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-primary disabled:bg-slate-50"
             />
             <input
               type="number"
@@ -504,7 +504,7 @@ export default function BillingCharges() {
               value={ruleForm.commissionPerKm}
               onChange={(e) => setRuleForm((prev) => ({ ...prev, commissionPerKm: e.target.value }))}
               placeholder="Commission/km"
-              className="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-sky-500"
+              className="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-primary"
             />
             <input
               type="number"
@@ -513,7 +513,7 @@ export default function BillingCharges() {
               value={ruleForm.basePayout}
               onChange={(e) => setRuleForm((prev) => ({ ...prev, basePayout: e.target.value }))}
               placeholder="Base payout"
-              className="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-sky-500"
+              className="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-primary"
             />
           </div>
 
@@ -536,7 +536,7 @@ export default function BillingCharges() {
             <button
               onClick={handleSaveRule}
               disabled={savingRule}
-              className="inline-flex items-center gap-2 rounded-2xl bg-sky-600 px-4 py-3 text-sm font-bold text-white hover:bg-sky-700"
+              className="inline-flex items-center gap-2 rounded-2xl bg-primary px-4 py-3 text-sm font-bold text-white hover:bg-primary-hover"
             >
               {savingRule ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
               {editingRuleId ? 'Update Rule' : 'Add Rule'}
@@ -567,7 +567,7 @@ export default function BillingCharges() {
                 {rulesLoading ? (
                   <tr>
                     <td colSpan="6" className="px-3 py-8 text-center">
-                      <Loader2 className="mx-auto h-5 w-5 animate-spin text-sky-600" />
+                      <Loader2 className="mx-auto h-5 w-5 animate-spin text-primary" />
                     </td>
                   </tr>
                 ) : sortedRules.length === 0 ? (
@@ -585,7 +585,7 @@ export default function BillingCharges() {
                           ? `${rule.minDistance}+ km`
                           : `${rule.minDistance}-${rule.maxDistance} km`}
                       </td>
-                      <td className="px-3 py-3 font-semibold text-sky-700">Rs {rule.commissionPerKm}</td>
+                      <td className="px-3 py-3 font-semibold text-orange-700">Rs {rule.commissionPerKm}</td>
                       <td className="px-3 py-3 font-semibold text-emerald-700">Rs {rule.basePayout}</td>
                       <td className="px-3 py-3">
                         <button

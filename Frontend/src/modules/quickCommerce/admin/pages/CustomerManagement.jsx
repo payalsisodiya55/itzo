@@ -148,8 +148,8 @@ const CustomerManagement = () => {
                 title="Customers"
                 description="Manage and track all customer accounts"
                 badge={
-                    <div className="ds-stat-card-icon bg-sky-50">
-                        <Users className="ds-icon-lg text-sky-600" />
+                    <div className="ds-stat-card-icon bg-orange-50">
+                        <Users className="ds-icon-lg text-primary" />
                     </div>
                 }
                 actions={
@@ -172,8 +172,8 @@ const CustomerManagement = () => {
                     label="Total Customers"
                     value={stats.total}
                     icon={Users}
-                    color="text-sky-600"
-                    bg="bg-sky-50"
+                    color="text-primary"
+                    bg="bg-orange-50"
                 />
                 <StatCard
                     label="Active Users"
@@ -186,8 +186,8 @@ const CustomerManagement = () => {
                     label="New Today"
                     value={stats.newToday}
                     icon={UserPlus}
-                    color="text-indigo-600"
-                    bg="bg-indigo-50"
+                    color="text-primary"
+                    bg="bg-orange-50"
                 />
             </div>
 

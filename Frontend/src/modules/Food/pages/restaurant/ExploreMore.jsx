@@ -326,7 +326,7 @@ function TimePickerWheel({
           <div className="border-t border-gray-200 px-4 py-4 flex justify-center">
             <button
               onClick={handleConfirm}
-              className="text-primary hover:text-blue-700 font-medium text-base transition-colors"
+              className="text-primary hover:text-primary-hover font-medium text-base transition-colors"
             >
               Okay
             </button>
@@ -1497,7 +1497,7 @@ export default function ExploreMore() {
               {/* Content */}
               <div className="px-6 py-6">
                 {/* Status Message */}
-                <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <div className="mb-6 p-4 bg-orange-50 rounded-lg border border-orange-200">
                   <p className="text-base font-semibold text-gray-900 mb-1">
                     Restaurant is scheduled off
                   </p>

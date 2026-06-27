@@ -2328,7 +2328,7 @@ function RestaurantDetailsContent() {
                               : "Unnamed Section"}
                         </h2>
                         {section.subtitle && (
-                          <button className="text-sm text-primary dark:text-blue-400 underline">
+                          <button className="text-sm text-primary dark:text-orange-400 underline">
                             {section.subtitle}
                           </button>
                         )}
@@ -3057,7 +3057,7 @@ function RestaurantDetailsContent() {
                             }))
                           }
                           className={`text-left px-4 py-2.5 rounded-lg border-2 transition-all ${filters.sortBy === "low-to-high"
-                            ? "border-primary dark:border-blue-400 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400"
+                            ? "border-primary dark:border-orange-400 bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400"
                             : "border-gray-200 dark:border-gray-700 bg-white dark:bg-[#2a2a2a] text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600"
                             }`}
                         >
@@ -3071,7 +3071,7 @@ function RestaurantDetailsContent() {
                             }))
                           }
                           className={`text-left px-4 py-2.5 rounded-lg border-2 transition-all ${filters.sortBy === "high-to-low"
-                            ? "border-primary dark:border-blue-400 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400"
+                            ? "border-primary dark:border-orange-400 bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400"
                             : "border-gray-200 dark:border-gray-700 bg-white dark:bg-[#2a2a2a] text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600"
                             }`}
                         >
@@ -3854,7 +3854,7 @@ function RestaurantDetailsContent() {
                                     })
                                   }}
                                 >
-                                  <Percent className="h-5 w-5 text-primary dark:text-blue-400 flex-shrink-0" />
+                                  <Percent className="h-5 w-5 text-primary dark:text-orange-400 flex-shrink-0" />
                                   <div className="flex-1 text-left">
                                     <p className="text-sm font-medium text-gray-900 dark:text-white mb-1">
                                       {coupon?.title || "Restaurant coupon"}

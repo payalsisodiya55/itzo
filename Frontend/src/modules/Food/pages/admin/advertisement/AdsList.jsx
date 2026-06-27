@@ -302,7 +302,7 @@ export default function AdsList() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <button 
                           onClick={() => handleViewAd(ad)}
-                          className="text-sm font-medium text-primary hover:text-blue-700"
+                          className="text-sm font-medium text-primary hover:text-primary-hover"
                         >
                           {ad.adsId}
                         </button>
@@ -338,7 +338,7 @@ export default function AdsList() {
                     )}
                     {visibleColumns.status && (
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+                        <span className="px-3 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700">
                           {ad.status}
                         </span>
                       </td>

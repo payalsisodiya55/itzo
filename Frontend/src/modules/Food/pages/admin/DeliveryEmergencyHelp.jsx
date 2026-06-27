@@ -170,7 +170,7 @@ export default function DeliveryEmergencyHelp() {
       label: "Contact Police",
       placeholder: "100",
       icon: Siren,
-      iconColor: "text-blue-500",
+      iconColor: "text-primary",
       description: "Police emergency number — exactly 3 digits"
     },
     {
@@ -213,10 +213,10 @@ export default function DeliveryEmergencyHelp() {
           </div>
 
           {/* Info Card */}
-          <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="mb-6 p-4 bg-orange-50 border border-orange-200 rounded-lg">
             <div className="flex items-start gap-3">
               <AlertCircle className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-              <div className="text-sm text-blue-800">
+              <div className="text-sm text-orange-800">
                 <p className="font-semibold mb-1">Important Information</p>
                 <p>
                   These phone numbers will be displayed to delivery partners in the emergency help section. 

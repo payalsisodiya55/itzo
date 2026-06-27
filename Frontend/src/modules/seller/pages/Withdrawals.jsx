@@ -133,8 +133,8 @@ const Withdrawals = () => {
                     <div>
                         <h1 className="text-2xl font-black text-slate-900 flex items-center gap-3">
                             Money Requests
-                            <div className="p-1.5 bg-indigo-100 rounded-lg">
-                                <Wallet className="h-5 w-5 text-indigo-600" />
+                            <div className="p-1.5 bg-orange-100 rounded-lg">
+                                <Wallet className="h-5 w-5 text-primary" />
                             </div>
                         </h1>
                         <p className="text-slate-600 text-base mt-1 font-medium">Request payouts and track your withdrawal history.</p>
@@ -154,15 +154,15 @@ const Withdrawals = () => {
                 {[
                     { label: 'Available Balance', value: `₹${balances.available.toLocaleString()}`, icon: Wallet, color: 'emerald', sub: 'Ready to withdraw' },
                     { label: 'Pending Requests', value: `₹${balances.pending.toLocaleString()}`, icon: Clock, color: 'amber', sub: 'Awaiting approval' },
-                    { label: 'Last Withdrawal', value: `₹${balances.lastWithdrawal.toLocaleString()}`, icon: CheckCircle2, color: 'blue', sub: 'Sent to bank' },
+                    { label: 'Last Withdrawal', value: `₹${balances.lastWithdrawal.toLocaleString()}`, icon: CheckCircle2, color: 'orange', sub: 'Sent to bank' },
                 ].map((stat, i) => (
                     <BlurFade key={i} delay={0.2 + i * 0.1}>
-                        <Card className="p-6 border-none shadow-sm ring-1 ring-slate-100 hover:ring-indigo-200 transition-all bg-white group relative overflow-hidden">
+                        <Card className="p-6 border-none shadow-sm ring-1 ring-slate-100 hover:ring-orange-200 transition-all bg-white group relative overflow-hidden">
                             <div className="relative z-10">
                                 <div className={cn(
                                     "h-10 w-10 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110",
                                     stat.color === 'emerald' ? 'bg-emerald-50 text-emerald-600' :
-                                        stat.color === 'amber' ? 'bg-amber-50 text-amber-600' : 'bg-blue-50 text-primary'
+                                        stat.color === 'amber' ? 'bg-amber-50 text-amber-600' : 'bg-orange-50 text-primary'
                                 )}>
                                     <stat.icon className="h-5 w-5" />
                                 </div>
@@ -186,17 +186,17 @@ const Withdrawals = () => {
                 <Card className="border-none shadow-xl ring-1 ring-slate-100 overflow-hidden bg-white rounded-3xl">
                     <div className="p-4 sm:p-6 border-b border-slate-50 flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4">
                         <h2 className="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
-                            <History className="h-5 w-5 text-indigo-500" />
+                            <History className="h-5 w-5 text-primary" />
                             Withdrawal History
                         </h2>
                         <div className="relative w-full md:w-64 group">
-                            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-600 group-focus-within:text-indigo-500 transition-colors" />
+                            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-600 group-focus-within:text-primary transition-colors" />
                             <input
                                 type="text"
                                 placeholder="Search ID or Status..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border-none rounded-xl text-xs font-semibold outline-none focus:ring-2 focus:ring-indigo-500/10 transition-all"
+                                className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border-none rounded-xl text-xs font-semibold outline-none focus:ring-2 focus:ring-primary/10 transition-all"
                             />
                         </div>
                     </div>
@@ -241,7 +241,7 @@ const Withdrawals = () => {
                                             <button
                                                 type="button"
                                                 onClick={() => handleDownloadReceipt(item)}
-                                                className="text-[10px] font-black text-indigo-500 hover:text-indigo-600 mt-1 uppercase tracking-widest flex items-center gap-1 justify-end ml-auto"
+                                                className="text-[10px] font-black text-primary hover:text-primary-hover mt-1 uppercase tracking-widest flex items-center gap-1 justify-end ml-auto"
                                             >
                                                 Receipt <Download className="h-3 w-3" />
                                             </button>
@@ -292,22 +292,22 @@ const Withdrawals = () => {
                         <div>
                             <label className="text-xs font-black text-slate-600 uppercase tracking-widest mb-2 block ml-1">Enter Amount</label>
                             <div className="relative group">
-                                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-2xl font-black text-slate-300 group-focus-within:text-indigo-500 transition-colors">₹</span>
+                                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-2xl font-black text-slate-300 group-focus-within:text-primary transition-colors">₹</span>
                                 <input
                                     type="number"
                                     value={amount}
                                     onChange={(e) => setAmount(e.target.value)}
                                     placeholder="0.00"
-                                    className="w-full pl-12 pr-6 py-4 bg-white ring-1 ring-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 rounded-2xl text-xl font-black outline-none transition-all placeholder:text-slate-200"
+                                    className="w-full pl-12 pr-6 py-4 bg-white ring-1 ring-slate-200 focus:ring-2 focus:ring-primary/20 focus:border-primary rounded-2xl text-xl font-black outline-none transition-all placeholder:text-slate-200"
                                 />
                             </div>
                         </div>
 
-                        <div className="p-4 bg-indigo-50/50 rounded-2xl border border-indigo-100/50 space-y-3">
-                            <p className="text-[10px] font-black text-indigo-600 uppercase tracking-widest mb-1">Transfer Destination</p>
+                        <div className="p-4 bg-orange-50/50 rounded-2xl border border-orange-100/50 space-y-3">
+                            <p className="text-[10px] font-black text-primary uppercase tracking-widest mb-1">Transfer Destination</p>
                             <div className="flex items-center gap-4">
                                 <div className="h-10 w-10 bg-white rounded-xl flex items-center justify-center shadow-sm">
-                                    <Building2 className="h-5 w-5 text-indigo-400" />
+                                    <Building2 className="h-5 w-5 text-orange-400" />
                                 </div>
                                 <div className="flex-1">
                                     <p className="text-xs font-black text-slate-900 uppercase">HDFC Bank Limited</p>

@@ -115,9 +115,9 @@ export default function LicensingRequestsList() {
       case "Pending":
         return "bg-amber-50 text-amber-700 border border-amber-200";
       case "Contacted":
-        return "bg-blue-50 text-blue-700 border border-blue-200";
+        return "bg-orange-50 text-orange-700 border border-orange-200";
       case "In Progress":
-        return "bg-indigo-50 text-indigo-700 border border-indigo-200";
+        return "bg-orange-50 text-orange-700 border border-orange-200";
       case "Completed":
         return "bg-emerald-50 text-emerald-755 border border-emerald-250";
       case "Rejected":
@@ -154,8 +154,8 @@ export default function LicensingRequestsList() {
         {[
           { label: "Total Requests", val: stats.total, color: "text-slate-900 bg-white border-slate-200", icon: Info },
           { label: "Pending", val: stats.pending, color: "text-amber-600 bg-amber-50/50 border-amber-100", icon: Clock },
-          { label: "Contacted", val: stats.contacted, color: "text-blue-600 bg-blue-50/50 border-blue-100", icon: Info },
-          { label: "In Progress", val: stats.inProgress, color: "text-indigo-600 bg-indigo-50/50 border-indigo-100", icon: AlertTriangle },
+          { label: "Contacted", val: stats.contacted, color: "text-primary bg-orange-50/50 border-orange-100", icon: Info },
+          { label: "In Progress", val: stats.inProgress, color: "text-primary bg-orange-50/50 border-orange-100", icon: AlertTriangle },
           { label: "Completed", val: stats.completed, color: "text-green-600 bg-green-50/50 border-green-100", icon: CheckCircle },
           { label: "Rejected", val: stats.rejected, color: "text-rose-600 bg-rose-50/50 border-rose-100", icon: XCircle }
         ].map((item, idx) => {

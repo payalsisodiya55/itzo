@@ -58,12 +58,12 @@ const CATEGORY_METADATA = {
   },
   Electronics: {
     icon: DevicesIcon,
-    theme: { gradient: "linear-gradient(to bottom, #7209B7, #B5179E)", shadow: "shadow-purple-500/20", accent: "text-purple-900" },
+    theme: { gradient: "linear-gradient(to bottom, #7209B7, #B5179E)", shadow: "shadow-purple-500/20", accent: "text-orange-900" },
     banner: { title: "TECH FEST", subtitle: "GADGETS", floatingElements: "tech" },
   },
   Kids: {
     icon: ChildCareIcon,
-    theme: { gradient: "linear-gradient(to bottom, #4CC9F0, #A0E7E5)", shadow: "shadow-blue-500/20", accent: "text-blue-900" },
+    theme: { gradient: "linear-gradient(to bottom, #4CC9F0, #A0E7E5)", shadow: "shadow-blue-500/20", accent: "text-orange-900" },
     banner: { title: "LITTLE ONE", subtitle: "CARE", floatingElements: "bubbles" },
   },
   "Pet Supplies": {
@@ -73,7 +73,7 @@ const CATEGORY_METADATA = {
   },
   Sports: {
     icon: SportsSoccerIcon,
-    theme: { gradient: "linear-gradient(to bottom, #4361EE, #4895EF)", shadow: "shadow-indigo-500/20", accent: "text-indigo-900" },
+    theme: { gradient: "linear-gradient(to bottom, #4361EE, #4895EF)", shadow: "shadow-indigo-500/20", accent: "text-orange-900" },
     banner: { title: "SPORTS", subtitle: "GEAR", floatingElements: "confetti" },
   },
 };

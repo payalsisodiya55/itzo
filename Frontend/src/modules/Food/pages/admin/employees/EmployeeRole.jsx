@@ -466,7 +466,7 @@ export default function EmployeeRole() {
                         <td className="px-6 py-4 whitespace-nowrap text-center">
                           <div className="flex items-center justify-center gap-2">
                             <button
-                              className="p-1.5 rounded text-primary hover:bg-blue-50 transition-colors"
+                              className="p-1.5 rounded text-primary hover:bg-orange-50 transition-colors"
                               title="Edit"
                             >
                               <Edit className="w-4 h-4" />

@@ -483,7 +483,7 @@ export default function UserOrderDetails() {
             {pickupSources.map((source, index) => {
               const isQuick = source.pickupType === "quick"
               const badgeClasses = isQuick
-                ? "bg-sky-50 text-sky-700 border-sky-200"
+                ? "bg-orange-50 text-orange-700 border-orange-200"
                 : "bg-red-50 text-red-700 border-red-200"
 
               return (

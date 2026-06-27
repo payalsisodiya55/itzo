@@ -1473,7 +1473,7 @@ export default function ItemDetailsPage() {
             <button
               onClick={() => setIsRecommended(!isRecommended)}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${isRecommended
-                ? "bg-blue-100 text-blue-700"
+                ? "bg-orange-100 text-orange-700"
                 : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 }`}
             >

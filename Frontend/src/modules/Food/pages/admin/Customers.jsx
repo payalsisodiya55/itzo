@@ -673,7 +673,7 @@ export default function Customers() {
                       <td className="px-6 py-4 whitespace-nowrap text-center">
                         <button
                           onClick={() => handleViewDetails(customer._id || customer.id || customer.sl)}
-                          className="p-1.5 rounded text-primary hover:bg-blue-50 transition-colors"
+                          className="p-1.5 rounded text-primary hover:bg-orange-50 transition-colors"
                         >
                           <Eye className="w-4 h-4" />
                         </button>
@@ -748,7 +748,7 @@ export default function Customers() {
 
               {/* Statistics Section */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div className="bg-blue-50 rounded-lg p-3">
+                <div className="bg-orange-50 rounded-lg p-3">
                   <div className="flex items-center gap-2 mb-1">
                     <Package className="w-4 h-4 text-primary" />
                     <span className="text-xs font-semibold text-slate-700">Total Orders</span>
@@ -764,12 +764,12 @@ export default function Customers() {
                     {"\u20B9"}{(userDetails.totalOrderAmount || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </p>
                 </div>
-                <div className="bg-purple-50 rounded-lg p-3">
+                <div className="bg-orange-50 rounded-lg p-3">
                   <div className="flex items-center gap-2 mb-1">
-                    <CalendarIcon className="w-4 h-4 text-purple-600" />
+                    <CalendarIcon className="w-4 h-4 text-primary" />
                     <span className="text-xs font-semibold text-slate-700">Member Since</span>
                   </div>
-                  <p className="text-base font-bold text-purple-600">{formatDateTime(userDetails.joiningDate)}</p>
+                  <p className="text-base font-bold text-primary">{formatDateTime(userDetails.joiningDate)}</p>
                 </div>
               </div>
 
@@ -786,7 +786,7 @@ export default function Customers() {
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-sm font-semibold text-slate-700">{address.label || 'Address'}</span>
                           {address.isDefault && (
-                            <span className="px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">
+                            <span className="px-2 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-700">
                               Default
                             </span>
                           )}

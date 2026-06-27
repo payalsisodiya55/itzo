@@ -85,7 +85,7 @@ const IconSelector = ({ selectedIcon, onSelect, onClose }) => {
               placeholder="Search icons..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+              className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
             />
           </div>
         </div>
@@ -99,9 +99,9 @@ const IconSelector = ({ selectedIcon, onSelect, onClose }) => {
                 onClick={() => onSelect(icon.id)}
                 className={`
                   flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all
-                  hover:border-indigo-500 hover:bg-indigo-50 group
+                  hover:border-primary-hover hover:bg-orange-50 group
                   ${selectedIcon === icon.id 
-                    ? 'border-indigo-600 bg-indigo-50' 
+                    ? 'border-primary bg-orange-50' 
                     : 'border-gray-200 bg-white'
                   }
                 `}
@@ -109,8 +109,8 @@ const IconSelector = ({ selectedIcon, onSelect, onClose }) => {
                 <div
                   className={`w-8 h-8 flex items-center justify-center transition-colors ${
                     selectedIcon === icon.id
-                      ? 'text-indigo-600'
-                      : 'text-gray-600 group-hover:text-indigo-600'
+                      ? 'text-primary'
+                      : 'text-gray-600 group-hover:text-primary'
                   }`}
                 >
                   {iconComponents[icon.id] ? (
@@ -143,7 +143,7 @@ const IconSelector = ({ selectedIcon, onSelect, onClose }) => {
         <div className="p-4 border-t border-gray-100 bg-gray-50 flex justify-end shrink-0">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium transition-colors">
+            className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover font-medium transition-colors">
             Done
           </button>
         </div>

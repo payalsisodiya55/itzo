@@ -40,7 +40,7 @@ export default function ContactUs() {
           </div>
           <div className="w-full h-px bg-slate-200"></div>
           <div>
-            <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl mx-auto mb-4">🤝</div>
+            <div className="w-12 h-12 bg-orange-100 text-primary rounded-full flex items-center justify-center text-xl mx-auto mb-4">🤝</div>
             <h4 className="text-2xl font-bold text-slate-900 mb-3">Partnerships</h4>
             <p className="text-slate-600 text-lg mb-2">Interested in partnering with us? Let's talk.</p>
             <p className="text-rose-500 font-bold text-lg">{partnershipEmail}</p>

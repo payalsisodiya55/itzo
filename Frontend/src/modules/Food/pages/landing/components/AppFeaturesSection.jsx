@@ -73,7 +73,7 @@ const AppFeaturesSection = React.memo(function AppFeaturesSection() {
             {/* Custom Offers Icon */}
             <FeatureCard 
               icon={
-                <div className="relative flex items-center justify-center w-12 h-12 bg-blue-500 text-white rounded-lg rotate-12 shadow-md border-2 border-blue-600">
+                <div className="relative flex items-center justify-center w-12 h-12 bg-primary text-white rounded-lg rotate-12 shadow-md border-2 border-primary">
                   <span className="font-bold text-xl -rotate-12">%</span>
                 </div>
               } 

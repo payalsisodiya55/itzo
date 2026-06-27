@@ -113,9 +113,9 @@ export default function LicensingRequestDetails() {
       case "Pending":
         return "bg-amber-100 text-amber-800 border-amber-250";
       case "Contacted":
-        return "bg-blue-100 text-blue-800 border-blue-250";
+        return "bg-orange-100 text-orange-800 border-orange-250";
       case "In Progress":
-        return "bg-indigo-100 text-indigo-800 border-indigo-250";
+        return "bg-orange-100 text-orange-800 border-orange-250";
       case "Completed":
         return "bg-emerald-100 text-emerald-800 border-emerald-250";
       case "Rejected":

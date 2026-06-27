@@ -123,7 +123,7 @@ const BannerHeaderFormBlock = ({
             placeholder="e.g., A SIX IS HIT! 🏏"
             value={draft.title}
             onChange={(e) => setDraft(prev => ({ ...prev, title: e.target.value }))}
-            className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-blue-100"
+            className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
           />
         </div>
         <div>
@@ -133,7 +133,7 @@ const BannerHeaderFormBlock = ({
             placeholder="e.g., 66% OFF FOR 10 MIN!"
             value={draft.subtitle}
             onChange={(e) => setDraft(prev => ({ ...prev, subtitle: e.target.value }))}
-            className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-blue-100"
+            className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
           />
         </div>
       </div>
@@ -1730,7 +1730,7 @@ export default function LandingPageManagement() {
                               value={bannerZoneDrafts[banner._id] ?? ''}
                               onChange={(e) => handleBannerZoneDraftChange(banner._id, e.target.value)}
                               disabled={zonesLoading || bannerZoneSavingId === banner._id}
-                              className="h-10 flex-1 rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-blue-100 disabled:cursor-not-allowed disabled:bg-slate-50"
+                              className="h-10 flex-1 rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100 disabled:cursor-not-allowed disabled:bg-slate-50"
                             >
                               <option value="">All zones (show everywhere)</option>
                               {zones.map((zone) => {
@@ -2483,7 +2483,7 @@ export default function LandingPageManagement() {
                                 />
                               ) : null}
                               <div
-                                className={`w-16 h-16 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-lg ${profileImageUrl ? 'hidden' : 'flex'
+                                className={`w-16 h-16 rounded-xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white font-bold text-lg ${profileImageUrl ? 'hidden' : 'flex'
                                   }`}
                               >
                                 {restaurant.name?.charAt(0)?.toUpperCase() || 'R'}

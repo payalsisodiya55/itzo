@@ -1307,7 +1307,7 @@ export default function Profile() {
                 setAppearanceOpen(false);
               }}
               className={`w-full p-3 rounded-xl border-2 transition-all flex items-center gap-3 ${appearance === "light"
-                  ? "border-primary bg-blue-50 dark:border-primary dark:bg-blue-900/20"
+                  ? "border-primary bg-orange-50 dark:border-primary dark:bg-orange-900/20"
                   : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600"
                 }`}>
               <div
@@ -1335,7 +1335,7 @@ export default function Profile() {
                 setAppearanceOpen(false);
               }}
               className={`w-full p-3 rounded-xl border-2 transition-all flex items-center gap-3 ${appearance === "dark"
-                  ? "border-primary dark:border-primary bg-blue-50 dark:bg-blue-900/20"
+                  ? "border-primary dark:border-primary bg-orange-50 dark:bg-orange-900/20"
                   : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600"
                 }`}>
               <div

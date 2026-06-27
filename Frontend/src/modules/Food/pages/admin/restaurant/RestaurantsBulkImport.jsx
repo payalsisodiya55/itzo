@@ -94,7 +94,7 @@ export default function RestaurantsBulkImport() {
               </div>
             </div>
           </div>
-          <div className="p-6 bg-blue-50 rounded-lg">
+          <div className="p-6 bg-orange-50 rounded-lg">
             <div className="flex items-center gap-2">
               <FileSpreadsheet className="w-12 h-12 text-primary" />
               <ArrowRight className="w-8 h-8 text-primary" />

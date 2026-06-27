@@ -112,10 +112,10 @@ const CategoryHierarchy = () => {
 
   const ListItem = ({ item, isSelected, onClick, hasChildren, type }) => {
     const activeClass = isSelected
-      ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-sm z-10"
+      ? "bg-orange-50 border-orange-200 text-orange-700 shadow-sm z-10"
       : "hover:bg-gray-50 border-transparent text-gray-600";
 
-    const iconColor = isSelected ? "text-indigo-500" : "text-gray-400";
+    const iconColor = isSelected ? "text-primary" : "text-gray-400";
 
     return (
       <motion.div
@@ -157,7 +157,7 @@ const CategoryHierarchy = () => {
 
         {hasChildren && (
           <ChevronRight
-            className={`w-4 h-4 ${isSelected ? "text-indigo-400" : "text-gray-300"}`}
+            className={`w-4 h-4 ${isSelected ? "text-orange-400" : "text-gray-300"}`}
           />
         )}
       </motion.div>
@@ -170,7 +170,7 @@ const CategoryHierarchy = () => {
       <div className="flex items-center justify-between bg-white p-4 rounded-2xl border border-gray-100 shadow-sm shrink-0">
         <div>
           <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-            <Layers className="w-6 h-6 text-indigo-600" />
+            <Layers className="w-6 h-6 text-primary" />
             Category Hierarchy Explorer
           </h1>
           <p className="text-gray-500 text-sm mt-1">
@@ -181,14 +181,14 @@ const CategoryHierarchy = () => {
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-4 text-sm text-gray-500 bg-gray-50 px-4 py-2 rounded-xl">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
+              <span className="w-2 h-2 rounded-full bg-primary"></span>
               <span>
                 Headers: <b>{stats.headers}</b>
               </span>
             </div>
             <div className="w-px h-4 bg-gray-300"></div>
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-purple-500"></span>
+              <span className="w-2 h-2 rounded-full bg-primary"></span>
               <span>
                 Level 2: <b>{stats.l2}</b>
               </span>
@@ -223,7 +223,7 @@ const CategoryHierarchy = () => {
                 placeholder="Filter headers..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 bg-gray-50 border-none rounded-lg text-sm focus:ring-2 focus:ring-indigo-100 transition-all"
+                className="w-full pl-9 pr-4 py-2 bg-gray-50 border-none rounded-lg text-sm focus:ring-2 focus:ring-orange-100 transition-all"
               />
             </div>
           </div>

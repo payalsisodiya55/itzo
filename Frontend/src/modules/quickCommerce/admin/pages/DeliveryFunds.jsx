@@ -115,7 +115,7 @@ const DeliveryFunds = () => {
         return [
             { label: 'Total Settled', value: `₹${settled.toLocaleString()}`, icon: Banknote, color: 'emerald' },
             { label: 'Pending Payouts', value: `₹${pending.toLocaleString()}`, icon: Clock, color: 'amber' },
-            { label: 'System Float', value: `₹${float.toLocaleString()}`, icon: Wallet, color: 'indigo' },
+            { label: 'System Float', value: `₹${float.toLocaleString()}`, icon: Wallet, color: 'orange' },
             { label: 'Riders Involved', value: [...new Set(transfers.map(tx => tx.riderId))].length, icon: Users, color: 'rose' },
         ];
     }, [transfers]);
@@ -154,7 +154,7 @@ const DeliveryFunds = () => {
                                 "p-3.5 rounded-2xl transition-all duration-500 group-hover:rotate-12 shadow-lg",
                                 stat.color === 'emerald' ? "bg-emerald-500/10 text-emerald-600 shadow-emerald-100" :
                                     stat.color === 'amber' ? "bg-amber-500/10 text-amber-600 shadow-amber-100" :
-                                        stat.color === 'indigo' ? "bg-indigo-500/10 text-indigo-600 shadow-indigo-100" :
+                                        stat.color === 'orange' ? "bg-primary/10 text-primary shadow-indigo-100" :
                                             "bg-rose-500/10 text-rose-600 shadow-rose-100"
                             )}>
                                 <stat.icon className="h-6 w-6" strokeWidth={2.5} />

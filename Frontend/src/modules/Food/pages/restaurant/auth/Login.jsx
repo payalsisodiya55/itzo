@@ -191,7 +191,7 @@ export default function RestaurantLogin() {
   return (
     <div className="min-h-[100dvh] bg-[#111] lg:bg-slate-900 flex flex-col lg:flex-row overflow-hidden font-sans">
       {/* Left Section: Onboard Growth Showcase (Desktop only) */}
-      <div className="hidden lg:flex lg:w-1/2 flex-col justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 px-12 xl:px-20 py-16 text-white overflow-y-auto min-h-screen shrink-0 relative" style={{ WebkitOverflowScrolling: "touch" }}>
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-orange-950 px-12 xl:px-20 py-16 text-white overflow-y-auto min-h-screen shrink-0 relative" style={{ WebkitOverflowScrolling: "touch" }}>
         <div className="max-w-[540px] mx-auto space-y-8 animate-in fade-in slide-in-from-left-6 duration-500">
           <div>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#FE5502]/10 text-[#FE5502] border border-[#FE5502]/20 uppercase tracking-widest">
@@ -221,9 +221,9 @@ export default function RestaurantLogin() {
                 <span className="text-sm font-bold text-emerald-400">{rData.savingsExample?.itzoCommission || "₹0 Commission"}</span>
               </div>
             </div>
-            <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-2xl p-4 flex items-center justify-between">
-              <span className="text-xs font-bold text-indigo-200 uppercase tracking-wide">{rData.savingsExample?.keepsRevenueText || "Restaurant Keeps Full Revenue"}</span>
-              <span className="text-xs font-black text-indigo-400 bg-white/10 px-2.5 py-1 rounded-full uppercase">0% Comm</span>
+            <div className="bg-primary/10 border border-primary/20 rounded-2xl p-4 flex items-center justify-between">
+              <span className="text-xs font-bold text-orange-200 uppercase tracking-wide">{rData.savingsExample?.keepsRevenueText || "Restaurant Keeps Full Revenue"}</span>
+              <span className="text-xs font-black text-orange-400 bg-white/10 px-2.5 py-1 rounded-full uppercase">0% Comm</span>
             </div>
           </div>
 
@@ -254,10 +254,10 @@ export default function RestaurantLogin() {
 
           {/* GST/FSSAI Consulting notice */}
           {rData.consultingServices && rData.consultingServices.length > 0 && (
-            <div className="bg-indigo-950/40 border border-indigo-500/10 rounded-2xl p-4 flex items-start gap-3">
-              <ShieldCheck className="h-6 w-6 text-indigo-400 shrink-0 mt-0.5" />
+            <div className="bg-orange-950/40 border border-primary/10 rounded-2xl p-4 flex items-start gap-3">
+              <ShieldCheck className="h-6 w-6 text-orange-400 shrink-0 mt-0.5" />
               <div>
-                <span className="text-xs text-indigo-200 font-bold block mb-1">FSSAI & GST Consulting Assistance</span>
+                <span className="text-xs text-orange-200 font-bold block mb-1">FSSAI & GST Consulting Assistance</span>
                 <p className="text-xs text-slate-300 font-medium leading-relaxed">
                   Need support registering your business? We assist with {rData.consultingServices.join(", ")}.
                 </p>

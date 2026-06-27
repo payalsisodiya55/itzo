@@ -280,7 +280,7 @@ export default function SellerCommission() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-center">
                           <div className="flex items-center justify-center gap-2">
-                            <button onClick={() => handleEdit(commission)} className="p-1.5 rounded text-primary hover:bg-blue-50 transition-colors"><Edit className="w-4 h-4" /></button>
+                            <button onClick={() => handleEdit(commission)} className="p-1.5 rounded text-primary hover:bg-orange-50 transition-colors"><Edit className="w-4 h-4" /></button>
                             <button onClick={() => handleDelete(commission)} className="p-1.5 rounded text-red-600 hover:bg-red-50 transition-colors"><Trash2 className="w-4 h-4" /></button>
                           </div>
                         </td>

@@ -369,7 +369,7 @@ export const PocketV2 = () => {
           {/* 4. ROW OF TWO CARDS */}
           <div className="flex gap-4">
              <div onClick={() => navigate('/food/delivery/pocket/payout')} className="flex-1 bg-white rounded-3xl p-5 shadow-sm border border-gray-100 flex flex-col justify-between cursor-pointer">
-                <div className="w-10 h-10 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-500 mb-6">
+                <div className="w-10 h-10 bg-orange-50 rounded-2xl flex items-center justify-center text-primary mb-6">
                    <IndianRupee className="w-5 h-5" />
                 </div>
                 <div>
@@ -444,7 +444,7 @@ export const PocketV2 = () => {
                              className="w-full p-4 border border-gray-200 rounded-2xl hover:border-black active:bg-gray-50 transition-all flex items-center justify-between"
                           >
                              <div className="flex items-center gap-3">
-                               <div className="w-10 h-10 bg-blue-50 text-primary rounded-full flex items-center justify-center">
+                               <div className="w-10 h-10 bg-orange-50 text-primary rounded-full flex items-center justify-center">
                                  <ShieldCheck className="w-5 h-5" />
                                </div>
                                <div className="text-left">
@@ -513,7 +513,7 @@ export const PocketV2 = () => {
                              className="w-full p-4 border border-gray-200 rounded-2xl hover:border-black active:bg-gray-50 transition-all flex items-center justify-between"
                           >
                              <div className="flex items-center gap-3">
-                               <div className="w-10 h-10 bg-purple-50 text-purple-600 rounded-full flex items-center justify-center">
+                               <div className="w-10 h-10 bg-orange-50 text-primary rounded-full flex items-center justify-center">
                                  <QrCode className="w-5 h-5" />
                                </div>
                                <div className="text-left">
@@ -529,7 +529,7 @@ export const PocketV2 = () => {
                              className="w-full p-4 border border-gray-200 rounded-2xl hover:border-black active:bg-gray-50 transition-all flex items-center justify-between"
                           >
                              <div className="flex items-center gap-3">
-                               <div className="w-10 h-10 bg-blue-50 text-primary rounded-full flex items-center justify-center">
+                               <div className="w-10 h-10 bg-orange-50 text-primary rounded-full flex items-center justify-center">
                                  <Smartphone className="w-5 h-5" />
                                </div>
                                <div className="text-left">
@@ -588,7 +588,7 @@ export const PocketV2 = () => {
                                     <p className="text-[9px] font-bold text-gray-400 uppercase">UPI ID</p>
                                     <p className="text-sm font-semibold text-black">{adminBankDetails.upiId}</p>
                                   </div>
-                                  <button onClick={() => handleCopy(adminBankDetails.upiId)} className="text-primary p-1.5 bg-blue-50 rounded-md active:bg-blue-100"><Copy className="w-3.5 h-3.5" /></button>
+                                  <button onClick={() => handleCopy(adminBankDetails.upiId)} className="text-primary p-1.5 bg-orange-50 rounded-md active:bg-orange-100"><Copy className="w-3.5 h-3.5" /></button>
                                 </div>
                              </div>
                            )}
@@ -601,7 +601,7 @@ export const PocketV2 = () => {
                                      <p className="text-[9px] font-bold text-gray-400 uppercase">Account Number</p>
                                      <p className="text-sm font-semibold text-black">{adminBankDetails.accountNumber}</p>
                                    </div>
-                                   <button onClick={() => handleCopy(adminBankDetails.accountNumber)} className="text-primary p-1.5 bg-blue-50 rounded-md active:bg-blue-100"><Copy className="w-3.5 h-3.5" /></button>
+                                   <button onClick={() => handleCopy(adminBankDetails.accountNumber)} className="text-primary p-1.5 bg-orange-50 rounded-md active:bg-orange-100"><Copy className="w-3.5 h-3.5" /></button>
                                  </div>
                                )}
 
@@ -611,7 +611,7 @@ export const PocketV2 = () => {
                                      <p className="text-[9px] font-bold text-gray-400 uppercase">IFSC Code</p>
                                      <p className="text-sm font-semibold text-black">{adminBankDetails.ifscCode}</p>
                                    </div>
-                                   <button onClick={() => handleCopy(adminBankDetails.ifscCode)} className="text-primary p-1.5 bg-blue-50 rounded-md active:bg-blue-100"><Copy className="w-3.5 h-3.5" /></button>
+                                   <button onClick={() => handleCopy(adminBankDetails.ifscCode)} className="text-primary p-1.5 bg-orange-50 rounded-md active:bg-orange-100"><Copy className="w-3.5 h-3.5" /></button>
                                  </div>
                                )}
                                

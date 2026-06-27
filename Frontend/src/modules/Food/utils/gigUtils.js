@@ -171,7 +171,7 @@ export const isSlotInPast = (slot) => {
 export const getGigStatusColor = (status) => {
   switch (status) {
     case 'booked':
-      return 'bg-blue-100 text-blue-800'
+      return 'bg-orange-100 text-orange-800'
     case 'active':
       return 'bg-green-100 text-green-800'
     case 'completed':

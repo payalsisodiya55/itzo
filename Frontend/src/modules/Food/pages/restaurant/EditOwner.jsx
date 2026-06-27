@@ -348,7 +348,7 @@ export default function EditOwner() {
             <button
               onClick={handlePhotoClick}
               disabled={loading || saving}
-              className="text-primary text-sm font-normal hover:text-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="text-primary text-sm font-normal hover:text-primary-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Edit photo
             </button>

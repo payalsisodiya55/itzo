@@ -297,8 +297,8 @@ export default function AdminHome() {
               title="Platform fee"
               value={formatCurrency(platformFeeTotal)}
               helper={`Platform service fees: ${periodLabel}`}
-              icon={<CreditCard className="h-5 w-5 text-purple-600" />}
-              accent="bg-purple-200/40"
+              icon={<CreditCard className="h-5 w-5 text-primary" />}
+              accent="bg-orange-200/40"
               path="/ecs/food/fee-settings"
             />
             <MetricCard
@@ -306,7 +306,7 @@ export default function AdminHome() {
               value={formatCurrency(deliveryFeeTotal)}
               helper={`Total delivery fees: ${periodLabel}`}
               icon={<Truck className="h-5 w-5 text-primary" />}
-              accent="bg-blue-200/40"
+              accent="bg-orange-200/40"
               path="/ecs/food/transaction-report"
             />
             <MetricCard
@@ -330,7 +330,7 @@ export default function AdminHome() {
               value={totalRestaurants.toLocaleString("en-IN")}
               helper="Approved restaurants"
               icon={<Store className="h-5 w-5 text-primary" />}
-              accent="bg-blue-200/40"
+              accent="bg-orange-200/40"
               path="/ecs/food/restaurants"
             />
             <MetricCard
@@ -345,8 +345,8 @@ export default function AdminHome() {
               title="Total delivery boy"
               value={totalDeliveryBoys.toLocaleString("en-IN")}
               helper="Approved delivery partners"
-              icon={<Truck className="h-5 w-5 text-indigo-600" />}
-              accent="bg-indigo-200/40"
+              icon={<Truck className="h-5 w-5 text-primary" />}
+              accent="bg-orange-200/40"
               path="/ecs/food/delivery-partners"
             />
             <MetricCard
@@ -361,8 +361,8 @@ export default function AdminHome() {
               title="Total foods"
               value={totalFoods.toLocaleString("en-IN")}
               helper="Approved menu items"
-              icon={<Package className="h-5 w-5 text-purple-600" />}
-              accent="bg-purple-200/40"
+              icon={<Package className="h-5 w-5 text-primary" />}
+              accent="bg-orange-200/40"
               path="/ecs/food/foods"
             />
             <MetricCard
@@ -377,8 +377,8 @@ export default function AdminHome() {
               title="Total customers"
               value={totalCustomers.toLocaleString("en-IN")}
               helper="Registered users"
-              icon={<UserCircle className="h-5 w-5 text-cyan-600" />}
-              accent="bg-cyan-200/40"
+              icon={<UserCircle className="h-5 w-5 text-primary" />}
+              accent="bg-orange-200/40"
               path="/ecs/food/customers"
             />
             <MetricCard
@@ -416,15 +416,15 @@ export default function AdminHome() {
                 value={`${subOverview?.activeSubscribers?.total || 0} (${subOverview?.activeSubscribers?.restaurants || 0} R / ${subOverview?.activeSubscribers?.deliveryPartners || 0} D)`}
                 helper="Active subscription plans"
                 icon={<Activity className="h-5 w-5 text-primary" />}
-                accent="bg-blue-100/40"
+                accent="bg-orange-100/40"
                 path="/ecs/food/subscriptions?status=active"
               />
               <MetricCard
                 title="Daily pass count"
                 value={(subOverview?.oneDayPassCount || 0).toLocaleString("en-IN")}
                 helper="One day passes activated"
-                icon={<Truck className="h-5 w-5 text-purple-600" />}
-                accent="bg-purple-100/40"
+                icon={<Truck className="h-5 w-5 text-primary" />}
+                accent="bg-orange-100/40"
                 path="/ecs/food/subscriptions?type=DAILY_DEDUCTION"
               />
               <MetricCard
@@ -439,8 +439,8 @@ export default function AdminHome() {
                 title="Recurring plans"
                 value={formatCurrency(subOverview?.recurringPlanRevenue || 0)}
                 helper="Weekly & Monthly direct plans"
-                icon={<Package className="h-5 w-5 text-indigo-600" />}
-                accent="bg-indigo-100/40"
+                icon={<Package className="h-5 w-5 text-primary" />}
+                accent="bg-orange-100/40"
                 path="/ecs/food/subscriptions?type=WEEKLY_SUBSCRIPTION"
               />
               <MetricCard
@@ -616,7 +616,7 @@ export default function AdminHome() {
                         case "restaurant":
                           return <Store className="h-4 w-4 text-primary" />
                         case "delivery":
-                          return <Truck className="h-4 w-4 text-purple-600" />
+                          return <Truck className="h-4 w-4 text-primary" />
                         case "customer":
                           return <UserCircle className="h-4 w-4 text-pink-600" />
                         default:
@@ -633,9 +633,9 @@ export default function AdminHome() {
                         case "order_cancelled":
                           return "bg-red-50"
                         case "restaurant":
-                          return "bg-blue-50"
+                          return "bg-orange-50"
                         case "delivery":
-                          return "bg-purple-50"
+                          return "bg-orange-50"
                         case "customer":
                           return "bg-pink-50"
                         default:

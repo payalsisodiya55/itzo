@@ -132,18 +132,18 @@ const AdminWallet = () => {
             value: `₹${(walletData.stats?.totalPlatformEarning || 0).toLocaleString()}`,
             description: 'Total money collected',
             icon: TrendingUp,
-            color: 'blue',
-            bg: 'bg-blue-50',
-            iconColor: 'text-blue-500'
+            color: 'orange',
+            bg: 'bg-orange-50',
+            iconColor: 'text-primary'
         },
         {
             label: 'Total ECS Earning',
             value: `₹${(walletData.stats?.totalAdminEarning || 0).toLocaleString()}`,
             description: 'Net profit for platform',
             icon: DollarSign,
-            color: 'purple',
-            bg: 'bg-purple-50',
-            iconColor: 'text-purple-500'
+            color: 'orange',
+            bg: 'bg-orange-50',
+            iconColor: 'text-primary'
         },
         {
             label: 'Available Balance',
@@ -168,18 +168,18 @@ const AdminWallet = () => {
             value: `₹${(walletData.stats?.sellerPendingPayouts || 0).toLocaleString()}`,
             description: 'Owed to sellers',
             icon: CreditCard,
-            color: 'blue',
-            bg: 'bg-blue-50',
-            iconColor: 'text-blue-500'
+            color: 'orange',
+            bg: 'bg-orange-50',
+            iconColor: 'text-primary'
         },
         {
             label: 'Delivery Pending Payouts',
             value: `₹${(walletData.stats?.deliveryPendingPayouts || 0).toLocaleString()}`,
             description: 'Owed to delivery partners',
             icon: CreditCard,
-            color: 'purple',
-            bg: 'bg-purple-50',
-            iconColor: 'text-purple-500'
+            color: 'orange',
+            bg: 'bg-orange-50',
+            iconColor: 'text-primary'
         }
     ];
 
@@ -321,7 +321,7 @@ const AdminWallet = () => {
                 <div className="lg:col-span-2 space-y-6">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
-                            <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+                            <div className="p-2 bg-orange-50 text-primary rounded-lg">
                                 <History className="h-5 w-5" />
                             </div>
                             <h2 className="ds-h2">Recent Transactions</h2>
@@ -378,8 +378,8 @@ const AdminWallet = () => {
                                                 <tr key={req._id} className="group hover:bg-slate-50/50 transition-all">
                                                     <td className="px-6 py-5 pl-8">
                                                         <div className="flex items-center gap-3">
-                                                            <div className="h-10 w-10 rounded-xl bg-indigo-50 flex items-center justify-center">
-                                                                <Building2 className="h-5 w-5 text-indigo-500" />
+                                                            <div className="h-10 w-10 rounded-xl bg-orange-50 flex items-center justify-center">
+                                                                <Building2 className="h-5 w-5 text-primary" />
                                                             </div>
                                                             <div>
                                                                 <p className="text-sm font-bold text-slate-900">{req.beneficiary?.shopName || req.beneficiary?.name || req.beneficiaryId}</p>
@@ -532,14 +532,14 @@ const AdminWallet = () => {
                                 <div className="space-y-3">
                                     <div className="flex justify-between items-center bg-slate-800/50 p-3 rounded-2xl border border-white/5">
                                         <div className="flex items-center gap-2">
-                                            <div className="h-2 w-2 rounded-full bg-blue-400" />
+                                            <div className="h-2 w-2 rounded-full bg-orange-400" />
                                             <span className="text-xs font-bold text-slate-300">Sellers</span>
                                         </div>
                                         <span className="text-xs font-black">₹{(walletData.stats?.sellerPendingPayouts || 0).toLocaleString()}</span>
                                     </div>
                                     <div className="flex justify-between items-center bg-slate-800/50 p-3 rounded-2xl border border-white/5">
                                         <div className="flex items-center gap-2">
-                                            <div className="h-2 w-2 rounded-full bg-purple-400" />
+                                            <div className="h-2 w-2 rounded-full bg-orange-400" />
                                             <span className="text-xs font-bold text-slate-300">Riders</span>
                                         </div>
                                         <span className="text-xs font-black">₹{(walletData.stats?.deliveryPendingPayouts || 0).toLocaleString()}</span>
@@ -563,7 +563,7 @@ const AdminWallet = () => {
                     {/* Quick Links */}
                     <div className="space-y-4">
                         <div className="flex items-center gap-3">
-                            <div className="p-2 bg-blue-50 text-primary rounded-lg">
+                            <div className="p-2 bg-orange-50 text-primary rounded-lg">
                                 <BarChart3 className="h-5 w-5" />
                             </div>
                             <h2 className="text-xl font-black text-slate-900">Analytics</h2>

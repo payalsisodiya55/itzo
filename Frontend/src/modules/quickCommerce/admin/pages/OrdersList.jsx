@@ -246,7 +246,7 @@ const OrdersList = () => {
 
         return [
             { label: 'Total Earnings', value: `₹${totalEarnings.toLocaleString('en-IN')}`, trend: '+12.5%', icon: IndianRupee, color: 'emerald' },
-            { label: 'Active Orders', value: activeOrders, trend: '+5', icon: ShoppingBag, color: 'blue' },
+            { label: 'Active Orders', value: activeOrders, trend: '+5', icon: ShoppingBag, color: 'orange' },
             { label: 'Average Prep Time', value: '18m', trend: '-2m', icon: Clock, color: 'amber' },
             { label: 'Delivery Rate', value: '98.2%', trend: '+0.4%', icon: CheckCircle2, color: 'fuchsia' },
         ];
@@ -278,10 +278,10 @@ const OrdersList = () => {
     const getStatusStyles = (status) => {
         switch (status.toLowerCase()) {
             case 'pending': return 'bg-amber-100 text-amber-600 border-amber-200';
-            case 'confirmed': return 'bg-blue-100 text-primary border-blue-200';
-            case 'packed': return 'bg-indigo-100 text-indigo-600 border-indigo-200';
-            case 'ready_for_pickup': return 'bg-blue-100 text-primary border-blue-200';
-            case 'out_for_delivery': return 'bg-purple-100 text-purple-600 border-purple-200';
+            case 'confirmed': return 'bg-orange-100 text-primary border-orange-200';
+            case 'packed': return 'bg-orange-100 text-primary border-orange-200';
+            case 'ready_for_pickup': return 'bg-orange-100 text-primary border-orange-200';
+            case 'out_for_delivery': return 'bg-orange-100 text-primary border-orange-200';
             case 'delivered': return 'bg-emerald-100 text-emerald-600 border-emerald-200';
             case 'cancelled': return 'bg-rose-100 text-rose-600 border-rose-200';
             case 'returned': return 'bg-slate-100 text-slate-600 border-slate-200';
@@ -355,7 +355,7 @@ const OrdersList = () => {
                         onClick={handleExport}
                         className="flex items-center gap-2 px-5 py-3 bg-white ring-1 ring-slate-200 text-slate-700 rounded-2xl text-xs font-bold hover:bg-slate-50 transition-all shadow-sm"
                     >
-                        <Download className="h-4 w-4 text-sky-500" />
+                        <Download className="h-4 w-4 text-primary" />
                         EXPORT
                     </button>
                     <div className="h-10 w-px bg-slate-200 mx-1 hidden lg:block" />
@@ -511,7 +511,7 @@ const OrdersList = () => {
                                                         className={cn(
                                                             "text-[9px] font-bold py-0.5 uppercase",
                                                             order.orderType === 'mixed'
-                                                                ? "bg-blue-50 text-blue-700 border-blue-200"
+                                                                ? "bg-orange-50 text-orange-700 border-orange-200"
                                                                 : "border-slate-200 text-slate-400"
                                                         )}
                                                     >

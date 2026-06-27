@@ -843,7 +843,7 @@ const ProductDetailSheet = () => {
                                                     className={cn(
                                                         "flex-shrink-0 px-4 py-2 font-bold rounded-xl text-sm transition-all relative overflow-hidden",
                                                         selectedVariant?.sku === v.sku
-                                                            ? "bg-white border-2 border-primary text-blue-700 shadow-sm shadow-blue-100"
+                                                            ? "bg-white border-2 border-primary text-orange-700 shadow-sm shadow-blue-100"
                                                             : "bg-gray-50 border border-gray-200 text-gray-600"
                                                     )}
                                                 >
@@ -942,7 +942,7 @@ const ProductDetailSheet = () => {
                                                 <div key={r._id} className="p-5 rounded-2xl border border-gray-100 space-y-2">
                                                     <div className="flex justify-between items-start">
                                                         <div className="flex items-center gap-2">
-                                                            <div className="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center text-[10px] font-black text-primary">
+                                                            <div className="h-8 w-8 rounded-full bg-orange-50 flex items-center justify-center text-[10px] font-black text-primary">
                                                                 {r.userId?.name?.[0] || "A"}
                                                             </div>
                                                             <div>

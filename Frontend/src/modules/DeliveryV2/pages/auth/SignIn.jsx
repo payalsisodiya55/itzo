@@ -269,7 +269,7 @@ export default function DeliverySignIn() {
     <div className="min-h-[100dvh] bg-[#111] lg:bg-slate-900 flex flex-col lg:flex-row overflow-hidden font-sans">
       
       {/* Left Section: Delivery Partner Showcase (Desktop only) */}
-      <div className="hidden lg:flex lg:w-1/2 flex-col justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 px-12 xl:px-20 py-16 text-white overflow-y-auto min-h-screen shrink-0 relative" style={{ WebkitOverflowScrolling: "touch" }}>
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-orange-950 px-12 xl:px-20 py-16 text-white overflow-y-auto min-h-screen shrink-0 relative" style={{ WebkitOverflowScrolling: "touch" }}>
         <div className="max-w-[540px] mx-auto space-y-8 animate-in fade-in slide-in-from-left-6 duration-500">
           <div>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-500 border border-amber-500/20 uppercase tracking-widest">
@@ -307,14 +307,14 @@ export default function DeliverySignIn() {
             </div>
 
             <div className="bg-white/5 rounded-3xl p-5 border border-white/10 space-y-3">
-              <div className="flex items-center gap-2 text-indigo-400 font-bold text-xs uppercase tracking-wider">
+              <div className="flex items-center gap-2 text-orange-400 font-bold text-xs uppercase tracking-wider">
                 <ShieldCheck className="h-4 w-4" />
                 Operations Support
               </div>
               <ul className="space-y-2">
                 {dData.operationalBenefits?.slice(0, 3).map((op, idx) => (
                   <li key={idx} className="text-xs text-slate-300 font-medium flex items-start gap-1.5">
-                    <span className="text-indigo-400 font-bold mr-1">•</span>
+                    <span className="text-orange-400 font-bold mr-1">•</span>
                     <span>{op}</span>
                   </li>
                 ))}
@@ -336,8 +336,8 @@ export default function DeliverySignIn() {
           </div>
 
           {/* CTA agency callout */}
-          <div className="bg-indigo-950/40 border border-indigo-500/10 rounded-3xl p-5 flex items-center justify-between">
-            <span className="text-xs font-bold text-indigo-200 uppercase tracking-wide leading-relaxed">
+          <div className="bg-orange-950/40 border border-primary/10 rounded-3xl p-5 flex items-center justify-between">
+            <span className="text-xs font-bold text-orange-200 uppercase tracking-wide leading-relaxed">
               {dData.ctaText || "Sirf ₹30 Mein Apni Delivery Agency Shuru Karein."}
             </span>
           </div>
@@ -487,7 +487,7 @@ export default function DeliverySignIn() {
                           <span className="text-[10px] text-slate-400 font-bold block mb-1">PARTNER ADVANTAGES</span>
                           <div className="flex flex-wrap gap-1">
                             {dData.benefits?.slice(0, 3).map((b, i) => (
-                              <span key={i} className="text-[9px] font-bold bg-indigo-50 border border-indigo-100 text-indigo-700 px-2 py-0.5 rounded-md">
+                              <span key={i} className="text-[9px] font-bold bg-orange-50 border border-orange-100 text-orange-700 px-2 py-0.5 rounded-md">
                                 {b}
                               </span>
                             ))}

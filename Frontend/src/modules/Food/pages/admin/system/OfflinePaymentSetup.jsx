@@ -311,7 +311,7 @@ export default function OfflinePaymentSetup() {
                           <div className="flex items-center justify-center gap-2">
                             <button
                               type="button"
-                              className="p-1.5 text-primary hover:bg-blue-50 rounded transition-colors"
+                              className="p-1.5 text-primary hover:bg-orange-50 rounded transition-colors"
                               title="Edit"
                             >
                               <Pencil className="w-3.5 h-3.5" />

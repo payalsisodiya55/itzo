@@ -434,7 +434,7 @@ export default function AllOrdersPage() {
       case "READY":
         return "bg-primary text-white"
       case "OUT FOR DELIVERY":
-        return "bg-purple-600 text-white"
+        return "bg-primary text-white"
       default:
         return "bg-gray-600 text-white"
     }
@@ -537,7 +537,7 @@ export default function AllOrdersPage() {
             onClick={() => setShowFilterPopup(true)}
             className={`p-2.5 border rounded-lg transition-colors relative ${
               hasActiveFilters() 
-                ? 'bg-blue-50 border-primary hover:bg-blue-100' 
+                ? 'bg-orange-50 border-primary hover:bg-orange-100' 
                 : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
             }`}
             aria-label="Filter"
@@ -573,17 +573,17 @@ export default function AllOrdersPage() {
           <motion.div 
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-blue-50 border border-blue-200 rounded-lg p-3 flex items-center justify-between"
+            className="bg-orange-50 border border-orange-200 rounded-lg p-3 flex items-center justify-between"
           >
             <div className="flex items-center gap-2">
               <Filter className="w-4 h-4 text-primary" />
-              <span className="text-sm text-blue-900">
+              <span className="text-sm text-orange-900">
                 <span className="font-semibold">{Object.values(filters).flat().length}</span> filter{Object.values(filters).flat().length !== 1 ? 's' : ''} applied
               </span>
             </div>
             <button
               onClick={handleClearFilters}
-              className="text-xs text-primary hover:text-blue-800 font-medium hover:underline"
+              className="text-xs text-primary hover:text-orange-800 font-medium hover:underline"
             >
               Clear all
             </button>
@@ -822,7 +822,7 @@ export default function AllOrdersPage() {
                       onClick={() => handleDateRangeSelect(option)}
                       className={`w-full flex items-center justify-between rounded-xl border px-4 py-3 text-left transition-colors ${
                         isSelected
-                          ? "border-primary bg-blue-50"
+                          ? "border-primary bg-orange-50"
                           : "border-gray-200 bg-white hover:bg-gray-50"
                       }`}
                     >

@@ -4,8 +4,8 @@ import { Eye, Printer, ArrowUpDown, Loader2, Check, X, Trash2 } from "lucide-rea
 const getStatusColor = (orderStatus) => {
   const colors = {
     "Delivered": "bg-emerald-100 text-emerald-700",
-    "Pending": "bg-blue-100 text-blue-700",
-    "Scheduled": "bg-blue-100 text-blue-700",
+    "Pending": "bg-orange-100 text-orange-700",
+    "Scheduled": "bg-orange-100 text-orange-700",
     "Accepted": "bg-green-100 text-green-700",
     "Processing": "bg-orange-100 text-orange-700",
     "Food On The Way": "bg-yellow-100 text-yellow-700",
@@ -13,8 +13,8 @@ const getStatusColor = (orderStatus) => {
     "Cancelled by Restaurant": "bg-red-100 text-red-700",
     "Cancelled by User": "bg-orange-100 text-orange-700",
     "Payment Failed": "bg-red-100 text-red-700",
-    "Refunded": "bg-sky-100 text-sky-700",
-    "Dine In": "bg-indigo-100 text-indigo-700",
+    "Refunded": "bg-orange-100 text-orange-700",
+    "Dine In": "bg-orange-100 text-orange-700",
     "Offline Payments": "bg-slate-100 text-slate-700",
   }
   return colors[orderStatus] || "bg-slate-100 text-slate-700"
@@ -22,14 +22,14 @@ const getStatusColor = (orderStatus) => {
 
 const getPaymentStatusColor = (paymentStatus) => {
   if (paymentStatus === "Paid") return "text-emerald-600"
-  if (paymentStatus === "Refunded") return "text-sky-600"
+  if (paymentStatus === "Refunded") return "text-primary"
   if (paymentStatus === "Unpaid" || paymentStatus === "Failed") return "text-red-600"
   return "text-slate-600"
 }
 
 const getOrderTypeColor = (orderType) => {
   if (orderType === "Mixed") return "bg-amber-100 text-amber-700"
-  if (orderType === "Quick") return "bg-cyan-100 text-cyan-700"
+  if (orderType === "Quick") return "bg-orange-100 text-orange-700"
   return "bg-emerald-100 text-emerald-700"
 }
 
@@ -315,7 +315,7 @@ export default function OrdersTable({
                       return (
                         <span className={`text-sm font-medium ${
                           isCod ? 'text-amber-600' : 
-                          isWallet ? 'text-purple-600' : 
+                          isWallet ? 'text-primary' : 
                           'text-emerald-600'
                         }`}>
                           {paymentTypeDisplay}
@@ -402,7 +402,7 @@ export default function OrdersTable({
                       </button>
                       <button 
                         onClick={() => onPrintOrder(order)}
-                        className="p-1.5 rounded text-primary hover:bg-blue-50 transition-colors"
+                        className="p-1.5 rounded text-primary hover:bg-orange-50 transition-colors"
                         title="Print Order"
                       >
                         <Printer className="w-4 h-4" />
@@ -449,7 +449,7 @@ export default function OrdersTable({
                           {order.refundStatus === 'processed' || order.refundStatus === 'initiated' ? (
                             <span className={`px-3 py-1.5 rounded-md text-xs font-medium ${
                               order.paymentType === "Wallet" || order.payment?.method === "wallet"
-                                ? "bg-purple-100 text-purple-700"
+                                ? "bg-orange-100 text-orange-700"
                                 : "bg-emerald-100 text-emerald-700"
                             }`}>
                               {order.paymentType === "Wallet" || order.payment?.method === "wallet" 
@@ -461,7 +461,7 @@ export default function OrdersTable({
                               onClick={() => onRefund(order)}
                               className={`px-3 py-1.5 rounded-md text-white text-xs font-medium hover:opacity-90 transition-colors shadow-sm flex items-center gap-1.5 ${
                                 order.paymentType === "Wallet" || order.payment?.method === "wallet"
-                                  ? "bg-purple-600 hover:bg-purple-700"
+                                  ? "bg-primary hover:bg-primary-hover"
                                   : "bg-primary hover:bg-primary/90"
                               }`}
                               title={order.paymentType === "Wallet" || order.payment?.method === "wallet"

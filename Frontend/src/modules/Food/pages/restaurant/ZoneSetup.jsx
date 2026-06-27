@@ -655,9 +655,9 @@ export default function ZoneSetup() {
         </div>
 
         {/* Instructions */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-          <h3 className="text-sm font-semibold text-blue-900 mb-2">How to set your location:</h3>
-          <ul className="text-sm text-blue-800 space-y-1 list-disc list-inside">
+        <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
+          <h3 className="text-sm font-semibold text-orange-900 mb-2">How to set your location:</h3>
+          <ul className="text-sm text-orange-800 space-y-1 list-disc list-inside">
             <li>Search for your location using the search bar above, or</li>
             <li>Click anywhere on the map to place a pin at that location</li>
             <li>You can drag the pin to adjust the exact position</li>

@@ -96,7 +96,7 @@ const AdminProfile = () => {
     if (isLoading) {
         return (
             <div className="flex items-center justify-center min-h-[400px]">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
             </div>
         );
     }
@@ -108,8 +108,8 @@ const AdminProfile = () => {
                 <div>
                     <h1 className="ds-h1 flex items-center gap-3">
                         My Profile
-                        <div className="p-2 bg-indigo-100 rounded-xl">
-                            <User className="h-5 w-5 text-indigo-600" />
+                        <div className="p-2 bg-orange-100 rounded-xl">
+                            <User className="h-5 w-5 text-primary" />
                         </div>
                     </h1>
                     <p className="ds-description mt-1">Manage your account settings and security preferences.</p>
@@ -142,7 +142,7 @@ const AdminProfile = () => {
                                 </div>
                             </div>
                             <h2 className="mt-6 ds-h2 font-black text-slate-900">{profile.name}</h2>
-                            <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 ring-1 ring-indigo-200">
+                            <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-50 text-orange-700 ring-1 ring-orange-200">
                                 <Shield className="h-3 w-3" />
                                 <span className="text-[10px] font-black uppercase tracking-widest">{profile.role}</span>
                             </div>
@@ -153,7 +153,7 @@ const AdminProfile = () => {
                                 className={cn(
                                     "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all",
                                     activeTab === 'profile'
-                                        ? "bg-white text-indigo-600 shadow-sm ring-1 ring-slate-100"
+                                        ? "bg-white text-primary shadow-sm ring-1 ring-slate-100"
                                         : "text-slate-400 hover:text-slate-600 hover:bg-slate-100/50"
                                 )}
                             >
@@ -165,7 +165,7 @@ const AdminProfile = () => {
                                 className={cn(
                                     "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all mt-1",
                                     activeTab === 'security'
-                                        ? "bg-white text-indigo-600 shadow-sm ring-1 ring-slate-100"
+                                        ? "bg-white text-primary shadow-sm ring-1 ring-slate-100"
                                         : "text-slate-400 hover:text-slate-600 hover:bg-slate-100/50"
                                 )}
                             >
@@ -195,7 +195,7 @@ const AdminProfile = () => {
                                             type="text"
                                             value={profile.name}
                                             onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-                                            className="w-full px-5 py-4 bg-slate-50 border-none rounded-2xl text-sm font-bold text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/10 transition-all block"
+                                            className="w-full px-5 py-4 bg-slate-50 border-none rounded-2xl text-sm font-bold text-slate-900 outline-none focus:ring-2 focus:ring-primary/10 transition-all block"
                                             required
                                         />
                                     </div>
@@ -207,7 +207,7 @@ const AdminProfile = () => {
                                                 type="email"
                                                 value={profile.email}
                                                 onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-                                                className="w-full pl-12 pr-5 py-4 bg-slate-50 border-none rounded-2xl text-sm font-bold text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/10 transition-all block"
+                                                className="w-full pl-12 pr-5 py-4 bg-slate-50 border-none rounded-2xl text-sm font-bold text-slate-900 outline-none focus:ring-2 focus:ring-primary/10 transition-all block"
                                                 required
                                             />
                                         </div>
@@ -219,8 +219,8 @@ const AdminProfile = () => {
                                         type="submit"
                                         disabled={isSaving}
                                         className={cn(
-                                            "flex items-center gap-2 px-4 py-4 bg-indigo-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl shadow-indigo-100 active:scale-95",
-                                            isSaving ? "opacity-70 cursor-wait" : "hover:bg-indigo-700"
+                                            "flex items-center gap-2 px-4 py-4 bg-primary text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl shadow-indigo-100 active:scale-95",
+                                            isSaving ? "opacity-70 cursor-wait" : "hover:bg-primary-hover"
                                         )}
                                     >
                                         {isSaving ? 'Saving...' : 'Save Changes'}
@@ -247,7 +247,7 @@ const AdminProfile = () => {
                                             type="password"
                                             value={security.currentPassword}
                                             onChange={(e) => setSecurity({ ...security, currentPassword: e.target.value })}
-                                            className="w-full pl-12 pr-5 py-4 bg-slate-50 border-none rounded-2xl text-sm font-bold text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/10 transition-all block"
+                                            className="w-full pl-12 pr-5 py-4 bg-slate-50 border-none rounded-2xl text-sm font-bold text-slate-900 outline-none focus:ring-2 focus:ring-primary/10 transition-all block"
                                             required
                                         />
                                     </div>
@@ -261,7 +261,7 @@ const AdminProfile = () => {
                                                 type="password"
                                                 value={security.newPassword}
                                                 onChange={(e) => setSecurity({ ...security, newPassword: e.target.value })}
-                                                className="w-full pl-12 pr-5 py-4 bg-slate-50 border-none rounded-2xl text-sm font-bold text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/10 transition-all block"
+                                                className="w-full pl-12 pr-5 py-4 bg-slate-50 border-none rounded-2xl text-sm font-bold text-slate-900 outline-none focus:ring-2 focus:ring-primary/10 transition-all block"
                                                 required
                                             />
                                         </div>
@@ -274,7 +274,7 @@ const AdminProfile = () => {
                                                 type="password"
                                                 value={security.confirmPassword}
                                                 onChange={(e) => setSecurity({ ...security, confirmPassword: e.target.value })}
-                                                className="w-full pl-12 pr-5 py-4 bg-slate-50 border-none rounded-2xl text-sm font-bold text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/10 transition-all block"
+                                                className="w-full pl-12 pr-5 py-4 bg-slate-50 border-none rounded-2xl text-sm font-bold text-slate-900 outline-none focus:ring-2 focus:ring-primary/10 transition-all block"
                                                 required
                                             />
                                         </div>
@@ -286,8 +286,8 @@ const AdminProfile = () => {
                                         type="submit"
                                         disabled={isSaving}
                                         className={cn(
-                                            "flex items-center gap-2 px-4 py-4 bg-indigo-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl shadow-indigo-100 active:scale-95",
-                                            isSaving ? "opacity-70 cursor-wait" : "hover:bg-indigo-700"
+                                            "flex items-center gap-2 px-4 py-4 bg-primary text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl shadow-indigo-100 active:scale-95",
+                                            isSaving ? "opacity-70 cursor-wait" : "hover:bg-primary-hover"
                                         )}
                                     >
                                         {isSaving ? 'Updating...' : 'Update Password'}

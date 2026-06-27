@@ -18,21 +18,21 @@ import AdminModuleSwitcher from "@/shared/components/AdminModuleSwitcher";
 
 const colorMap = {
   indigo:
-    "text-indigo-600 bg-indigo-50 border-indigo-100 group-hover:bg-indigo-100/50",
+    "text-primary bg-orange-50 border-orange-100 group-hover:bg-orange-100/50",
   rose: "text-rose-600 bg-rose-50 border-rose-100 group-hover:bg-rose-100/50",
   amber:
     "text-amber-600 bg-amber-50 border-amber-100 group-hover:bg-amber-100/50",
-  blue: "text-primary bg-blue-50 border-blue-100 group-hover:bg-blue-100/50",
+  blue: "text-primary bg-orange-50 border-orange-100 group-hover:bg-orange-100/50",
   emerald:
     "text-emerald-600 bg-emerald-50 border-emerald-100 group-hover:bg-emerald-100/50",
   violet:
-    "text-violet-600 bg-violet-50 border-violet-100 group-hover:bg-violet-100/50",
-  cyan: "text-cyan-600 bg-cyan-50 border-cyan-100 group-hover:bg-cyan-100/50",
+    "text-primary bg-orange-50 border-orange-100 group-hover:bg-orange-100/50",
+  cyan: "text-primary bg-orange-50 border-orange-100 group-hover:bg-orange-100/50",
   orange:
     "text-orange-600 bg-orange-50 border-orange-100 group-hover:bg-orange-100/50",
   green:
     "text-green-600 bg-green-50 border-green-100 group-hover:bg-green-100/50",
-  sky: "text-sky-600 bg-sky-50 border-sky-100 group-hover:bg-sky-100/50",
+  sky: "text-primary bg-orange-50 border-orange-100 group-hover:bg-orange-100/50",
   pink: "text-pink-600 bg-pink-50 border-pink-100 group-hover:bg-pink-100/50",
   fuchsia:
     "text-fuchsia-600 bg-fuchsia-50 border-fuchsia-100 group-hover:bg-fuchsia-100/50",
@@ -319,7 +319,7 @@ const SidebarContent = ({ items, title, onClose, openMenu, handleToggle, hovered
         <div className="bg-white/5 rounded-lg p-3 shadow-sm border border-white/5 hover:bg-white/[0.08] hover:border-white/10 transition-all group cursor-pointer">
           <div className="flex items-center space-x-2.5">
             <div className="relative group">
-              <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary via-indigo-500 to-violet-600 flex items-center justify-center text-white font-black text-xs shadow-lg group-hover:scale-110 transition-all duration-500">
+              <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary via-orange-500 to-orange-600 flex items-center justify-center text-white font-black text-xs shadow-lg group-hover:scale-110 transition-all duration-500">
                 A
               </div>
               <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 bg-emerald-500 rounded-full border-2 border-[#0a0c10] shadow-sm animate-pulse"></div>

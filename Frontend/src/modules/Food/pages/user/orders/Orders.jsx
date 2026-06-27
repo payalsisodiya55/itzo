@@ -945,7 +945,7 @@ Order again from this restaurant in the ${companyName} app.`
                             (order.payment.status === 'paid' || order.payment.status === 'completed' || order.payment.status === 'captured') ? 'bg-green-100 text-green-700' :
                             (order.payment.status === 'failed' || order.payment.status === 'cancelled') ? 'bg-red-100 text-red-700' :
                             (order.payment.status === 'pending' || order.payment.status === 'cod_pending' || order.payment.status === 'created' || order.payment.status === 'pending_qr') ? 'bg-yellow-100 text-yellow-700' :
-                            (order.payment.status === 'refunded') ? 'bg-blue-100 text-blue-700' :
+                            (order.payment.status === 'refunded') ? 'bg-orange-100 text-orange-700' :
                             'bg-gray-100 text-gray-700'
                           }`}>
                             {order.payment.status === 'cod_pending' || order.payment.status === 'created' || order.payment.status === 'pending_qr' ? 'Pending' : 
@@ -968,9 +968,9 @@ Order again from this restaurant in the ${companyName} app.`
                       <p className="text-xs font-medium text-gray-500 mt-1">Cancelled</p>
                     )}
                     {order.status === 'scheduled' && (
-                      <div className="flex items-center gap-1.5 mt-1.5 p-2 bg-blue-50 border border-blue-100 rounded-lg w-fit">
+                      <div className="flex items-center gap-1.5 mt-1.5 p-2 bg-orange-50 border border-orange-100 rounded-lg w-fit">
                         <Calendar className="w-3.5 h-3.5 text-primary" />
-                        <span className="text-[10px] font-bold text-blue-700 uppercase tracking-tight">
+                        <span className="text-[10px] font-bold text-orange-700 uppercase tracking-tight">
                           Scheduled for {new Date(order.scheduledAt).toLocaleString("en-US", {
                             day: "numeric",
                             month: "short",
@@ -1237,7 +1237,7 @@ Order again from this restaurant in the ${companyName} app.`
                   onClick={() => openShareTarget("telegram")}
                   className="rounded-2xl border border-gray-200 px-3 py-4 text-xs font-medium text-gray-700 flex flex-col items-center gap-2 hover:bg-gray-50"
                 >
-                  <Send className="w-5 h-5 text-sky-500" />
+                  <Send className="w-5 h-5 text-primary" />
                   Telegram
                 </button>
                 <button
@@ -1253,7 +1253,7 @@ Order again from this restaurant in the ${companyName} app.`
                   onClick={() => openShareTarget("sms")}
                   className="rounded-2xl border border-gray-200 px-3 py-4 text-xs font-medium text-gray-700 flex flex-col items-center gap-2 hover:bg-gray-50"
                 >
-                  <MessagesSquare className="w-5 h-5 text-violet-500" />
+                  <MessagesSquare className="w-5 h-5 text-primary" />
                   SMS
                 </button>
                 <button
@@ -1277,7 +1277,7 @@ Order again from this restaurant in the ${companyName} app.`
                   onClick={() => openShareTarget("linkedin")}
                   className="rounded-2xl border border-gray-200 px-3 py-4 text-xs font-medium text-gray-700 flex flex-col items-center gap-2 hover:bg-gray-50"
                 >
-                  <Share2 className="w-5 h-5 text-blue-700" />
+                  <Share2 className="w-5 h-5 text-orange-700" />
                   LinkedIn
                 </button>
                 <button

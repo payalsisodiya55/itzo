@@ -580,14 +580,14 @@ export default function Coupons() {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm font-mono font-semibold text-primary bg-blue-50 px-2 py-1 rounded whitespace-nowrap">
+                        <span className="text-sm font-mono font-semibold text-primary bg-orange-50 px-2 py-1 rounded whitespace-nowrap">
                           {offer.couponCode}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                           offer.customerGroup === "new"
-                            ? "bg-purple-100 text-purple-700"
+                            ? "bg-orange-100 text-orange-700"
                             : "bg-slate-100 text-slate-700"
                         }`}>
                           {offer.customerGroup === "new" ? "First-time Users" : "All Users"}
@@ -629,7 +629,7 @@ export default function Coupons() {
                             status === 'active'
                               ? 'bg-green-100 text-green-700'
                               : status === 'scheduled'
-                              ? 'bg-blue-100 text-blue-700'
+                              ? 'bg-orange-100 text-orange-700'
                               : status === 'paused'
                               ? 'bg-orange-100 text-orange-700'
                               : status === 'expired' || status === 'inactive'

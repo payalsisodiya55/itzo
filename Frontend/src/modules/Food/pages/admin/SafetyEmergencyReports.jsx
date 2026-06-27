@@ -139,7 +139,7 @@ export default function SafetyEmergencyReports() {
 
   const getStatusBadge = (status) => {
     const statusConfig = {
-      unread: { label: 'Unread', className: 'bg-blue-100 text-blue-700' },
+      unread: { label: 'Unread', className: 'bg-orange-100 text-orange-700' },
       read: { label: 'Read', className: 'bg-slate-100 text-slate-700' },
       resolved: { label: 'Resolved', className: 'bg-green-100 text-green-700' },
       urgent: { label: 'Urgent', className: 'bg-red-100 text-red-700' }
@@ -458,7 +458,7 @@ export default function SafetyEmergencyReports() {
               {/* User Information Section */}
               <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-5 flex items-center gap-3">
-                  <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full"></div>
+                  <div className="w-1 h-6 bg-gradient-to-b from-orange-500 to-orange-600 rounded-full"></div>
                   User Information
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

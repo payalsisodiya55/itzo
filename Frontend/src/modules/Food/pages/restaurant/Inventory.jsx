@@ -568,7 +568,7 @@ function TimePickerWheel({
           <div className="border-t border-gray-200 px-4 py-4 flex justify-center">
             <button
               onClick={handleConfirm}
-              className="text-primary hover:text-blue-700 font-medium text-base transition-colors"
+              className="text-primary hover:text-primary-hover font-medium text-base transition-colors"
             >
               Okay
             </button>
@@ -2371,7 +2371,7 @@ export default function Inventory() {
                                         {approvalMeta.label.toUpperCase()}
                                       </span>
                                       {item.isRecommended ? (
-                                        <span className="rounded-full bg-sky-50 border border-sky-100 px-2 py-0.5 text-[10px] font-bold text-sky-700">
+                                        <span className="rounded-full bg-orange-50 border border-orange-100 px-2 py-0.5 text-[10px] font-bold text-orange-700">
                                           RECOMMENDED
                                         </span>
                                       ) : null}
@@ -2406,7 +2406,7 @@ export default function Inventory() {
                                       handleRecommendToggle(category.id, item.id)
                                     }}
                                     className={`rounded-2xl p-2 transition-colors ${item.isRecommended
-                                        ? "bg-blue-100 text-primary"
+                                        ? "bg-orange-100 text-primary"
                                         : "bg-white text-gray-400 hover:bg-slate-100"
                                       }`}
                                     title={item.isRecommended ? "Recommended" : "Click to recommend"}

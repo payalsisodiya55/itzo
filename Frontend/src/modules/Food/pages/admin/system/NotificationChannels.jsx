@@ -565,7 +565,7 @@ export default function NotificationChannels() {
                         <td className="px-3 py-3">
                           <button
                             type="button"
-                            className="px-2 py-1 text-[10px] font-medium bg-blue-50 text-primary rounded hover:bg-blue-100 transition-colors"
+                            className="px-2 py-1 text-[10px] font-medium bg-orange-50 text-primary rounded hover:bg-orange-100 transition-colors"
                           >
                             {notification.pushNotification}
                           </button>
@@ -589,7 +589,7 @@ export default function NotificationChannels() {
                           ) : (
                             <button
                               type="button"
-                              className="px-2 py-1 text-[10px] font-medium bg-blue-50 text-primary rounded hover:bg-blue-100 transition-colors"
+                              className="px-2 py-1 text-[10px] font-medium bg-orange-50 text-primary rounded hover:bg-orange-100 transition-colors"
                             >
                               N/A
                             </button>

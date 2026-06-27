@@ -214,7 +214,7 @@ export default function Notifications() {
                     {/* Icon */}
                     <div className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center ${notification.type === "order" ? "bg-green-100 dark:bg-green-900/40" :
                         notification.type === "offer" ? "bg-red-100 dark:bg-red-900/40" :
-                          notification.type === "promotion" ? "bg-blue-100 dark:bg-blue-900/40" :
+                          notification.type === "promotion" ? "bg-orange-100 dark:bg-orange-900/40" :
                             "bg-orange-100 dark:bg-orange-900/40"
                       }`}>
                       <Icon className={`h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 ${notification.iconColor}`} />

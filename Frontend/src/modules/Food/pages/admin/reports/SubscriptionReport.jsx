@@ -158,7 +158,7 @@ export default function SubscriptionReport() {
               <button 
                 onClick={handleFilterApply}
                 className={`px-6 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-primary transition-all flex items-center gap-2 relative ${
-                  activeFiltersCount > 0 ? "ring-2 ring-blue-300" : ""
+                  activeFiltersCount > 0 ? "ring-2 ring-orange-300" : ""
                 }`}
               >
                 <Filter className="w-4 h-4" />
@@ -337,7 +337,7 @@ export default function SubscriptionReport() {
                       </td>
                       <td className="px-4 py-3 text-center">
                         <button
-                          className="p-1.5 rounded text-primary hover:bg-blue-50 transition-colors"
+                          className="p-1.5 rounded text-primary hover:bg-orange-50 transition-colors"
                           title="Download"
                         >
                           <Download className="w-4 h-4" />

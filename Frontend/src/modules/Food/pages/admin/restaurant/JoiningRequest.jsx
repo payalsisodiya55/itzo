@@ -508,7 +508,7 @@ export default function JoiningRequest() {
                 onClick={() => setShowFilterDialog(true)}
                 className={`px-4 py-2.5 text-sm font-medium rounded-lg border transition-all flex items-center gap-2 ${
                   hasActiveFilters 
-                    ? "border-primary bg-blue-50 text-blue-700 hover:bg-blue-100" 
+                    ? "border-primary bg-orange-50 text-orange-700 hover:bg-orange-100" 
                     : "border-slate-300 bg-white hover:bg-slate-50 text-slate-700"
                 }`}
               >
@@ -643,7 +643,7 @@ export default function JoiningRequest() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                           request.status === "Pending" || request.status === "pending"
-                            ? (request?.reVerification?.isZoneUpdate || request?.reVerification?.reVerificationReason === 'FSSAI License Update' ? "bg-purple-100 text-purple-700" : "bg-blue-100 text-blue-700")
+                            ? (request?.reVerification?.isZoneUpdate || request?.reVerification?.reVerificationReason === 'FSSAI License Update' ? "bg-orange-100 text-orange-700" : "bg-orange-100 text-orange-700")
                             : "bg-red-100 text-red-700"
                         }`}>
                           {request?.reVerification?.isZoneUpdate || request?.reVerification?.reVerificationReason === 'FSSAI License Update' ? "Re-verification" : request.status}
@@ -653,7 +653,7 @@ export default function JoiningRequest() {
                         <div className="flex items-center justify-center gap-2">
                           <button
                             onClick={() => handleViewDetails(request)}
-                            className="p-1.5 rounded-full bg-blue-50 text-primary hover:bg-blue-100 transition-colors"
+                            className="p-1.5 rounded-full bg-orange-50 text-primary hover:bg-orange-100 transition-colors"
                             title="View Details"
                           >
                             <Eye className="w-4 h-4" />
@@ -696,7 +696,7 @@ export default function JoiningRequest() {
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center">
                     <Filter className="w-5 h-5 text-primary" />
                   </div>
                   <div>
@@ -855,7 +855,7 @@ export default function JoiningRequest() {
             {/* Panel Header */}
             <div className="sticky top-0 bg-white border-b border-slate-100 px-6 py-5 flex items-center justify-between z-10">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center">
                   <UtensilsCrossed className="w-5 h-5 text-primary" />
                 </div>
                 <h2 className="text-xl font-bold text-slate-900">Restaurant Details - {selectedRequest.restaurantName || "N/A"}</h2>
@@ -934,7 +934,7 @@ export default function JoiningRequest() {
                           <span className="text-sm">{formatRestaurantId(r)}</span>
                         </div>
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          approvalStatus === "approved" ? "bg-green-100 text-green-700" : (approvalStatus === "rejected" || approvalStatus === "Rejected") ? "bg-red-100 text-red-700" : (r?.reVerification?.isZoneUpdate || r?.reVerification?.reVerificationReason === 'FSSAI License Update' ? "bg-purple-100 text-purple-700" : "bg-amber-100 text-amber-700")
+                          approvalStatus === "approved" ? "bg-green-100 text-green-700" : (approvalStatus === "rejected" || approvalStatus === "Rejected") ? "bg-red-100 text-red-700" : (r?.reVerification?.isZoneUpdate || r?.reVerification?.reVerificationReason === 'FSSAI License Update' ? "bg-orange-100 text-orange-700" : "bg-amber-100 text-amber-700")
                         }`}>
                           {approvalStatus === "approved" ? "Approved" : (approvalStatus === "rejected" || approvalStatus === "Rejected") ? "Rejected" : (r?.reVerification?.isZoneUpdate || r?.reVerification?.reVerificationReason === 'FSSAI License Update' ? "Re-verification" : "Pending Approval")}
                         </span>
@@ -976,18 +976,18 @@ export default function JoiningRequest() {
                     {/* Zone Update Warning (if applicable) */}
                     {r?.reVerification?.isZoneUpdate && (
                       <div className="md:col-span-2">
-                        <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-2">
-                          <h4 className="text-sm font-bold text-purple-900 mb-1 flex items-center gap-2">
+                        <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-2">
+                          <h4 className="text-sm font-bold text-orange-900 mb-1 flex items-center gap-2">
                             <MapPin className="w-4 h-4" />
                             Region/Zone Edit Request
                           </h4>
-                          <p className="text-xs text-purple-800">
+                          <p className="text-xs text-orange-800">
                             The restaurant has updated their business location. Please review the changes below before approval.
                           </p>
                           {r.reVerification.reVerificationReason && (
-                            <div className="mt-2 pt-2 border-t border-purple-200">
-                              <p className="text-xs font-bold text-purple-900">Reason for Re-verification:</p>
-                              <p className="text-xs text-purple-800">{r.reVerification.reVerificationReason}</p>
+                            <div className="mt-2 pt-2 border-t border-orange-200">
+                              <p className="text-xs font-bold text-orange-900">Reason for Re-verification:</p>
+                              <p className="text-xs text-orange-800">{r.reVerification.reVerificationReason}</p>
                             </div>
                           )}
                         </div>
@@ -1024,8 +1024,8 @@ export default function JoiningRequest() {
                               {r?.reVerification?.isZoneUpdate ? (
                                 <div className="space-y-4">
                                   <div>
-                                    <p className="text-xs text-purple-600 font-bold uppercase tracking-wider mb-1">Updated Address</p>
-                                    <p className="text-sm font-medium text-slate-900 bg-purple-50 p-2 rounded border border-purple-100">
+                                    <p className="text-xs text-primary font-bold uppercase tracking-wider mb-1">Updated Address</p>
+                                    <p className="text-sm font-medium text-slate-900 bg-orange-50 p-2 rounded border border-orange-100">
                                       {r.location?.formattedAddress || "N/A"}
                                     </p>
                                   </div>
@@ -1037,7 +1037,7 @@ export default function JoiningRequest() {
                                   </div>
                                   <div className="grid grid-cols-2 gap-4 pt-2 border-t border-slate-100">
                                     <div>
-                                      <p className="text-xs text-purple-600 font-bold uppercase tracking-wider mb-1">Updated Zone</p>
+                                      <p className="text-xs text-primary font-bold uppercase tracking-wider mb-1">Updated Zone</p>
                                       <p className="text-sm font-medium text-slate-900">
                                         {r.reVerification.updatedZone || r.zone || "N/A"}
                                       </p>
@@ -1090,7 +1090,7 @@ export default function JoiningRequest() {
                           <div className="flex flex-wrap gap-2">
                             {r?.cuisines && Array.isArray(r.cuisines) && r.cuisines.length > 0 ? (
                               r.cuisines.map((cuisine, idx) => (
-                                <span key={idx} className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
+                                <span key={idx} className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">
                                   {cuisine}
                                 </span>
                               ))
@@ -1228,7 +1228,7 @@ export default function JoiningRequest() {
                                     href={typeof r.panImage === "string" ? r.panImage : (r.panImage?.url || r.onboarding?.step3?.pan?.image?.url)}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 text-primary hover:text-blue-700"
+                                    className="inline-flex items-center gap-2 text-primary hover:text-primary-hover"
                                   >
                                     <ImageIcon className="w-4 h-4" />
                                     <span>View PAN Document</span>
@@ -1279,7 +1279,7 @@ export default function JoiningRequest() {
                                     href={typeof r.gstImage === "string" ? r.gstImage : (r.gstImage?.url || r.onboarding?.step3?.gst?.image?.url)}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 text-primary hover:text-blue-700"
+                                    className="inline-flex items-center gap-2 text-primary hover:text-primary-hover"
                                   >
                                     <ImageIcon className="w-4 h-4" />
                                     <span>View GST Document</span>
@@ -1324,7 +1324,7 @@ export default function JoiningRequest() {
                                     href={typeof r.fssaiImage === "string" ? r.fssaiImage : (r.fssaiImage?.url || r.onboarding?.step3?.fssai?.image?.url)}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 text-primary hover:text-blue-700"
+                                    className="inline-flex items-center gap-2 text-primary hover:text-primary-hover"
                                   >
                                     <ImageIcon className="w-4 h-4" />
                                     <span>View FSSAI Document</span>

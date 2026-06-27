@@ -17,7 +17,7 @@ const ExploreMoreSection = memo(({
         
         {/* Background Effects matching the second image */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-amber-400 rounded-full blur-[80px] opacity-20 pointer-events-none" />
-        <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-indigo-500 rounded-full blur-[70px] opacity-30 pointer-events-none" />
+        <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-primary rounded-full blur-[70px] opacity-30 pointer-events-none" />
         
         {/* Subtle floating stars/particles */}
         <div className="absolute top-3 left-4 w-1 h-1 bg-white rounded-full shadow-[0_0_8px_2px_rgba(255,255,255,0.8)] opacity-70" />
@@ -49,7 +49,7 @@ const ExploreMoreSection = memo(({
                     />
                   </div>
                 </div>
-                <span className="text-[10px] sm:text-[11px] font-bold text-indigo-50 text-center tracking-wide group-hover:text-amber-300 transition-colors duration-300">
+                <span className="text-[10px] sm:text-[11px] font-bold text-orange-50 text-center tracking-wide group-hover:text-amber-300 transition-colors duration-300">
                   {item.label}
                 </span>
               </Link>

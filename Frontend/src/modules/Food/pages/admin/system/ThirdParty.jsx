@@ -233,7 +233,7 @@ export default function ThirdParty() {
                           <button
                             type="button"
                             onClick={() => setExpandedService(expandedService === service.id ? null : service.id)}
-                            className="text-xs text-primary hover:text-blue-700 font-medium"
+                            className="text-xs text-primary hover:text-primary-hover font-medium"
                           >
                             {expandedService === service.id ? "Hide" : "Configure"}
                           </button>

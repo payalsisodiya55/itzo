@@ -12,7 +12,7 @@ const debugError = (...args) => {}
 
 
 const statsCards = [
-  { id: 1, label: "Total Subscribed User", value: 3, bg: "bg-sky-50" },
+  { id: 1, label: "Total Subscribed User", value: 3, bg: "bg-orange-50" },
   { id: 2, label: "Active Subscriptions", value: 0, bg: "bg-emerald-50" },
   { id: 3, label: "Expired Subscription", value: 3, bg: "bg-rose-50" },
   { id: 4, label: "Expiring Soon", value: 0, bg: "bg-amber-50" },
@@ -166,7 +166,7 @@ export default function SubscriberList() {
         <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-slate-200">
           <div className="flex-1 px-5 py-3 flex items-center justify-between text-xs">
             <div className="flex items-center gap-2 text-slate-700">
-              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-sky-50 text-sky-600 text-lg">
+              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-orange-50 text-primary text-lg">
                 ?
               </span>
               <div>

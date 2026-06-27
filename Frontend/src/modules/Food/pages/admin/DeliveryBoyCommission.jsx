@@ -505,11 +505,11 @@ export default function DeliveryBoyCommission() {
           </div>
 
           {/* Info Card */}
-          <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="mb-4 p-4 bg-orange-50 border border-orange-200 rounded-lg">
             <div className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-primary mt-0.5" />
               <div className="text-sm text-slate-700">
-                <p className="font-semibold text-blue-900 mb-1">Fixed + Extra Distance Commission</p>
+                <p className="font-semibold text-orange-900 mb-1">Fixed + Extra Distance Commission</p>
                 <p className="text-slate-600">
                   Commission is calculated as: <strong>Base payout for 0-{formulaMinDistance} km + Extra per km after {formulaMinDistance} km</strong>.
                   Example: if base is ₹25 and extra is ₹5/km, then 6 km earns ₹25 + (2 x ₹5) = ₹35.
@@ -606,7 +606,7 @@ export default function DeliveryBoyCommission() {
                       )}
                       {visibleColumns.basePayout && (
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm font-semibold text-blue-700">{"\u20B9"}{commission.basePayout}</span>
+                          <span className="text-sm font-semibold text-orange-700">{"\u20B9"}{commission.basePayout}</span>
                         </td>
                       )}
                       {visibleColumns.status && (
@@ -632,7 +632,7 @@ export default function DeliveryBoyCommission() {
                             {canEdit && (
                               <button
                                 onClick={() => handleEdit(commission)}
-                                className="p-1.5 rounded text-primary hover:bg-blue-50 transition-colors"
+                                className="p-1.5 rounded text-primary hover:bg-orange-50 transition-colors"
                                 title="Edit"
                               >
                                 <Edit className="w-4 h-4" />

@@ -129,7 +129,7 @@ export default function ZoneSetup() {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => navigate(`/ecs/quick-commerce/zone-setup/view/${zone._id || zone.id}`)}
-                      className="p-2 text-slate-600 hover:text-primary hover:bg-blue-50 rounded-lg transition-colors"
+                      className="p-2 text-slate-600 hover:text-primary hover:bg-orange-50 rounded-lg transition-colors"
                       title="View"
                     >
                       <Eye className="w-4 h-4" />

@@ -27,7 +27,7 @@ const SectionCard = ({ title, children, id }) => (
 );
 
 const InputField = ({ label, name, value, onChange, placeholder, info }) => {
-  const inputClass = "w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 bg-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-colors shadow-sm";
+  const inputClass = "w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 bg-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors shadow-sm";
   const labelClass = "block text-xs font-semibold text-gray-500 mb-1.5";
 
   return (
@@ -61,7 +61,7 @@ const MediaUploadBox = ({ title, size, preview, onUpload, onClear, type = 'image
       <div className="flex items-center justify-between px-0.5">
         <label className="text-xs font-bold text-gray-500">{title}({size})</label>
       </div>
-      <div className="aspect-video w-full rounded-xl border border-dashed border-gray-300 bg-gray-50/50 relative overflow-hidden group hover:border-indigo-300 transition-colors cursor-pointer flex items-center justify-center" onClick={() => fileInputRef.current?.click()}>
+      <div className="aspect-video w-full rounded-xl border border-dashed border-gray-300 bg-gray-50/50 relative overflow-hidden group hover:border-orange-300 transition-colors cursor-pointer flex items-center justify-center" onClick={() => fileInputRef.current?.click()}>
         {preview ? (
           type === 'video' ? (
             <video src={preview} className="w-full h-full object-cover" muted loop autoPlay playsInline />

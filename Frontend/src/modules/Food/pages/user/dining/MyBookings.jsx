@@ -101,7 +101,7 @@ export default function MyBookings() {
         if (key === "pending") return "bg-amber-100 text-amber-700"
         if (key === "confirmed" || key === "accepted") return "bg-green-100 text-green-700"
         if (key === "checked-in") return "bg-red-50 text-red-600"
-        if (key === "completed") return "bg-blue-100 text-blue-700"
+        if (key === "completed") return "bg-orange-100 text-orange-700"
         if (key === "cancelled") return "bg-red-100 text-red-700"
         return "bg-slate-100 text-slate-700"
     }

@@ -643,7 +643,7 @@ function TableBookings() {
                         : booking.status === "checked-in"
                           ? "bg-orange-100 text-orange-700"
                           : booking.status === "completed"
-                            ? "bg-blue-100 text-blue-700"
+                            ? "bg-orange-100 text-orange-700"
                             : "bg-gray-100 text-gray-600"
                   }`}>
                   {booking.status === "pending" ? "Pending" : booking.status}
@@ -690,8 +690,8 @@ function TableBookings() {
               </div>
 
               {booking.specialRequest && (
-                <div className="mb-5 p-3 bg-blue-50/50 rounded-xl border border-blue-100/30">
-                  <p className="text-[11px] text-blue-700 italic flex items-start gap-1.5">
+                <div className="mb-5 p-3 bg-orange-50/50 rounded-xl border border-orange-100/30">
+                  <p className="text-[11px] text-orange-700 italic flex items-start gap-1.5">
                     <MessageSquare className="w-3.5 h-3.5 mt-0.5 shrink-0" />
                     <span>{booking.specialRequest}</span>
                   </p>

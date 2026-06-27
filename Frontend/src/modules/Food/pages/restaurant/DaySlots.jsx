@@ -368,7 +368,7 @@ function TimePickerWheel({
           <div className="border-t border-gray-200 px-4 py-4 flex justify-center">
             <button
               onClick={handleConfirm}
-              className="text-primary hover:text-blue-700 font-medium text-base transition-colors"
+              className="text-primary hover:text-primary-hover font-medium text-base transition-colors"
             >
               Okay
             </button>
@@ -714,7 +714,7 @@ export default function DaySlots() {
         {dayData.slots.length < 3 && (
           <button
             onClick={addSlot}
-            className="w-full text-primary hover:text-blue-700 text-sm font-medium py-3 transition-colors"
+            className="w-full text-primary hover:text-primary-hover text-sm font-medium py-3 transition-colors"
           >
             + Add time slot
           </button>

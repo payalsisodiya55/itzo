@@ -141,7 +141,7 @@ export default function FoodCampaign() {
                       <span className="text-sm font-medium text-slate-700">{campaign.sl}</span>
                     </td>
                     <td className="px-6 py-4">
-                      <a href="#" className="text-sm font-medium text-primary hover:text-blue-700">
+                      <a href="#" className="text-sm font-medium text-primary hover:text-primary-hover">
                         {campaign.title}
                       </a>
                     </td>
@@ -171,7 +171,7 @@ export default function FoodCampaign() {
                     <td className="px-6 py-4 whitespace-nowrap text-center">
                       <div className="flex items-center justify-center gap-2">
                         <button
-                          className="p-1.5 rounded text-primary hover:bg-blue-50 transition-colors"
+                          className="p-1.5 rounded text-primary hover:bg-orange-50 transition-colors"
                           title="Edit"
                         >
                           <Edit className="w-4 h-4" />

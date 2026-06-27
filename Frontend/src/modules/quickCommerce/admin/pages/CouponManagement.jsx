@@ -196,7 +196,7 @@ const CouponManagement = () => {
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
-                    { label: 'Total Coupons', value: stats.total, icon: HiOutlineTicket, color: 'indigo' },
+                    { label: 'Total Coupons', value: stats.total, icon: HiOutlineTicket, color: 'orange' },
                     { label: 'Active Codes', value: stats.active, icon: HiOutlineCheckCircle, color: 'emerald' },
                     { label: 'Redemptions', value: stats.totalRedeemed.toLocaleString(), icon: HiOutlineUsers, color: 'amber' },
                     { label: 'Expiring Soon', value: stats.expiringSoon, icon: HiOutlineClock, color: 'rose' },
@@ -204,7 +204,7 @@ const CouponManagement = () => {
                     <Card key={i} className="p-6 border-none shadow-xl ring-1 ring-slate-100 bg-white group hover:ring-primary/20 transition-all">
                         <div className="flex items-center justify-between mb-4">
                             <div className={cn("p-2.5 rounded-2xl",
-                                s.color === 'indigo' && "bg-indigo-50 text-indigo-600",
+                                s.color === 'orange' && "bg-orange-50 text-primary",
                                 s.color === 'emerald' && "bg-emerald-50 text-emerald-600",
                                 s.color === 'amber' && "bg-amber-50 text-amber-600",
                                 s.color === 'rose' && "bg-rose-50 text-rose-600",
@@ -275,7 +275,7 @@ const CouponManagement = () => {
                                 <tr key={c._id} className="group hover:bg-slate-50/30 transition-colors">
                                     <td className="px-4 py-6">
                                         <div className="flex items-center gap-4">
-                                            <div className="h-12 w-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                                            <div className="h-12 w-12 rounded-2xl bg-orange-50 text-primary flex items-center justify-center">
                                                 <HiOutlineTicket className="h-6 w-6" />
                                             </div>
                                             <div>
@@ -304,7 +304,7 @@ const CouponManagement = () => {
                                             </div>
                                             <div className="h-1.5 w-32 bg-slate-100 rounded-full overflow-hidden">
                                                 <div
-                                                    className="h-full bg-indigo-500 rounded-full transition-all duration-1000"
+                                                    className="h-full bg-primary rounded-full transition-all duration-1000"
                                                     style={{ width: c.usageLimit ? `${((c.usedCount || 0) / c.usageLimit) * 100}%` : '0%' }}
                                                 />
                                             </div>
