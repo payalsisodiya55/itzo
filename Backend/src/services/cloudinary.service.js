@@ -101,6 +101,30 @@ export const uploadBufferDetailed = async (
     });
 };
 
+export const uploadPdfBuffer = async (buffer, folder = 'hrms/payslips') => {
+    if (!buffer) {
+        throw new Error('File buffer is required');
+    }
+
+    return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+            { 
+                folder, 
+                resource_type: 'raw',
+                format: 'pdf'
+            },
+            (error, result) => {
+                if (error) {
+                    return reject(error);
+                }
+                return resolve(result.secure_url);
+            }
+        );
+
+        stream.end(buffer);
+    });
+};
+
 export const uploadFileDetailed = async (
     filePath,
     { folder = 'uploads', resourceType = 'auto' } = {}

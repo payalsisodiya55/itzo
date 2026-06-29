@@ -94,21 +94,43 @@ export const updateSettingsSection = async (req, res, next) => {
         const { section } = req.params;
         const data = req.body;
 
-        const validSections = ['workingHours', 'leavePolicies', 'payrollRules', 'expensePolicies', 'organization', 'shifts', 'documentTypes', 'holidayCalendar', 'templates'];
+        const validSections = ['workingHours', 'leavePolicies', 'payrollRules', 'expensePolicies', 'organization', 'shifts', 'documentTypes', 'holidayCalendar', 'templates', 'companyInfo'];
         if (!validSections.includes(section)) {
             return sendError(res, 400, `Invalid section. Valid sections: ${validSections.join(', ')}`);
         }
 
         let settings = await HrmsSettings.findOne();
         if (!settings) {
-            settings = new HrmsSettings({});
+            settings = new HrmsSettings();
         }
 
         settings[section] = data;
         settings.updatedBy = req.user.userId;
         await settings.save();
 
-        return sendResponse(res, 200, `${section} updated successfully`, settings);
+        return sendResponse(res, 200, `${section} updated successfully`, settings[section]);
+    } catch (error) {
+        next(error);
+    }
+};
+
+/**
+ * PUBLIC: Get company branding and info (for login/signup pages before auth)
+ */
+export const getPublicSettings = async (req, res, next) => {
+    try {
+        let settings = await HrmsSettings.findOne().select('companyInfo').lean();
+        // If settings don't exist yet, return the defaults
+        const info = settings?.companyInfo || {
+            companyName: 'ItzoFood',
+            companyAddress: '123 Tech Park, Bangalore, India',
+            supportEmail: 'support@itzofood.com',
+            supportPhone: '',
+            companyLogoUrl: '',
+            currency: 'INR',
+            currencySymbol: '₹'
+        };
+        return sendResponse(res, 200, 'Public settings retrieved', info);
     } catch (error) {
         next(error);
     }

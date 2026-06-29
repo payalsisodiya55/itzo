@@ -1,8 +1,11 @@
 import express from 'express';
-import { getSettings, updateSettings, updateSettingsSection } from '../controllers/settings.controller.js';
+import { getSettings, updateSettings, updateSettingsSection, getPublicSettings } from '../controllers/settings.controller.js';
 import { authMiddleware, requireAdmin } from '../../../core/auth/auth.middleware.js';
 
 const router = express.Router();
+
+// GET: Public settings for branding (no auth needed)
+router.get('/public', getPublicSettings);
 
 // GET: Accessible by any authenticated user (settings needed for frontend calculations)
 router.get('/', authMiddleware, getSettings);

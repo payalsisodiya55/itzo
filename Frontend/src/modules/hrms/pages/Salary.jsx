@@ -6,7 +6,9 @@ export default function Salary() {
     const [records, setRecords] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+    const [tab, setTab] = useState('overview');
     const [selectedPayslip, setSelectedPayslip] = useState(null);
+    const [previewPdf, setPreviewPdf] = useState(null);
 
     useEffect(() => {
         const fetch = async () => {
@@ -34,6 +36,11 @@ export default function Salary() {
                     className="h-10 px-4 border border-slate-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-orange-500/30">
                     {[2024, 2025, 2026, 2027].map(y => <option key={y} value={y}>{y}</option>)}
                 </select>
+            </div>
+
+            <div className="flex gap-2">
+                <button onClick={() => setTab('overview')} className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${tab === 'overview' ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200'}`}>Salary Overview</button>
+                <button onClick={() => setTab('payslips')} className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${tab === 'payslips' ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200'}`}>Payslips</button>
             </div>
 
             {/* Payslip Detail Modal */}
@@ -102,9 +109,25 @@ export default function Salary() {
                                         <td className="px-5 py-3.5 font-bold text-emerald-600">₹{r.netSalary?.toLocaleString() || 0}</td>
                                         <td className="px-5 py-3.5"><span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusColor[r.status] || ''}`}>{r.status}</span></td>
                                         <td className="px-5 py-3.5">
-                                            <button onClick={() => setSelectedPayslip(r)} className="flex items-center gap-1.5 text-orange-600 hover:text-orange-700 font-medium text-xs">
-                                                <Eye className="w-3.5 h-3.5" /> View
-                                            </button>
+                                            {tab === 'overview' ? (
+                                                <button onClick={() => setSelectedPayslip(r)} className="flex items-center gap-1.5 text-orange-600 hover:text-orange-700 font-medium text-xs">
+                                                    <Eye className="w-3.5 h-3.5" /> View Breakdown
+                                                </button>
+                                            ) : (
+                                                r.payslipUrl ? (
+                                                    <div className="flex items-center gap-3">
+                                                        <button onClick={() => setPreviewPdf(r.payslipUrl)} className="text-blue-600 hover:text-blue-700 text-xs font-medium flex items-center gap-1">
+                                                            <Eye className="w-3.5 h-3.5" /> Preview PDF
+                                                        </button>
+                                                        <span className="text-slate-300">|</span>
+                                                        <a href={r.payslipUrl} download target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 text-xs font-medium flex items-center gap-1">
+                                                            <Download className="w-3.5 h-3.5" /> Download PDF
+                                                        </a>
+                                                    </div>
+                                                ) : (
+                                                    <span className="text-xs text-slate-400 italic">Generating Payslip...</span>
+                                                )
+                                            )}
                                         </td>
                                     </tr>
                                 ))}
@@ -113,6 +136,26 @@ export default function Salary() {
                     </div>
                 )}
             </div>
+
+            {/* PDF Preview Modal */}
+            {previewPdf && (
+                <div className="fixed inset-0 z-50 flex flex-col bg-black/90 backdrop-blur-sm">
+                    <div className="flex items-center justify-between p-4 border-b border-white/10 text-white">
+                        <h3 className="font-medium text-lg">Payslip Preview</h3>
+                        <div className="flex gap-4">
+                            <a href={previewPdf} download target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition-colors flex items-center gap-2">
+                                Download PDF
+                            </a>
+                            <button onClick={() => setPreviewPdf(null)} className="px-4 py-2 bg-red-500/20 text-red-400 hover:bg-red-500/30 rounded-lg text-sm transition-colors">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                    <div className="flex-1 w-full h-full p-4">
+                        <iframe src={previewPdf} className="w-full h-full rounded-xl bg-white" title="Payslip PDF" />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

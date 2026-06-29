@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@core/context/AuthContext';
+import { useHrmsSettings } from '../context/HrmsSettingsContext';
 import axiosInstance from '@core/api/axios';
 import { toast } from 'sonner';
 import { Lock, Mail, Building2, Eye, EyeOff } from 'lucide-react';
@@ -11,6 +12,7 @@ export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const { login } = useAuth();
+    const { hrmsSettings } = useHrmsSettings();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -112,24 +114,18 @@ export default function Login() {
                             </button>
                         </form>
 
-                        <div className="mt-8 text-center">
-                            <p className="text-sm text-slate-400">
-                                Want to join ItzoFood?{' '}
-                                <button
-                                    onClick={() => navigate('/hrms/signup')}
-                                    className="text-orange-400 font-semibold hover:text-orange-300 transition-colors"
-                                >
-                                    Apply Now
-                                </button>
-                            </p>
+                        <div className="mt-8 text-center text-sm text-slate-500 font-medium">
+                            Want to join {hrmsSettings?.companyName || 'ItzoFood'}?{' '}
+                            <Link to="/hrms/signup" className="text-orange-500 hover:text-orange-600 font-bold">
+                                Submit a joining request
+                            </Link>
                         </div>
                     </div>
-                </div>
 
-                {/* Footer */}
-                <p className="text-center text-xs text-slate-600 mt-6">
-                    © {new Date().getFullYear()} ItzoFood · Enterprise HRMS
-                </p>
+                    <div className="mt-8 text-center text-sm text-slate-400 font-medium pb-6">
+                        © {new Date().getFullYear()} {hrmsSettings?.companyName || 'ItzoFood'} · Enterprise HRMS
+                    </div>
+                </div>
             </div>
         </div>
     );

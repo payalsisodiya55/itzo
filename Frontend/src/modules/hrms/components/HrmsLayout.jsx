@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '@core/context/AuthContext';
+import { useHrmsSettings } from '../context/HrmsSettingsContext';
 import {
     LayoutDashboard, Clock, CalendarDays, Wallet, FileText,
     Receipt, User, LogOut, Menu, X, ChevronRight, Building2
@@ -18,6 +19,7 @@ const navItems = [
 
 export default function HrmsLayout() {
     const { user, logout } = useAuth();
+    const { hrmsSettings } = useHrmsSettings();
     const navigate = useNavigate();
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -46,11 +48,15 @@ export default function HrmsLayout() {
                 {/* Sidebar Header */}
                 <div className="flex items-center justify-between px-6 py-5 border-b border-slate-700/50">
                     <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-lg shadow-orange-500/20">
-                            <Building2 className="w-5 h-5 text-white" />
+                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-lg shadow-orange-500/20 overflow-hidden">
+                            {hrmsSettings?.companyLogoUrl ? (
+                                <img src={hrmsSettings.companyLogoUrl} alt="Logo" className="w-full h-full object-cover bg-white" />
+                            ) : (
+                                <Building2 className="w-5 h-5 text-white" />
+                            )}
                         </div>
                         <div>
-                            <h1 className="text-white font-bold text-base tracking-tight">ItzoFood</h1>
+                            <h1 className="text-white font-bold text-base tracking-tight">{hrmsSettings?.companyName || 'ItzoFood'}</h1>
                             <p className="text-[10px] text-slate-400 font-medium tracking-widest uppercase">Employee Portal</p>
                         </div>
                     </div>

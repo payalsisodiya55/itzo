@@ -37,7 +37,9 @@ const hrmsSalarySchema = new mongoose.Schema(
             default: 'Draft'
         },
         paidAt: { type: Date },
-        payslipUrl: { type: String }
+        payslipUrl: { type: String },
+        payslipVersion: { type: Number, default: 0 },
+        payslipGeneratedAt: { type: Date }
     },
     {
         timestamps: true,

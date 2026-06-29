@@ -7,7 +7,7 @@ export default function HrmsSettings() {
     const [settings, setSettings] = useState(null);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
-    const [activeSection, setActiveSection] = useState('workingHours');
+    const [activeSection, setActiveSection] = useState('companyInfo');
 
     useEffect(() => {
         const fetch = async () => {
@@ -44,6 +44,7 @@ export default function HrmsSettings() {
     if (!settings) return <div className="text-center p-12 text-slate-500">Failed to load settings</div>;
 
     const sections = [
+        { key: 'companyInfo', label: 'Company Branding', icon: Building2 },
         { key: 'workingHours', label: 'Working Hours', icon: Clock },
         { key: 'leavePolicies', label: 'Leave Policies', icon: CalendarDays },
         { key: 'payrollRules', label: 'Payroll Rules', icon: Wallet },
@@ -69,6 +70,39 @@ export default function HrmsSettings() {
             </div>
 
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                {activeSection === 'companyInfo' && (
+                    <div className="space-y-4">
+                        <h3 className="font-semibold text-slate-900 mb-4">Company Branding & Details</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div><label className={labelClass}>Company Name</label>
+                                <input type="text" className={inputClass} value={settings.companyInfo?.companyName || ''}
+                                    onChange={e => updateNested('companyInfo.companyName', e.target.value)} placeholder="e.g. ItzoFood" /></div>
+                            <div><label className={labelClass}>Company Logo URL</label>
+                                <input type="text" className={inputClass} value={settings.companyInfo?.companyLogoUrl || ''}
+                                    onChange={e => updateNested('companyInfo.companyLogoUrl', e.target.value)} placeholder="https://..." /></div>
+                            <div><label className={labelClass}>Support Email</label>
+                                <input type="email" className={inputClass} value={settings.companyInfo?.supportEmail || ''}
+                                    onChange={e => updateNested('companyInfo.supportEmail', e.target.value)} placeholder="support@itzofood.com" /></div>
+                            <div><label className={labelClass}>Support Phone</label>
+                                <input type="text" className={inputClass} value={settings.companyInfo?.supportPhone || ''}
+                                    onChange={e => updateNested('companyInfo.supportPhone', e.target.value)} placeholder="+91..." /></div>
+                            <div className="sm:col-span-2"><label className={labelClass}>Company Address</label>
+                                <textarea className="w-full p-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/30" rows={3} value={settings.companyInfo?.companyAddress || ''}
+                                    onChange={e => updateNested('companyInfo.companyAddress', e.target.value)} placeholder="123 Tech Park..."></textarea></div>
+                            <div><label className={labelClass}>Currency Code</label>
+                                <input type="text" className={inputClass} value={settings.companyInfo?.currency || 'INR'}
+                                    onChange={e => updateNested('companyInfo.currency', e.target.value)} placeholder="INR" /></div>
+                            <div><label className={labelClass}>Currency Symbol</label>
+                                <input type="text" className={inputClass} value={settings.companyInfo?.currencySymbol || '₹'}
+                                    onChange={e => updateNested('companyInfo.currencySymbol', e.target.value)} placeholder="₹" /></div>
+                        </div>
+                        <button onClick={() => saveSection('companyInfo', settings.companyInfo)} disabled={saving}
+                            className="flex items-center gap-2 px-5 h-10 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-xl text-sm disabled:opacity-50 mt-4">
+                            <Save className="w-4 h-4" /> {saving ? 'Saving...' : 'Save'}
+                        </button>
+                    </div>
+                )}
+
                 {activeSection === 'workingHours' && (
                     <div className="space-y-4">
                         <h3 className="font-semibold text-slate-900 mb-4">Working Hours Configuration</h3>

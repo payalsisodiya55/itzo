@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '@core/api/axios';
 import { toast } from 'sonner';
+import { useHrmsSettings } from '../context/HrmsSettingsContext';
 import {
     Building2, User, Mail, Phone, Lock, MapPin, FileText,
     GraduationCap, Briefcase, CreditCard, Heart, ChevronLeft,
@@ -17,6 +18,7 @@ const STEPS = [
 
 export default function Signup() {
     const navigate = useNavigate();
+    const { hrmsSettings } = useHrmsSettings();
     const [currentStep, setCurrentStep] = useState(0);
     const [loading, setLoading] = useState(false);
     const [submitted, setSubmitted] = useState(false);
@@ -142,10 +144,14 @@ export default function Signup() {
             <div className="w-full max-w-2xl mx-auto">
                 {/* Header */}
                 <div className="text-center mb-8">
-                    <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-orange-500/20">
-                        <Building2 className="w-7 h-7 text-white" />
+                    <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-orange-500/20 overflow-hidden">
+                        {hrmsSettings?.companyLogoUrl ? (
+                            <img src={hrmsSettings.companyLogoUrl} alt="Logo" className="w-full h-full object-cover bg-white" />
+                        ) : (
+                            <Building2 className="w-7 h-7 text-white" />
+                        )}
                     </div>
-                    <h1 className="text-2xl font-bold text-white">Join ItzoFood</h1>
+                    <h1 className="text-2xl font-bold text-white">Join {hrmsSettings?.companyName || 'ItzoFood'}</h1>
                     <p className="text-sm text-slate-400 mt-1">Submit your joining request</p>
                 </div>
 

@@ -76,7 +76,18 @@ const hrmsSettingsSchema = new mongoose.Schema(
             welcomeEmailHtml: { type: String, default: '<h1>Welcome to ItzoFood</h1>' }
         },
 
-        // 10. Audit & Modification Tracking
+        // 10. Company Branding & Details
+        companyInfo: {
+            companyName: { type: String, default: 'ItzoFood' },
+            companyAddress: { type: String, default: '123 Tech Park, Bangalore, India' },
+            supportEmail: { type: String, default: 'support@itzofood.com' },
+            supportPhone: { type: String, default: '' },
+            companyLogoUrl: { type: String, default: '' },
+            currency: { type: String, default: 'INR' },
+            currencySymbol: { type: String, default: '₹' },
+        },
+
+        // 11. Audit & Modification Tracking
         updatedBy: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'FoodAdmin'

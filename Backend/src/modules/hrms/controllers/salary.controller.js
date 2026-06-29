@@ -5,6 +5,7 @@ import { HrmsLeave } from '../models/leave.model.js';
 import { HrmsExpense } from '../models/expense.model.js';
 import { HrmsSettings } from '../models/settings.model.js';
 import { sendResponse, sendError } from '../../../utils/response.js';
+import { generateBulkPayslipsBackground, generatePayslipPdf } from '../services/payslip.service.js';
 
 /**
  * ADMIN: Generate payroll for a month
@@ -140,6 +141,9 @@ export const generatePayroll = async (req, res, next) => {
         }
 
         const savedRecords = await HrmsSalary.insertMany(salaryRecords);
+
+        // Trigger PDF generation in the background asynchronously
+        generateBulkPayslipsBackground(savedRecords.map(s => s._id)).catch(err => console.error('Bulk generation error:', err));
 
         return sendResponse(res, 201, `Payroll generated for ${employees.length} employees`, {
             month: m,
@@ -279,6 +283,24 @@ export const getPayslipDetail = async (req, res, next) => {
         if (!salary) return sendError(res, 404, 'Payslip not found');
 
         return sendResponse(res, 200, 'Payslip detail retrieved', salary);
+    } catch (error) {
+        next(error);
+    }
+};
+
+/**
+ * ADMIN: Regenerate a single payslip PDF
+ */
+export const regeneratePayslip = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const salary = await HrmsSalary.findById(id);
+        if (!salary) return sendError(res, 404, 'Salary record not found');
+
+        // Regenerate payslip PDF
+        await generatePayslipPdf(id);
+
+        return sendResponse(res, 200, 'Payslip regenerated successfully');
     } catch (error) {
         next(error);
     }

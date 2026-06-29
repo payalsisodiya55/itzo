@@ -12,6 +12,10 @@ export default function HrmsPayroll() {
     const [genLoading, setGenLoading] = useState(false);
     const [month, setMonth] = useState(new Date().getMonth() + 1);
     const [year, setYear] = useState(new Date().getFullYear());
+    
+    // Payslip modal
+    const [previewPdf, setPreviewPdf] = useState(null);
+    const [regeneratingId, setRegeneratingId] = useState(null);
 
     useEffect(() => {
         const fetch = async () => {
@@ -74,6 +78,21 @@ export default function HrmsPayroll() {
             toast.success(`Expense ${action.toLowerCase()}`);
             setExpenses(prev => prev.filter(e => e._id !== id));
         } catch (e) { toast.error(e.response?.data?.message || 'Action failed'); }
+    };
+
+    const handleRegeneratePayslip = async (id) => {
+        setRegeneratingId(id);
+        try {
+            await axiosInstance.post(`/hrms/salaries/${id}/generate-payslip`);
+            toast.success('Payslip regenerated successfully');
+            // Refresh table
+            const res = await axiosInstance.get(`/hrms/salaries?month=${month}&year=${year}`);
+            setPayrollRecords(res.data?.data?.records || []);
+        } catch (e) {
+            toast.error(e.response?.data?.message || 'Regeneration failed');
+        } finally {
+            setRegeneratingId(null);
+        }
     };
 
     const hasDrafts = payrollRecords.some(r => r.status === 'Draft');
@@ -149,6 +168,7 @@ export default function HrmsPayroll() {
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Reimb.</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Net Salary</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Status</th>
+                                    <th className="px-5 py-3 text-right text-xs font-semibold text-slate-600 uppercase">Payslip</th>
                                 </tr></thead>
                                 <tbody>
                                     {payrollRecords.map(r => (
@@ -160,6 +180,21 @@ export default function HrmsPayroll() {
                                             <td className="px-5 py-3.5 text-blue-600">₹{r.reimbursements?.toLocaleString() || 0}</td>
                                             <td className="px-5 py-3.5 font-bold text-emerald-600">₹{r.netSalary?.toLocaleString() || 0}</td>
                                             <td className="px-5 py-3.5"><span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${r.status === 'Paid' ? 'bg-emerald-50 text-emerald-700' : r.status === 'Approved' ? 'bg-blue-50 text-blue-700' : 'bg-slate-100 text-slate-600'}`}>{r.status}</span></td>
+                                            <td className="px-5 py-3.5 text-right">
+                                                {r.payslipUrl ? (
+                                                    <div className="flex items-center justify-end gap-2">
+                                                        <button onClick={() => setPreviewPdf(r.payslipUrl)} className="text-blue-600 hover:text-blue-700 text-xs font-medium" title="Preview PDF">View</button>
+                                                        <span className="text-slate-300">|</span>
+                                                        <a href={r.payslipUrl} download target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 text-xs font-medium" title="Download PDF">DL</a>
+                                                        <span className="text-slate-300">|</span>
+                                                        <button onClick={() => handleRegeneratePayslip(r._id)} disabled={regeneratingId === r._id} className="text-orange-600 hover:text-orange-700 text-xs font-medium disabled:opacity-50" title="Regenerate PDF">
+                                                            {regeneratingId === r._id ? '...' : 'Regen'}
+                                                        </button>
+                                                    </div>
+                                                ) : (
+                                                    <span className="text-xs text-slate-400 italic">Generating...</span>
+                                                )}
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -188,6 +223,26 @@ export default function HrmsPayroll() {
                     )
                 )}
             </div>
+
+            {/* PDF Preview Modal */}
+            {previewPdf && (
+                <div className="fixed inset-0 z-50 flex flex-col bg-black/90 backdrop-blur-sm">
+                    <div className="flex items-center justify-between p-4 border-b border-white/10 text-white">
+                        <h3 className="font-medium text-lg">Payslip Preview</h3>
+                        <div className="flex gap-4">
+                            <a href={previewPdf} download target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition-colors flex items-center gap-2">
+                                Download PDF
+                            </a>
+                            <button onClick={() => setPreviewPdf(null)} className="px-4 py-2 bg-red-500/20 text-red-400 hover:bg-red-500/30 rounded-lg text-sm transition-colors">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                    <div className="flex-1 w-full h-full p-4">
+                        <iframe src={previewPdf} className="w-full h-full rounded-xl bg-white" title="Payslip PDF" />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
