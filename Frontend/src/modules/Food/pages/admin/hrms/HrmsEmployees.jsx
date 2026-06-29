@@ -112,44 +112,53 @@ export default function HrmsEmployees() {
                     className="w-full h-11 pl-11 pr-4 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/30 bg-white" />
             </div>
 
-            {/* Employee Detail */}
+            {/* Employee Detail Modal */}
             {selectedEmployee && (
-                <div className="bg-white rounded-2xl border border-slate-200 shadow-lg p-6">
-                    <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-lg font-bold text-slate-900">{selectedEmployee.adminId?.name} <span className="text-sm text-slate-400">({selectedEmployee.employeeId})</span></h2>
-                        <button onClick={() => setSelectedEmployee(null)} className="p-2 rounded-lg hover:bg-slate-100"><X className="w-5 h-5 text-slate-400" /></button>
-                    </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 text-sm">
-                        {[
-                            { l: 'Email', v: selectedEmployee.adminId?.email },
-                            { l: 'Phone', v: selectedEmployee.adminId?.phone },
-                            { l: 'Department', v: selectedEmployee.department },
-                            { l: 'Designation', v: selectedEmployee.designation },
-                            { l: 'HRMS Role', v: selectedEmployee.hrmsRole },
-                            { l: 'Employment', v: selectedEmployee.employmentType },
-                            { l: 'CTC', v: selectedEmployee.ctc ? `₹${selectedEmployee.ctc.toLocaleString()}` : '—' },
-                            { l: 'Monthly Salary', v: selectedEmployee.monthlySalary ? `₹${selectedEmployee.monthlySalary.toLocaleString()}` : '—' },
-                            { l: 'Joining Date', v: selectedEmployee.joiningDate ? new Date(selectedEmployee.joiningDate).toLocaleDateString('en-IN') : '—' },
-                            { l: 'Status', v: selectedEmployee.status },
-                            { l: 'Manager', v: selectedEmployee.managerId?.adminId?.name || '—' },
-                            { l: 'Shift', v: selectedEmployee.shift },
-                        ].map((f, i) => (
-                            <div key={i} className="min-w-0">
-                                <p className="text-xs text-slate-500">{f.l}</p>
-                                <p className="font-medium text-slate-900 truncate" title={f.v}>{f.v || '—'}</p>
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+                    <div className="bg-white rounded-2xl w-full max-w-2xl shadow-xl overflow-hidden max-h-[90vh] flex flex-col">
+                        <div className="flex items-center justify-between p-6 border-b border-slate-100">
+                            <div>
+                                <h2 className="text-lg font-bold text-slate-900">{selectedEmployee.adminId?.name || 'Unknown'}</h2>
+                                <p className="text-sm text-slate-500">ID: {selectedEmployee.employeeId}</p>
                             </div>
-                        ))}
-                    </div>
-                    <div className="mt-4 pt-4 border-t border-slate-100 flex gap-2 flex-wrap">
-                        {selectedEmployee.status === 'Active' && (
-                            <button onClick={() => handleStatusChange(selectedEmployee._id, 'Suspended')} className="px-4 h-9 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-sm font-medium transition-all">Suspend</button>
-                        )}
-                        {selectedEmployee.status === 'Suspended' && (
-                            <button onClick={() => handleStatusChange(selectedEmployee._id, 'Active')} className="px-4 h-9 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-sm font-medium transition-all">Reactivate</button>
-                        )}
-                        {selectedEmployee.status !== 'Terminated' && (
-                            <button onClick={() => handleStatusChange(selectedEmployee._id, 'Terminated')} className="px-4 h-9 bg-red-500 hover:bg-red-600 text-white rounded-xl text-sm font-medium transition-all">Terminate</button>
-                        )}
+                            <button onClick={() => setSelectedEmployee(null)} className="p-2 rounded-lg hover:bg-slate-100 transition-colors">
+                                <X className="w-5 h-5 text-slate-400" />
+                            </button>
+                        </div>
+                        <div className="p-6 overflow-y-auto">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 text-sm">
+                                {[
+                                    { l: 'Email', v: selectedEmployee.adminId?.email },
+                                    { l: 'Phone', v: selectedEmployee.adminId?.phone },
+                                    { l: 'Department', v: selectedEmployee.department },
+                                    { l: 'Designation', v: selectedEmployee.designation },
+                                    { l: 'HRMS Role', v: selectedEmployee.hrmsRole },
+                                    { l: 'Employment', v: selectedEmployee.employmentType },
+                                    { l: 'CTC', v: selectedEmployee.ctc ? `₹${Number(selectedEmployee.ctc).toLocaleString()}` : '—' },
+                                    { l: 'Monthly Salary', v: selectedEmployee.monthlySalary ? `₹${Number(selectedEmployee.monthlySalary).toLocaleString()}` : '—' },
+                                    { l: 'Joining Date', v: selectedEmployee.joiningDate ? new Date(selectedEmployee.joiningDate).toLocaleDateString('en-IN') : '—' },
+                                    { l: 'Status', v: selectedEmployee.status },
+                                    { l: 'Manager', v: selectedEmployee.managerId?.adminId?.name || '—' },
+                                    { l: 'Shift', v: selectedEmployee.shift },
+                                ].map((f, i) => (
+                                    <div key={i} className="min-w-0">
+                                        <p className="text-xs text-slate-500 mb-1">{f.l}</p>
+                                        <p className="font-medium text-slate-900 truncate" title={f.v}>{f.v || '—'}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="p-6 border-t border-slate-100 bg-slate-50 flex gap-3 justify-end rounded-b-2xl">
+                            {selectedEmployee.status === 'Active' && (
+                                <button onClick={() => handleStatusChange(selectedEmployee._id, 'Suspended')} className="px-5 h-10 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-sm font-medium transition-all shadow-sm">Suspend Employee</button>
+                            )}
+                            {selectedEmployee.status === 'Suspended' && (
+                                <button onClick={() => handleStatusChange(selectedEmployee._id, 'Active')} className="px-5 h-10 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-sm font-medium transition-all shadow-sm">Reactivate Employee</button>
+                            )}
+                            {selectedEmployee.status !== 'Terminated' && (
+                                <button onClick={() => handleStatusChange(selectedEmployee._id, 'Terminated')} className="px-5 h-10 bg-red-500 hover:bg-red-600 text-white rounded-xl text-sm font-medium transition-all shadow-sm">Terminate Employee</button>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}
