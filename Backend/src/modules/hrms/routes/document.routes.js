@@ -3,7 +3,8 @@ import {
     getMyDocuments,
     getEmployeeDocuments,
     uploadDocument,
-    deleteDocument
+    deleteDocument,
+    getAllDocuments
 } from '../controllers/document.controller.js';
 import { authMiddleware, requireAdmin } from '../../../core/auth/auth.middleware.js';
 import { requireHrmsEmployee } from '../middleware/hrmsAuth.middleware.js';
@@ -14,6 +15,7 @@ const router = express.Router();
 router.get('/me', authMiddleware, requireHrmsEmployee, getMyDocuments);
 
 // ADMIN: Document management
+router.get('/', authMiddleware, requireAdmin, getAllDocuments);
 router.get('/employee/:employeeId', authMiddleware, requireAdmin, getEmployeeDocuments);
 router.post('/', authMiddleware, requireAdmin, uploadDocument);
 router.delete('/:id', authMiddleware, requireAdmin, deleteDocument);

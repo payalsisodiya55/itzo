@@ -80,3 +80,19 @@ export const deleteDocument = async (req, res, next) => {
         next(error);
     }
 };
+
+/**
+ * ADMIN: Get all documents
+ */
+export const getAllDocuments = async (req, res, next) => {
+    try {
+        const { documentType } = req.query;
+        const filter = {};
+        if (documentType) filter.documentType = documentType;
+
+        const documents = await HrmsDocument.find(filter).sort({ createdAt: -1 }).lean();
+        return sendResponse(res, 200, 'Documents retrieved', documents);
+    } catch (error) {
+        next(error);
+    }
+};

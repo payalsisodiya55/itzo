@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axiosInstance from '@core/api/axios';
 import { toast } from 'sonner';
-import { Users, Loader2, Search, Eye, Plus, ChevronLeft, ChevronRight, X, UserPlus } from 'lucide-react';
+import { Users, Loader2, Search, Eye, Plus, ChevronLeft, ChevronRight, X, UserPlus, FileText } from 'lucide-react';
 
 export default function HrmsEmployees() {
     const [employees, setEmployees] = useState([]);
@@ -66,11 +66,16 @@ export default function HrmsEmployees() {
                     <h1 className="text-2xl font-bold text-slate-900">Employee Management</h1>
                     <p className="text-sm text-slate-500 mt-1">Manage your active workforce</p>
                 </div>
-                <button onClick={() => setShowOnboard(!showOnboard)}
-                    className="flex items-center gap-2 px-4 h-10 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-xl shadow-sm transition-all text-sm">
-                    {showOnboard ? <X className="w-4 h-4" /> : <UserPlus className="w-4 h-4" />}
-                    {showOnboard ? 'Cancel' : 'Direct Onboard'}
-                </button>
+                <div className="flex items-center gap-3">
+                    <a href="/ecs/hrms/employee-docs" className="flex items-center gap-2 px-4 h-10 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium rounded-xl shadow-sm transition-all text-sm">
+                        <FileText className="w-4 h-4" /> Employee Docs
+                    </a>
+                    <button onClick={() => setShowOnboard(!showOnboard)}
+                        className="flex items-center gap-2 px-4 h-10 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-xl shadow-sm transition-all text-sm">
+                        {showOnboard ? <X className="w-4 h-4" /> : <UserPlus className="w-4 h-4" />}
+                        {showOnboard ? 'Cancel' : 'Direct Onboard'}
+                    </button>
+                </div>
             </div>
 
             {/* Direct Onboard Form */}
