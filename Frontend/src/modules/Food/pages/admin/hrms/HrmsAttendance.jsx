@@ -132,7 +132,7 @@ export default function HrmsAttendance() {
                                         <p className="text-xs text-slate-400">Requested: {r.regularization?.requestedCheckInTime ? new Date(r.regularization.requestedCheckInTime).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : ''} - {r.regularization?.requestedCheckOutTime ? new Date(r.regularization.requestedCheckOutTime).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : ''}</p>
                                     </div>
                                     <div className="flex gap-2">
-                                        <button onClick={() => handleRegAction(r._id, 'Approved')} className="px-4 h-9 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-sm font-medium">Approve</button>
+                                        <button onClick={() => handleRegAction(r._id, 'Approved')} className="px-4 h-9 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-sm font-medium">Approve</button>
                                         <button onClick={() => handleRegAction(r._id, 'Rejected')} className="px-4 h-9 bg-red-500 hover:bg-red-600 text-white rounded-xl text-sm font-medium">Reject</button>
                                     </div>
                                 </div>
@@ -152,7 +152,7 @@ export default function HrmsAttendance() {
                                         <p className="text-xs text-slate-400">Reason: {l.reason}</p>
                                     </div>
                                     <div className="flex gap-2">
-                                        <button onClick={() => handleLeaveAction(l._id, 'Approved')} className="px-4 h-9 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-sm font-medium">Approve</button>
+                                        <button onClick={() => handleLeaveAction(l._id, 'Approved')} className="px-4 h-9 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-sm font-medium">Approve</button>
                                         <button onClick={() => handleLeaveAction(l._id, 'Rejected')} className="px-4 h-9 bg-red-500 hover:bg-red-600 text-white rounded-xl text-sm font-medium">Reject</button>
                                     </div>
                                 </div>

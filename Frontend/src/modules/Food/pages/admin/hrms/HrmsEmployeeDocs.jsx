@@ -206,10 +206,10 @@ export default function HrmsEmployeeDocs() {
                                                 <div className="flex items-center justify-end gap-2">
                                                     {hasDoc ? (
                                                         <>
-                                                            <button onClick={() => openPreview(doc)} className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Preview">
+                                                            <button onClick={() => openPreview(doc)} className="p-1.5 text-orange-500 hover:bg-orange-50 rounded-lg transition-colors" title="Preview">
                                                                 <Eye className="w-4 h-4" />
                                                             </button>
-                                                            <a href={doc.url} download target="_blank" rel="noopener noreferrer" className="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors" title="Download">
+                                                            <a href={doc.url} download target="_blank" rel="noopener noreferrer" className="p-1.5 text-orange-500 hover:bg-orange-50 rounded-lg transition-colors" title="Download">
                                                                 <Download className="w-4 h-4" />
                                                             </a>
                                                             <button onClick={() => openUploadModal(emp)} className="p-1.5 text-orange-600 hover:bg-orange-50 rounded-lg transition-colors" title="Replace">

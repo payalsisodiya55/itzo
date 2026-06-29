@@ -117,16 +117,16 @@ export default function HrmsPayroll() {
                             {[2024,2025,2026,2027].map(y => <option key={y} value={y}>{y}</option>)}
                         </select>
                         <button onClick={handleGenerate} disabled={genLoading}
-                            className="flex items-center gap-2 px-4 h-10 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-xl text-sm disabled:opacity-50">
+                            className="flex items-center gap-2 px-4 h-10 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-xl text-sm disabled:opacity-50">
                             <Play className="w-4 h-4" />{genLoading ? 'Generating...' : 'Generate Payroll'}
                         </button>
                         {hasDrafts && (
-                            <button onClick={handleApprovePayroll} className="flex items-center gap-2 px-4 h-10 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-xl text-sm">
+                            <button onClick={handleApprovePayroll} className="flex items-center gap-2 px-4 h-10 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-xl text-sm">
                                 <CheckCircle className="w-4 h-4" /> Approve All
                             </button>
                         )}
                         {hasApproved && (
-                            <button onClick={handleMarkPaid} className="flex items-center gap-2 px-4 h-10 bg-violet-500 hover:bg-violet-600 text-white font-medium rounded-xl text-sm">
+                            <button onClick={handleMarkPaid} className="flex items-center gap-2 px-4 h-10 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-xl text-sm">
                                 <DollarSign className="w-4 h-4" /> Mark Paid
                             </button>
                         )}
@@ -138,10 +138,10 @@ export default function HrmsPayroll() {
                                 <p className="text-xs text-slate-500">Employees</p><p className="text-2xl font-bold text-slate-900">{summary.count}</p>
                             </div>
                             <div className="bg-white rounded-xl border border-slate-200 p-4 text-center">
-                                <p className="text-xs text-slate-500">Total Salary</p><p className="text-2xl font-bold text-emerald-600">₹{summary.totalNetSalary?.toLocaleString()}</p>
+                                <p className="text-xs text-slate-500">Total Salary</p><p className="text-2xl font-bold text-slate-900">₹{summary.totalNetSalary?.toLocaleString()}</p>
                             </div>
                             <div className="bg-white rounded-xl border border-slate-200 p-4 text-center">
-                                <p className="text-xs text-slate-500">Reimbursements</p><p className="text-2xl font-bold text-blue-600">₹{summary.totalReimbursements?.toLocaleString()}</p>
+                                <p className="text-xs text-slate-500">Reimbursements</p><p className="text-2xl font-bold text-slate-900">₹{summary.totalReimbursements?.toLocaleString()}</p>
                             </div>
                             <div className="bg-white rounded-xl border border-slate-200 p-4 text-center">
                                 <p className="text-xs text-slate-500">LOP Deductions</p><p className="text-2xl font-bold text-red-600">₹{summary.totalLopDeduction?.toLocaleString()}</p>
@@ -177,15 +177,15 @@ export default function HrmsPayroll() {
                                             <td className="px-5 py-3.5">{r.presentDays}/{r.totalWorkingDays}</td>
                                             <td className="px-5 py-3.5 text-red-600">{r.lopDays || 0}</td>
                                             <td className="px-5 py-3.5 text-red-600">₹{((r.shortHourDeduction || 0) + (r.lopDeduction || 0)).toLocaleString()}</td>
-                                            <td className="px-5 py-3.5 text-blue-600">₹{r.reimbursements?.toLocaleString() || 0}</td>
-                                            <td className="px-5 py-3.5 font-bold text-emerald-600">₹{r.netSalary?.toLocaleString() || 0}</td>
-                                            <td className="px-5 py-3.5"><span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${r.status === 'Paid' ? 'bg-emerald-50 text-emerald-700' : r.status === 'Approved' ? 'bg-blue-50 text-blue-700' : 'bg-slate-100 text-slate-600'}`}>{r.status}</span></td>
+                                            <td className="px-5 py-3.5 text-slate-900">₹{r.reimbursements?.toLocaleString() || 0}</td>
+                                            <td className="px-5 py-3.5 font-bold text-slate-900">₹{r.netSalary?.toLocaleString() || 0}</td>
+                                            <td className="px-5 py-3.5"><span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${r.status === 'Paid' ? 'bg-orange-50 text-orange-700' : r.status === 'Approved' ? 'bg-orange-50 text-orange-700' : 'bg-slate-100 text-slate-600'}`}>{r.status}</span></td>
                                             <td className="px-5 py-3.5 text-right">
                                                 {r.payslipUrl ? (
                                                     <div className="flex items-center justify-end gap-2">
-                                                        <button onClick={() => setPreviewPdf(r.payslipUrl)} className="text-blue-600 hover:text-blue-700 text-xs font-medium" title="Preview PDF">View</button>
+                                                        <button onClick={() => setPreviewPdf(r.payslipUrl)} className="text-orange-600 hover:text-orange-700 text-xs font-medium" title="Preview PDF">View</button>
                                                         <span className="text-slate-300">|</span>
-                                                        <a href={r.payslipUrl} download target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 text-xs font-medium" title="Download PDF">DL</a>
+                                                        <a href={r.payslipUrl} download target="_blank" rel="noopener noreferrer" className="text-orange-600 hover:text-orange-700 text-xs font-medium" title="Download PDF">DL</a>
                                                         <span className="text-slate-300">|</span>
                                                         <button onClick={() => handleRegeneratePayslip(r._id)} disabled={regeneratingId === r._id} className="text-orange-600 hover:text-orange-700 text-xs font-medium disabled:opacity-50" title="Regenerate PDF">
                                                             {regeneratingId === r._id ? '...' : 'Regen'}

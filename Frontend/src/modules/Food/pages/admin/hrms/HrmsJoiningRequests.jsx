@@ -231,7 +231,7 @@ export default function HrmsJoiningRequests() {
                             {selectedRequest.status !== 'Approved' && selectedRequest.status !== 'Rejected' && (
                                 <div className="space-y-4 pt-4 border-t border-slate-100">
                                     <details className="group">
-                                        <summary className="flex items-center gap-2 cursor-pointer text-emerald-600 font-semibold text-sm">
+                                        <summary className="flex items-center gap-2 cursor-pointer text-orange-600 font-semibold text-sm">
                                             <CheckCircle className="w-4 h-4" /> Approve & Onboard
                                         </summary>
                                         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -265,7 +265,7 @@ export default function HrmsJoiningRequests() {
                                             </div>
                                         </div>
                                         <button onClick={handleApprove} disabled={actionLoading}
-                                            className="mt-4 px-6 h-10 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-xl transition-all text-sm disabled:opacity-50 shadow-sm">
+                                            className="mt-4 px-6 h-10 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-all text-sm disabled:opacity-50 shadow-sm">
                                             {actionLoading ? 'Processing...' : 'Approve & Create Employee'}
                                         </button>
                                     </details>
@@ -285,14 +285,14 @@ export default function HrmsJoiningRequests() {
                                     </details>
 
                                     <details className="group">
-                                        <summary className="flex items-center gap-2 cursor-pointer text-violet-600 font-semibold text-sm">
+                                        <summary className="flex items-center gap-2 cursor-pointer text-orange-600 font-semibold text-sm">
                                             <MessageSquare className="w-4 h-4" /> Request More Information
                                         </summary>
                                         <div className="mt-4">
                                             <textarea value={infoMessage} onChange={e => setInfoMessage(e.target.value)} rows={2} placeholder="What information do you need?"
-                                                className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/30 resize-none" />
+                                                className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/30 resize-none" />
                                             <button onClick={handleRequestInfo} disabled={actionLoading}
-                                                className="mt-2 px-6 h-10 bg-violet-500 hover:bg-violet-600 text-white font-semibold rounded-xl transition-all text-sm disabled:opacity-50">
+                                                className="mt-2 px-6 h-10 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-all text-sm disabled:opacity-50">
                                                 {actionLoading ? 'Sending...' : 'Send Request'}
                                             </button>
                                         </div>

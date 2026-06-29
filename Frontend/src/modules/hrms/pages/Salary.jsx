@@ -116,7 +116,7 @@ export default function Salary() {
                                             ) : (
                                                 r.payslipUrl ? (
                                                     <div className="flex items-center gap-3">
-                                                        <button onClick={() => setPreviewPdf(r.payslipUrl)} className="text-blue-600 hover:text-blue-700 text-xs font-medium flex items-center gap-1">
+                                                        <button onClick={() => setPreviewPdf(r.payslipUrl)} className="text-orange-500 hover:text-orange-600 text-xs font-medium flex items-center gap-1">
                                                             <Eye className="w-3.5 h-3.5" /> Preview PDF
                                                         </button>
                                                         <span className="text-slate-300">|</span>

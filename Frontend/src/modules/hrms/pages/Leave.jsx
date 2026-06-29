@@ -67,7 +67,7 @@ export default function Leave() {
             {balance && (
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {[
-                        { label: 'Monthly Allowed', value: balance.monthly?.allowed || 0, color: 'text-blue-600 bg-blue-50' },
+                        { label: 'Monthly Allowed', value: balance.monthly?.allowed || 0, color: 'text-orange-600 bg-orange-50' },
                         { label: 'Used This Month', value: balance.monthly?.used || 0, color: 'text-orange-600 bg-orange-50' },
                         { label: 'Remaining', value: balance.monthly?.remaining || 0, color: 'text-emerald-600 bg-emerald-50' },
                         { label: 'LOP This Month', value: balance.monthly?.lopDays || 0, color: 'text-red-600 bg-red-50' },

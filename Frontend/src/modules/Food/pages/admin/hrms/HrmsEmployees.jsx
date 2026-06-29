@@ -99,7 +99,7 @@ export default function HrmsEmployees() {
                         </div>
                     </div>
                     <button onClick={handleOnboard} disabled={onboardLoading}
-                        className="mt-4 px-6 h-10 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-xl transition-all text-sm disabled:opacity-50">
+                        className="mt-4 px-6 h-10 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-all text-sm disabled:opacity-50">
                         {onboardLoading ? 'Processing...' : 'Onboard Employee'}
                     </button>
                 </div>
@@ -153,7 +153,7 @@ export default function HrmsEmployees() {
                                 <button onClick={() => handleStatusChange(selectedEmployee._id, 'Suspended')} className="px-5 h-10 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-sm font-medium transition-all shadow-sm">Suspend Employee</button>
                             )}
                             {selectedEmployee.status === 'Suspended' && (
-                                <button onClick={() => handleStatusChange(selectedEmployee._id, 'Active')} className="px-5 h-10 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-sm font-medium transition-all shadow-sm">Reactivate Employee</button>
+                                <button onClick={() => handleStatusChange(selectedEmployee._id, 'Active')} className="px-5 h-10 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-sm font-medium transition-all shadow-sm">Reactivate Employee</button>
                             )}
                             {selectedEmployee.status !== 'Terminated' && (
                                 <button onClick={() => handleStatusChange(selectedEmployee._id, 'Terminated')} className="px-5 h-10 bg-red-500 hover:bg-red-600 text-white rounded-xl text-sm font-medium transition-all shadow-sm">Terminate Employee</button>

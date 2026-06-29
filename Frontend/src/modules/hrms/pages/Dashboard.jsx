@@ -128,11 +128,11 @@ export default function Dashboard() {
 
                 {/* Leave Balance */}
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                    <div className="h-1 bg-gradient-to-r from-blue-500 to-indigo-500" />
+                    <div className="h-1 bg-gradient-to-r from-orange-500 to-amber-500" />
                     <div className="p-6">
                         <div className="flex items-center gap-3 mb-5">
-                            <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
-                                <CalendarDays className="w-5 h-5 text-blue-600" />
+                            <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center">
+                                <CalendarDays className="w-5 h-5 text-orange-600" />
                             </div>
                             <h3 className="font-bold text-slate-900">Leave Balance</h3>
                         </div>
@@ -159,20 +159,20 @@ export default function Dashboard() {
 
                 {/* Quick Actions */}
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden md:col-span-2 xl:col-span-1">
-                    <div className="h-1 bg-gradient-to-r from-violet-500 to-purple-500" />
+                    <div className="h-1 bg-gradient-to-r from-orange-500 to-amber-500" />
                     <div className="p-6">
                         <div className="flex items-center gap-3 mb-5">
-                            <div className="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center">
-                                <TrendingUp className="w-5 h-5 text-violet-600" />
+                            <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center">
+                                <TrendingUp className="w-5 h-5 text-orange-600" />
                             </div>
                             <h3 className="font-bold text-slate-900">Quick Actions</h3>
                         </div>
                         <div className="space-y-2.5">
                             {[
-                                { label: 'Apply for Leave', path: '/hrms/leave', icon: CalendarDays, color: 'text-blue-600 bg-blue-50' },
-                                { label: 'Submit Expense', path: '/hrms/expenses', icon: Wallet, color: 'text-emerald-600 bg-emerald-50' },
+                                { label: 'Apply for Leave', path: '/hrms/leave', icon: CalendarDays, color: 'text-orange-600 bg-orange-50' },
+                                { label: 'Submit Expense', path: '/hrms/expenses', icon: Wallet, color: 'text-orange-600 bg-orange-50' },
                                 { label: 'View Attendance', path: '/hrms/attendance', icon: Clock, color: 'text-orange-600 bg-orange-50' },
-                                { label: 'View Payslip', path: '/hrms/salary', icon: FileCheck, color: 'text-violet-600 bg-violet-50' },
+                                { label: 'View Payslip', path: '/hrms/salary', icon: FileCheck, color: 'text-orange-600 bg-orange-50' },
                             ].map((item) => (
                                 <button key={item.path} onClick={() => navigate(item.path)}
                                     className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-slate-100 hover:bg-slate-50 hover:border-slate-200 transition-all text-left group">
