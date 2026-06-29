@@ -1,113 +1,156 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '@core/api/axios';
-import { Card, CardContent } from '@food/components/ui/Card';
-import { Calendar, Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
+import { Clock, Loader2, CheckCircle, XCircle, CalendarDays } from 'lucide-react';
 
 export default function HrmsAttendance() {
-    const [attendance, setAttendance] = useState([]);
-    const [leaves, setLeaves] = useState([]);
+    const [tab, setTab] = useState('attendance');
+    const [records, setRecords] = useState([]);
+    const [pendingRegs, setPendingRegs] = useState([]);
+    const [pendingLeaves, setPendingLeaves] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [month, setMonth] = useState(new Date().getMonth() + 1);
+    const [year, setYear] = useState(new Date().getFullYear());
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetch = async () => {
+            setLoading(true);
             try {
-                const [attRes, leaveRes] = await Promise.all([
-                    axiosInstance.get('/hrms/attendance'),
-                    axiosInstance.get('/hrms/leaves')
-                ]);
-                setAttendance(attRes.data.data || []);
-                setLeaves(leaveRes.data.data || []);
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setLoading(false);
-            }
+                if (tab === 'attendance') {
+                    const res = await axiosInstance.get(`/hrms/attendance?month=${month}&year=${year}`);
+                    setRecords(res.data?.data?.records || []);
+                } else if (tab === 'regularizations') {
+                    const res = await axiosInstance.get('/hrms/attendance/pending-regularizations');
+                    setPendingRegs(res.data?.data || []);
+                } else if (tab === 'leaves') {
+                    const res = await axiosInstance.get('/hrms/leaves/pending');
+                    setPendingLeaves(res.data?.data || []);
+                }
+            } catch (e) { console.error(e); }
+            finally { setLoading(false); }
         };
-        fetchData();
-    }, []);
+        fetch();
+    }, [tab, month, year]);
+
+    const handleRegAction = async (id, action) => {
+        try {
+            await axiosInstance.post(`/hrms/attendance/regularize/${id}/action`, { action });
+            toast.success(`Regularization ${action.toLowerCase()}`);
+            setPendingRegs(prev => prev.filter(r => r._id !== id));
+        } catch (e) { toast.error(e.response?.data?.message || 'Action failed'); }
+    };
+
+    const handleLeaveAction = async (id, action) => {
+        try {
+            await axiosInstance.post(`/hrms/leaves/${id}/action`, { action });
+            toast.success(`Leave ${action.toLowerCase()}`);
+            setPendingLeaves(prev => prev.filter(l => l._id !== id));
+        } catch (e) { toast.error(e.response?.data?.message || 'Action failed'); }
+    };
 
     return (
-        <div className="p-6">
-            <div className="mb-6">
-                <h1 className="text-2xl font-bold tracking-tight text-gray-900">Attendance & Leaves</h1>
-                <p className="text-sm text-gray-500 mt-1">Monitor daily attendance and manage leave requests.</p>
+        <div className="space-y-6">
+            <h1 className="text-2xl font-bold text-slate-900">Attendance & Leaves</h1>
+
+            {/* Tabs */}
+            <div className="flex gap-2">
+                {[
+                    { key: 'attendance', label: 'All Attendance' },
+                    { key: 'regularizations', label: 'Pending Regularizations', count: pendingRegs.length },
+                    { key: 'leaves', label: 'Pending Leaves', count: pendingLeaves.length },
+                ].map(t => (
+                    <button key={t.key} onClick={() => setTab(t.key)}
+                        className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${tab === t.key ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}`}>
+                        {t.label}
+                    </button>
+                ))}
             </div>
 
-            <h2 className="text-lg font-bold mb-4">Leave Requests</h2>
-            <Card className="mb-8">
-                <CardContent className="p-0">
-                    {loading ? (
-                        <div className="flex justify-center p-8"><Loader2 className="w-6 h-6 animate-spin text-gray-400" /></div>
-                    ) : leaves.length === 0 ? (
-                        <div className="p-8 text-center text-gray-500">No leave requests found.</div>
-                    ) : (
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-left text-sm text-gray-500">
-                                <thead className="text-xs text-gray-700 uppercase bg-gray-50 border-b">
-                                    <tr>
-                                        <th className="px-6 py-4 font-semibold">Employee</th>
-                                        <th className="px-6 py-4 font-semibold">Type</th>
-                                        <th className="px-6 py-4 font-semibold">Duration</th>
-                                        <th className="px-6 py-4 font-semibold">Reason</th>
-                                        <th className="px-6 py-4 font-semibold">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {leaves.map(l => (
-                                        <tr key={l._id} className="border-b">
-                                            <td className="px-6 py-4 font-medium text-gray-900">{l.employeeId?.adminId?.name || 'N/A'}</td>
-                                            <td className="px-6 py-4">{l.leaveType}</td>
-                                            <td className="px-6 py-4">{new Date(l.startDate).toLocaleDateString()} to {new Date(l.endDate).toLocaleDateString()} ({l.totalDays} Days)</td>
-                                            <td className="px-6 py-4 max-w-[200px] truncate">{l.reason}</td>
-                                            <td className="px-6 py-4">
-                                                <span className={`px-2 py-1 rounded-full text-xs font-medium ${l.status === 'Approved' ? 'bg-emerald-100 text-emerald-700' : l.status === 'Pending' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`}>
-                                                    {l.status}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    )}
-                </CardContent>
-            </Card>
+            {tab === 'attendance' && (
+                <div className="flex gap-3 items-center">
+                    <select value={month} onChange={e => setMonth(Number(e.target.value))} className="h-10 px-3 border border-slate-200 rounded-xl text-sm bg-white">
+                        {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map((m,i) => <option key={i} value={i+1}>{m}</option>)}
+                    </select>
+                    <select value={year} onChange={e => setYear(Number(e.target.value))} className="h-10 px-3 border border-slate-200 rounded-xl text-sm bg-white">
+                        {[2024,2025,2026,2027].map(y => <option key={y} value={y}>{y}</option>)}
+                    </select>
+                </div>
+            )}
 
-            <h2 className="text-lg font-bold mb-4">Attendance Logs</h2>
-            <Card>
-                <CardContent className="p-0">
-                    {loading ? (
-                        <div className="flex justify-center p-8"><Loader2 className="w-6 h-6 animate-spin text-gray-400" /></div>
-                    ) : attendance.length === 0 ? (
-                        <div className="p-8 text-center text-gray-500">No attendance records found.</div>
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                {loading ? (
+                    <div className="flex justify-center p-12"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>
+                ) : tab === 'attendance' ? (
+                    records.length === 0 ? (
+                        <div className="text-center p-12"><Clock className="w-12 h-12 text-slate-300 mx-auto mb-3" /><p className="text-slate-500">No attendance records</p></div>
                     ) : (
                         <div className="overflow-x-auto">
-                            <table className="w-full text-left text-sm text-gray-500">
-                                <thead className="text-xs text-gray-700 uppercase bg-gray-50 border-b">
-                                    <tr>
-                                        <th className="px-6 py-4 font-semibold">Employee</th>
-                                        <th className="px-6 py-4 font-semibold">Date</th>
-                                        <th className="px-6 py-4 font-semibold">Check In</th>
-                                        <th className="px-6 py-4 font-semibold">Check Out</th>
-                                        <th className="px-6 py-4 font-semibold">Working Hours</th>
-                                    </tr>
-                                </thead>
+                            <table className="w-full text-sm">
+                                <thead><tr className="bg-slate-50 border-b border-slate-100">
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Employee</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Date</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Status</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Check In</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Check Out</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Hours</th>
+                                </tr></thead>
                                 <tbody>
-                                    {attendance.map(a => (
-                                        <tr key={a._id} className="border-b">
-                                            <td className="px-6 py-4 font-medium text-gray-900">{a.employeeId?.adminId?.name || 'N/A'}</td>
-                                            <td className="px-6 py-4">{new Date(a.date).toDateString()}</td>
-                                            <td className="px-6 py-4">{a.checkInTime ? new Date(a.checkInTime).toLocaleTimeString() : '-'}</td>
-                                            <td className="px-6 py-4">{a.checkOutTime ? new Date(a.checkOutTime).toLocaleTimeString() : '-'}</td>
-                                            <td className="px-6 py-4">{a.workingHours ? `${a.workingHours} hrs` : '-'}</td>
+                                    {records.map(r => (
+                                        <tr key={r._id} className="border-b border-slate-50 hover:bg-slate-50/50">
+                                            <td className="px-5 py-3.5 font-medium text-slate-900">{r.employeeId?.adminId?.name || '—'}</td>
+                                            <td className="px-5 py-3.5 text-slate-600">{new Date(r.date).toLocaleDateString('en-IN', { day:'2-digit', month:'short' })}</td>
+                                            <td className="px-5 py-3.5"><span className={`px-2 py-0.5 rounded text-xs font-medium ${r.status === 'Present' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'}`}>{r.status}</span></td>
+                                            <td className="px-5 py-3.5 text-slate-600">{r.checkInTime ? new Date(r.checkInTime).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : '—'}</td>
+                                            <td className="px-5 py-3.5 text-slate-600">{r.checkOutTime ? new Date(r.checkOutTime).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : '—'}</td>
+                                            <td className="px-5 py-3.5 font-semibold">{r.workingHours ? `${r.workingHours.toFixed(1)}h` : '—'}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
-                    )}
-                </CardContent>
-            </Card>
+                    )
+                ) : tab === 'regularizations' ? (
+                    pendingRegs.length === 0 ? (
+                        <div className="text-center p-12"><CheckCircle className="w-12 h-12 text-slate-300 mx-auto mb-3" /><p className="text-slate-500">No pending regularizations</p></div>
+                    ) : (
+                        <div className="divide-y divide-slate-100">
+                            {pendingRegs.map(r => (
+                                <div key={r._id} className="p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                                    <div>
+                                        <p className="font-medium text-slate-900">{r.employeeId?.adminId?.name}</p>
+                                        <p className="text-sm text-slate-500">{new Date(r.date).toLocaleDateString('en-IN')} — {r.regularization?.reason}</p>
+                                        <p className="text-xs text-slate-400">Requested: {r.regularization?.requestedCheckInTime ? new Date(r.regularization.requestedCheckInTime).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : ''} - {r.regularization?.requestedCheckOutTime ? new Date(r.regularization.requestedCheckOutTime).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : ''}</p>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <button onClick={() => handleRegAction(r._id, 'Approved')} className="px-4 h-9 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-sm font-medium">Approve</button>
+                                        <button onClick={() => handleRegAction(r._id, 'Rejected')} className="px-4 h-9 bg-red-500 hover:bg-red-600 text-white rounded-xl text-sm font-medium">Reject</button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )
+                ) : (
+                    pendingLeaves.length === 0 ? (
+                        <div className="text-center p-12"><CalendarDays className="w-12 h-12 text-slate-300 mx-auto mb-3" /><p className="text-slate-500">No pending leaves</p></div>
+                    ) : (
+                        <div className="divide-y divide-slate-100">
+                            {pendingLeaves.map(l => (
+                                <div key={l._id} className="p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                                    <div>
+                                        <p className="font-medium text-slate-900">{l.employeeId?.adminId?.name}</p>
+                                        <p className="text-sm text-slate-500">{l.leaveType} · {new Date(l.startDate).toLocaleDateString('en-IN')} to {new Date(l.endDate).toLocaleDateString('en-IN')} · {l.totalDays} day(s)</p>
+                                        <p className="text-xs text-slate-400">Reason: {l.reason}</p>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <button onClick={() => handleLeaveAction(l._id, 'Approved')} className="px-4 h-9 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-sm font-medium">Approve</button>
+                                        <button onClick={() => handleLeaveAction(l._id, 'Rejected')} className="px-4 h-9 bg-red-500 hover:bg-red-600 text-white rounded-xl text-sm font-medium">Reject</button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )
+                )}
+            </div>
         </div>
     );
 }

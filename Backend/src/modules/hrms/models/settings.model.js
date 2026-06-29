@@ -4,18 +4,18 @@ const hrmsSettingsSchema = new mongoose.Schema(
     {
         // 1. Company Policies & Working Hours
         workingHours: {
-            minimumWorkingHours: { type: Number, default: 8 }, // Default 8 hours
+            minimumWorkingHours: { type: Number, default: 8 },
             gracePeriodMinutes: { type: Number, default: 15 },
-            shortHourDeductionRate: { type: Number, default: 1 }, // E.g., 1x or 0.5x hourly rate deduction
-            overtimeRate: { type: Number, default: 1.5 }, // E.g., 1.5x hourly rate
+            shortHourDeductionRate: { type: Number, default: 1 },
+            overtimeRate: { type: Number, default: 1.5 },
         },
 
         // 2. Leave Policies
         leavePolicies: {
-            paidLeavesPerMonth: { type: Number, default: 1.5 },
-            maxAccumulatedLeaves: { type: Number, default: 18 },
+            paidLeavesPerMonth: { type: Number, default: 4 },
+            maxAccumulatedLeaves: { type: Number, default: 48 },
             leaveTypes: [{
-                name: { type: String, required: true }, // e.g., 'Sick Leave', 'Casual Leave', 'Earned Leave'
+                name: { type: String, required: true },
                 isPaid: { type: Boolean, default: true }
             }],
             requiresManagerApproval: { type: Boolean, default: true },
@@ -23,18 +23,18 @@ const hrmsSettingsSchema = new mongoose.Schema(
 
         // 3. Payroll Rules
         payrollRules: {
-            lopMultiplier: { type: Number, default: 1 }, // Loss of pay deduction multiplier
+            lopMultiplier: { type: Number, default: 1 },
             salaryCalculationType: { type: String, enum: ['Fixed', 'Attendance_Based'], default: 'Attendance_Based' },
             payPeriod: { type: String, enum: ['Monthly', 'Bi-Weekly'], default: 'Monthly' },
         },
 
         // 4. Expenses & Travel Policies
         expensePolicies: {
-            categories: [{ type: String }], // e.g., 'Travel', 'Food', 'Accommodation', 'Client Meeting'
+            categories: [{ type: String }],
             maxHotelAllowancePerNight: { type: Number, default: 2000 },
             maxFoodAllowancePerDay: { type: Number, default: 500 },
-            travelRatePerKm: { type: Number, default: 5 }, // For distance-based travel claims
-            requiresReceiptAbove: { type: Number, default: 500 }, // Require attachment if bill > 500
+            travelRatePerKm: { type: Number, default: 5 },
+            requiresReceiptAbove: { type: Number, default: 500 },
         },
 
         // 5. Organizational Structure
@@ -43,28 +43,40 @@ const hrmsSettingsSchema = new mongoose.Schema(
                 name: { type: String, required: true },
                 headAdminId: { type: mongoose.Schema.Types.ObjectId, ref: 'FoodAdmin' }
             }],
-            designations: [{ type: String }], // e.g., 'Software Engineer', 'Sales Executive'
+            designations: [{ type: String }],
             officeLocations: [{
                 name: { type: String, required: true },
                 address: { type: String },
                 city: { type: String }
             }],
-            zones: [{ type: String }], // e.g., 'North Zone', 'South Zone'
+            zones: [{ type: String }],
         },
 
-        // 6. Calendars & Templates
+        // 6. Shifts
+        shifts: [{
+            name: { type: String, required: true },
+            startTime: { type: String }, // "09:00"
+            endTime: { type: String }    // "18:00"
+        }],
+
+        // 7. Document Types
+        documentTypes: [{ type: String }],
+
+        // 8. Holiday Calendar
         holidayCalendar: [{
             date: { type: Date, required: true },
             name: { type: String, required: true },
             isOptional: { type: Boolean, default: false }
         }],
+
+        // 9. Templates
         templates: {
             offerLetterHtml: { type: String, default: '<h1>Offer Letter</h1>' },
             salarySlipHtml: { type: String, default: '<h1>Payslip</h1>' },
             welcomeEmailHtml: { type: String, default: '<h1>Welcome to ItzoFood</h1>' }
         },
 
-        // 7. Audit & Modification Tracking
+        // 10. Audit & Modification Tracking
         updatedBy: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'FoodAdmin'

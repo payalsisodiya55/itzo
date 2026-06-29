@@ -15,6 +15,12 @@ const hrmsLeaveSchema = new mongoose.Schema(
         
         reason: { type: String, required: true, trim: true },
         attachmentUrl: { type: String },
+        isHalfDay: { type: Boolean, default: false },
+
+        // Paid vs LOP breakdown
+        isPaid: { type: Boolean, default: true },
+        paidDays: { type: Number, default: 0 },
+        lopDays: { type: Number, default: 0 },
 
         status: {
             type: String,
@@ -24,8 +30,9 @@ const hrmsLeaveSchema = new mongoose.Schema(
 
         approvedBy: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'HrmsEmployee' // Usually their manager
+            ref: 'HrmsEmployee'
         },
+        approvedAt: { type: Date },
         rejectionReason: { type: String }
     },
     {
@@ -36,5 +43,6 @@ const hrmsLeaveSchema = new mongoose.Schema(
 
 hrmsLeaveSchema.index({ employeeId: 1 });
 hrmsLeaveSchema.index({ status: 1 });
+hrmsLeaveSchema.index({ employeeId: 1, startDate: 1 });
 
 export const HrmsLeave = mongoose.model('HrmsLeave', hrmsLeaveSchema, 'hrms_leave_requests');

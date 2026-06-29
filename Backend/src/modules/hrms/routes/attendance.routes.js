@@ -1,16 +1,29 @@
 import express from 'express';
-import { checkIn, checkOut, requestRegularization, getMyAttendance, getAllAttendance } from '../controllers/attendance.controller.js';
-import { authMiddleware, requireAdmin, checkPermission } from '../../../core/auth/auth.middleware.js';
+import {
+    checkIn,
+    checkOut,
+    requestRegularization,
+    approveRegularization,
+    getMyAttendance,
+    getAllAttendance,
+    getPendingRegularizations
+} from '../controllers/attendance.controller.js';
+import { authMiddleware, requireAdmin } from '../../../core/auth/auth.middleware.js';
+import { requireHrmsEmployee, requireAdminOrManager } from '../middleware/hrmsAuth.middleware.js';
 
 const router = express.Router();
 
-// --- Employee Portal Routes (HRMS_EMPLOYEE) ---
-router.post('/check-in', authMiddleware, checkIn);
-router.post('/check-out', authMiddleware, checkOut);
-router.post('/regularize', authMiddleware, requestRegularization);
-router.get('/me', authMiddleware, getMyAttendance);
+// EMPLOYEE: Own attendance
+router.post('/check-in', authMiddleware, requireHrmsEmployee, checkIn);
+router.post('/check-out', authMiddleware, requireHrmsEmployee, checkOut);
+router.get('/me', authMiddleware, requireHrmsEmployee, getMyAttendance);
+router.post('/regularize', authMiddleware, requireHrmsEmployee, requestRegularization);
 
-// --- Admin Panel Routes (ECS) ---
-router.get('/', authMiddleware, requireAdmin, checkPermission('hrms::attendance', 'view'), getAllAttendance);
+// MANAGER/ADMIN: Approvals
+router.get('/pending-regularizations', authMiddleware, requireAdminOrManager, getPendingRegularizations);
+router.post('/regularize/:id/action', authMiddleware, requireAdminOrManager, approveRegularization);
+
+// ADMIN: All attendance
+router.get('/', authMiddleware, requireAdmin, getAllAttendance);
 
 export default router;

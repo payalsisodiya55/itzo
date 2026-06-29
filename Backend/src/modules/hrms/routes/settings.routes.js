@@ -1,11 +1,16 @@
 import express from 'express';
-import { getSettings, updateSettings } from '../controllers/settings.controller.js';
-import { authMiddleware, requireAdmin, checkPermission } from '../../../core/auth/auth.middleware.js';
+import { getSettings, updateSettings, updateSettingsSection } from '../controllers/settings.controller.js';
+import { authMiddleware, requireAdmin } from '../../../core/auth/auth.middleware.js';
 
 const router = express.Router();
 
-// Only ECS Admins with HRMS permissions can view/edit settings
-router.get('/', authMiddleware, requireAdmin, checkPermission('hrms::settings', 'view'), getSettings);
-router.put('/', authMiddleware, requireAdmin, checkPermission('hrms::settings', 'edit'), updateSettings);
+// GET: Accessible by any authenticated user (settings needed for frontend calculations)
+router.get('/', authMiddleware, getSettings);
+
+// PUT: Admin-only — update entire settings
+router.put('/', authMiddleware, requireAdmin, updateSettings);
+
+// PATCH: Admin-only — update a specific section
+router.patch('/:section', authMiddleware, requireAdmin, updateSettingsSection);
 
 export default router;

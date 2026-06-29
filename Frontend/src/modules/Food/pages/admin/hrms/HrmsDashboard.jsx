@@ -1,97 +1,75 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '@core/api/axios';
-import { Card, CardContent, CardHeader, CardTitle } from '@food/components/ui/Card';
+import { useNavigate } from 'react-router-dom';
+import { Users, UserPlus, Clock, Wallet, CalendarDays, Loader2, TrendingUp, AlertCircle } from 'lucide-react';
 
 export default function HrmsDashboard() {
-    const [metrics, setMetrics] = useState({
-        totalEmployees: 0,
-        presentToday: 0,
-        onLeave: 0,
-        pendingApprovals: 0
-    });
+    const navigate = useNavigate();
+    const [stats, setStats] = useState(null);
+    const [pendingRequests, setPendingRequests] = useState(0);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchMetrics = async () => {
+        const fetch = async () => {
             try {
-                // To keep it simple, we fetch all and calculate on the frontend for now
-                const [empRes, attRes, leaveRes, expRes] = await Promise.all([
-                    axiosInstance.get('/hrms/employees'),
-                    axiosInstance.get('/hrms/attendance'),
-                    axiosInstance.get('/hrms/leaves'),
-                    axiosInstance.get('/hrms/expenses')
+                const [statsRes, jrRes] = await Promise.all([
+                    axiosInstance.get('/hrms/employees/stats').catch(() => ({ data: { data: null } })),
+                    axiosInstance.get('/hrms/joining-requests?status=Pending&limit=1').catch(() => ({ data: { data: { counts: {} } } }))
                 ]);
-
-                const employees = empRes.data.data || [];
-                const attendance = attRes.data.data || [];
-                const leaves = leaveRes.data.data || [];
-                const expenses = expRes.data.data || [];
-
-                const today = new Date().toDateString();
-
-                const presentToday = attendance.filter(a => new Date(a.date).toDateString() === today).length;
-                const onLeave = leaves.filter(l => 
-                    l.status === 'Approved' && 
-                    new Date(l.startDate) <= new Date() && 
-                    new Date(l.endDate) >= new Date()
-                ).length;
-
-                const pendingLeaves = leaves.filter(l => l.status === 'Pending').length;
-                const pendingExpenses = expenses.filter(e => e.status === 'Pending').length;
-
-                setMetrics({
-                    totalEmployees: employees.length,
-                    presentToday,
-                    onLeave,
-                    pendingApprovals: pendingLeaves + pendingExpenses
-                });
-            } catch (error) {
-                console.error("Failed to fetch dashboard metrics", error);
-            }
+                setStats(statsRes.data?.data || null);
+                setPendingRequests(jrRes.data?.data?.counts?.pending || 0);
+            } catch (e) { console.error(e); }
+            finally { setLoading(false); }
         };
-        fetchMetrics();
+        fetch();
     }, []);
 
+    if (loading) return <div className="flex justify-center p-12"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>;
+
+    const cards = [
+        { label: 'Active Employees', value: stats?.totalActive || 0, icon: Users, color: 'text-emerald-600 bg-emerald-50', path: 'employees' },
+        { label: 'Pending Requests', value: pendingRequests, icon: UserPlus, color: 'text-orange-600 bg-orange-50', path: 'joining-requests', highlight: pendingRequests > 0 },
+        { label: 'Suspended', value: stats?.totalSuspended || 0, icon: AlertCircle, color: 'text-amber-600 bg-amber-50', path: 'employees' },
+        { label: 'Total Employees', value: stats?.totalEmployees || 0, icon: TrendingUp, color: 'text-blue-600 bg-blue-50', path: 'employees' },
+    ];
+
     return (
-        <div className="p-6">
-            <div className="mb-6">
-                <h1 className="text-2xl font-bold tracking-tight text-gray-900">HRMS Dashboard</h1>
-                <p className="text-sm text-gray-500 mt-1">Enterprise overview of employee metrics.</p>
+        <div className="space-y-6">
+            <div>
+                <h1 className="text-2xl font-bold text-slate-900">HRMS Dashboard</h1>
+                <p className="text-sm text-slate-500 mt-1">Overview of your workforce</p>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-gray-500 uppercase tracking-wider">Total Employees</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-3xl font-bold text-gray-900">{metrics.totalEmployees}</div>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-gray-500 uppercase tracking-wider">Present Today</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-3xl font-bold text-emerald-600">{metrics.presentToday}</div>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-gray-500 uppercase tracking-wider">On Leave</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-3xl font-bold text-amber-600">{metrics.onLeave}</div>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-gray-500 uppercase tracking-wider">Pending Approvals</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-3xl font-bold text-primary">{metrics.pendingApprovals}</div>
-                    </CardContent>
-                </Card>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+                {cards.map((card, i) => (
+                    <button key={i} onClick={() => navigate(card.path)}
+                        className={`bg-white rounded-2xl border shadow-sm p-5 text-left hover:shadow-md transition-all group ${card.highlight ? 'border-orange-300 ring-2 ring-orange-100' : 'border-slate-200'}`}>
+                        <div className="flex items-center justify-between mb-3">
+                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${card.color.split(' ')[1]}`}>
+                                <card.icon className={`w-5 h-5 ${card.color.split(' ')[0]}`} />
+                            </div>
+                            {card.highlight && <span className="w-2.5 h-2.5 rounded-full bg-orange-500 animate-pulse" />}
+                        </div>
+                        <p className="text-3xl font-bold text-slate-900">{card.value}</p>
+                        <p className="text-sm text-slate-500 mt-0.5">{card.label}</p>
+                    </button>
+                ))}
             </div>
+
+            {/* Department Breakdown */}
+            {stats?.departments?.length > 0 && (
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                    <h3 className="font-semibold text-slate-900 mb-4">Department Breakdown</h3>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                        {stats.departments.map((dept, i) => (
+                            <div key={i} className="bg-slate-50 rounded-xl p-4 text-center">
+                                <p className="text-2xl font-bold text-slate-900">{dept.count}</p>
+                                <p className="text-sm text-slate-500 mt-0.5">{dept._id || 'Unassigned'}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

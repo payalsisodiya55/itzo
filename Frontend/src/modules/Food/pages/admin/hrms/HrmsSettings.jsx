@@ -1,105 +1,248 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@food/components/ui/Card';
-import { Input } from '@food/components/ui/Input';
-import { Button } from '@food/components/ui/Button';
-import { Settings, Save, Clock, Users, Building2, MapPin } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import axiosInstance from '@core/api/axios';
 import { toast } from 'sonner';
+import { Settings, Loader2, Save, Plus, X, Clock, CalendarDays, Wallet, Building2, MapPin } from 'lucide-react';
 
 export default function HrmsSettings() {
-    const [loading, setLoading] = useState(false);
+    const [settings, setSettings] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
+    const [activeSection, setActiveSection] = useState('workingHours');
 
-    const handleSave = () => {
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-            toast.success('HRMS Settings updated successfully');
-        }, 1000);
+    useEffect(() => {
+        const fetch = async () => {
+            try {
+                const res = await axiosInstance.get('/hrms/settings');
+                setSettings(res.data?.data || null);
+            } catch (e) { console.error(e); }
+            finally { setLoading(false); }
+        };
+        fetch();
+    }, []);
+
+    const saveSection = async (section, data) => {
+        setSaving(true);
+        try {
+            await axiosInstance.patch(`/hrms/settings/${section}`, data);
+            toast.success(`${section} updated successfully`);
+        } catch (e) { toast.error(e.response?.data?.message || 'Save failed'); }
+        finally { setSaving(false); }
     };
 
+    const updateNested = (path, value) => {
+        setSettings(prev => {
+            const updated = JSON.parse(JSON.stringify(prev));
+            const keys = path.split('.');
+            let current = updated;
+            for (let i = 0; i < keys.length - 1; i++) current = current[keys[i]];
+            current[keys[keys.length - 1]] = value;
+            return updated;
+        });
+    };
+
+    if (loading) return <div className="flex justify-center p-12"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>;
+    if (!settings) return <div className="text-center p-12 text-slate-500">Failed to load settings</div>;
+
+    const sections = [
+        { key: 'workingHours', label: 'Working Hours', icon: Clock },
+        { key: 'leavePolicies', label: 'Leave Policies', icon: CalendarDays },
+        { key: 'payrollRules', label: 'Payroll Rules', icon: Wallet },
+        { key: 'organization', label: 'Organization', icon: Building2 },
+        { key: 'shifts', label: 'Shifts', icon: Clock },
+        { key: 'holidayCalendar', label: 'Holiday Calendar', icon: CalendarDays },
+    ];
+
+    const inputClass = "w-full h-10 px-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/30";
+    const labelClass = "text-xs font-medium text-slate-600 mb-1 block";
+
     return (
-        <div className="p-6 max-w-5xl mx-auto pb-24">
-            <div className="mb-8 flex items-center justify-between">
-                <div>
-                    <h1 className="text-2xl font-bold tracking-tight text-gray-900">HRMS Settings</h1>
-                    <p className="text-sm text-gray-500 mt-1">Dynamically configure all company policies, payroll rules, and organization structure.</p>
-                </div>
-                <Button onClick={handleSave} disabled={loading} className="gap-2 min-w-[120px]">
-                    <Save className="w-4 h-4" />
-                    {loading ? 'Saving...' : 'Save Settings'}
-                </Button>
+        <div className="space-y-6">
+            <h1 className="text-2xl font-bold text-slate-900">HRMS Settings</h1>
+
+            <div className="flex flex-wrap gap-2">
+                {sections.map(s => (
+                    <button key={s.key} onClick={() => setActiveSection(s.key)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${activeSection === s.key ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}`}>
+                        <s.icon className="w-4 h-4" /> {s.label}
+                    </button>
+                ))}
             </div>
 
-            <div className="space-y-6">
-                <Card>
-                    <CardHeader>
-                        <div className="flex items-center gap-3">
-                            <div className="p-2 bg-orange-100 text-primary rounded-lg"><Clock className="w-5 h-5" /></div>
-                            <div>
-                                <CardTitle>Working Hours & Policies</CardTitle>
-                                <CardDescription>Configure minimum hours and grace periods.</CardDescription>
-                            </div>
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                {activeSection === 'workingHours' && (
+                    <div className="space-y-4">
+                        <h3 className="font-semibold text-slate-900 mb-4">Working Hours Configuration</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div><label className={labelClass}>Minimum Working Hours</label>
+                                <input type="number" className={inputClass} value={settings.workingHours?.minimumWorkingHours || 8}
+                                    onChange={e => updateNested('workingHours.minimumWorkingHours', Number(e.target.value))} /></div>
+                            <div><label className={labelClass}>Grace Period (minutes)</label>
+                                <input type="number" className={inputClass} value={settings.workingHours?.gracePeriodMinutes || 15}
+                                    onChange={e => updateNested('workingHours.gracePeriodMinutes', Number(e.target.value))} /></div>
+                            <div><label className={labelClass}>Short Hour Deduction Rate</label>
+                                <input type="number" step="0.1" className={inputClass} value={settings.workingHours?.shortHourDeductionRate || 1}
+                                    onChange={e => updateNested('workingHours.shortHourDeductionRate', Number(e.target.value))} /></div>
+                            <div><label className={labelClass}>Overtime Rate</label>
+                                <input type="number" step="0.1" className={inputClass} value={settings.workingHours?.overtimeRate || 1.5}
+                                    onChange={e => updateNested('workingHours.overtimeRate', Number(e.target.value))} /></div>
                         </div>
-                    </CardHeader>
-                    <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700">Minimum Working Hours</label>
-                            <Input type="number" defaultValue={8} />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700">Grace Period (Minutes)</label>
-                            <Input type="number" defaultValue={15} />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700">Short Hour Deduction Rate</label>
-                            <Input type="number" defaultValue={1} step="0.1" />
-                            <p className="text-xs text-gray-500">Multiplier for hourly deduction.</p>
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700">Overtime Rate</label>
-                            <Input type="number" defaultValue={1.5} step="0.1" />
-                            <p className="text-xs text-gray-500">Multiplier for hourly bonus.</p>
-                        </div>
-                    </CardContent>
-                </Card>
+                        <button onClick={() => saveSection('workingHours', settings.workingHours)} disabled={saving}
+                            className="flex items-center gap-2 px-5 h-10 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-xl text-sm disabled:opacity-50">
+                            <Save className="w-4 h-4" /> {saving ? 'Saving...' : 'Save'}
+                        </button>
+                    </div>
+                )}
 
-                <Card>
-                    <CardHeader>
-                        <div className="flex items-center gap-3">
-                            <div className="p-2 bg-orange-100 text-primary rounded-lg"><Users className="w-5 h-5" /></div>
-                            <div>
-                                <CardTitle>Leave Policies</CardTitle>
-                                <CardDescription>Configure paid leave allocations.</CardDescription>
-                            </div>
+                {activeSection === 'leavePolicies' && (
+                    <div className="space-y-4">
+                        <h3 className="font-semibold text-slate-900 mb-4">Leave Policies</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div><label className={labelClass}>Paid Leaves Per Month</label>
+                                <input type="number" className={inputClass} value={settings.leavePolicies?.paidLeavesPerMonth || 4}
+                                    onChange={e => updateNested('leavePolicies.paidLeavesPerMonth', Number(e.target.value))} /></div>
+                            <div><label className={labelClass}>Max Accumulated Leaves</label>
+                                <input type="number" className={inputClass} value={settings.leavePolicies?.maxAccumulatedLeaves || 48}
+                                    onChange={e => updateNested('leavePolicies.maxAccumulatedLeaves', Number(e.target.value))} /></div>
                         </div>
-                    </CardHeader>
-                    <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700">Paid Leaves Per Month</label>
-                            <Input type="number" defaultValue={1.5} step="0.5" />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700">Max Accumulated Leaves</label>
-                            <Input type="number" defaultValue={18} />
-                        </div>
-                    </CardContent>
-                </Card>
+                        <button onClick={() => saveSection('leavePolicies', settings.leavePolicies)} disabled={saving}
+                            className="flex items-center gap-2 px-5 h-10 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-xl text-sm disabled:opacity-50">
+                            <Save className="w-4 h-4" /> {saving ? 'Saving...' : 'Save'}
+                        </button>
+                    </div>
+                )}
 
-                <Card>
-                    <CardHeader>
-                        <div className="flex items-center gap-3">
-                            <div className="p-2 bg-orange-100 text-primary rounded-lg"><Building2 className="w-5 h-5" /></div>
-                            <div>
-                                <CardTitle>Organization Structure</CardTitle>
-                                <CardDescription>Departments and designations.</CardDescription>
+                {activeSection === 'payrollRules' && (
+                    <div className="space-y-4">
+                        <h3 className="font-semibold text-slate-900 mb-4">Payroll Rules</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div><label className={labelClass}>Salary Calculation Type</label>
+                                <select className={inputClass} value={settings.payrollRules?.salaryCalculationType || 'Attendance_Based'}
+                                    onChange={e => updateNested('payrollRules.salaryCalculationType', e.target.value)}>
+                                    <option value="Attendance_Based">Attendance Based</option><option value="Fixed">Fixed</option>
+                                </select></div>
+                            <div><label className={labelClass}>Pay Period</label>
+                                <select className={inputClass} value={settings.payrollRules?.payPeriod || 'Monthly'}
+                                    onChange={e => updateNested('payrollRules.payPeriod', e.target.value)}>
+                                    <option>Monthly</option><option>Bi-Weekly</option>
+                                </select></div>
+                        </div>
+                        <button onClick={() => saveSection('payrollRules', settings.payrollRules)} disabled={saving}
+                            className="flex items-center gap-2 px-5 h-10 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-xl text-sm disabled:opacity-50">
+                            <Save className="w-4 h-4" /> {saving ? 'Saving...' : 'Save'}
+                        </button>
+                    </div>
+                )}
+
+                {activeSection === 'organization' && (
+                    <div className="space-y-6">
+                        <div>
+                            <h3 className="font-semibold text-slate-900 mb-3">Departments</h3>
+                            <div className="flex flex-wrap gap-2 mb-3">
+                                {(settings.organization?.departments || []).map((d, i) => (
+                                    <span key={i} className="px-3 py-1.5 bg-slate-100 rounded-lg text-sm flex items-center gap-2">
+                                        {d.name}
+                                        <button onClick={() => {
+                                            const depts = [...settings.organization.departments];
+                                            depts.splice(i, 1);
+                                            updateNested('organization.departments', depts);
+                                        }}><X className="w-3 h-3 text-slate-400 hover:text-red-500" /></button>
+                                    </span>
+                                ))}
+                            </div>
+                            <div className="flex gap-2">
+                                <input id="newDept" className={inputClass} placeholder="New department name" style={{ maxWidth: '250px' }} />
+                                <button onClick={() => {
+                                    const input = document.getElementById('newDept');
+                                    if (input.value.trim()) {
+                                        updateNested('organization.departments', [...(settings.organization?.departments || []), { name: input.value.trim() }]);
+                                        input.value = '';
+                                    }
+                                }} className="px-4 h-10 bg-slate-900 text-white rounded-xl text-sm font-medium"><Plus className="w-4 h-4" /></button>
                             </div>
                         </div>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="bg-gray-50 p-4 rounded-lg border border-gray-100 text-center text-sm text-gray-500">
-                            Department and Designation management UI goes here.
+                        <div>
+                            <h3 className="font-semibold text-slate-900 mb-3">Designations</h3>
+                            <div className="flex flex-wrap gap-2 mb-3">
+                                {(settings.organization?.designations || []).map((d, i) => (
+                                    <span key={i} className="px-3 py-1.5 bg-slate-100 rounded-lg text-sm flex items-center gap-2">
+                                        {d}
+                                        <button onClick={() => {
+                                            const desigs = [...settings.organization.designations];
+                                            desigs.splice(i, 1);
+                                            updateNested('organization.designations', desigs);
+                                        }}><X className="w-3 h-3 text-slate-400 hover:text-red-500" /></button>
+                                    </span>
+                                ))}
+                            </div>
+                            <div className="flex gap-2">
+                                <input id="newDesig" className={inputClass} placeholder="New designation" style={{ maxWidth: '250px' }} />
+                                <button onClick={() => {
+                                    const input = document.getElementById('newDesig');
+                                    if (input.value.trim()) {
+                                        updateNested('organization.designations', [...(settings.organization?.designations || []), input.value.trim()]);
+                                        input.value = '';
+                                    }
+                                }} className="px-4 h-10 bg-slate-900 text-white rounded-xl text-sm font-medium"><Plus className="w-4 h-4" /></button>
+                            </div>
                         </div>
-                    </CardContent>
-                </Card>
+                        <button onClick={() => saveSection('organization', settings.organization)} disabled={saving}
+                            className="flex items-center gap-2 px-5 h-10 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-xl text-sm disabled:opacity-50">
+                            <Save className="w-4 h-4" /> {saving ? 'Saving...' : 'Save Organization'}
+                        </button>
+                    </div>
+                )}
+
+                {activeSection === 'shifts' && (
+                    <div className="space-y-4">
+                        <h3 className="font-semibold text-slate-900 mb-4">Shift Configuration</h3>
+                        {(settings.shifts || []).map((shift, i) => (
+                            <div key={i} className="flex items-center gap-3 bg-slate-50 rounded-xl p-3">
+                                <input className="h-10 px-3 border border-slate-200 rounded-xl text-sm flex-1" value={shift.name}
+                                    onChange={e => { const s = [...settings.shifts]; s[i].name = e.target.value; updateNested('shifts', s); }} />
+                                <input type="time" className="h-10 px-3 border border-slate-200 rounded-xl text-sm" value={shift.startTime}
+                                    onChange={e => { const s = [...settings.shifts]; s[i].startTime = e.target.value; updateNested('shifts', s); }} />
+                                <span className="text-slate-400">to</span>
+                                <input type="time" className="h-10 px-3 border border-slate-200 rounded-xl text-sm" value={shift.endTime}
+                                    onChange={e => { const s = [...settings.shifts]; s[i].endTime = e.target.value; updateNested('shifts', s); }} />
+                                <button onClick={() => { const s = [...settings.shifts]; s.splice(i, 1); updateNested('shifts', s); }}>
+                                    <X className="w-4 h-4 text-slate-400 hover:text-red-500" />
+                                </button>
+                            </div>
+                        ))}
+                        <button onClick={() => updateNested('shifts', [...(settings.shifts || []), { name: '', startTime: '09:00', endTime: '18:00' }])}
+                            className="flex items-center gap-2 text-sm text-orange-600 font-medium"><Plus className="w-4 h-4" /> Add Shift</button>
+                        <button onClick={() => saveSection('shifts', settings.shifts)} disabled={saving}
+                            className="flex items-center gap-2 px-5 h-10 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-xl text-sm disabled:opacity-50">
+                            <Save className="w-4 h-4" /> {saving ? 'Saving...' : 'Save Shifts'}
+                        </button>
+                    </div>
+                )}
+
+                {activeSection === 'holidayCalendar' && (
+                    <div className="space-y-4">
+                        <h3 className="font-semibold text-slate-900 mb-4">Holiday Calendar</h3>
+                        {(settings.holidayCalendar || []).map((h, i) => (
+                            <div key={i} className="flex items-center gap-3 bg-slate-50 rounded-xl p-3">
+                                <input type="date" className="h-10 px-3 border border-slate-200 rounded-xl text-sm" value={h.date ? h.date.split('T')[0] : ''}
+                                    onChange={e => { const hc = [...settings.holidayCalendar]; hc[i].date = e.target.value; updateNested('holidayCalendar', hc); }} />
+                                <input className="h-10 px-3 border border-slate-200 rounded-xl text-sm flex-1" value={h.name} placeholder="Holiday name"
+                                    onChange={e => { const hc = [...settings.holidayCalendar]; hc[i].name = e.target.value; updateNested('holidayCalendar', hc); }} />
+                                <label className="flex items-center gap-1 text-xs text-slate-500">
+                                    <input type="checkbox" checked={h.isOptional} onChange={e => { const hc = [...settings.holidayCalendar]; hc[i].isOptional = e.target.checked; updateNested('holidayCalendar', hc); }} className="accent-orange-500" /> Optional
+                                </label>
+                                <button onClick={() => { const hc = [...settings.holidayCalendar]; hc.splice(i, 1); updateNested('holidayCalendar', hc); }}>
+                                    <X className="w-4 h-4 text-slate-400 hover:text-red-500" />
+                                </button>
+                            </div>
+                        ))}
+                        <button onClick={() => updateNested('holidayCalendar', [...(settings.holidayCalendar || []), { date: '', name: '', isOptional: false }])}
+                            className="flex items-center gap-2 text-sm text-orange-600 font-medium"><Plus className="w-4 h-4" /> Add Holiday</button>
+                        <button onClick={() => saveSection('holidayCalendar', settings.holidayCalendar)} disabled={saving}
+                            className="flex items-center gap-2 px-5 h-10 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-xl text-sm disabled:opacity-50">
+                            <Save className="w-4 h-4" /> {saving ? 'Saving...' : 'Save Holidays'}
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );

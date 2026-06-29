@@ -14,18 +14,25 @@ const hrmsEmployeeSchema = new mongoose.Schema(
             unique: true,
             trim: true
         },
-        
+
+        // HRMS Role distinction (Manager vs Employee vs HR)
+        hrmsRole: {
+            type: String,
+            enum: ['Employee', 'Manager', 'HR'],
+            default: 'Employee'
+        },
+
         // 1. Professional Details
         department: { type: String, trim: true },
         designation: { type: String, trim: true },
-        managerId: { 
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: 'HrmsEmployee' 
+        managerId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'HrmsEmployee'
         },
-        employmentType: { 
-            type: String, 
-            enum: ['Full-Time', 'Part-Time', 'Contract', 'Intern'], 
-            default: 'Full-Time' 
+        employmentType: {
+            type: String,
+            enum: ['Full-Time', 'Part-Time', 'Contract', 'Intern'],
+            default: 'Full-Time'
         },
         joiningDate: { type: Date, required: true },
         shift: { type: String, default: 'General' },
@@ -36,7 +43,10 @@ const hrmsEmployeeSchema = new mongoose.Schema(
         ctc: { type: Number, default: 0 },
         monthlySalary: { type: Number, default: 0 },
 
-        // 3. KYC & Documents
+        // 3. Profile Photo
+        profilePhotoUrl: { type: String },
+
+        // 4. KYC & Documents
         documents: {
             aadhaarNumber: { type: String, trim: true },
             aadhaarPhotoUrl: { type: String },
@@ -49,7 +59,7 @@ const hrmsEmployeeSchema = new mongoose.Schema(
             }]
         },
 
-        // 4. Bank Details
+        // 5. Bank Details
         bankDetails: {
             accountHolderName: { type: String, trim: true },
             accountNumber: { type: String, trim: true },
@@ -58,12 +68,28 @@ const hrmsEmployeeSchema = new mongoose.Schema(
             upiId: { type: String, trim: true }
         },
 
-        // 5. Personal & Emergency
-        address: { type: String, trim: true },
+        // 6. Personal & Emergency
+        address: {
+            street: { type: String, trim: true },
+            city: { type: String, trim: true },
+            state: { type: String, trim: true },
+            pincode: { type: String, trim: true },
+            country: { type: String, default: 'India', trim: true }
+        },
         emergencyContact: {
             name: { type: String, trim: true },
             relation: { type: String, trim: true },
             phone: { type: String, trim: true }
+        },
+
+        // 7. Qualifications
+        qualification: { type: String, trim: true },
+        experience: { type: String, trim: true },
+
+        // 8. Source tracking (from joining request or direct onboard)
+        joiningRequestId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'HrmsJoiningRequest'
         },
 
         status: {
@@ -78,9 +104,20 @@ const hrmsEmployeeSchema = new mongoose.Schema(
     }
 );
 
+// Auto-derive monthly salary from CTC
+hrmsEmployeeSchema.pre('save', function (next) {
+    if (this.isModified('ctc') && this.ctc > 0) {
+        this.monthlySalary = Math.round((this.ctc / 12) * 100) / 100;
+    }
+    next();
+});
+
 // Indexes for fast querying
 hrmsEmployeeSchema.index({ adminId: 1 });
 hrmsEmployeeSchema.index({ managerId: 1 });
 hrmsEmployeeSchema.index({ employeeId: 1 });
+hrmsEmployeeSchema.index({ status: 1 });
+hrmsEmployeeSchema.index({ hrmsRole: 1 });
+hrmsEmployeeSchema.index({ department: 1 });
 
 export const HrmsEmployee = mongoose.model('HrmsEmployee', hrmsEmployeeSchema, 'hrms_employees');

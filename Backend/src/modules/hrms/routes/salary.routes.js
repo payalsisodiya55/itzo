@@ -1,14 +1,25 @@
 import express from 'express';
-import { getMySalaries, getAllSalaries, generatePayroll } from '../controllers/salary.controller.js';
-import { authMiddleware, requireAdmin, checkPermission } from '../../../core/auth/auth.middleware.js';
+import {
+    generatePayroll,
+    approvePayroll,
+    markPayrollPaid,
+    getPayroll,
+    getMySalary,
+    getPayslipDetail
+} from '../controllers/salary.controller.js';
+import { authMiddleware, requireAdmin } from '../../../core/auth/auth.middleware.js';
+import { requireHrmsEmployee } from '../middleware/hrmsAuth.middleware.js';
 
 const router = express.Router();
 
-// --- Employee Portal Routes (HRMS_EMPLOYEE) ---
-router.get('/me', authMiddleware, getMySalaries);
+// EMPLOYEE: View own salary
+router.get('/me', authMiddleware, requireHrmsEmployee, getMySalary);
+router.get('/payslip/:id', authMiddleware, requireHrmsEmployee, getPayslipDetail);
 
-// --- Admin Panel Routes (ECS) ---
-router.get('/', authMiddleware, requireAdmin, checkPermission('hrms::payroll', 'view'), getAllSalaries);
-router.post('/generate', authMiddleware, requireAdmin, checkPermission('hrms::payroll', 'create'), generatePayroll);
+// ADMIN: Payroll management
+router.post('/generate', authMiddleware, requireAdmin, generatePayroll);
+router.post('/approve', authMiddleware, requireAdmin, approvePayroll);
+router.post('/mark-paid', authMiddleware, requireAdmin, markPayrollPaid);
+router.get('/', authMiddleware, requireAdmin, getPayroll);
 
 export default router;

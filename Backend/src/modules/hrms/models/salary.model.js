@@ -11,30 +11,24 @@ const hrmsSalarySchema = new mongoose.Schema(
         year: { type: Number, required: true }, // e.g., 2026
         
         // Base Compensation
-        ctc: { type: Number, required: true },
-        baseMonthlySalary: { type: Number, required: true },
+        baseSalary: { type: Number, default: 0 },
 
         // Working metrics for the month
-        totalDays: { type: Number, required: true },
-        workingDays: { type: Number, required: true },
+        totalWorkingDays: { type: Number, default: 0 },
         presentDays: { type: Number, default: 0 },
-        paidLeavesTaken: { type: Number, default: 0 },
+        paidLeaveDays: { type: Number, default: 0 },
         lopDays: { type: Number, default: 0 },
+        absentDays: { type: Number, default: 0 },
         totalShortHours: { type: Number, default: 0 },
+        totalOvertimeHours: { type: Number, default: 0 },
 
-        // Calculations
-        grossEarnings: { type: Number, default: 0 },
+        // Deductions & Additions
+        shortHourDeduction: { type: Number, default: 0 },
+        overtimeBonus: { type: Number, default: 0 },
+        lopDeduction: { type: Number, default: 0 },
+        reimbursements: { type: Number, default: 0 },
         
-        deductions: {
-            lopAmount: { type: Number, default: 0 },
-            shortHoursAmount: { type: Number, default: 0 },
-            taxes: { type: Number, default: 0 },
-            otherDeductions: { type: Number, default: 0 }
-        },
-        
-        reimbursements: { type: Number, default: 0 }, // From approved expenses
-        
-        netSalary: { type: Number, required: true }, // Final amount to pay
+        netSalary: { type: Number, default: 0 },
 
         // Status & Delivery
         status: {
@@ -42,8 +36,8 @@ const hrmsSalarySchema = new mongoose.Schema(
             enum: ['Draft', 'Approved', 'Paid'],
             default: 'Draft'
         },
-        paymentDate: { type: Date },
-        payslipUrl: { type: String } // URL to generated PDF
+        paidAt: { type: Date },
+        payslipUrl: { type: String }
     },
     {
         timestamps: true,
@@ -52,5 +46,6 @@ const hrmsSalarySchema = new mongoose.Schema(
 );
 
 hrmsSalarySchema.index({ employeeId: 1, month: 1, year: 1 }, { unique: true });
+hrmsSalarySchema.index({ month: 1, year: 1 });
 
 export const HrmsSalary = mongoose.model('HrmsSalary', hrmsSalarySchema, 'hrms_salaries');

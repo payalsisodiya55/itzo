@@ -1,96 +1,235 @@
 import { HrmsEmployee } from '../models/employee.model.js';
 import { FoodAdmin } from '../../../core/admin/admin.model.js';
+import { HrmsDocument } from '../models/document.model.js';
+import { getNextSequence } from '../models/counter.model.js';
 import { sendResponse, sendError } from '../../../utils/response.js';
 import mongoose from 'mongoose';
 
-const generateEmployeeId = async () => {
-    const count = await HrmsEmployee.countDocuments();
-    return `ITZO-EMP-${String(count + 1).padStart(3, '0')}`;
-};
-
+/**
+ * ADMIN: Onboard a new employee directly from ECS (no joining request)
+ */
 export const createEmployee = async (req, res, next) => {
     const session = await mongoose.startSession();
     session.startTransaction();
     try {
         const {
-            firstName, lastName, email, phone, password,
-            department, designation, managerId, employmentType,
-            joiningDate, shift, officeLocation, zone, ctc, monthlySalary,
-            aadhaarNumber, panNumber, accountHolderName, accountNumber, bankName, ifscCode
+            fullName, email, phone, password,
+            department, designation, managerId, employmentType, hrmsRole,
+            joiningDate, shift, officeLocation, zone, ctc,
+            aadhaarNumber, panNumber, accountHolderName, accountNumber, bankName, ifscCode, upiId,
+            address, emergencyContact, qualification, experience,
+            profilePhotoUrl, aadhaarPhotoUrl, panPhotoUrl, offerLetterUrl
         } = req.body;
 
-        // 1. Create Base Credentials in FoodAdmin
-        const existingAdmin = await FoodAdmin.findOne({ email }).session(session);
+        if (!fullName || !email || !password || !joiningDate) {
+            await session.abortTransaction();
+            session.endSession();
+            return sendError(res, 400, 'Full name, email, password, and joining date are required');
+        }
+
+        // 1. Create base credentials in FoodAdmin
+        const existingAdmin = await FoodAdmin.findOne({ email: email.toLowerCase().trim() }).session(session);
         if (existingAdmin) {
-            throw new Error('Email is already in use');
+            await session.abortTransaction();
+            session.endSession();
+            return sendError(res, 409, 'Email is already in use');
         }
 
         const newAdmin = new FoodAdmin({
-            email,
+            email: email.toLowerCase().trim(),
             password,
-            name: `${firstName} ${lastName}`.trim(),
-            phone,
+            name: fullName.trim(),
+            phone: phone || '',
+            profileImage: profilePhotoUrl || '',
             role: 'HRMS_EMPLOYEE',
             isActive: true
         });
         await newAdmin.save({ session });
 
-        // 2. Generate Employee ID
-        const employeeId = await generateEmployeeId();
+        // 2. Generate Employee ID atomically
+        const seq = await getNextSequence('employeeId', session);
+        const employeeId = `ITZO-EMP-${String(seq).padStart(4, '0')}`;
 
         // 3. Create HRMS Employee Profile
         const newEmployee = new HrmsEmployee({
             adminId: newAdmin._id,
             employeeId,
+            hrmsRole: hrmsRole || 'Employee',
             department,
             designation,
             managerId: managerId || null,
-            employmentType,
+            employmentType: employmentType || 'Full-Time',
             joiningDate,
-            shift,
+            shift: shift || 'General',
             officeLocation,
             zone,
-            ctc,
-            monthlySalary,
+            ctc: ctc || 0,
+            profilePhotoUrl,
             documents: {
                 aadhaarNumber,
+                aadhaarPhotoUrl,
                 panNumber,
+                panPhotoUrl,
+                offerLetterUrl
             },
             bankDetails: {
                 accountHolderName,
                 accountNumber,
                 bankName,
-                ifscCode
-            }
+                ifscCode,
+                upiId
+            },
+            address: address || {},
+            emergencyContact: emergencyContact || {},
+            qualification,
+            experience,
+            status: 'Active'
         });
-
         await newEmployee.save({ session });
+
+        // 4. Create document records
+        const docRecords = [];
+        if (offerLetterUrl) {
+            docRecords.push({ employeeId: newEmployee._id, documentType: 'Offer Letter', name: 'Offer Letter', url: offerLetterUrl, uploadedBy: req.user.userId });
+        }
+        if (aadhaarPhotoUrl) {
+            docRecords.push({ employeeId: newEmployee._id, documentType: 'Aadhaar', name: 'Aadhaar Card', url: aadhaarPhotoUrl, uploadedBy: req.user.userId });
+        }
+        if (panPhotoUrl) {
+            docRecords.push({ employeeId: newEmployee._id, documentType: 'PAN', name: 'PAN Card', url: panPhotoUrl, uploadedBy: req.user.userId });
+        }
+        if (docRecords.length > 0) {
+            await HrmsDocument.insertMany(docRecords, { session });
+        }
+
         await session.commitTransaction();
 
-        return sendResponse(res, 201, "Employee onboarded successfully", newEmployee);
+        return sendResponse(res, 201, 'Employee onboarded successfully', {
+            employeeId: newEmployee.employeeId,
+            name: fullName,
+            email
+        });
     } catch (error) {
         await session.abortTransaction();
+        if (error.code === 11000) {
+            return sendError(res, 409, 'Duplicate record detected');
+        }
         next(error);
     } finally {
         session.endSession();
     }
 };
 
+/**
+ * ADMIN: Get all active employees with pagination
+ */
 export const getEmployees = async (req, res, next) => {
     try {
-        const employees = await HrmsEmployee.find()
-            .populate('adminId', 'name email phone isActive')
-            .populate('managerId', 'employeeId adminId');
-        
-        return sendResponse(res, 200, "Employees retrieved successfully", employees);
+        const { page = 1, limit = 20, search, department, status = 'Active', sortBy = 'createdAt', sortOrder = 'desc' } = req.query;
+
+        const filter = {};
+        if (status && status !== 'all') {
+            filter.status = status;
+        }
+        if (department) {
+            filter.department = department;
+        }
+        if (search) {
+            const regex = new RegExp(search, 'i');
+            filter.$or = [
+                { employeeId: regex },
+                { department: regex },
+                { designation: regex }
+            ];
+        }
+
+        const skip = (parseInt(page) - 1) * parseInt(limit);
+        const sortDir = sortOrder === 'asc' ? 1 : -1;
+
+        const [employees, total] = await Promise.all([
+            HrmsEmployee.find(filter)
+                .populate('adminId', 'name email phone profileImage isActive')
+                .populate({
+                    path: 'managerId',
+                    populate: { path: 'adminId', select: 'name email' }
+                })
+                .sort({ [sortBy]: sortDir })
+                .skip(skip)
+                .limit(parseInt(limit))
+                .lean(),
+            HrmsEmployee.countDocuments(filter)
+        ]);
+
+        // If search term, also match by admin name/email
+        let finalEmployees = employees;
+        if (search && employees.length === 0) {
+            const regex = new RegExp(search, 'i');
+            const adminMatches = await FoodAdmin.find({
+                role: 'HRMS_EMPLOYEE',
+                $or: [{ name: regex }, { email: regex }]
+            }).select('_id').lean();
+
+            if (adminMatches.length > 0) {
+                const adminIds = adminMatches.map(a => a._id);
+                const baseFilter = { ...filter };
+                delete baseFilter.$or;
+                baseFilter.adminId = { $in: adminIds };
+
+                const [emps, cnt] = await Promise.all([
+                    HrmsEmployee.find(baseFilter)
+                        .populate('adminId', 'name email phone profileImage isActive')
+                        .populate({ path: 'managerId', populate: { path: 'adminId', select: 'name email' } })
+                        .sort({ [sortBy]: sortDir })
+                        .skip(skip)
+                        .limit(parseInt(limit))
+                        .lean(),
+                    HrmsEmployee.countDocuments(baseFilter)
+                ]);
+                finalEmployees = emps;
+                return sendResponse(res, 200, 'Employees retrieved successfully', {
+                    employees: finalEmployees,
+                    pagination: { page: parseInt(page), limit: parseInt(limit), total: cnt, totalPages: Math.ceil(cnt / parseInt(limit)) }
+                });
+            }
+        }
+
+        return sendResponse(res, 200, 'Employees retrieved successfully', {
+            employees: finalEmployees,
+            pagination: { page: parseInt(page), limit: parseInt(limit), total, totalPages: Math.ceil(total / parseInt(limit)) }
+        });
     } catch (error) {
         next(error);
     }
 };
 
+/**
+ * ADMIN: Get single employee details
+ */
+export const getEmployeeById = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const employee = await HrmsEmployee.findById(id)
+            .populate('adminId', 'name email phone profileImage isActive')
+            .populate({ path: 'managerId', populate: { path: 'adminId', select: 'name email' } });
+
+        if (!employee) {
+            return sendError(res, 404, 'Employee not found');
+        }
+
+        // Get documents
+        const documents = await HrmsDocument.find({ employeeId: employee._id }).lean();
+
+        return sendResponse(res, 200, 'Employee details retrieved', { employee, documents });
+    } catch (error) {
+        next(error);
+    }
+};
+
+/**
+ * EMPLOYEE: Get own profile
+ */
 export const getMyProfile = async (req, res, next) => {
     try {
-        // req.user.userId belongs to FoodAdmin. We need to find the HrmsEmployee
         const employee = await HrmsEmployee.findOne({ adminId: req.user.userId })
             .populate('adminId', 'name email phone profileImage')
             .populate({
@@ -99,93 +238,126 @@ export const getMyProfile = async (req, res, next) => {
             });
 
         if (!employee) {
-            return sendError(res, 404, "Employee profile not found");
+            return sendError(res, 404, 'Employee profile not found');
         }
 
-        return sendResponse(res, 200, "Profile retrieved successfully", employee);
+        const documents = await HrmsDocument.find({ employeeId: employee._id })
+            .select('documentType name url createdAt')
+            .lean();
+
+        return sendResponse(res, 200, 'Profile retrieved successfully', { employee, documents });
     } catch (error) {
         next(error);
     }
 };
 
+/**
+ * ADMIN: Update employee details
+ */
+export const updateEmployee = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const updateData = req.body;
+
+        const employee = await HrmsEmployee.findById(id);
+        if (!employee) return sendError(res, 404, 'Employee not found');
+
+        // Fields that can be updated
+        const allowedFields = [
+            'department', 'designation', 'managerId', 'employmentType', 'hrmsRole',
+            'shift', 'officeLocation', 'zone', 'ctc',
+            'bankDetails', 'address', 'emergencyContact', 'profilePhotoUrl',
+            'documents', 'qualification', 'experience'
+        ];
+
+        for (const field of allowedFields) {
+            if (updateData[field] !== undefined) {
+                employee[field] = updateData[field];
+            }
+        }
+
+        await employee.save();
+
+        // Sync name/phone with FoodAdmin if provided
+        if (updateData.fullName || updateData.phone) {
+            const adminUpdate = {};
+            if (updateData.fullName) adminUpdate.name = updateData.fullName;
+            if (updateData.phone) adminUpdate.phone = updateData.phone;
+            await FoodAdmin.findByIdAndUpdate(employee.adminId, adminUpdate);
+        }
+
+        return sendResponse(res, 200, 'Employee updated successfully', employee);
+    } catch (error) {
+        next(error);
+    }
+};
+
+/**
+ * ADMIN: Update employee status (Active/Suspended/Terminated/Resigned)
+ */
 export const updateEmployeeStatus = async (req, res, next) => {
     try {
         const { id } = req.params;
         const { status } = req.body;
 
         const employee = await HrmsEmployee.findById(id);
-        if (!employee) return sendError(res, 404, "Employee not found");
+        if (!employee) return sendError(res, 404, 'Employee not found');
 
         employee.status = status;
         await employee.save();
 
         // Sync with FoodAdmin isActive
-        if (status === 'Suspended' || status === 'Terminated' || status === 'Resigned') {
-            await FoodAdmin.findByIdAndUpdate(employee.adminId, { isActive: false });
-        } else if (status === 'Active') {
-            await FoodAdmin.findByIdAndUpdate(employee.adminId, { isActive: true });
-        }
+        const isActive = status === 'Active';
+        await FoodAdmin.findByIdAndUpdate(employee.adminId, { isActive });
 
-        return sendResponse(res, 200, "Employee status updated", employee);
+        return sendResponse(res, 200, 'Employee status updated', employee);
     } catch (error) {
         next(error);
     }
 };
 
-export const registerEmployee = async (req, res, next) => {
-    const session = await mongoose.startSession();
-    session.startTransaction();
+/**
+ * ADMIN: Get employee stats for HRMS dashboard
+ */
+export const getEmployeeStats = async (req, res, next) => {
     try {
-        const { 
-            name, email, phone, password, 
-            department, designation, employmentType, 
-            joiningDate, officeLocation 
-        } = req.body;
+        const [totalActive, totalSuspended, totalTerminated, departments] = await Promise.all([
+            HrmsEmployee.countDocuments({ status: 'Active' }),
+            HrmsEmployee.countDocuments({ status: 'Suspended' }),
+            HrmsEmployee.countDocuments({ status: { $in: ['Terminated', 'Resigned'] } }),
+            HrmsEmployee.aggregate([
+                { $match: { status: 'Active' } },
+                { $group: { _id: '$department', count: { $sum: 1 } } },
+                { $sort: { count: -1 } }
+            ])
+        ]);
 
-        if (!name || !email || !password || !joiningDate) {
-            return sendError(res, 400, 'Name, email, password, and joining date are required');
-        }
-
-        // 1. Create Base Credentials in FoodAdmin
-        const existingAdmin = await FoodAdmin.findOne({ email }).session(session);
-        if (existingAdmin) {
-            return sendError(res, 400, 'Email is already in use');
-        }
-
-        const newAdmin = new FoodAdmin({
-            email,
-            password,
-            phone,
-            name: name.trim(),
-            role: 'HRMS_EMPLOYEE',
-            isActive: true
+        return sendResponse(res, 200, 'Employee stats retrieved', {
+            totalActive,
+            totalSuspended,
+            totalTerminated,
+            totalEmployees: totalActive + totalSuspended + totalTerminated,
+            departments
         });
-        await newAdmin.save({ session });
-
-        // 2. Generate Employee ID
-        const count = await HrmsEmployee.countDocuments();
-        const employeeId = `ITZO-EMP-${String(count + 1).padStart(3, '0')}`;
-
-        // 3. Create HRMS Employee Profile
-        const newEmployee = new HrmsEmployee({
-            adminId: newAdmin._id,
-            employeeId,
-            department,
-            designation,
-            employmentType: employmentType || 'Full-Time',
-            joiningDate,
-            officeLocation,
-            status: 'Active'
-        });
-
-        await newEmployee.save({ session });
-        await session.commitTransaction();
-
-        return sendResponse(res, 201, "Registration successful", newEmployee);
     } catch (error) {
-        await session.abortTransaction();
         next(error);
-    } finally {
-        session.endSession();
+    }
+};
+
+/**
+ * MANAGER: Get team members (reporting employees)
+ */
+export const getTeamMembers = async (req, res, next) => {
+    try {
+        const employee = await HrmsEmployee.findOne({ adminId: req.user.userId });
+        if (!employee) return sendError(res, 404, 'Employee not found');
+
+        const team = await HrmsEmployee.find({ managerId: employee._id, status: 'Active' })
+            .populate('adminId', 'name email phone profileImage')
+            .lean();
+
+        return sendResponse(res, 200, 'Team members retrieved', team);
+    } catch (error) {
+        next(error);
     }
 };

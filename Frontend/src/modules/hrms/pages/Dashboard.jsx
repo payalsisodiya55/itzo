@@ -1,180 +1,191 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@core/context/AuthContext';
 import axiosInstance from '@core/api/axios';
 import { toast } from 'sonner';
-import { Button } from '@food/components/ui/Button';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, Loader2 } from 'lucide-react';
-import { Card, CardContent } from '@food/components/ui/Card';
+import { Clock, CalendarDays, Wallet, FileCheck, LogIn, LogOut, Loader2, TrendingUp, Timer } from 'lucide-react';
 
 export default function Dashboard() {
-    const { user, logout } = useAuth();
+    const { user } = useAuth();
     const navigate = useNavigate();
-    const [attendanceRecord, setAttendanceRecord] = useState(null);
+    const [attendance, setAttendance] = useState(null);
+    const [leaveBalance, setLeaveBalance] = useState(null);
     const [loading, setLoading] = useState(true);
     const [actionLoading, setActionLoading] = useState(false);
-    const [elapsedTime, setElapsedTime] = useState("0:00");
+    const [elapsed, setElapsed] = useState('0:00');
 
-    useEffect(() => {
-        fetchAttendance();
+    const fetchData = useCallback(async () => {
+        try {
+            const [attRes, leaveRes] = await Promise.all([
+                axiosInstance.get('/hrms/attendance/me').catch(() => ({ data: { data: [] } })),
+                axiosInstance.get('/hrms/leaves/balance').catch(() => ({ data: { data: null } }))
+            ]);
+            const records = attRes.data?.data || [];
+            if (records.length > 0) {
+                const latest = records[0];
+                const today = new Date().toDateString();
+                if (new Date(latest.date).toDateString() === today) setAttendance(latest);
+            }
+            setLeaveBalance(leaveRes.data?.data || null);
+        } catch (e) { console.error(e); }
+        finally { setLoading(false); }
     }, []);
 
-    const fetchAttendance = async () => {
-        try {
-            const res = await axiosInstance.get('/hrms/attendance/me');
-            const records = res.data.data;
-            if (records && records.length > 0) {
-                // Check if the most recent record is today
-                const latest = records[0];
-                const recordDate = new Date(latest.date).toDateString();
-                const today = new Date().toDateString();
-                
-                if (recordDate === today) {
-                    setAttendanceRecord(latest);
-                }
-            }
-        } catch (error) {
-            console.error("Failed to fetch attendance", error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    useEffect(() => { fetchData(); }, [fetchData]);
 
     useEffect(() => {
-        let interval;
-        if (attendanceRecord && attendanceRecord.checkInTime && !attendanceRecord.checkOutTime) {
-            // Check-in timer calculation
-            const updateTimer = () => {
-                const now = new Date();
-                const checkInDate = new Date(attendanceRecord.checkInTime);
-                const diffMs = now - checkInDate;
-                const hours = Math.floor(diffMs / (1000 * 60 * 60));
-                const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-                setElapsedTime(`${hours}:${mins.toString().padStart(2, '0')}`);
-            };
-            updateTimer();
-            interval = setInterval(updateTimer, 60000); // Update every minute
-        } else if (attendanceRecord && attendanceRecord.checkOutTime) {
-            setElapsedTime(`${attendanceRecord.workingHours?.toFixed(1) || '0.0'} hr`);
-        } else {
-            setElapsedTime("0:00");
-        }
+        if (!attendance?.checkInTime || attendance?.checkOutTime) return;
+        const update = () => {
+            const diff = Date.now() - new Date(attendance.checkInTime).getTime();
+            const h = Math.floor(diff / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            setElapsed(`${h}:${String(m).padStart(2, '0')}`);
+        };
+        update();
+        const interval = setInterval(update, 60000);
         return () => clearInterval(interval);
-    }, [attendanceRecord]);
+    }, [attendance]);
 
     const handleCheckIn = async () => {
         setActionLoading(true);
         try {
             const res = await axiosInstance.post('/hrms/attendance/check-in');
-            setAttendanceRecord(res.data.data);
-            toast.success("Successfully checked in!");
-        } catch (error) {
-            toast.error(error.response?.data?.message || "Check-in failed");
-        } finally {
-            setActionLoading(false);
-        }
+            setAttendance(res.data.data);
+            toast.success('Checked in successfully!');
+        } catch (e) { toast.error(e.response?.data?.message || 'Check-in failed'); }
+        finally { setActionLoading(false); }
     };
 
     const handleCheckOut = async () => {
         setActionLoading(true);
         try {
             const res = await axiosInstance.post('/hrms/attendance/check-out');
-            setAttendanceRecord(res.data.data);
-            toast.success("Successfully checked out!");
-        } catch (error) {
-            toast.error(error.response?.data?.message || "Check-out failed");
-        } finally {
-            setActionLoading(false);
-        }
+            setAttendance(res.data.data);
+            toast.success('Checked out successfully!');
+        } catch (e) { toast.error(e.response?.data?.message || 'Check-out failed'); }
+        finally { setActionLoading(false); }
     };
 
+    const firstName = user?.name?.split(' ')[0] || 'Employee';
+
+    if (loading) {
+        return <div className="flex items-center justify-center h-96"><Loader2 className="w-8 h-8 animate-spin text-orange-500" /></div>;
+    }
+
+    const isCheckedIn = attendance?.checkInTime && !attendance?.checkOutTime;
+    const isDone = attendance?.checkOutTime;
+
     return (
-        <div className="min-h-screen bg-gray-50">
-            {/* Header */}
-            <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
-                <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-                        <User className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                        <h2 className="text-sm font-bold text-gray-900">{user?.name || 'Employee'}</h2>
-                        <p className="text-xs text-gray-500">{user?.email}</p>
-                    </div>
-                </div>
-                <Button variant="ghost" className="text-gray-600 hover:text-red-600 hover:bg-red-50 gap-2" onClick={logout}>
-                    <LogOut className="w-4 h-4" />
-                    Logout
-                </Button>
-            </header>
+        <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6">
+            {/* Welcome Banner */}
+            <div className="bg-gradient-to-r from-orange-500 to-amber-500 rounded-2xl p-6 sm:p-8 text-white shadow-xl shadow-orange-500/15">
+                <h1 className="text-2xl sm:text-3xl font-bold">Welcome back, {firstName}!</h1>
+                <p className="text-orange-100 mt-1 text-sm sm:text-base">{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+            </div>
 
-            {/* Content */}
-            <main className="p-6 max-w-7xl mx-auto space-y-6">
-                <div className="mb-8">
-                    <h1 className="text-2xl font-bold tracking-tight text-gray-900">Welcome back, {user?.name?.split(' ')[0] || 'Employee'}!</h1>
-                    <p className="text-gray-500 mt-1">Here is your daily attendance and HRMS overview.</p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {/* Check In Widget */}
-                    <Card className={`shadow-sm border-t-4 ${attendanceRecord?.checkOutTime ? 'border-t-gray-400' : attendanceRecord?.checkInTime ? 'border-t-emerald-500' : 'border-t-orange-500'}`}>
-                        <CardContent className="p-6 text-center">
-                            {loading ? (
-                                <div className="py-8 flex justify-center">
-                                    <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
-                                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+                {/* Check-in Card */}
+                <div className={`bg-white rounded-2xl border shadow-sm overflow-hidden ${isDone ? 'border-slate-200' : isCheckedIn ? 'border-emerald-200' : 'border-orange-200'}`}>
+                    <div className={`h-1 ${isDone ? 'bg-slate-300' : isCheckedIn ? 'bg-emerald-500' : 'bg-orange-500'}`} />
+                    <div className="p-6 text-center">
+                        <div className={`w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center border-4 ${
+                            isDone ? 'border-slate-100 bg-slate-50' : isCheckedIn ? 'border-emerald-100 bg-emerald-50' : 'border-orange-100 bg-orange-50'
+                        }`}>
+                            {isDone ? (
+                                <span className="text-lg font-bold text-slate-500">{attendance.workingHours?.toFixed(1)}h</span>
+                            ) : isCheckedIn ? (
+                                <span className="text-lg font-bold text-emerald-600">{elapsed}</span>
                             ) : (
-                                <>
-                                    <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 border-4 ${attendanceRecord?.checkOutTime ? 'border-gray-100 bg-gray-50 text-gray-500' : attendanceRecord?.checkInTime ? 'border-emerald-100 bg-emerald-50 text-emerald-600' : 'border-orange-100 bg-orange-50 text-orange-500'}`}>
-                                        <span className="text-2xl font-bold">{elapsedTime}</span>
-                                    </div>
-                                    <h3 className="text-lg font-bold text-gray-900 mb-1">
-                                        {attendanceRecord?.checkOutTime ? 'Shift Completed' : attendanceRecord?.checkInTime ? 'Checked In' : 'Not Checked In'}
-                                    </h3>
-                                    <p className="text-sm text-gray-500 mb-6">
-                                        {attendanceRecord?.checkOutTime 
-                                            ? `You checked out at ${new Date(attendanceRecord.checkOutTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}` 
-                                            : attendanceRecord?.checkInTime 
-                                                ? `You checked in at ${new Date(attendanceRecord.checkInTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`
-                                                : 'Click below to start your workday.'}
-                                    </p>
-                                    
-                                    {!attendanceRecord?.checkInTime && (
-                                        <Button 
-                                            onClick={handleCheckIn} 
-                                            disabled={actionLoading} 
-                                            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white h-12 text-base font-semibold"
-                                        >
-                                            {actionLoading ? 'Processing...' : 'Check In'}
-                                        </Button>
-                                    )}
-
-                                    {attendanceRecord?.checkInTime && !attendanceRecord?.checkOutTime && (
-                                        <Button 
-                                            onClick={handleCheckOut} 
-                                            disabled={actionLoading} 
-                                            variant="destructive" 
-                                            className="w-full h-12 text-base font-semibold"
-                                        >
-                                            {actionLoading ? 'Processing...' : 'Check Out'}
-                                        </Button>
-                                    )}
-                                </>
+                                <Timer className="w-8 h-8 text-orange-500" />
                             )}
-                        </CardContent>
-                    </Card>
-
-                    <Card className="border-gray-100 shadow-sm">
-                        <CardContent className="p-6">
-                            <h3 className="font-bold text-gray-900 mb-4">Quick Links</h3>
-                            <div className="space-y-3">
-                                <Button onClick={() => navigate('/hrms/leave')} variant="outline" className="w-full justify-start text-gray-600">Apply for Leave</Button>
-                                <Button onClick={() => navigate('/hrms/expense')} variant="outline" className="w-full justify-start text-gray-600">Submit Travel Expense</Button>
-                                <Button onClick={() => navigate('/hrms/payslip')} variant="outline" className="w-full justify-start text-gray-600">Download Payslip</Button>
-                            </div>
-                        </CardContent>
-                    </Card>
+                        </div>
+                        <h3 className="font-bold text-slate-900 text-lg mb-1">
+                            {isDone ? 'Shift Complete' : isCheckedIn ? 'Working' : 'Not Checked In'}
+                        </h3>
+                        <p className="text-sm text-slate-500 mb-5">
+                            {isDone
+                                ? `Checked out at ${new Date(attendance.checkOutTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+                                : isCheckedIn
+                                    ? `Since ${new Date(attendance.checkInTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+                                    : 'Start your workday'}
+                        </p>
+                        {!attendance?.checkInTime && (
+                            <button onClick={handleCheckIn} disabled={actionLoading}
+                                className="w-full h-11 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/20 transition-all disabled:opacity-50 flex items-center justify-center gap-2">
+                                {actionLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <LogIn className="w-4 h-4" />}
+                                {actionLoading ? 'Processing...' : 'Check In'}
+                            </button>
+                        )}
+                        {isCheckedIn && (
+                            <button onClick={handleCheckOut} disabled={actionLoading}
+                                className="w-full h-11 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-xl shadow-lg shadow-red-500/20 transition-all disabled:opacity-50 flex items-center justify-center gap-2">
+                                {actionLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <LogOut className="w-4 h-4" />}
+                                {actionLoading ? 'Processing...' : 'Check Out'}
+                            </button>
+                        )}
+                    </div>
                 </div>
-            </main>
+
+                {/* Leave Balance */}
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div className="h-1 bg-gradient-to-r from-blue-500 to-indigo-500" />
+                    <div className="p-6">
+                        <div className="flex items-center gap-3 mb-5">
+                            <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+                                <CalendarDays className="w-5 h-5 text-blue-600" />
+                            </div>
+                            <h3 className="font-bold text-slate-900">Leave Balance</h3>
+                        </div>
+                        {leaveBalance ? (
+                            <div className="space-y-3">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-sm text-slate-500">Monthly Allowed</span>
+                                    <span className="font-bold text-slate-900">{leaveBalance.monthly?.allowed || 4}</span>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-sm text-slate-500">Used This Month</span>
+                                    <span className="font-bold text-orange-500">{leaveBalance.monthly?.used || 0}</span>
+                                </div>
+                                <div className="flex justify-between items-center pt-2 border-t border-slate-100">
+                                    <span className="text-sm font-medium text-slate-700">Remaining</span>
+                                    <span className="font-bold text-lg text-emerald-600">{leaveBalance.monthly?.remaining || 4}</span>
+                                </div>
+                            </div>
+                        ) : (
+                            <p className="text-sm text-slate-400">No leave data available</p>
+                        )}
+                    </div>
+                </div>
+
+                {/* Quick Actions */}
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden md:col-span-2 xl:col-span-1">
+                    <div className="h-1 bg-gradient-to-r from-violet-500 to-purple-500" />
+                    <div className="p-6">
+                        <div className="flex items-center gap-3 mb-5">
+                            <div className="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center">
+                                <TrendingUp className="w-5 h-5 text-violet-600" />
+                            </div>
+                            <h3 className="font-bold text-slate-900">Quick Actions</h3>
+                        </div>
+                        <div className="space-y-2.5">
+                            {[
+                                { label: 'Apply for Leave', path: '/hrms/leave', icon: CalendarDays, color: 'text-blue-600 bg-blue-50' },
+                                { label: 'Submit Expense', path: '/hrms/expenses', icon: Wallet, color: 'text-emerald-600 bg-emerald-50' },
+                                { label: 'View Attendance', path: '/hrms/attendance', icon: Clock, color: 'text-orange-600 bg-orange-50' },
+                                { label: 'View Payslip', path: '/hrms/salary', icon: FileCheck, color: 'text-violet-600 bg-violet-50' },
+                            ].map((item) => (
+                                <button key={item.path} onClick={() => navigate(item.path)}
+                                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-slate-100 hover:bg-slate-50 hover:border-slate-200 transition-all text-left group">
+                                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${item.color}`}>
+                                        <item.icon className="w-4 h-4" />
+                                    </div>
+                                    <span className="text-sm font-medium text-slate-700 group-hover:text-slate-900">{item.label}</span>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
