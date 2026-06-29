@@ -6,7 +6,7 @@ import {
     getPayroll,
     getMySalary,
     getPayslipDetail,
-    regeneratePayslip
+    uploadPayslip
 } from '../controllers/salary.controller.js';
 import { authMiddleware, requireAdmin } from '../../../core/auth/auth.middleware.js';
 import { requireHrmsEmployee } from '../middleware/hrmsAuth.middleware.js';
@@ -21,7 +21,7 @@ router.get('/payslip/:id', authMiddleware, requireHrmsEmployee, getPayslipDetail
 router.post('/generate', authMiddleware, requireAdmin, generatePayroll);
 router.post('/approve', authMiddleware, requireAdmin, approvePayroll);
 router.post('/mark-paid', authMiddleware, requireAdmin, markPayrollPaid);
-router.post('/:id/generate-payslip', authMiddleware, requireAdmin, regeneratePayslip);
+router.post('/:id/upload-payslip', authMiddleware, requireAdmin, uploadPayslip);
 router.get('/', authMiddleware, requireAdmin, getPayroll);
 
 export default router;

@@ -15,7 +15,10 @@ export default function HrmsPayroll() {
     
     // Payslip modal
     const [previewPdf, setPreviewPdf] = useState(null);
-    const [regeneratingId, setRegeneratingId] = useState(null);
+    const [uploadModalOpen, setUploadModalOpen] = useState(false);
+    const [selectedSalaryId, setSelectedSalaryId] = useState(null);
+    const [file, setFile] = useState(null);
+    const [uploading, setUploading] = useState(false);
 
     useEffect(() => {
         const fetch = async () => {
@@ -80,18 +83,41 @@ export default function HrmsPayroll() {
         } catch (e) { toast.error(e.response?.data?.message || 'Action failed'); }
     };
 
-    const handleRegeneratePayslip = async (id) => {
-        setRegeneratingId(id);
+    const handleUploadPayslip = async (e) => {
+        e.preventDefault();
+        if (!file || !selectedSalaryId) return;
+
+        setUploading(true);
         try {
-            await axiosInstance.post(`/hrms/salaries/${id}/generate-payslip`);
-            toast.success('Payslip regenerated successfully');
+            // Upload image to Cloudinary via backend proxy
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('folder', 'hrms/payslips');
+            
+            const uploadRes = await axiosInstance.post('/uploads/image', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            const imageUrl = uploadRes.data?.data?.url;
+            
+            if (!imageUrl) throw new Error('Failed to get image URL');
+
+            // Save payslip URL to salary record
+            await axiosInstance.post(`/hrms/salaries/${selectedSalaryId}/upload-payslip`, {
+                payslipUrl: imageUrl
+            });
+
+            toast.success('Payslip uploaded successfully');
+            setUploadModalOpen(false);
+            setFile(null);
+            setSelectedSalaryId(null);
+            
             // Refresh table
             const res = await axiosInstance.get(`/hrms/salaries?month=${month}&year=${year}`);
             setPayrollRecords(res.data?.data?.records || []);
         } catch (e) {
-            toast.error(e.response?.data?.message || 'Regeneration failed');
+            toast.error(e.response?.data?.message || 'Upload failed');
         } finally {
-            setRegeneratingId(null);
+            setUploading(false);
         }
     };
 
@@ -183,16 +209,14 @@ export default function HrmsPayroll() {
                                             <td className="px-5 py-3.5 text-right">
                                                 {r.payslipUrl ? (
                                                     <div className="flex items-center justify-end gap-2">
-                                                        <button onClick={() => setPreviewPdf(r.payslipUrl)} className="text-orange-600 hover:text-orange-700 text-xs font-medium" title="Preview PDF">View</button>
+                                                        <button onClick={() => setPreviewPdf(r.payslipUrl)} className="text-orange-600 hover:text-orange-700 text-xs font-medium" title="Preview Payslip">View</button>
                                                         <span className="text-slate-300">|</span>
-                                                        <a href={r.payslipUrl} download target="_blank" rel="noopener noreferrer" className="text-orange-600 hover:text-orange-700 text-xs font-medium" title="Download PDF">DL</a>
+                                                        <a href={r.payslipUrl} download target="_blank" rel="noopener noreferrer" className="text-orange-600 hover:text-orange-700 text-xs font-medium" title="Download Payslip">DL</a>
                                                         <span className="text-slate-300">|</span>
-                                                        <button onClick={() => handleRegeneratePayslip(r._id)} disabled={regeneratingId === r._id} className="text-orange-600 hover:text-orange-700 text-xs font-medium disabled:opacity-50" title="Regenerate PDF">
-                                                            {regeneratingId === r._id ? '...' : 'Regen'}
-                                                        </button>
+                                                        <button onClick={() => { setSelectedSalaryId(r._id); setUploadModalOpen(true); }} className="text-orange-600 hover:text-orange-700 text-xs font-medium" title="Replace Payslip">Replace</button>
                                                     </div>
                                                 ) : (
-                                                    <span className="text-xs text-slate-400 italic">Generating...</span>
+                                                    <button onClick={() => { setSelectedSalaryId(r._id); setUploadModalOpen(true); }} className="text-orange-600 hover:text-orange-700 text-xs font-medium" title="Upload Payslip">Upload</button>
                                                 )}
                                             </td>
                                         </tr>
@@ -224,22 +248,54 @@ export default function HrmsPayroll() {
                 )}
             </div>
 
-            {/* PDF Preview Modal */}
+            {/* Payslip Preview Modal */}
             {previewPdf && (
                 <div className="fixed inset-0 z-50 flex flex-col bg-black/90 backdrop-blur-sm">
                     <div className="flex items-center justify-between p-4 border-b border-white/10 text-white">
                         <h3 className="font-medium text-lg">Payslip Preview</h3>
                         <div className="flex gap-4">
                             <a href={previewPdf} download target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition-colors flex items-center gap-2">
-                                Download PDF
+                                Download
                             </a>
                             <button onClick={() => setPreviewPdf(null)} className="px-4 py-2 bg-red-500/20 text-red-400 hover:bg-red-500/30 rounded-lg text-sm transition-colors">
                                 Close
                             </button>
                         </div>
                     </div>
-                    <div className="flex-1 w-full h-full p-4">
-                        <iframe src={previewPdf} className="w-full h-full rounded-xl bg-white" title="Payslip PDF" />
+                    <div className="flex-1 w-full h-full p-4 flex items-center justify-center">
+                        {previewPdf.match(/\.(jpeg|jpg|gif|png|webp)$/i) ? (
+                            <img src={previewPdf} className="max-w-full max-h-full object-contain rounded-xl" alt="Payslip Preview" />
+                        ) : (
+                            <iframe src={previewPdf} className="w-full h-full rounded-xl bg-white" title="Payslip Document" />
+                        )}
+                    </div>
+                </div>
+            )}
+
+            {/* Upload Payslip Modal */}
+            {uploadModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+                    <div className="bg-white rounded-2xl w-full max-w-md shadow-xl overflow-hidden">
+                        <div className="p-6">
+                            <h3 className="text-lg font-bold text-slate-900 mb-4">Upload Payslip</h3>
+                            
+                            <form onSubmit={handleUploadPayslip} className="space-y-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Select File (Image or PDF)</label>
+                                    <input type="file" required onChange={e => setFile(e.target.files[0])} accept="image/*,.pdf" 
+                                        className="w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-600 hover:file:bg-orange-100" />
+                                </div>
+                                <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
+                                    <button type="button" onClick={() => { setUploadModalOpen(false); setFile(null); setSelectedSalaryId(null); }} className="px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-xl text-sm font-medium transition-colors">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" disabled={uploading || !file} className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-sm font-medium transition-colors disabled:opacity-50 flex items-center gap-2">
+                                        {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+                                        {uploading ? 'Uploading...' : 'Upload Payslip'}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             )}

@@ -117,15 +117,15 @@ export default function Salary() {
                                                 r.payslipUrl ? (
                                                     <div className="flex items-center gap-3">
                                                         <button onClick={() => setPreviewPdf(r.payslipUrl)} className="text-orange-500 hover:text-orange-600 text-xs font-medium flex items-center gap-1">
-                                                            <Eye className="w-3.5 h-3.5" /> Preview PDF
+                                                            <Eye className="w-3.5 h-3.5" /> Preview Payslip
                                                         </button>
                                                         <span className="text-slate-300">|</span>
                                                         <a href={r.payslipUrl} download target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 text-xs font-medium flex items-center gap-1">
-                                                            <Download className="w-3.5 h-3.5" /> Download PDF
+                                                            <Download className="w-3.5 h-3.5" /> Download Payslip
                                                         </a>
                                                     </div>
                                                 ) : (
-                                                    <span className="text-xs text-slate-400 italic">Generating Payslip...</span>
+                                                    <span className="text-xs text-slate-400 italic">Not uploaded yet</span>
                                                 )
                                             )}
                                         </td>
@@ -144,15 +144,19 @@ export default function Salary() {
                         <h3 className="font-medium text-lg">Payslip Preview</h3>
                         <div className="flex gap-4">
                             <a href={previewPdf} download target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition-colors flex items-center gap-2">
-                                Download PDF
+                                Download
                             </a>
                             <button onClick={() => setPreviewPdf(null)} className="px-4 py-2 bg-red-500/20 text-red-400 hover:bg-red-500/30 rounded-lg text-sm transition-colors">
                                 Close
                             </button>
                         </div>
                     </div>
-                    <div className="flex-1 w-full h-full p-4">
-                        <iframe src={previewPdf} className="w-full h-full rounded-xl bg-white" title="Payslip PDF" />
+                    <div className="flex-1 w-full h-full p-4 flex items-center justify-center">
+                        {previewPdf.match(/\.(jpeg|jpg|gif|png|webp)$/i) ? (
+                            <img src={previewPdf} className="max-w-full max-h-full object-contain rounded-xl" alt="Payslip Preview" />
+                        ) : (
+                            <iframe src={previewPdf} className="w-full h-full rounded-xl bg-white" title="Payslip Document" />
+                        )}
                     </div>
                 </div>
             )}
