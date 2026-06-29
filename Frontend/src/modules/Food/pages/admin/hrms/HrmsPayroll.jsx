@@ -97,12 +97,10 @@ export default function HrmsPayroll() {
                         <select value={year} onChange={e => setYear(Number(e.target.value))} className="h-10 px-3 border border-slate-200 rounded-xl text-sm bg-white">
                             {[2024,2025,2026,2027].map(y => <option key={y} value={y}>{y}</option>)}
                         </select>
-                        {payrollRecords.length === 0 && (
-                            <button onClick={handleGenerate} disabled={genLoading}
-                                className="flex items-center gap-2 px-4 h-10 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-xl text-sm disabled:opacity-50">
-                                <Play className="w-4 h-4" />{genLoading ? 'Generating...' : 'Generate Payroll'}
-                            </button>
-                        )}
+                        <button onClick={handleGenerate} disabled={genLoading}
+                            className="flex items-center gap-2 px-4 h-10 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-xl text-sm disabled:opacity-50">
+                            <Play className="w-4 h-4" />{genLoading ? 'Generating...' : 'Generate Payroll'}
+                        </button>
                         {hasDrafts && (
                             <button onClick={handleApprovePayroll} className="flex items-center gap-2 px-4 h-10 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-xl text-sm">
                                 <CheckCircle className="w-4 h-4" /> Approve All

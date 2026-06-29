@@ -17,9 +17,18 @@ export const generatePayroll = async (req, res, next) => {
         const m = parseInt(month);
         const y = parseInt(year);
 
-        // Check if payroll already generated
-        const existing = await HrmsSalary.findOne({ month: m, year: y });
-        if (existing) return sendError(res, 409, 'Payroll for this month has already been generated');
+        // Get all active employees
+        const allEmployees = await HrmsEmployee.find({ status: 'Active' }).populate('adminId', 'name email').lean();
+
+        // Filter out employees who already have a salary record for this month
+        const existingSalaries = await HrmsSalary.find({ month: m, year: y }, { employeeId: 1 }).lean();
+        const existingEmpIds = new Set(existingSalaries.map(s => s.employeeId.toString()));
+
+        const employees = allEmployees.filter(emp => !existingEmpIds.has(emp._id.toString()));
+
+        if (employees.length === 0) {
+            return sendError(res, 409, 'Payroll has already been generated for all active employees for this month');
+        }
 
         // Get settings
         const settings = await HrmsSettings.findOne().lean();
@@ -27,13 +36,6 @@ export const generatePayroll = async (req, res, next) => {
         const shortHourRate = settings?.workingHours?.shortHourDeductionRate || 1;
         const overtimeRate = settings?.workingHours?.overtimeRate || 1.5;
         const paidLeavesPerMonth = settings?.leavePolicies?.paidLeavesPerMonth || 4;
-
-        // Get all active employees
-        const employees = await HrmsEmployee.find({ status: 'Active' }).populate('adminId', 'name email').lean();
-
-        if (employees.length === 0) {
-            return sendError(res, 404, 'No active employees found');
-        }
 
         const startDate = new Date(y, m - 1, 1);
         const endDate = new Date(y, m, 0, 23, 59, 59);
