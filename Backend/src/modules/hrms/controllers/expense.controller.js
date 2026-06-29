@@ -134,7 +134,8 @@ export const approveExpense = async (req, res, next) => {
             expense.approvedBy = approverEmployee?._id;
         }
 
-        await expense.save();
+        const saveOptions = action === 'Approved' ? {} : { validateBeforeSave: false };
+        await expense.save(saveOptions);
         return sendResponse(res, 200, `Expense ${action.toLowerCase()}`, expense);
     } catch (error) {
         if (error.name === 'ValidationError') {

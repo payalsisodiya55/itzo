@@ -256,7 +256,8 @@ export const approveLeave = async (req, res, next) => {
 
         leave.approvedBy = approverEmployee?._id;
         leave.approvedAt = new Date();
-        await leave.save();
+        const saveOptions = action === 'Approved' ? {} : { validateBeforeSave: false };
+        await leave.save(saveOptions);
 
         return sendResponse(res, 200, `Leave ${action.toLowerCase()} successfully`, leave);
     } catch (error) {
