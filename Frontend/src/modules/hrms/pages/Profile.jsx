@@ -3,6 +3,23 @@ import axiosInstance from '@core/api/axios';
 import { toast } from 'sonner';
 import { User, Loader2, Building2, Phone, Mail, MapPin, CreditCard, Heart, GraduationCap, Edit2, X, Check, AlertCircle, XCircle } from 'lucide-react';
 
+const Section = ({ icon: Icon, title, children }) => (
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden h-full">
+        <div className="px-6 py-4 border-b border-slate-100 flex items-center gap-3 bg-slate-50/50">
+            <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center"><Icon className="w-4 h-4 text-orange-600" /></div>
+            <h3 className="font-semibold text-slate-900">{title}</h3>
+        </div>
+        <div className="p-6">{children}</div>
+    </div>
+);
+
+const Field = ({ label, value }) => (
+    <div>
+        <p className="text-xs font-medium text-slate-500 mb-1">{label}</p>
+        <p className="text-sm font-medium text-slate-900">{value || '—'}</p>
+    </div>
+);
+
 export default function Profile() {
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -69,23 +86,6 @@ export default function Profile() {
             setSubmitting(false);
         }
     };
-
-    const Section = ({ icon: Icon, title, children }) => (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden h-full">
-            <div className="px-6 py-4 border-b border-slate-100 flex items-center gap-3 bg-slate-50/50">
-                <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center"><Icon className="w-4 h-4 text-orange-600" /></div>
-                <h3 className="font-semibold text-slate-900">{title}</h3>
-            </div>
-            <div className="p-6">{children}</div>
-        </div>
-    );
-
-    const Field = ({ label, value }) => (
-        <div>
-            <p className="text-xs font-medium text-slate-500 mb-1">{label}</p>
-            <p className="text-sm font-medium text-slate-900">{value || '—'}</p>
-        </div>
-    );
 
     const inputClass = "w-full h-9 px-3 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all";
 
