@@ -102,8 +102,12 @@ export const requestRegularization = async (req, res, next) => {
             attendance = new HrmsAttendance({ employeeId: employee._id, date: normDate });
         }
 
-        if (attendance.regularization?.status === 'Pending') {
-            return sendError(res, 400, 'A regularization request is already pending for this date');
+        if (attendance.regularization?.isRequested) {
+            if (attendance.regularization.status === 'Pending') {
+                return sendError(res, 400, 'A regularization request is already pending for this date');
+            } else if (attendance.regularization.status === 'Approved') {
+                return sendError(res, 400, 'Regularization for this date has already been approved');
+            }
         }
 
         attendance.regularization = {
