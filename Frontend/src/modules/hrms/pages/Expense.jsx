@@ -24,7 +24,7 @@ export default function Expense() {
     useEffect(() => { fetchExpenses(); }, []);
 
     const handleSubmit = async () => {
-        if (!form.visitDate || !form.purpose) return toast.error('Visit date and purpose are required');
+        if (!form.visitDate || !form.purpose?.trim()) return toast.error('Visit date and purpose are required');
         setSubmitLoading(true);
         try {
             await axiosInstance.post('/hrms/expenses', {

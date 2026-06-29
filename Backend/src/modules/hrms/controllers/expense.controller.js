@@ -31,6 +31,10 @@ export const submitExpense = async (req, res, next) => {
         await expense.save();
         return sendResponse(res, 201, 'Expense submitted successfully', expense);
     } catch (error) {
+        if (error.name === 'ValidationError') {
+            const messages = Object.values(error.errors).map(val => val.message);
+            return sendError(res, 400, `Required fields missing: ${messages.join(', ')}`);
+        }
         next(error);
     }
 };
@@ -133,6 +137,10 @@ export const approveExpense = async (req, res, next) => {
         await expense.save();
         return sendResponse(res, 200, `Expense ${action.toLowerCase()}`, expense);
     } catch (error) {
+        if (error.name === 'ValidationError') {
+            // When approving old data that is missing required fields
+            return sendError(res, 400, 'Cannot approve: this expense record is missing required fields (e.g. Visit Date or Purpose). Please reject it or have the employee re-submit.');
+        }
         next(error);
     }
 };

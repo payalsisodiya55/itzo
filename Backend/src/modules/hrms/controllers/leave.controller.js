@@ -97,6 +97,10 @@ export const applyLeave = async (req, res, next) => {
         await leave.save();
         return sendResponse(res, 201, 'Leave applied successfully', leave);
     } catch (error) {
+        if (error.name === 'ValidationError') {
+            const messages = Object.values(error.errors).map(val => val.message);
+            return sendError(res, 400, `Required fields missing: ${messages.join(', ')}`);
+        }
         next(error);
     }
 };
@@ -256,6 +260,9 @@ export const approveLeave = async (req, res, next) => {
 
         return sendResponse(res, 200, `Leave ${action.toLowerCase()} successfully`, leave);
     } catch (error) {
+        if (error.name === 'ValidationError') {
+            return sendError(res, 400, 'Cannot approve: this leave record is missing required fields. Please reject it or have the employee re-submit.');
+        }
         next(error);
     }
 };

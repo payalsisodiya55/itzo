@@ -27,7 +27,7 @@ export default function Leave() {
     useEffect(() => { fetchData(); }, []);
 
     const handleSubmit = async () => {
-        if (!form.startDate || !form.endDate || !form.reason) return toast.error('All fields are required');
+        if (!form.startDate || !form.endDate || !form.reason?.trim()) return toast.error('All fields are required');
         setSubmitLoading(true);
         try {
             await axiosInstance.post('/hrms/leaves', form);
