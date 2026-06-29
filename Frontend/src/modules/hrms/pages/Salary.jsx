@@ -38,33 +38,37 @@ export default function Salary() {
 
             {/* Payslip Detail Modal */}
             {selectedPayslip && (
-                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-                    <div className="flex items-center justify-between mb-6">
-                        <h3 className="font-bold text-slate-900 text-lg">Payslip — {monthNames[selectedPayslip.month - 1]} {selectedPayslip.year}</h3>
-                        <button onClick={() => setSelectedPayslip(null)} className="text-slate-400 hover:text-slate-600 text-sm font-medium">Close</button>
-                    </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                        {[
-                            { label: 'Base Salary', value: `₹${selectedPayslip.baseSalary?.toLocaleString() || 0}` },
-                            { label: 'Working Days', value: selectedPayslip.totalWorkingDays || 0 },
-                            { label: 'Present Days', value: selectedPayslip.presentDays || 0 },
-                            { label: 'Paid Leave Days', value: selectedPayslip.paidLeaveDays || 0 },
-                            { label: 'LOP Days', value: selectedPayslip.lopDays || 0, danger: true },
-                            { label: 'Absent Days', value: selectedPayslip.absentDays || 0, danger: true },
-                            { label: 'Short Hour Deduction', value: `₹${selectedPayslip.shortHourDeduction?.toLocaleString() || 0}`, danger: true },
-                            { label: 'Overtime Bonus', value: `₹${selectedPayslip.overtimeBonus?.toLocaleString() || 0}`, success: true },
-                            { label: 'Reimbursements', value: `₹${selectedPayslip.reimbursements?.toLocaleString() || 0}`, success: true },
-                            { label: 'LOP Deduction', value: `₹${selectedPayslip.lopDeduction?.toLocaleString() || 0}`, danger: true },
-                        ].map((item, i) => (
-                            <div key={i} className="bg-slate-50 rounded-xl p-3">
-                                <p className="text-xs text-slate-500 mb-1">{item.label}</p>
-                                <p className={`font-bold text-lg ${item.danger ? 'text-red-600' : item.success ? 'text-emerald-600' : 'text-slate-900'}`}>{item.value}</p>
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+                    <div className="bg-white rounded-2xl w-full max-w-3xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
+                        <div className="p-6 overflow-y-auto">
+                            <div className="flex items-center justify-between mb-6">
+                                <h3 className="font-bold text-slate-900 text-lg">Payslip — {monthNames[selectedPayslip.month - 1]} {selectedPayslip.year}</h3>
+                                <button onClick={() => setSelectedPayslip(null)} className="text-slate-400 hover:text-slate-600 text-sm font-medium">Close</button>
                             </div>
-                        ))}
-                    </div>
-                    <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between">
-                        <span className="text-lg font-bold text-slate-900">Net Salary</span>
-                        <span className="text-2xl font-bold text-emerald-600">₹{selectedPayslip.netSalary?.toLocaleString() || 0}</span>
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                                {[
+                                    { label: 'Base Salary', value: `₹${selectedPayslip.baseSalary?.toLocaleString() || 0}` },
+                                    { label: 'Working Days', value: selectedPayslip.totalWorkingDays || 0 },
+                                    { label: 'Present Days', value: selectedPayslip.presentDays || 0 },
+                                    { label: 'Paid Leave Days', value: selectedPayslip.paidLeaveDays || 0 },
+                                    { label: 'LOP Days', value: selectedPayslip.lopDays || 0, danger: true },
+                                    { label: 'Absent Days', value: selectedPayslip.absentDays || 0, danger: true },
+                                    { label: 'Short Hour Deduction', value: `₹${selectedPayslip.shortHourDeduction?.toLocaleString() || 0}`, danger: true },
+                                    { label: 'Overtime Bonus', value: `₹${selectedPayslip.overtimeBonus?.toLocaleString() || 0}`, success: true },
+                                    { label: 'Reimbursements', value: `₹${selectedPayslip.reimbursements?.toLocaleString() || 0}`, success: true },
+                                    { label: 'LOP Deduction', value: `₹${selectedPayslip.lopDeduction?.toLocaleString() || 0}`, danger: true },
+                                ].map((item, i) => (
+                                    <div key={i} className="bg-slate-50 rounded-xl p-3">
+                                        <p className="text-xs text-slate-500 mb-1">{item.label}</p>
+                                        <p className={`font-bold text-lg ${item.danger ? 'text-red-600' : item.success ? 'text-emerald-600' : 'text-slate-900'}`}>{item.value}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between">
+                                <span className="text-lg font-bold text-slate-900">Net Salary</span>
+                                <span className="text-2xl font-bold text-emerald-600">₹{selectedPayslip.netSalary?.toLocaleString() || 0}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}

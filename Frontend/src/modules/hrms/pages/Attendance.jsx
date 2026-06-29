@@ -146,11 +146,16 @@ export default function Attendance() {
                                         </td>
                                         <td className="px-5 py-3.5">
                                             {r.regularization?.isRequested ? (
-                                                <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                                    r.regularization.status === 'Approved' ? 'bg-emerald-50 text-emerald-700' :
-                                                    r.regularization.status === 'Rejected' ? 'bg-red-50 text-red-700' :
-                                                    'bg-amber-50 text-amber-700'
-                                                }`}>{r.regularization.status}</span>
+                                                <div className="flex flex-col">
+                                                    <span className={`px-2 py-1 rounded-full text-xs font-medium self-start ${
+                                                        r.regularization.status === 'Approved' ? 'bg-emerald-50 text-emerald-700' :
+                                                        r.regularization.status === 'Rejected' ? 'bg-red-50 text-red-700' :
+                                                        'bg-amber-50 text-amber-700'
+                                                    }`}>{r.regularization.status}</span>
+                                                    {r.regularization.status === 'Rejected' && r.regularization.rejectionReason && (
+                                                        <p className="text-[10px] text-red-500 mt-1 max-w-[150px] truncate" title={r.regularization.rejectionReason}>Reason: {r.regularization.rejectionReason}</p>
+                                                    )}
+                                                </div>
                                             ) : <span className="text-slate-400">—</span>}
                                         </td>
                                     </tr>

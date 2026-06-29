@@ -155,7 +155,12 @@ export default function Leave() {
                                         <td className="px-5 py-3.5 text-slate-600">{new Date(l.endDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' })}</td>
                                         <td className="px-5 py-3.5 font-semibold">{l.totalDays}{l.isHalfDay ? ' (Half)' : ''}</td>
                                         <td className="px-5 py-3.5">{l.lopDays > 0 ? <span className="text-red-600 font-semibold">{l.lopDays}</span> : <span className="text-slate-400">0</span>}</td>
-                                        <td className="px-5 py-3.5">{statusBadge(l.status)}</td>
+                                        <td className="px-5 py-3.5">
+                                            {statusBadge(l.status)}
+                                            {l.status === 'Rejected' && l.rejectionReason && (
+                                                <p className="text-[10px] text-red-500 mt-1 max-w-[150px] truncate" title={l.rejectionReason}>Reason: {l.rejectionReason}</p>
+                                            )}
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

@@ -30,6 +30,7 @@ const hrmsAttendanceSchema = new mongoose.Schema(
             requestedCheckInTime: { type: Date },
             requestedCheckOutTime: { type: Date },
             reason: { type: String },
+            rejectionReason: { type: String },
             status: { 
                 type: String, 
                 enum: ['Pending', 'Approved', 'Rejected'], 

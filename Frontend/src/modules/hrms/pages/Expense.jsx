@@ -140,7 +140,12 @@ export default function Expense() {
                                         <td className="px-5 py-3.5 text-slate-600">₹{e.hotelCost || 0}</td>
                                         <td className="px-5 py-3.5 text-slate-600">₹{e.foodCost || 0}</td>
                                         <td className="px-5 py-3.5 font-bold text-slate-900">₹{e.totalAmount?.toLocaleString() || 0}</td>
-                                        <td className="px-5 py-3.5">{statusBadge(e.status)}</td>
+                                        <td className="px-5 py-3.5">
+                                            {statusBadge(e.status)}
+                                            {e.status === 'Rejected' && e.rejectionReason && (
+                                                <p className="text-[10px] text-red-500 mt-1 max-w-[150px] truncate" title={e.rejectionReason}>Reason: {e.rejectionReason}</p>
+                                            )}
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

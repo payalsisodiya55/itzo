@@ -131,7 +131,7 @@ export const requestRegularization = async (req, res, next) => {
 export const approveRegularization = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const { action } = req.body; // 'Approved' or 'Rejected'
+        const { action, rejectionReason } = req.body; // 'Approved' or 'Rejected'
 
         const attendance = await HrmsAttendance.findById(id);
         if (!attendance) return sendError(res, 404, 'Attendance record not found');
@@ -182,6 +182,7 @@ export const approveRegularization = async (req, res, next) => {
                 : 0;
         } else {
             attendance.regularization.status = 'Rejected';
+            attendance.regularization.rejectionReason = rejectionReason || '';
             attendance.regularization.approvedBy = approverEmployee?._id;
         }
 

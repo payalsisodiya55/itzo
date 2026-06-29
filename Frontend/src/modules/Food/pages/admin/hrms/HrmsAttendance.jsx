@@ -34,7 +34,12 @@ export default function HrmsAttendance() {
 
     const handleRegAction = async (id, action) => {
         try {
-            await axiosInstance.post(`/hrms/attendance/regularize/${id}/action`, { action });
+            let rejectionReason = '';
+            if (action === 'Rejected') {
+                rejectionReason = window.prompt("Please provide a reason for rejection:");
+                if (rejectionReason === null) return;
+            }
+            await axiosInstance.post(`/hrms/attendance/regularize/${id}/action`, { action, rejectionReason });
             toast.success(`Regularization ${action.toLowerCase()}`);
             setPendingRegs(prev => prev.filter(r => r._id !== id));
         } catch (e) { toast.error(e.response?.data?.message || 'Action failed'); }
@@ -42,7 +47,12 @@ export default function HrmsAttendance() {
 
     const handleLeaveAction = async (id, action) => {
         try {
-            await axiosInstance.post(`/hrms/leaves/${id}/action`, { action });
+            let rejectionReason = '';
+            if (action === 'Rejected') {
+                rejectionReason = window.prompt("Please provide a reason for rejection:");
+                if (rejectionReason === null) return;
+            }
+            await axiosInstance.post(`/hrms/leaves/${id}/action`, { action, rejectionReason });
             toast.success(`Leave ${action.toLowerCase()}`);
             setPendingLeaves(prev => prev.filter(l => l._id !== id));
         } catch (e) { toast.error(e.response?.data?.message || 'Action failed'); }

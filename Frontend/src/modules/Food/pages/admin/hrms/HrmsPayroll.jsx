@@ -65,7 +65,12 @@ export default function HrmsPayroll() {
 
     const handleExpenseAction = async (id, action, approvedAmount) => {
         try {
-            await axiosInstance.post(`/hrms/expenses/${id}/action`, { action, approvedAmount });
+            let rejectionReason = '';
+            if (action === 'Rejected') {
+                rejectionReason = window.prompt("Please provide a reason for rejection:");
+                if (rejectionReason === null) return; // User cancelled
+            }
+            await axiosInstance.post(`/hrms/expenses/${id}/action`, { action, approvedAmount, rejectionReason });
             toast.success(`Expense ${action.toLowerCase()}`);
             setExpenses(prev => prev.filter(e => e._id !== id));
         } catch (e) { toast.error(e.response?.data?.message || 'Action failed'); }
