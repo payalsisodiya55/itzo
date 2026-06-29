@@ -92,6 +92,15 @@ const hrmsEmployeeSchema = new mongoose.Schema(
             ref: 'HrmsJoiningRequest'
         },
 
+        // 9. Profile Edit Requests
+        profileEditStatus: {
+            type: String,
+            enum: ['None', 'Pending', 'Rejected'],
+            default: 'None'
+        },
+        profileEditRejectionReason: { type: String },
+        pendingProfileEdit: { type: Object },
+
         status: {
             type: String,
             enum: ['Active', 'Suspended', 'Resigned', 'Terminated'],

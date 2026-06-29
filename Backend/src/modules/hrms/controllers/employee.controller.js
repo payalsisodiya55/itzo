@@ -361,3 +361,104 @@ export const getTeamMembers = async (req, res, next) => {
         next(error);
     }
 };
+
+/**
+ * EMPLOYEE: Request a profile update
+ */
+export const requestProfileUpdate = async (req, res, next) => {
+    try {
+        const employee = await HrmsEmployee.findOne({ adminId: req.user.userId });
+        if (!employee) return sendError(res, 404, 'Employee not found');
+
+        if (employee.profileEditStatus === 'Pending') {
+            return sendError(res, 400, 'A profile edit request is already pending approval');
+        }
+
+        // Allowed fields for employee to edit
+        const allowedFields = ['phone', 'address', 'emergencyContact', 'bankDetails', 'qualification', 'experience', 'profilePhotoUrl'];
+        const requestedChanges = {};
+
+        for (const field of allowedFields) {
+            if (req.body[field] !== undefined) {
+                requestedChanges[field] = req.body[field];
+            }
+        }
+
+        if (Object.keys(requestedChanges).length === 0) {
+            return sendError(res, 400, 'No valid fields provided for update');
+        }
+
+        employee.pendingProfileEdit = requestedChanges;
+        employee.profileEditStatus = 'Pending';
+        employee.profileEditRejectionReason = '';
+
+        await employee.save();
+        return sendResponse(res, 200, 'Profile update requested successfully', employee);
+    } catch (error) {
+        next(error);
+    }
+};
+
+/**
+ * ADMIN: Get all pending profile edit requests
+ */
+export const getPendingProfileEdits = async (req, res, next) => {
+    try {
+        const edits = await HrmsEmployee.find({ profileEditStatus: 'Pending' })
+            .populate('adminId', 'name email phone profileImage')
+            .lean();
+
+        return sendResponse(res, 200, 'Pending profile edits retrieved', edits);
+    } catch (error) {
+        next(error);
+    }
+};
+
+/**
+ * ADMIN: Approve or reject profile edit
+ */
+export const approveProfileEdit = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { action, rejectionReason } = req.body; // 'Approved' or 'Rejected'
+
+        const employee = await HrmsEmployee.findById(id);
+        if (!employee) return sendError(res, 404, 'Employee not found');
+
+        if (employee.profileEditStatus !== 'Pending') {
+            return sendError(res, 400, 'No pending edit request found for this employee');
+        }
+
+        if (action === 'Approved') {
+            const changes = employee.pendingProfileEdit || {};
+            
+            // Merge changes into employee
+            for (const key in changes) {
+                employee[key] = changes[key];
+            }
+
+            // Sync with FoodAdmin if phone or profilePhotoUrl changed
+            const adminUpdate = {};
+            if (changes.phone) adminUpdate.phone = changes.phone;
+            if (changes.profilePhotoUrl) adminUpdate.profileImage = changes.profilePhotoUrl;
+            
+            if (Object.keys(adminUpdate).length > 0) {
+                await FoodAdmin.findByIdAndUpdate(employee.adminId, adminUpdate);
+            }
+
+            employee.pendingProfileEdit = {};
+            employee.profileEditStatus = 'None';
+            employee.profileEditRejectionReason = '';
+        } else if (action === 'Rejected') {
+            employee.profileEditStatus = 'Rejected';
+            employee.profileEditRejectionReason = rejectionReason || 'Your profile edit request was rejected by Admin.';
+        } else {
+            return sendError(res, 400, 'Invalid action');
+        }
+
+        await employee.save();
+        return sendResponse(res, 200, `Profile edit ${action.toLowerCase()} successfully`, employee);
+    } catch (error) {
+        next(error);
+    }
+};
