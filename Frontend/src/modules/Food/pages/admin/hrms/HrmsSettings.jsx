@@ -153,8 +153,16 @@ export default function HrmsSettings() {
                                 <input id="newDept" className={inputClass} placeholder="New department name" style={{ maxWidth: '250px' }} />
                                 <button onClick={() => {
                                     const input = document.getElementById('newDept');
-                                    if (input.value.trim()) {
-                                        updateNested('organization.departments', [...(settings.organization?.departments || []), { name: input.value.trim() }]);
+                                    let val = input.value.trim();
+                                    if (val) {
+                                        // Title Case (capitalize first letter of each word)
+                                        val = val.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+                                        const depts = settings.organization?.departments || [];
+                                        if (!depts.find(d => d.name.toLowerCase() === val.toLowerCase())) {
+                                            updateNested('organization.departments', [...depts, { name: val }]);
+                                        } else {
+                                            toast.error('Department already exists');
+                                        }
                                         input.value = '';
                                     }
                                 }} className="px-4 h-10 bg-slate-900 text-white rounded-xl text-sm font-medium"><Plus className="w-4 h-4" /></button>
@@ -178,8 +186,15 @@ export default function HrmsSettings() {
                                 <input id="newDesig" className={inputClass} placeholder="New designation" style={{ maxWidth: '250px' }} />
                                 <button onClick={() => {
                                     const input = document.getElementById('newDesig');
-                                    if (input.value.trim()) {
-                                        updateNested('organization.designations', [...(settings.organization?.designations || []), input.value.trim()]);
+                                    let val = input.value.trim();
+                                    if (val) {
+                                        val = val.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+                                        const desigs = settings.organization?.designations || [];
+                                        if (!desigs.find(d => d.toLowerCase() === val.toLowerCase())) {
+                                            updateNested('organization.designations', [...desigs, val]);
+                                        } else {
+                                            toast.error('Designation already exists');
+                                        }
                                         input.value = '';
                                     }
                                 }} className="px-4 h-10 bg-slate-900 text-white rounded-xl text-sm font-medium"><Plus className="w-4 h-4" /></button>

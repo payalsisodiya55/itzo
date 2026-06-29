@@ -27,10 +27,10 @@ export default function HrmsDashboard() {
     if (loading) return <div className="flex justify-center p-12"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>;
 
     const cards = [
-        { label: 'Active Employees', value: stats?.totalActive || 0, icon: Users, color: 'text-emerald-600 bg-emerald-50', path: 'employees' },
-        { label: 'Pending Requests', value: pendingRequests, icon: UserPlus, color: 'text-orange-600 bg-orange-50', path: 'joining-requests', highlight: pendingRequests > 0 },
-        { label: 'Suspended', value: stats?.totalSuspended || 0, icon: AlertCircle, color: 'text-amber-600 bg-amber-50', path: 'employees' },
-        { label: 'Total Employees', value: stats?.totalEmployees || 0, icon: TrendingUp, color: 'text-blue-600 bg-blue-50', path: 'employees' },
+        { label: 'Active Employees', value: stats?.totalActive || 0, icon: Users, color: 'text-emerald-600 bg-emerald-50', path: '/ecs/hrms/employees' },
+        { label: 'Pending Requests', value: pendingRequests, icon: UserPlus, color: 'text-orange-600 bg-orange-50', path: '/ecs/hrms/joining-requests', highlight: pendingRequests > 0 },
+        { label: 'Suspended', value: stats?.totalSuspended || 0, icon: AlertCircle, color: 'text-amber-600 bg-amber-50', path: '/ecs/hrms/employees' },
+        { label: 'Total Employees', value: stats?.totalEmployees || 0, icon: TrendingUp, color: 'text-blue-600 bg-blue-50', path: '/ecs/hrms/employees' },
     ];
 
     return (
