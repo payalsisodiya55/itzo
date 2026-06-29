@@ -101,6 +101,7 @@ const FooterSection = React.memo(function FooterSection() {
               <li><a href="/about" className="hover:text-black transition-colors">Who We Are</a></li>
               <li><a href="/food/careers" className="hover:text-black transition-colors">Careers / Jobs</a></li>
               <li><a href="/contact" className="hover:text-black transition-colors">Contact Us</a></li>
+              <li><a href="/hrms" className="hover:text-black transition-colors">HRMS Portal</a></li>
             </ul>
           </div>
 
