@@ -129,7 +129,10 @@ export default function HrmsEmployees() {
                             { l: 'Manager', v: selectedEmployee.managerId?.adminId?.name || '—' },
                             { l: 'Shift', v: selectedEmployee.shift },
                         ].map((f, i) => (
-                            <div key={i}><p className="text-xs text-slate-500">{f.l}</p><p className="font-medium text-slate-900">{f.v || '—'}</p></div>
+                            <div key={i} className="min-w-0">
+                                <p className="text-xs text-slate-500">{f.l}</p>
+                                <p className="font-medium text-slate-900 truncate" title={f.v}>{f.v || '—'}</p>
+                            </div>
                         ))}
                     </div>
                     <div className="mt-4 pt-4 border-t border-slate-100 flex gap-2 flex-wrap">

@@ -158,9 +158,9 @@ export default function HrmsJoiningRequests() {
                             { l: 'Emergency', v: selectedRequest.emergencyContact?.name ? `${selectedRequest.emergencyContact.name} (${selectedRequest.emergencyContact.relation})` : '—' },
                             { l: 'Applied On', v: new Date(selectedRequest.createdAt).toLocaleDateString('en-IN') },
                         ].map((f, i) => (
-                            <div key={i}>
+                            <div key={i} className="min-w-0">
                                 <p className="text-xs text-slate-500">{f.l}</p>
-                                <p className="font-medium text-slate-900">{f.v || '—'}</p>
+                                <p className="font-medium text-slate-900 truncate" title={f.v}>{f.v || '—'}</p>
                             </div>
                         ))}
                     </div>
