@@ -23,7 +23,7 @@ export default function Salary() {
     }, [selectedYear]);
 
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const statusColor = { Draft: 'bg-slate-100 text-slate-600', Approved: 'bg-blue-50 text-blue-700', Paid: 'bg-emerald-50 text-emerald-700' };
+    const statusColor = { Draft: 'bg-slate-100 text-slate-600', Approved: 'bg-orange-50 text-orange-700', Paid: 'bg-emerald-50 text-emerald-700' };
 
     return (
         <div className="p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto space-y-6">

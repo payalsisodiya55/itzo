@@ -152,11 +152,14 @@ export default function AdminLogin() {
       const landingPath = getDefaultAdminLandingPath(adminUser, resolvedPermissions)
       navigate(landingPath, { replace: true })
     } catch (err) {
-      const message =
-        err?.response?.data?.message ||
-        err?.response?.data?.error ||
-        err?.message ||
-        "Login failed. Please check your credentials."
+      let message = "Login failed. Please check your credentials.";
+      
+      if (err.code === 'ERR_NETWORK' || err.message === 'Network Error') {
+        message = "Network error: Cannot connect to server. Please check if backend is running.";
+      } else if (err?.response?.data?.message || err?.response?.data?.error) {
+        message = err.response.data.message || err.response.data.error;
+      }
+
       setError(message)
     } finally {
       setIsLoading(false)

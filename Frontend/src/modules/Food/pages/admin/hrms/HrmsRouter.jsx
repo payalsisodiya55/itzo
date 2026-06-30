@@ -9,6 +9,10 @@ const HrmsEmployeeDocs = lazy(() => import("./HrmsEmployeeDocs"));
 const HrmsAttendance = lazy(() => import("./HrmsAttendance"));
 const HrmsPayroll = lazy(() => import("./HrmsPayroll"));
 const HrmsSettings = lazy(() => import("./HrmsSettings"));
+const SupportDashboard = lazy(() => import("./support/SupportDashboard"));
+const SupportRequests = lazy(() => import("./support/SupportRequests"));
+const SupportSettings = lazy(() => import("./support/SupportSettings"));
+const SupportAdminDetails = lazy(() => import("./support/SupportAdminDetails"));
 
 export default function HrmsRouter() {
     return (
@@ -22,6 +26,13 @@ export default function HrmsRouter() {
                 <Route path="attendance" element={<HrmsAttendance />} />
                 <Route path="payroll" element={<HrmsPayroll />} />
                 <Route path="settings" element={<HrmsSettings />} />
+
+                {/* Support Center */}
+                <Route path="support" element={<Navigate to="dashboard" replace />} />
+                <Route path="support/dashboard" element={<SupportDashboard />} />
+                <Route path="support/requests" element={<SupportRequests />} />
+                <Route path="support/requests/:id" element={<SupportAdminDetails />} />
+                <Route path="support/settings" element={<SupportSettings />} />
             </Routes>
         </Suspense>
     );

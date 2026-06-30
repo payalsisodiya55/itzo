@@ -32,7 +32,12 @@ export default function Login() {
                 toast.error('Access denied. This portal is for employees only.');
             }
         } catch (error) {
-            const msg = error.response?.data?.message || 'Login failed. Please check your credentials.';
+            let msg = 'Login failed. Please check your credentials.';
+            if (error.code === 'ERR_NETWORK' || error.message === 'Network Error') {
+                msg = 'Network error: Cannot connect to server. Please check if backend is running.';
+            } else if (error.response?.data?.message) {
+                msg = error.response.data.message;
+            }
             toast.error(msg);
         } finally {
             setLoading(false);

@@ -7,6 +7,7 @@ import salaryRoutes from './salary.routes.js';
 import expenseRoutes from './expense.routes.js';
 import documentRoutes from './document.routes.js';
 import joiningRequestRoutes from './joiningRequest.routes.js';
+import supportRoutes from './support.routes.js';
 
 const router = express.Router();
 
@@ -18,5 +19,6 @@ router.use('/salaries', salaryRoutes);
 router.use('/expenses', expenseRoutes);
 router.use('/documents', documentRoutes);
 router.use('/joining-requests', joiningRequestRoutes);
+router.use('/support', supportRoutes);
 
 export default router;

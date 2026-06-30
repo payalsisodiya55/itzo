@@ -255,6 +255,17 @@ export const adminSidebarMenu = [
       { type: "link", label: "Employee Management", permissionKey: "employees", path: "/ecs/hrms/employees", icon: "Users" },
       { type: "link", label: "Attendance & Leaves", permissionKey: "attendance", path: "/ecs/hrms/attendance", icon: "CalendarCheck" },
       { type: "link", label: "Payroll & Expenses", permissionKey: "payroll", path: "/ecs/hrms/payroll", icon: "CreditCard" },
+      {
+        type: "expandable",
+        label: "Support Center",
+        icon: "LifeBuoy",
+        permissionKey: "support",
+        subItems: [
+          { label: "Dashboard", path: "/ecs/hrms/support/dashboard", permissionKey: "support_dashboard" },
+          { label: "Support Requests", path: "/ecs/hrms/support/requests", permissionKey: "support_requests" },
+          { label: "Support Settings", path: "/ecs/hrms/support/settings", permissionKey: "support_settings" },
+        ],
+      },
       { type: "link", label: "Settings", permissionKey: "settings", path: "/ecs/hrms/settings", icon: "Settings" },
     ],
   },

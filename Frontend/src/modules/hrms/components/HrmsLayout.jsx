@@ -4,7 +4,8 @@ import { useAuth } from '@core/context/AuthContext';
 import { useHrmsSettings } from '../context/HrmsSettingsContext';
 import {
     LayoutDashboard, Clock, CalendarDays, Wallet, FileText,
-    Receipt, User, LogOut, Menu, X, ChevronRight, Building2
+    Receipt, User, LogOut, Menu, X, ChevronRight, Building2,
+    LifeBuoy, ChevronDown, MessageSquarePlus, List, Phone
 } from 'lucide-react';
 
 const navItems = [
@@ -15,6 +16,14 @@ const navItems = [
     { label: 'Documents', icon: FileText, path: '/hrms/documents' },
     { label: 'Travel Expenses', icon: Receipt, path: '/hrms/expenses' },
     { label: 'My Profile', icon: User, path: '/hrms/profile' },
+    {
+        label: 'Support', icon: LifeBuoy, path: '/hrms/support',
+        subItems: [
+            { label: 'Contact HR', icon: Phone, path: '/hrms/support/contact' },
+            { label: 'Raise Request', icon: MessageSquarePlus, path: '/hrms/support/create' },
+            { label: 'My Requests', icon: List, path: '/hrms/support/list' }
+        ]
+    }
 ];
 
 export default function HrmsLayout() {
@@ -22,6 +31,11 @@ export default function HrmsLayout() {
     const { hrmsSettings } = useHrmsSettings();
     const navigate = useNavigate();
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [openMenus, setOpenMenus] = useState({});
+
+    const toggleMenu = (label) => {
+        setOpenMenus(prev => ({ ...prev, [label]: !prev[label] }));
+    };
 
     const handleLogout = () => {
         logout();
@@ -82,25 +96,63 @@ export default function HrmsLayout() {
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-700">
+                <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-slate-700/50 hover:[&::-webkit-scrollbar-thumb]:bg-orange-500/50 [&::-webkit-scrollbar-thumb]:rounded-full">
                     {navItems.map((item) => (
-                        <NavLink
-                            key={item.path}
-                            to={item.path}
-                            onClick={() => setSidebarOpen(false)}
-                            className={({ isActive }) => `
-                                group flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium
-                                transition-all duration-200
-                                ${isActive
-                                    ? 'bg-gradient-to-r from-orange-500/15 to-orange-500/5 text-orange-400 shadow-sm border border-orange-500/10'
-                                    : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
-                                }
-                            `}
-                        >
-                            <item.icon className="w-[18px] h-[18px] shrink-0" />
-                            <span className="truncate">{item.label}</span>
-                            <ChevronRight className={`w-4 h-4 ml-auto opacity-0 group-hover:opacity-60 transition-opacity`} />
-                        </NavLink>
+                        <div key={item.label}>
+                            {item.subItems ? (
+                                <>
+                                    <button
+                                        onClick={() => toggleMenu(item.label)}
+                                        className={`w-full group flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200
+                                            ${openMenus[item.label] ? 'text-white bg-slate-800/80' : 'text-slate-400 hover:text-white hover:bg-slate-800/50'}
+                                        `}
+                                    >
+                                        <item.icon className="w-[18px] h-[18px] shrink-0" />
+                                        <span className="truncate">{item.label}</span>
+                                        <ChevronDown className={`w-4 h-4 ml-auto transition-transform ${openMenus[item.label] ? 'rotate-180 text-orange-400' : 'opacity-60'}`} />
+                                    </button>
+                                    {openMenus[item.label] && (
+                                        <div className="mt-1 ml-4 pl-3 border-l border-slate-700/50 space-y-1">
+                                            {item.subItems.map((sub) => (
+                                                <NavLink
+                                                    key={sub.path}
+                                                    to={sub.path}
+                                                    onClick={() => setSidebarOpen(false)}
+                                                    className={({ isActive }) => `
+                                                        group flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-medium
+                                                        transition-all duration-200
+                                                        ${isActive
+                                                            ? 'bg-gradient-to-r from-orange-500/15 to-orange-500/5 text-orange-400'
+                                                            : 'text-slate-400 hover:text-white hover:bg-slate-800/30'
+                                                        }
+                                                    `}
+                                                >
+                                                    <sub.icon className="w-4 h-4 shrink-0" />
+                                                    <span className="truncate">{sub.label}</span>
+                                                </NavLink>
+                                            ))}
+                                        </div>
+                                    )}
+                                </>
+                            ) : (
+                                <NavLink
+                                    to={item.path}
+                                    onClick={() => setSidebarOpen(false)}
+                                    className={({ isActive }) => `
+                                        group flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium
+                                        transition-all duration-200
+                                        ${isActive
+                                            ? 'bg-gradient-to-r from-orange-500/15 to-orange-500/5 text-orange-400 shadow-sm border border-orange-500/10'
+                                            : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+                                        }
+                                    `}
+                                >
+                                    <item.icon className="w-[18px] h-[18px] shrink-0" />
+                                    <span className="truncate">{item.label}</span>
+                                    <ChevronRight className={`w-4 h-4 ml-auto opacity-0 group-hover:opacity-60 transition-opacity`} />
+                                </NavLink>
+                            )}
+                        </div>
                     ))}
                 </nav>
 

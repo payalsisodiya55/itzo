@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import axiosInstance from '@core/api/axios';
 import { useNavigate } from 'react-router-dom';
-import { Users, UserPlus, CalendarDays, Loader2, TrendingUp, AlertCircle, Search, ArrowRight } from 'lucide-react';
+import { Users, UserPlus, CalendarDays, Loader2, TrendingUp, AlertCircle, Search, ArrowRight, Bell, FileEdit, Clock, LifeBuoy } from 'lucide-react';
 
 /* ───────── live date hook ───────── */
 function useLiveDate() {
@@ -192,6 +192,12 @@ export default function HrmsDashboard() {
 
     const dateStr = useLiveDate();
 
+    /* ── notifications state ── */
+    const [notifications, setNotifications] = useState([]);
+    const [notifLoading, setNotifLoading] = useState(true);
+    const [showNotifPanel, setShowNotifPanel] = useState(false);
+    const bellRef = useRef(null);
+
     /* ── stats fetch ── */
     useEffect(() => {
         const fetch = async () => {
@@ -206,6 +212,105 @@ export default function HrmsDashboard() {
             finally { setLoading(false); }
         };
         fetch();
+    }, []);
+
+    /* ── notifications fetch ── */
+    useEffect(() => {
+        const fetchNotifications = async () => {
+            setNotifLoading(true);
+            try {
+                const [jrRes, leavesRes, editsRes, regRes, supportRes] = await Promise.all([
+                    axiosInstance.get('/hrms/joining-requests?status=Pending&limit=5').catch(() => ({ data: { data: { requests: [], counts: {} } } })),
+                    axiosInstance.get('/hrms/leaves/pending').catch(() => ({ data: { data: [] } })),
+                    axiosInstance.get('/hrms/employees/pending-edits').catch(() => ({ data: { data: [] } })),
+                    axiosInstance.get('/hrms/attendance/pending-regularizations').catch(() => ({ data: { data: [] } })),
+                    axiosInstance.get('/hrms/support/admin/tickets?limit=5').catch(() => ({ data: { data: { tickets: [] } } }))
+                ]);
+
+                const items = [];
+
+                // Joining requests
+                const jrList = jrRes.data?.data?.requests || [];
+                jrList.forEach(jr => items.push({
+                    id: jr._id,
+                    type: 'Joining Request',
+                    icon: 'UserPlus',
+                    title: jr.fullName || 'New Applicant',
+                    subtitle: `${jr.requestId || ''} · ${jr.preferredDepartment || 'No dept'}`,
+                    time: jr.createdAt,
+                    path: '/ecs/hrms/joining-requests'
+                }));
+
+                // Leave requests
+                const leaveList = Array.isArray(leavesRes.data?.data) ? leavesRes.data.data : [];
+                leaveList.forEach(lv => items.push({
+                    id: lv._id,
+                    type: 'Leave Request',
+                    icon: 'CalendarDays',
+                    title: lv.employeeId?.adminId?.name || 'Employee',
+                    subtitle: `${lv.leaveType || 'Leave'} · ${lv.totalDays || 0} day(s)`,
+                    time: lv.createdAt,
+                    path: '/ecs/hrms/attendance'
+                }));
+
+                // Profile edits
+                const editList = Array.isArray(editsRes.data?.data) ? editsRes.data.data : [];
+                editList.forEach(ed => items.push({
+                    id: ed._id,
+                    type: 'Profile Edit',
+                    icon: 'FileEdit',
+                    title: ed.adminId?.name || 'Employee',
+                    subtitle: `Wants to update ${Object.keys(ed.pendingProfileEdit || {}).join(', ') || 'profile'}`,
+                    time: ed.updatedAt,
+                    path: '/ecs/hrms/employees'
+                }));
+
+                // Regularizations
+                const regList = Array.isArray(regRes.data?.data) ? regRes.data.data : [];
+                regList.forEach(rg => items.push({
+                    id: rg._id,
+                    type: 'Regularization',
+                    icon: 'Clock',
+                    title: rg.employeeId?.adminId?.name || 'Employee',
+                    subtitle: `${new Date(rg.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} attendance`,
+                    time: rg.updatedAt || rg.createdAt,
+                    path: '/ecs/hrms/attendance'
+                }));
+
+                // Support Tickets
+                const supportList = Array.isArray(supportRes.data?.data?.tickets) ? supportRes.data.data.tickets : [];
+                // Only take those unread by admin
+                const unreadSupport = supportList.filter(t => t.unreadByAdmin);
+                unreadSupport.forEach(t => items.push({
+                    id: t._id,
+                    type: 'Support Request',
+                    icon: 'LifeBuoy',
+                    title: t.subject || 'Ticket',
+                    subtitle: `${t.ticketId || ''} · ${t.employeeId?.adminId?.name || 'Employee'}`,
+                    time: t.updatedAt,
+                    path: `/ecs/hrms/support/requests/${t._id}`
+                }));
+
+                // Sort by time (newest first)
+                items.sort((a, b) => new Date(b.time) - new Date(a.time));
+                setNotifications(items);
+            } catch (e) {
+                console.error('Notification fetch error:', e);
+                setNotifications([]);
+            } finally {
+                setNotifLoading(false);
+            }
+        };
+        fetchNotifications();
+    }, []);
+
+    /* ── close notification panel on outside click ── */
+    useEffect(() => {
+        const handleClick = (e) => {
+            if (bellRef.current && !bellRef.current.contains(e.target)) setShowNotifPanel(false);
+        };
+        document.addEventListener('mousedown', handleClick);
+        return () => document.removeEventListener('mousedown', handleClick);
     }, []);
 
     /* ── weekly attendance chart fetch ── */
@@ -359,9 +464,101 @@ export default function HrmsDashboard() {
     return (
         <div className="space-y-6">
             {/* ── Title ── */}
-            <div>
-                <h1 className="text-2xl font-bold text-slate-900">HRMS Dashboard</h1>
-                <p className="text-sm text-slate-500 mt-1">Overview of your workforce</p>
+            <div className="flex items-center justify-between">
+                <div>
+                    <h1 className="text-2xl font-bold text-slate-900">HRMS Dashboard</h1>
+                    <p className="text-sm text-slate-500 mt-1">Overview of your workforce</p>
+                </div>
+
+                {/* Bell Icon */}
+                <div className="relative" ref={bellRef}>
+                    <button
+                        onClick={() => setShowNotifPanel(prev => !prev)}
+                        className="relative w-10 h-10 flex items-center justify-center rounded-full bg-white border border-slate-200 hover:bg-orange-50 hover:border-orange-200 transition-all shadow-sm"
+                    >
+                        <Bell className="w-5 h-5 text-slate-600" />
+                        {notifications.length > 0 && (
+                            <span className="absolute -top-1 -right-1 min-w-[20px] h-5 flex items-center justify-center px-1 bg-orange-500 text-white text-[11px] font-bold rounded-full shadow-md">
+                                {notifications.length > 99 ? '99+' : notifications.length}
+                            </span>
+                        )}
+                    </button>
+
+                    {/* Notification Panel */}
+                    {showNotifPanel && (
+                        <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 bg-white border border-slate-200 rounded-2xl shadow-2xl z-50 overflow-hidden">
+                            <div className="px-5 py-3.5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+                                <h3 className="text-sm font-bold text-slate-800">Notifications</h3>
+                                <span className="text-[11px] font-semibold text-orange-600 bg-orange-50 px-2 py-0.5 rounded-full">
+                                    {notifications.length} pending
+                                </span>
+                            </div>
+
+                            <div className="max-h-80 overflow-y-auto">
+                                {notifLoading ? (
+                                    <div className="flex items-center justify-center py-10 gap-2">
+                                        <Loader2 className="w-5 h-5 animate-spin text-orange-500" />
+                                        <span className="text-sm text-slate-500">Loading…</span>
+                                    </div>
+                                ) : notifications.length === 0 ? (
+                                    <div className="text-center py-10">
+                                        <Bell className="w-10 h-10 text-slate-200 mx-auto mb-2" />
+                                        <p className="text-sm text-slate-400 font-medium">All caught up!</p>
+                                        <p className="text-xs text-slate-300 mt-0.5">No pending approvals</p>
+                                    </div>
+                                ) : (
+                                    <div className="divide-y divide-slate-100">
+                                        {notifications.map((n, i) => {
+                                            const IconComp = n.icon === 'UserPlus' ? UserPlus : n.icon === 'CalendarDays' ? CalendarDays : n.icon === 'FileEdit' ? FileEdit : n.icon === 'LifeBuoy' ? LifeBuoy : Clock;
+                                            const typeColor = n.icon === 'UserPlus' ? 'bg-blue-50 text-blue-600' : n.icon === 'CalendarDays' ? 'bg-amber-50 text-amber-600' : n.icon === 'FileEdit' ? 'bg-violet-50 text-violet-600' : n.icon === 'LifeBuoy' ? 'bg-orange-50 text-orange-600' : 'bg-emerald-50 text-emerald-600';
+                                            const timeAgo = (() => {
+                                                if (!n.time) return '';
+                                                const diff = Date.now() - new Date(n.time).getTime();
+                                                const mins = Math.floor(diff / 60000);
+                                                if (mins < 1) return 'Just now';
+                                                if (mins < 60) return `${mins}m ago`;
+                                                const hrs = Math.floor(mins / 60);
+                                                if (hrs < 24) return `${hrs}h ago`;
+                                                const days = Math.floor(hrs / 24);
+                                                return `${days}d ago`;
+                                            })();
+                                            return (
+                                                <button
+                                                    key={`${n.type}-${n.id}-${i}`}
+                                                    onClick={() => { setShowNotifPanel(false); navigate(n.path); }}
+                                                    className="w-full flex items-start gap-3 px-5 py-3.5 hover:bg-orange-50/50 transition-colors text-left group"
+                                                >
+                                                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${typeColor}`}>
+                                                        <IconComp className="w-4 h-4" />
+                                                    </div>
+                                                    <div className="flex-1 min-w-0">
+                                                        <div className="flex items-center justify-between gap-2">
+                                                            <p className="text-sm font-medium text-slate-800 truncate">{n.title}</p>
+                                                            <span className="text-[10px] text-slate-400 shrink-0">{timeAgo}</span>
+                                                        </div>
+                                                        <p className="text-xs text-slate-400 truncate mt-0.5">{n.subtitle}</p>
+                                                        <span className="inline-block mt-1 text-[10px] font-semibold uppercase tracking-wider text-orange-500">{n.type}</span>
+                                                    </div>
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+                            </div>
+
+                            {notifications.length > 0 && (
+                                <div className="px-5 py-3 border-t border-slate-100 bg-slate-50">
+                                    <button
+                                        onClick={() => { setShowNotifPanel(false); navigate('/ecs/hrms/joining-requests'); }}
+                                        className="text-xs font-semibold text-orange-600 hover:text-orange-700 transition-colors"
+                                    >
+                                        View all approvals →
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
             </div>
 
             {/* ── Dashboard Sub-Header ── */}
