@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '@core/api/axios';
 import { toast } from 'sonner';
-import { User, Loader2, Building2, Phone, Mail, MapPin, CreditCard, Heart, GraduationCap, Edit2, X, Check, AlertCircle, XCircle } from 'lucide-react';
+import { User, Loader2, Building2, Phone, Mail, MapPin, CreditCard, Heart, GraduationCap, Edit2, X, Check, AlertCircle, XCircle, Camera } from 'lucide-react';
 
 const Section = ({ icon: Icon, title, children }) => (
     <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden h-full">
@@ -26,6 +26,7 @@ export default function Profile() {
     const [isEditing, setIsEditing] = useState(false);
     const [editForm, setEditForm] = useState({});
     const [submitting, setSubmitting] = useState(false);
+    const [uploadingImage, setUploadingImage] = useState(false);
 
     const fetchProfile = async () => {
         try {
@@ -49,6 +50,7 @@ export default function Profile() {
     const startEdit = () => {
         setIsEditing(true);
         setEditForm({
+            profilePhotoUrl: admin?.profileImage || emp.profilePhotoUrl || '',
             phone: admin?.phone || '',
             address: {
                 street: emp.address?.street || '',
@@ -87,6 +89,27 @@ export default function Profile() {
         }
     };
 
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        setUploadingImage(true);
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+            const res = await axiosInstance.post('/uploads/image', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            const url = res.data?.data?.url;
+            if (url) {
+                setEditForm(prev => ({ ...prev, profilePhotoUrl: url }));
+            }
+        } catch (err) {
+            toast.error('Failed to upload image');
+        } finally {
+            setUploadingImage(false);
+        }
+    };
+
     const inputClass = "w-full h-9 px-3 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all";
 
     return (
@@ -116,8 +139,22 @@ export default function Profile() {
             {/* Header */}
             <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-6 sm:p-8 text-white shadow-xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
                 <div className="flex items-center gap-5">
-                    <div className="w-20 h-20 rounded-2xl bg-white/10 flex items-center justify-center text-3xl font-bold backdrop-blur-sm border border-white/10">
-                        {admin?.name?.[0]?.toUpperCase() || 'E'}
+                    <div className="relative">
+                        <div className="w-20 h-20 rounded-2xl bg-white/10 flex items-center justify-center text-3xl font-bold backdrop-blur-sm border border-white/10 overflow-hidden">
+                            {(isEditing && editForm.profilePhotoUrl) ? (
+                                <img src={editForm.profilePhotoUrl} alt="Profile" className="w-full h-full object-cover" />
+                            ) : (admin?.profileImage || emp?.profilePhotoUrl) ? (
+                                <img src={admin.profileImage || emp.profilePhotoUrl} alt="Profile" className="w-full h-full object-cover" />
+                            ) : (
+                                admin?.name?.[0]?.toUpperCase() || 'E'
+                            )}
+                        </div>
+                        {isEditing && (
+                            <label className="absolute -bottom-2 -right-2 w-8 h-8 bg-orange-500 hover:bg-orange-600 rounded-full flex items-center justify-center cursor-pointer shadow-lg transition-colors border-2 border-slate-800">
+                                {uploadingImage ? <Loader2 className="w-4 h-4 animate-spin text-white" /> : <Camera className="w-4 h-4 text-white" />}
+                                <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={uploadingImage} />
+                            </label>
+                        )}
                     </div>
                     <div>
                         <h1 className="text-2xl font-bold">{admin?.name || 'Employee'}</h1>

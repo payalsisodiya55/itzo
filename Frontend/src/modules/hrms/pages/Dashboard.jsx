@@ -92,7 +92,9 @@ export default function Dashboard() {
                             isDone ? 'border-slate-100 bg-slate-50' : 'border-orange-100 bg-orange-50'
                         }`}>
                             {isDone ? (
-                                <span className="text-lg font-bold text-slate-500">{attendance.workingHours?.toFixed(1)}h</span>
+                                <span className="text-base font-bold text-slate-500">
+                                    {Math.floor(attendance.workingHours)}h {Math.round((attendance.workingHours % 1) * 60)}m
+                                </span>
                             ) : isCheckedIn ? (
                                 <span className="text-lg font-bold text-orange-600">{elapsed}</span>
                             ) : (
