@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axiosInstance from '@core/api/axios';
 import { toast } from 'sonner';
-import { Settings, Loader2, Save, Plus, X, Clock, CalendarDays, Wallet, Building2, MapPin } from 'lucide-react';
+import { Settings, Loader2, Save, Plus, X, Clock, CalendarDays, Wallet, Building2, MapPin, Upload, Image } from 'lucide-react';
 
 export default function HrmsSettings() {
     const [settings, setSettings] = useState(null);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
+    const [logoUploading, setLogoUploading] = useState(false);
+    const logoInputRef = useRef(null);
     const [activeSection, setActiveSection] = useState('companyInfo');
 
     useEffect(() => {
@@ -27,6 +29,44 @@ export default function HrmsSettings() {
             toast.success(`${section} updated successfully`);
         } catch (e) { toast.error(e.response?.data?.message || 'Save failed'); }
         finally { setSaving(false); }
+    };
+
+    const handleLogoUpload = async (file) => {
+        if (!file) return;
+        // Validate type
+        const allowed = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml', 'image/webp'];
+        if (!allowed.includes(file.type)) {
+            toast.error('Only PNG, JPG, SVG or WebP images are allowed');
+            return;
+        }
+        // Validate size (2 MB max)
+        if (file.size > 2 * 1024 * 1024) {
+            toast.error('Logo must be smaller than 2 MB');
+            return;
+        }
+        setLogoUploading(true);
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('folder', 'hrms/company-logo');
+            const res = await axiosInstance.post('/uploads/image', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            const url = res.data?.data?.url;
+            if (!url) throw new Error('No URL returned from upload');
+            // Update local state
+            const updated = JSON.parse(JSON.stringify(settings));
+            updated.companyInfo.companyLogoUrl = url;
+            setSettings(updated);
+            // Auto-save so the logo is immediately live everywhere
+            await axiosInstance.patch('/hrms/settings/companyInfo', updated.companyInfo);
+            toast.success('Company logo updated!');
+        } catch (e) {
+            toast.error(e.response?.data?.message || 'Logo upload failed');
+        } finally {
+            setLogoUploading(false);
+            if (logoInputRef.current) logoInputRef.current.value = '';
+        }
     };
 
     const updateNested = (path, value) => {
@@ -77,9 +117,61 @@ export default function HrmsSettings() {
                             <div><label className={labelClass}>Company Name</label>
                                 <input type="text" className={inputClass} value={settings.companyInfo?.companyName || ''}
                                     onChange={e => updateNested('companyInfo.companyName', e.target.value)} placeholder="e.g. ItzoFood" /></div>
-                            <div><label className={labelClass}>Company Logo URL</label>
-                                <input type="text" className={inputClass} value={settings.companyInfo?.companyLogoUrl || ''}
-                                    onChange={e => updateNested('companyInfo.companyLogoUrl', e.target.value)} placeholder="https://..." /></div>
+                            {/* ── Company Logo Upload ── */}
+                            <div>
+                                <label className={labelClass}>Company Logo</label>
+                                <div className="flex items-center gap-4">
+                                    {/* Preview */}
+                                    <div className="w-16 h-16 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center overflow-hidden shrink-0">
+                                        {settings.companyInfo?.companyLogoUrl ? (
+                                            <img
+                                                src={settings.companyInfo.companyLogoUrl}
+                                                alt="Company Logo"
+                                                className="w-full h-full object-contain p-1"
+                                                onError={e => { e.target.style.display = 'none'; }}
+                                            />
+                                        ) : (
+                                            <Image className="w-6 h-6 text-slate-300" />
+                                        )}
+                                    </div>
+                                    {/* Upload Button */}
+                                    <div className="flex flex-col gap-1.5">
+                                        <input
+                                            ref={logoInputRef}
+                                            type="file"
+                                            accept="image/png,image/jpeg,image/jpg,image/svg+xml,image/webp"
+                                            className="hidden"
+                                            onChange={e => handleLogoUpload(e.target.files?.[0])}
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => logoInputRef.current?.click()}
+                                            disabled={logoUploading}
+                                            className="flex items-center gap-2 px-4 h-9 bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white text-sm font-medium rounded-xl transition-colors"
+                                        >
+                                            {logoUploading
+                                                ? <><Loader2 className="w-4 h-4 animate-spin" /> Uploading…</>
+                                                : <><Upload className="w-4 h-4" /> Upload Logo</>}
+                                        </button>
+                                        <p className="text-[11px] text-slate-400">PNG, JPG, SVG or WebP · max 2 MB</p>
+                                        {settings.companyInfo?.companyLogoUrl && (
+                                            <button
+                                                type="button"
+                                                onClick={async () => {
+                                                    const updated = JSON.parse(JSON.stringify(settings));
+                                                    updated.companyInfo.companyLogoUrl = '';
+                                                    setSettings(updated);
+                                                    await axiosInstance.patch('/hrms/settings/companyInfo', updated.companyInfo);
+                                                    toast.success('Logo removed');
+                                                }}
+                                                className="text-[11px] text-red-400 hover:text-red-600 text-left"
+                                            >
+                                                Remove logo
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
                             <div><label className={labelClass}>Support Email</label>
                                 <input type="email" className={inputClass} value={settings.companyInfo?.supportEmail || ''}
                                     onChange={e => updateNested('companyInfo.supportEmail', e.target.value)} placeholder="support@itzofood.com" /></div>

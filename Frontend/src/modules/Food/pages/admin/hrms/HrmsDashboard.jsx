@@ -1,39 +1,176 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import axiosInstance from '@core/api/axios';
 import { useNavigate } from 'react-router-dom';
-import { Users, UserPlus, Clock, Wallet, CalendarDays, Loader2, TrendingUp, AlertCircle, Search, ArrowRight, Package, User, Building2, Utensils, Grid, PlusCircle } from 'lucide-react';
-import { adminAPI } from '@food/api';
+import { Users, UserPlus, CalendarDays, Loader2, TrendingUp, AlertCircle, Search, ArrowRight } from 'lucide-react';
 
 /* ───────── live date hook ───────── */
 function useLiveDate() {
     const [now, setNow] = useState(() => new Date());
 
     useEffect(() => {
-        // Calculate ms until next midnight so the date ticks over exactly at 00:00
         const msUntilMidnight = () => {
             const tomorrow = new Date();
             tomorrow.setHours(24, 0, 0, 0);
             return tomorrow - new Date();
         };
-
         let timeout;
         const schedule = () => {
             setNow(new Date());
             timeout = setTimeout(schedule, msUntilMidnight());
         };
         timeout = setTimeout(schedule, msUntilMidnight());
-
         return () => clearTimeout(timeout);
     }, []);
 
-    const formatted = now.toLocaleDateString('en-US', {
-        weekday: 'short',
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
+    return now.toLocaleDateString('en-US', {
+        weekday: 'short', month: 'short', day: 'numeric', year: 'numeric',
     }).toUpperCase();
+}
 
-    return formatted;
+/* ───────── smooth SVG area chart ───────── */
+function AttendanceChart({ data }) {
+    const W = 800, H = 260, PAD = { top: 24, right: 24, bottom: 44, left: 44 };
+    const innerW = W - PAD.left - PAD.right;
+    const innerH = H - PAD.top - PAD.bottom;
+
+    const maxVal = Math.max(...data.map(d => d.present), 1);
+    // round up to nearest 5 for clean y-axis
+    const yMax = Math.ceil((maxVal + 1) / 5) * 5;
+    const yMin = 0;
+
+    const xPos = (i) => PAD.left + (i / (data.length - 1 || 1)) * innerW;
+    const yPos = (v) => PAD.top + innerH - ((v - yMin) / (yMax - yMin || 1)) * innerH;
+
+    // Build cubic bezier smooth path
+    const smoothPath = (pts) => {
+        if (pts.length < 2) return '';
+        let d = `M ${pts[0][0]} ${pts[0][1]}`;
+        for (let i = 0; i < pts.length - 1; i++) {
+            const [x0, y0] = pts[i];
+            const [x1, y1] = pts[i + 1];
+            const cpX = (x0 + x1) / 2;
+            d += ` C ${cpX} ${y0}, ${cpX} ${y1}, ${x1} ${y1}`;
+        }
+        return d;
+    };
+
+    const pts = data.map((d, i) => [xPos(i), yPos(d.present)]);
+    const linePath = smoothPath(pts);
+    const areaPath = linePath
+        ? `${linePath} L ${pts[pts.length - 1][0]} ${PAD.top + innerH} L ${pts[0][0]} ${PAD.top + innerH} Z`
+        : '';
+
+    const yTicks = Array.from({ length: 5 }, (_, i) => Math.round(yMin + (yMax - yMin) * (i / 4)));
+
+    const [tooltip, setTooltip] = useState(null);
+    const svgRef = useRef(null);
+
+    const handleMouseMove = (e) => {
+        const rect = svgRef.current?.getBoundingClientRect();
+        if (!rect) return;
+        const relX = (e.clientX - rect.left) * (W / rect.width);
+        // Find closest point
+        let closest = 0, minDist = Infinity;
+        pts.forEach(([px], i) => {
+            const dist = Math.abs(px - relX);
+            if (dist < minDist) { minDist = dist; closest = i; }
+        });
+        setTooltip({ idx: closest, x: pts[closest][0], y: pts[closest][1] });
+    };
+
+    return (
+        <div className="relative w-full overflow-x-auto">
+            <svg
+                ref={svgRef}
+                viewBox={`0 0 ${W} ${H}`}
+                className="w-full"
+                style={{ minWidth: 320 }}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={() => setTooltip(null)}
+            >
+                <defs>
+                    <linearGradient id="hrmsAreaGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#f97316" stopOpacity="0.18" />
+                        <stop offset="100%" stopColor="#f97316" stopOpacity="0.01" />
+                    </linearGradient>
+                </defs>
+
+                {/* Y grid lines */}
+                {yTicks.map(tick => (
+                    <g key={tick}>
+                        <line
+                            x1={PAD.left} y1={yPos(tick)}
+                            x2={PAD.left + innerW} y2={yPos(tick)}
+                            stroke="#f1f5f9" strokeWidth="1"
+                        />
+                        <text
+                            x={PAD.left - 8} y={yPos(tick) + 4}
+                            fontSize="10" fill="#94a3b8" textAnchor="end"
+                        >{tick}</text>
+                    </g>
+                ))}
+
+                {/* X axis labels */}
+                {data.map((d, i) => (
+                    <text
+                        key={i}
+                        x={xPos(i)} y={H - 10}
+                        fontSize="10" fill="#94a3b8" textAnchor="middle"
+                    >{d.label}</text>
+                ))}
+
+                {/* Area fill */}
+                {areaPath && (
+                    <path d={areaPath} fill="url(#hrmsAreaGrad)" />
+                )}
+
+                {/* Line */}
+                {linePath && (
+                    <path
+                        d={linePath}
+                        fill="none"
+                        stroke="#f97316"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    />
+                )}
+
+                {/* Data points */}
+                {pts.map(([px, py], i) => (
+                    <circle
+                        key={i} cx={px} cy={py} r="4"
+                        fill="#f97316" stroke="white" strokeWidth="2"
+                        style={{ cursor: 'pointer' }}
+                    />
+                ))}
+
+                {/* Tooltip */}
+                {tooltip !== null && data[tooltip.idx] && (() => {
+                    const d = data[tooltip.idx];
+                    const tx = tooltip.x;
+                    const ty = tooltip.y;
+                    const boxW = 110, boxH = 48, boxR = 8;
+                    const bx = Math.min(Math.max(tx - boxW / 2, PAD.left), PAD.left + innerW - boxW);
+                    const by = ty - boxH - 12;
+                    return (
+                        <g>
+                            <line x1={tx} y1={ty} x2={tx} y2={PAD.top + innerH}
+                                stroke="#f97316" strokeWidth="1" strokeDasharray="4 3" opacity="0.5" />
+                            <rect x={bx} y={by} width={boxW} height={boxH} rx={boxR}
+                                fill="#1e293b" opacity="0.92" />
+                            <text x={bx + boxW / 2} y={by + 17}
+                                fontSize="10" fill="#94a3b8" textAnchor="middle">{d.label}</text>
+                            <text x={bx + boxW / 2} y={by + 34}
+                                fontSize="12" fill="white" textAnchor="middle" fontWeight="600">
+                                {d.present} Present · {d.absent} Absent
+                            </text>
+                        </g>
+                    );
+                })()}
+            </svg>
+        </div>
+    );
 }
 
 export default function HrmsDashboard() {
@@ -41,6 +178,10 @@ export default function HrmsDashboard() {
     const [stats, setStats] = useState(null);
     const [pendingRequests, setPendingRequests] = useState(0);
     const [loading, setLoading] = useState(true);
+
+    /* ── attendance chart state ── */
+    const [chartData, setChartData] = useState([]);
+    const [chartLoading, setChartLoading] = useState(true);
 
     /* ── search state ── */
     const [searchQuery, setSearchQuery] = useState('');
@@ -51,6 +192,7 @@ export default function HrmsDashboard() {
 
     const dateStr = useLiveDate();
 
+    /* ── stats fetch ── */
     useEffect(() => {
         const fetch = async () => {
             try {
@@ -66,6 +208,71 @@ export default function HrmsDashboard() {
         fetch();
     }, []);
 
+    /* ── weekly attendance chart fetch ── */
+    useEffect(() => {
+        const fetchChart = async () => {
+            setChartLoading(true);
+            try {
+                // Build last-7-days date range
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                const days = Array.from({ length: 7 }, (_, i) => {
+                    const d = new Date(today);
+                    d.setDate(today.getDate() - (6 - i));
+                    return d;
+                });
+
+                // Fetch current month attendance (may span two months; handle edge case below)
+                const month = today.getMonth() + 1;
+                const year = today.getFullYear();
+
+                // If the 7-day window crosses a month boundary, also fetch previous month
+                const firstDay = days[0];
+                const requests = [axiosInstance.get(`/hrms/attendance?month=${month}&year=${year}&limit=500`).catch(() => ({ data: { data: { records: [] } } }))];
+                if (firstDay.getMonth() !== today.getMonth()) {
+                    const pm = firstDay.getMonth() + 1;
+                    const py = firstDay.getFullYear();
+                    requests.push(axiosInstance.get(`/hrms/attendance?month=${pm}&year=${py}&limit=500`).catch(() => ({ data: { data: { records: [] } } })));
+                }
+
+                const responses = await Promise.all(requests);
+                const allRecords = responses.flatMap(r => r.data?.data?.records || []);
+
+                // Map date string → records
+                const byDate = {};
+                allRecords.forEach(rec => {
+                    const key = new Date(rec.date).toDateString();
+                    if (!byDate[key]) byDate[key] = [];
+                    byDate[key].push(rec);
+                });
+
+                const DAY_LABELS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+
+                const built = days.map(d => {
+                    const key = d.toDateString();
+                    const recs = byDate[key] || [];
+                    const present = recs.filter(r => r.status === 'Present').length;
+                    const absent = recs.filter(r => r.status === 'Absent').length;
+                    return {
+                        label: DAY_LABELS[d.getDay()],
+                        date: d,
+                        present,
+                        absent,
+                    };
+                });
+
+                setChartData(built);
+            } catch (e) {
+                console.error('Chart fetch error:', e);
+                setChartData([]);
+            } finally {
+                setChartLoading(false);
+            }
+        };
+        fetchChart();
+    }, []);
+
     /* ── debounced search ── */
     useEffect(() => {
         if (searchQuery.trim().length < 2) {
@@ -79,32 +286,21 @@ export default function HrmsDashboard() {
                     axiosInstance.get(`/hrms/employees?status=all&limit=10&search=${encodeURIComponent(searchQuery)}`),
                     axiosInstance.get(`/hrms/joining-requests?status=all&limit=10&search=${encodeURIComponent(searchQuery)}`)
                 ]);
-
                 const emps = empRes.data?.data?.employees || [];
                 const requests = jrRes.data?.data?.requests || [];
-
                 const results = [];
-
-                emps.forEach(emp => {
-                    results.push({
-                        id: emp._id,
-                        type: 'Employee',
-                        title: emp.adminId?.name || 'Unnamed Employee',
-                        description: `ID: ${emp.employeeId || '-'} | ${emp.designation || ''} (${emp.department || ''}) [${emp.status}]`,
-                        path: `/ecs/hrms/employees?search=${encodeURIComponent(emp.adminId?.name || '')}`
-                    });
-                });
-
-                requests.forEach(req => {
-                    results.push({
-                        id: req._id,
-                        type: 'Joining Request',
-                        title: req.fullName || 'Unnamed Applicant',
-                        description: `ID: ${req.requestId || '-'} | Dept: ${req.preferredDepartment || ''} | Status: ${req.status}`,
-                        path: `/ecs/hrms/joining-requests?status=all&search=${encodeURIComponent(req.fullName || '')}`
-                    });
-                });
-
+                emps.forEach(emp => results.push({
+                    id: emp._id, type: 'Employee',
+                    title: emp.adminId?.name || 'Unnamed Employee',
+                    description: `ID: ${emp.employeeId || '-'} | ${emp.designation || ''} (${emp.department || ''}) [${emp.status}]`,
+                    path: `/ecs/hrms/employees?search=${encodeURIComponent(emp.adminId?.name || '')}`
+                }));
+                requests.forEach(req => results.push({
+                    id: req._id, type: 'Joining Request',
+                    title: req.fullName || 'Unnamed Applicant',
+                    description: `ID: ${req.requestId || '-'} | Dept: ${req.preferredDepartment || ''} | Status: ${req.status}`,
+                    path: `/ecs/hrms/joining-requests?status=all&search=${encodeURIComponent(req.fullName || '')}`
+                }));
                 setSearchResults(results);
             } catch (err) {
                 console.error('Error searching HRMS:', err);
@@ -113,16 +309,13 @@ export default function HrmsDashboard() {
                 setIsSearching(false);
             }
         }, 350);
-
         return () => clearTimeout(timer);
     }, [searchQuery]);
 
     /* ── close results on outside click ── */
     useEffect(() => {
         const handleClick = (e) => {
-            if (searchRef.current && !searchRef.current.contains(e.target)) {
-                setShowResults(false);
-            }
+            if (searchRef.current && !searchRef.current.contains(e.target)) setShowResults(false);
         };
         document.addEventListener('mousedown', handleClick);
         return () => document.removeEventListener('mousedown', handleClick);
@@ -160,6 +353,9 @@ export default function HrmsDashboard() {
         { label: 'Total Employees', value: stats?.totalEmployees || 0, icon: TrendingUp, color: 'text-orange-600 bg-orange-50', path: '/ecs/hrms/employees' },
     ];
 
+    const totalPresent = chartData.reduce((s, d) => s + d.present, 0);
+    const totalAbsent = chartData.reduce((s, d) => s + d.absent, 0);
+
     return (
         <div className="space-y-6">
             {/* ── Title ── */}
@@ -178,10 +374,7 @@ export default function HrmsDashboard() {
                             type="text"
                             placeholder="Search employees or approvals…"
                             value={searchQuery}
-                            onChange={(e) => {
-                                setSearchQuery(e.target.value);
-                                setShowResults(true);
-                            }}
+                            onChange={(e) => { setSearchQuery(e.target.value); setShowResults(true); }}
                             onFocus={() => setShowResults(true)}
                             className="bg-transparent w-full text-sm text-slate-700 placeholder:text-slate-400 placeholder:uppercase placeholder:tracking-wider placeholder:text-xs focus:outline-none"
                         />
@@ -235,7 +428,6 @@ export default function HrmsDashboard() {
 
                 {/* Right side: Status + Date */}
                 <div className="flex items-center gap-3 shrink-0">
-                    {/* System Active Badge */}
                     <div className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-full">
                         <span className="relative flex h-2.5 w-2.5">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -243,8 +435,6 @@ export default function HrmsDashboard() {
                         </span>
                         <span className="text-xs font-semibold uppercase tracking-wider text-slate-600">System Active</span>
                     </div>
-
-                    {/* Date Badge */}
                     <div className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-full">
                         <CalendarDays className="w-3.5 h-3.5 text-orange-500" />
                         <span className="text-xs font-semibold uppercase tracking-wider text-slate-600">{dateStr}</span>
@@ -252,6 +442,7 @@ export default function HrmsDashboard() {
                 </div>
             </div>
 
+            {/* ── Stat Cards ── */}
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
                 {cards.map((card, i) => (
                     <button key={i} onClick={() => navigate(card.path)}
@@ -268,7 +459,44 @@ export default function HrmsDashboard() {
                 ))}
             </div>
 
-            {/* Department Breakdown */}
+            {/* ── Weekly Attendance Chart ── */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-6">
+                    <div>
+                        <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-0.5">Attendance Activity</p>
+                        <h3 className="text-lg font-bold text-slate-900">Weekly Statistics</h3>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-1.5">
+                            <span className="w-2.5 h-2.5 rounded-full bg-orange-500 inline-block"></span>
+                            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Present</span>
+                        </div>
+                        {chartLoading ? (
+                            <Loader2 className="w-4 h-4 animate-spin text-orange-400" />
+                        ) : (
+                            <div className="flex gap-3 text-xs text-slate-500">
+                                <span className="font-semibold text-orange-600">{totalPresent}</span> present this week ·
+                                <span className="font-semibold text-slate-500">{totalAbsent}</span> absent
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {chartLoading ? (
+                    <div className="flex items-center justify-center h-48">
+                        <Loader2 className="w-8 h-8 animate-spin text-orange-400" />
+                    </div>
+                ) : chartData.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center h-48 text-slate-400">
+                        <AlertCircle className="w-10 h-10 mb-2 text-slate-300" />
+                        <p className="text-sm">No attendance data for this week</p>
+                    </div>
+                ) : (
+                    <AttendanceChart data={chartData} />
+                )}
+            </div>
+
+            {/* ── Department Breakdown ── */}
             {stats?.departments?.length > 0 && (
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
                     <h3 className="font-semibold text-slate-900 mb-4">Department Breakdown</h3>
@@ -285,3 +513,5 @@ export default function HrmsDashboard() {
         </div>
     );
 }
+
+
