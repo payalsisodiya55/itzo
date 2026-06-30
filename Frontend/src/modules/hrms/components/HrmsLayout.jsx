@@ -86,8 +86,12 @@ export default function HrmsLayout() {
                 {/* User Info */}
                 <div className="px-5 py-4 mx-3 mt-3 rounded-xl bg-slate-800/60 border border-slate-700/40">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center text-white font-bold text-sm shadow-lg">
-                            {user?.name?.[0]?.toUpperCase() || 'E'}
+                        <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 font-semibold border border-slate-700/50 overflow-hidden">
+                            {user?.profileImage ? (
+                                <img src={user.profileImage} alt="Profile" className="w-full h-full object-cover" />
+                            ) : (
+                                user?.name?.[0]?.toUpperCase() || 'E'
+                            )}
                         </div>
                         <div className="min-w-0">
                             <p className="text-white font-semibold text-sm truncate">{user?.name || 'Employee'}</p>
@@ -186,8 +190,12 @@ export default function HrmsLayout() {
                     </div>
                     <div className="flex items-center gap-3">
                         <span className="hidden md:inline text-sm text-slate-500">{user?.name || 'Employee'}</span>
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center text-white font-bold text-xs">
-                            {user?.name?.[0]?.toUpperCase() || 'E'}
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center text-white font-bold text-xs overflow-hidden">
+                            {user?.profileImage ? (
+                                <img src={user.profileImage} alt="Profile" className="w-full h-full object-cover" />
+                            ) : (
+                                user?.name?.[0]?.toUpperCase() || 'E'
+                            )}
                         </div>
                     </div>
                 </header>

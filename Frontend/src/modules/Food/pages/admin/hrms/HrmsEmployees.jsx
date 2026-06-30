@@ -192,8 +192,12 @@ export default function HrmsEmployees() {
                                         <td className="px-5 py-3.5 font-mono text-xs text-slate-600">{emp.employeeId}</td>
                                         <td className="px-5 py-3.5">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center text-white text-xs font-bold">
-                                                    {emp.adminId?.name?.[0]?.toUpperCase() || 'E'}
+                                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center text-white text-xs font-bold overflow-hidden">
+                                                    {emp.adminId?.profileImage ? (
+                                                        <img src={emp.adminId.profileImage} alt="Profile" className="w-full h-full object-cover" />
+                                                    ) : (
+                                                        emp.adminId?.name?.[0]?.toUpperCase() || 'E'
+                                                    )}
                                                 </div>
                                                 <div>
                                                     <p className="font-medium text-slate-900">{emp.adminId?.name}</p>
