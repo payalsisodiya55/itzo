@@ -3,12 +3,10 @@ import axiosInstance from '@core/api/axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Loader2, ArrowLeft, Download, FileText, User, Building2, Send, Paperclip, CheckCircle, Clock, AlertCircle, X, MessageSquare } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { useAuth } from '@core/context/AuthContext';
 
 export default function ReportDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { user } = useAuth();
     
     const [report, setReport] = useState(null);
     const [comments, setComments] = useState([]);

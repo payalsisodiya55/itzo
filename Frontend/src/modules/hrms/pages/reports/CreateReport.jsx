@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import axiosInstance from '@core/api/axios';
-import { Loader2, ArrowLeft, Plus, X, Upload, FileText, Save, Send } from 'lucide-react';
+import { Loader2, ArrowLeft, Plus, X, Upload, FileText, Save, Send, AlertCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function CreateReport() {

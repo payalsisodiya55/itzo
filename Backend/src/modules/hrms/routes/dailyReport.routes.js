@@ -23,28 +23,21 @@ router.get('/settings', authMiddleware, getSettings);
 // =====================================
 // EMPLOYEE ROUTES
 // =====================================
-// Employees can create/update their reports
 router.post('/', authMiddleware, requireHrmsEmployee, createOrUpdateReport);
-// Employees get their own reports
 router.get('/me', authMiddleware, requireHrmsEmployee, getMyReports);
 
 // =====================================
-// SHARED / DETAILS & REPLY
-// =====================================
-// Both employees and managers/admins use these for a specific report
-router.get('/:id', authMiddleware, getReportDetails);
-router.post('/:id/reply', authMiddleware, replyToReport);
-
-// =====================================
-// MANAGER & ADMIN ROUTES
+// MANAGER & ADMIN ROUTES (must be before /:id)
 // =====================================
 router.get('/admin/all', authMiddleware, requireAdminOrManager, getAllReports);
 router.get('/admin/dashboard', authMiddleware, requireAdminOrManager, getAdminDashboardStats);
+router.put('/admin/settings', authMiddleware, requireAdmin, updateSettings);
 router.put('/admin/:id/status', authMiddleware, requireAdminOrManager, updateReportStatus);
 
 // =====================================
-// ADMIN ONLY ROUTES
+// PARAMETERIZED ROUTES (must be last)
 // =====================================
-router.put('/admin/settings', authMiddleware, requireAdmin, updateSettings);
+router.get('/:id', authMiddleware, getReportDetails);
+router.post('/:id/reply', authMiddleware, replyToReport);
 
 export default router;

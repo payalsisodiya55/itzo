@@ -73,7 +73,7 @@ export const createOrUpdateReport = async (req, res, next) => {
             report = new HrmsDailyReport({
                 employeeId: employee._id,
                 reportDate: targetDate,
-                managerId: employee.reportingManagerId || null
+                managerId: employee.managerId || null
             });
         }
 
@@ -169,7 +169,7 @@ export const getMyReports = async (req, res, next) => {
                 .sort({ reportDate: -1 })
                 .skip(skip)
                 .limit(parseInt(limit))
-                .populate('managerId', 'employeeId') // For basic info
+                .populate({ path: 'managerId', populate: { path: 'adminId', select: 'name' } })
                 .lean(),
             HrmsDailyReport.countDocuments(filter)
         ]);
@@ -227,7 +227,7 @@ export const replyToReport = async (req, res, next) => {
         const { id } = req.params;
         const { message, attachments } = req.body;
 
-        if (!message) return sendError(res, 400, 'Message is required');
+        if (!message && (!attachments || attachments.length === 0)) return sendError(res, 400, 'Message or attachments are required');
 
         const report = await HrmsDailyReport.findById(id);
         if (!report) return sendError(res, 404, 'Report not found');
@@ -294,27 +294,27 @@ export const getAllReports = async (req, res, next) => {
             filter.managerId = managerId;
         }
 
-        // Employee filter block (Need to lookup employees if searching by department/name)
-        let employeeFilter = {};
-        let needEmployeeMatch = false;
-
-        if (department && department !== 'All') {
-            employeeFilter.department = department;
-            needEmployeeMatch = true;
-        }
-
-        // If needEmployeeMatch is true, we first find matching employee IDs
-        if (needEmployeeMatch || search) {
-            // Simplified search on employee ID or name requires an aggregation or a 2-step lookup.
-            // Using 2-step for simplicity.
-            
-            let adminMatch = {};
-            if (search) {
-                 adminMatch = { name: { $regex: search, $options: 'i' } };
+        // Employee filter: lookup by department and/or admin name
+        if ((department && department !== 'All') || search) {
+            let empFilter = {};
+            if (department && department !== 'All') {
+                empFilter.department = department;
             }
-            
-            // This is a naive approach; in a fully scalable system, use aggregation pipeline.
-            // We'll skip complex string search for now if it requires deep population unless strictly requested.
+
+            // If searching by name, find matching FoodAdmin IDs first
+            if (search) {
+                const { FoodAdmin } = await import('../../../core/admin/admin.model.js');
+                const matchingAdmins = await FoodAdmin.find(
+                    { name: { $regex: search, $options: 'i' } },
+                    { _id: 1 }
+                ).lean();
+                const adminIds = matchingAdmins.map(a => a._id);
+                empFilter.adminId = { $in: adminIds };
+            }
+
+            const matchingEmployees = await HrmsEmployee.find(empFilter, { _id: 1 }).lean();
+            const empIds = matchingEmployees.map(e => e._id);
+            filter.employeeId = { $in: empIds };
         }
 
         const skip = (parseInt(page) - 1) * parseInt(limit);
