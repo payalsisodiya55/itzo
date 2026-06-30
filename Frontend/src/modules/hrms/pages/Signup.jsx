@@ -37,17 +37,34 @@ export default function Signup() {
 
     const updateField = (field, value) => setForm(prev => ({ ...prev, [field]: value }));
 
+    /* ── strict validators ── */
+    const isValidName = (v) => /^[A-Za-z\s]{2,50}$/.test(v.trim());
+    const isValidEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
+    const isValidPhone = (v) => /^[6-9]\d{9}$/.test(v.replace(/\D/g, ''));
+    const isValidAadhaar = (v) => !v || /^\d{12}$/.test(v.replace(/\s/g, ''));
+    const isValidPan = (v) => !v || /^[A-Z]{5}\d{4}[A-Z]$/.test(v.trim().toUpperCase());
+    const isValidPincode = (v) => !v || /^\d{6}$/.test(v.trim());
+
     const validateStep = () => {
         switch (currentStep) {
             case 0:
                 if (!form.fullName.trim()) { toast.error('Full name is required'); return false; }
+                if (!isValidName(form.fullName)) { toast.error('Name must be 2-50 characters (letters & spaces only)'); return false; }
                 if (!form.email.trim()) { toast.error('Email is required'); return false; }
-                if (!form.phone.trim()) { toast.error('Phone is required'); return false; }
+                if (!isValidEmail(form.email)) { toast.error('Please enter a valid email address'); return false; }
+                if (!form.phone.trim()) { toast.error('Phone number is required'); return false; }
+                if (!isValidPhone(form.phone)) { toast.error('Enter a valid 10-digit mobile number (starting with 6-9)'); return false; }
                 if (!form.password || form.password.length < 6) { toast.error('Password must be at least 6 characters'); return false; }
                 return true;
-            case 1: return true;
+            case 1:
+                if (form.aadhaarNumber && !isValidAadhaar(form.aadhaarNumber)) { toast.error('Aadhaar must be exactly 12 digits'); return false; }
+                if (form.panNumber && !isValidPan(form.panNumber)) { toast.error('PAN must be in format ABCDE1234F'); return false; }
+                if (form.pincode && !isValidPincode(form.pincode)) { toast.error('Pincode must be exactly 6 digits'); return false; }
+                return true;
             case 2: return true;
-            case 3: return true;
+            case 3:
+                if (form.emergencyPhone && !isValidPhone(form.emergencyPhone)) { toast.error('Emergency phone must be a valid 10-digit mobile number'); return false; }
+                return true;
             default: return true;
         }
     };
@@ -192,8 +209,8 @@ export default function Signup() {
                                         <input type="email" className={inputClass} value={form.email} onChange={e => updateField('email', e.target.value)} placeholder="your@email.com" required />
                                     </div>
                                     <div>
-                                        <label className={labelClass}>Phone *</label>
-                                        <input type="tel" className={inputClass} value={form.phone} onChange={e => updateField('phone', e.target.value)} placeholder="+91 XXXXXXXXXX" required />
+                                        <label className={labelClass}>Phone * <span className="text-[10px] font-normal text-slate-500 normal-case tracking-normal">(10 digits)</span></label>
+                                        <input type="tel" className={inputClass} value={form.phone} onChange={e => updateField('phone', e.target.value.replace(/\D/g, '').slice(0, 10))} placeholder="9876543210" maxLength={10} required />
                                     </div>
                                     <div>
                                         <label className={labelClass}>Password *</label>
@@ -241,16 +258,16 @@ export default function Signup() {
                                         <input className={inputClass} value={form.state} onChange={e => updateField('state', e.target.value)} placeholder="State" />
                                     </div>
                                     <div>
-                                        <label className={labelClass}>Pincode</label>
-                                        <input className={inputClass} value={form.pincode} onChange={e => updateField('pincode', e.target.value)} placeholder="XXXXXX" />
+                                        <label className={labelClass}>Pincode <span className="text-[10px] font-normal text-slate-500 normal-case tracking-normal">(6 digits)</span></label>
+                                        <input className={inputClass} value={form.pincode} onChange={e => updateField('pincode', e.target.value.replace(/\D/g, '').slice(0, 6))} placeholder="560001" maxLength={6} />
                                     </div>
                                     <div>
-                                        <label className={labelClass}>Aadhaar Number</label>
-                                        <input className={inputClass} value={form.aadhaarNumber} onChange={e => updateField('aadhaarNumber', e.target.value)} placeholder="XXXX XXXX XXXX" />
+                                        <label className={labelClass}>Aadhaar Number <span className="text-[10px] font-normal text-slate-500 normal-case tracking-normal">(12 digits)</span></label>
+                                        <input className={inputClass} value={form.aadhaarNumber} onChange={e => updateField('aadhaarNumber', e.target.value.replace(/\D/g, '').slice(0, 12))} placeholder="123456789012" maxLength={12} />
                                     </div>
                                     <div className="sm:col-span-2">
-                                        <label className={labelClass}>PAN Number</label>
-                                        <input className={inputClass} value={form.panNumber} onChange={e => updateField('panNumber', e.target.value)} placeholder="ABCDE1234F" />
+                                        <label className={labelClass}>PAN Number <span className="text-[10px] font-normal text-slate-500 normal-case tracking-normal">(e.g. ABCDE1234F)</span></label>
+                                        <input className={inputClass} value={form.panNumber} onChange={e => updateField('panNumber', e.target.value.toUpperCase().slice(0, 10))} placeholder="ABCDE1234F" maxLength={10} />
                                     </div>
                                 </div>
                             </div>
@@ -321,8 +338,8 @@ export default function Signup() {
                                             <input className={inputClass} value={form.emergencyRelation} onChange={e => updateField('emergencyRelation', e.target.value)} placeholder="e.g., Father" />
                                         </div>
                                         <div>
-                                            <label className={labelClass}>Phone</label>
-                                            <input type="tel" className={inputClass} value={form.emergencyPhone} onChange={e => updateField('emergencyPhone', e.target.value)} placeholder="Phone number" />
+                                            <label className={labelClass}>Phone <span className="text-[10px] font-normal text-slate-500 normal-case tracking-normal">(10 digits)</span></label>
+                                            <input type="tel" className={inputClass} value={form.emergencyPhone} onChange={e => updateField('emergencyPhone', e.target.value.replace(/\D/g, '').slice(0, 10))} placeholder="9876543210" maxLength={10} />
                                         </div>
                                     </div>
                                 </div>

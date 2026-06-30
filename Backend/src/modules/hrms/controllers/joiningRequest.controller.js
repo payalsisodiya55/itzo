@@ -29,6 +29,23 @@ export const submitJoiningRequest = async (req, res, next) => {
             return sendError(res, 400, 'Full name, email, phone, and password are required');
         }
 
+        // Strict format validation
+        if (!/^[A-Za-z\s]{2,50}$/.test(fullName.trim())) {
+            return sendError(res, 400, 'Name must be 2-50 characters (letters and spaces only)');
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())) {
+            return sendError(res, 400, 'Please provide a valid email address');
+        }
+        if (!/^[6-9]\d{9}$/.test(phone.replace(/\D/g, ''))) {
+            return sendError(res, 400, 'Phone must be a valid 10-digit Indian mobile number (starting with 6-9)');
+        }
+        if (aadhaarNumber && !/^\d{12}$/.test(aadhaarNumber.replace(/\s/g, ''))) {
+            return sendError(res, 400, 'Aadhaar number must be exactly 12 digits');
+        }
+        if (panNumber && !/^[A-Z]{5}\d{4}[A-Z]$/.test(panNumber.trim().toUpperCase())) {
+            return sendError(res, 400, 'PAN must be in format ABCDE1234F');
+        }
+
         if (password.length < 6) {
             return sendError(res, 400, 'Password must be at least 6 characters');
         }

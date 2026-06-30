@@ -55,8 +55,12 @@ export default function Login() {
                     <div className="p-8 sm:p-10">
                         {/* Logo */}
                         <div className="text-center mb-8">
-                            <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-xl shadow-orange-500/25 rotate-3 hover:rotate-0 transition-transform duration-300">
-                                <Building2 className="w-8 h-8 text-white" />
+                            <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-xl shadow-orange-500/25 rotate-3 hover:rotate-0 transition-transform duration-300 overflow-hidden">
+                                {hrmsSettings?.companyLogoUrl ? (
+                                    <img src={hrmsSettings.companyLogoUrl} alt="Logo" className="w-full h-full object-cover bg-white" />
+                                ) : (
+                                    <Building2 className="w-8 h-8 text-white" />
+                                )}
                             </div>
                             <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Employee Portal</h1>
                             <p className="text-sm text-slate-500 mt-2">Sign in to access your HRMS dashboard</p>
