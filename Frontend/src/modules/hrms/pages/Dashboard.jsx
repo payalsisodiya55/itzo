@@ -85,16 +85,16 @@ export default function Dashboard() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
                 {/* Check-in Card */}
-                <div className={`bg-white rounded-2xl border shadow-sm overflow-hidden ${isDone ? 'border-slate-200' : isCheckedIn ? 'border-emerald-200' : 'border-orange-200'}`}>
-                    <div className={`h-1 ${isDone ? 'bg-slate-300' : isCheckedIn ? 'bg-emerald-500' : 'bg-orange-500'}`} />
+                <div className={`bg-white rounded-2xl border shadow-sm overflow-hidden ${isDone ? 'border-slate-200' : isCheckedIn ? 'border-orange-300' : 'border-orange-200'}`}>
+                    <div className={`h-1 ${isDone ? 'bg-slate-300' : 'bg-gradient-to-r from-orange-500 to-amber-500'}`} />
                     <div className="p-6 text-center">
                         <div className={`w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center border-4 ${
-                            isDone ? 'border-slate-100 bg-slate-50' : isCheckedIn ? 'border-emerald-100 bg-emerald-50' : 'border-orange-100 bg-orange-50'
+                            isDone ? 'border-slate-100 bg-slate-50' : 'border-orange-100 bg-orange-50'
                         }`}>
                             {isDone ? (
                                 <span className="text-lg font-bold text-slate-500">{attendance.workingHours?.toFixed(1)}h</span>
                             ) : isCheckedIn ? (
-                                <span className="text-lg font-bold text-emerald-600">{elapsed}</span>
+                                <span className="text-lg font-bold text-orange-600">{elapsed}</span>
                             ) : (
                                 <Timer className="w-8 h-8 text-orange-500" />
                             )}
@@ -111,14 +111,14 @@ export default function Dashboard() {
                         </p>
                         {!attendance?.checkInTime && (
                             <button onClick={handleCheckIn} disabled={actionLoading}
-                                className="w-full h-11 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/20 transition-all disabled:opacity-50 flex items-center justify-center gap-2">
+                                className="w-full h-11 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/20 transition-all disabled:opacity-50 flex items-center justify-center gap-2">
                                 {actionLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <LogIn className="w-4 h-4" />}
                                 {actionLoading ? 'Processing...' : 'Check In'}
                             </button>
                         )}
                         {isCheckedIn && (
                             <button onClick={handleCheckOut} disabled={actionLoading}
-                                className="w-full h-11 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-xl shadow-lg shadow-red-500/20 transition-all disabled:opacity-50 flex items-center justify-center gap-2">
+                                className="w-full h-11 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/20 transition-all disabled:opacity-50 flex items-center justify-center gap-2">
                                 {actionLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <LogOut className="w-4 h-4" />}
                                 {actionLoading ? 'Processing...' : 'Check Out'}
                             </button>
@@ -148,7 +148,7 @@ export default function Dashboard() {
                                 </div>
                                 <div className="flex justify-between items-center pt-2 border-t border-slate-100">
                                     <span className="text-sm font-medium text-slate-700">Remaining</span>
-                                    <span className="font-bold text-lg text-emerald-600">{leaveBalance.monthly?.remaining || 4}</span>
+                                    <span className="font-bold text-lg text-orange-600">{leaveBalance.monthly?.remaining || 4}</span>
                                 </div>
                             </div>
                         ) : (
