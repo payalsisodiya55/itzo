@@ -2,12 +2,14 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axiosInstance from '@core/api/axios';
 import { toast } from 'sonner';
 import { Users, Loader2, Search, Eye, Plus, ChevronLeft, ChevronRight, X, UserPlus, FileText } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 
 export default function HrmsEmployees() {
+    const [searchParams] = useSearchParams();
     const [employees, setEmployees] = useState([]);
     const [pagination, setPagination] = useState({ page: 1, total: 0, totalPages: 0 });
     const [loading, setLoading] = useState(true);
-    const [search, setSearch] = useState('');
+    const [search, setSearch] = useState(searchParams.get('search') || '');
     const [showOnboard, setShowOnboard] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [onboardLoading, setOnboardLoading] = useState(false);

@@ -5,6 +5,7 @@ import {
     UserPlus, Loader2, Search, Eye, CheckCircle, XCircle,
     MessageSquare, ChevronLeft, ChevronRight, UserCog, X
 } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 
 const statusStyles = {
     Pending: 'bg-amber-50 text-amber-700 border-amber-200',
@@ -15,15 +16,16 @@ const statusStyles = {
 };
 
 export default function HrmsJoiningRequests() {
-    const [mainTab, setMainTab] = useState('joining'); // 'joining' or 'edits'
+    const [searchParams] = useSearchParams();
+    const [mainTab, setMainTab] = useState(searchParams.get('tab') || 'joining'); // 'joining' or 'edits'
     
     // Joining Requests State
     const [requests, setRequests] = useState([]);
     const [counts, setCounts] = useState({});
     const [pagination, setPagination] = useState({ page: 1, total: 0, totalPages: 0 });
     const [loading, setLoading] = useState(true);
-    const [search, setSearch] = useState('');
-    const [statusFilter, setStatusFilter] = useState('Pending');
+    const [search, setSearch] = useState(searchParams.get('search') || '');
+    const [statusFilter, setStatusFilter] = useState(searchParams.get('status') || 'Pending');
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [actionLoading, setActionLoading] = useState(false);
 
