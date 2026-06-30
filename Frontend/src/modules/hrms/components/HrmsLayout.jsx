@@ -15,6 +15,7 @@ const navItems = [
     { label: 'Salary & Payslip', icon: Wallet, path: '/hrms/salary' },
     { label: 'Documents', icon: FileText, path: '/hrms/documents' },
     { label: 'Travel Expenses', icon: Receipt, path: '/hrms/expenses' },
+    { label: 'Daily Reports', icon: FileText, path: '/hrms/reports' },
     { label: 'My Profile', icon: User, path: '/hrms/profile' },
     {
         label: 'Support', icon: LifeBuoy, path: '/hrms/support',

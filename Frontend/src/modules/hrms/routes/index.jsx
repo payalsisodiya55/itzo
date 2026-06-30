@@ -17,6 +17,9 @@ const SupportContact = lazy(() => import('../pages/support/SupportContact'));
 const SupportCreate = lazy(() => import('../pages/support/SupportCreate'));
 const SupportList = lazy(() => import('../pages/support/SupportList'));
 const SupportDetails = lazy(() => import('../pages/support/SupportDetails'));
+const ReportList = lazy(() => import('../pages/reports/ReportList'));
+const CreateReport = lazy(() => import('../pages/reports/CreateReport'));
+const ReportDetails = lazy(() => import('../pages/reports/ReportDetails'));
 
 export default function HrmsEmployeeApp() {
     return (
@@ -50,6 +53,12 @@ export default function HrmsEmployeeApp() {
                         <Route path="support/create" element={<SupportCreate />} />
                         <Route path="support/list" element={<SupportList />} />
                         <Route path="support/:id" element={<SupportDetails />} />
+
+                        {/* Daily Reports */}
+                        <Route path="reports" element={<Navigate to="list" replace />} />
+                        <Route path="reports/list" element={<ReportList />} />
+                        <Route path="reports/create" element={<CreateReport />} />
+                        <Route path="reports/:id" element={<ReportDetails />} />
                     </Route>
 
                     {/* Fallback */}

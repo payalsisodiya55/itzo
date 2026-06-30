@@ -14,6 +14,11 @@ const SupportRequests = lazy(() => import("./support/SupportRequests"));
 const SupportSettings = lazy(() => import("./support/SupportSettings"));
 const SupportAdminDetails = lazy(() => import("./support/SupportAdminDetails"));
 
+const AdminReportDashboard = lazy(() => import("./reports/AdminReportDashboard"));
+const AdminReportList = lazy(() => import("./reports/AdminReportList"));
+const AdminReportDetails = lazy(() => import("./reports/AdminReportDetails"));
+const AdminReportSettings = lazy(() => import("./reports/AdminReportSettings"));
+
 export default function HrmsRouter() {
     return (
         <Suspense fallback={<Loader />}>
@@ -33,6 +38,13 @@ export default function HrmsRouter() {
                 <Route path="support/requests" element={<SupportRequests />} />
                 <Route path="support/requests/:id" element={<SupportAdminDetails />} />
                 <Route path="support/settings" element={<SupportSettings />} />
+
+                {/* Daily Reports */}
+                <Route path="reports" element={<Navigate to="dashboard" replace />} />
+                <Route path="reports/dashboard" element={<AdminReportDashboard />} />
+                <Route path="reports/all" element={<AdminReportList />} />
+                <Route path="reports/:id" element={<AdminReportDetails />} />
+                <Route path="reports/settings" element={<AdminReportSettings />} />
             </Routes>
         </Suspense>
     );

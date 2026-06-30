@@ -8,6 +8,7 @@ import expenseRoutes from './expense.routes.js';
 import documentRoutes from './document.routes.js';
 import joiningRequestRoutes from './joiningRequest.routes.js';
 import supportRoutes from './support.routes.js';
+import dailyReportRoutes from './dailyReport.routes.js';
 
 const router = express.Router();
 
@@ -20,5 +21,6 @@ router.use('/expenses', expenseRoutes);
 router.use('/documents', documentRoutes);
 router.use('/joining-requests', joiningRequestRoutes);
 router.use('/support', supportRoutes);
+router.use('/daily-reports', dailyReportRoutes);
 
 export default router;

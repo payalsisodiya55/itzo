@@ -266,6 +266,17 @@ export const adminSidebarMenu = [
           { label: "Support Settings", path: "/ecs/hrms/support/settings", permissionKey: "support_settings" },
         ],
       },
+      {
+        type: "expandable",
+        label: "Daily Reports",
+        icon: "FileText",
+        permissionKey: "daily_reports",
+        subItems: [
+          { label: "Dashboard", path: "/ecs/hrms/reports/dashboard", permissionKey: "reports_dashboard" },
+          { label: "All Reports", path: "/ecs/hrms/reports/all", permissionKey: "reports_all" },
+          { label: "Report Settings", path: "/ecs/hrms/reports/settings", permissionKey: "reports_settings" },
+        ],
+      },
       { type: "link", label: "Settings", permissionKey: "settings", path: "/ecs/hrms/settings", icon: "Settings" },
     ],
   },
