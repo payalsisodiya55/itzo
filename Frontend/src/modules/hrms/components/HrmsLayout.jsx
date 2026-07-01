@@ -84,7 +84,7 @@ export default function HrmsLayout() {
                 </div>
 
                 {/* User Info */}
-                <div className="px-5 py-4 mx-3 mt-3 rounded-xl bg-slate-800/60 border border-slate-200">
+                <div className="px-5 py-4 mx-3 mt-3 rounded-xl bg-slate-50 border border-slate-200">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-700 font-semibold border border-slate-200 overflow-hidden">
                             {user?.profileImage ? (
@@ -95,7 +95,7 @@ export default function HrmsLayout() {
                         </div>
                         <div className="min-w-0">
                             <p className="text-slate-900 font-semibold text-sm truncate">{user?.name || 'Employee'}</p>
-                            <p className="text-slate-500 text-xs truncate">{user?.email || ''}</p>
+                            <p className="text-slate-900 text-xs truncate">{user?.email || ''}</p>
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@ export default function HrmsLayout() {
                                     <button
                                         onClick={() => toggleMenu(item.label)}
                                         className={`w-full group flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200
-                                            ${openMenus[item.label] ? 'text-orange-600 bg-orange-50' : 'text-slate-600 hover:text-orange-600 hover:bg-orange-50'}
+                                            ${openMenus[item.label] ? 'text-[#FE5502] bg-orange-50' : 'text-slate-600 hover:text-[#FE5502] hover:bg-orange-50'}
                                         `}
                                     >
                                         <item.icon className="w-[18px] h-[18px] shrink-0" />
@@ -127,8 +127,8 @@ export default function HrmsLayout() {
                                                         group flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-medium
                                                         transition-all duration-200
                                                         ${isActive
-                                                            ? 'bg-gradient-to-r from-orange-500/15 to-orange-500/5 text-orange-400'
-                                                            : 'text-slate-600 hover:text-orange-600 hover:bg-orange-50'
+                                                            ? 'bg-orange-50 text-[#FE5502] font-semibold'
+                                                            : 'text-slate-600 hover:text-[#FE5502] hover:bg-orange-50'
                                                         }
                                                     `}
                                                 >
@@ -147,8 +147,8 @@ export default function HrmsLayout() {
                                         group flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium
                                         transition-all duration-200
                                         ${isActive
-                                            ? 'bg-gradient-to-r from-orange-500/15 to-orange-500/5 text-orange-400 shadow-sm border border-orange-500/10'
-                                            : 'text-slate-600 hover:text-orange-600 hover:bg-orange-50'
+                                            ? 'bg-orange-50 text-[#FE5502] font-semibold shadow-sm border border-orange-500/10'
+                                            : 'text-slate-600 hover:text-[#FE5502] hover:bg-orange-50'
                                         }
                                     `}
                                 >
