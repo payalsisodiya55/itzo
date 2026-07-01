@@ -12,8 +12,8 @@ import {
     getPendingProfileEdits,
     approveProfileEdit
 } from '../controllers/employee.controller.js';
-import { authMiddleware, requireAdmin } from '../../../core/auth/auth.middleware.js';
-import { requireHrmsEmployee } from '../middleware/hrmsAuth.middleware.js';
+import { authMiddleware } from '../../../core/auth/auth.middleware.js';
+import { requireHrmsEmployee, requireAdminOrManager } from '../middleware/hrmsAuth.middleware.js';
 
 const router = express.Router();
 
@@ -23,18 +23,18 @@ router.get('/me', authMiddleware, requireHrmsEmployee, getMyProfile);
 router.post('/me/edit-request', authMiddleware, requireHrmsEmployee, requestProfileUpdate);
 
 // ADMIN: Get pending profile edits
-router.get('/pending-edits', authMiddleware, requireAdmin, getPendingProfileEdits);
+router.get('/pending-edits', authMiddleware, requireAdminOrManager, getPendingProfileEdits);
 
 // EMPLOYEE/MANAGER: Get team members
 router.get('/team', authMiddleware, requireHrmsEmployee, getTeamMembers);
 
 // ADMIN: Employee management
-router.get('/stats', authMiddleware, requireAdmin, getEmployeeStats);
-router.post('/', authMiddleware, requireAdmin, createEmployee);
-router.get('/', authMiddleware, requireAdmin, getEmployees);
-router.get('/:id', authMiddleware, requireAdmin, getEmployeeById);
-router.put('/:id', authMiddleware, requireAdmin, updateEmployee);
-router.patch('/:id/status', authMiddleware, requireAdmin, updateEmployeeStatus);
-router.post('/:id/edit-request/action', authMiddleware, requireAdmin, approveProfileEdit);
+router.get('/stats', authMiddleware, requireAdminOrManager, getEmployeeStats);
+router.post('/', authMiddleware, requireAdminOrManager, createEmployee);
+router.get('/', authMiddleware, requireAdminOrManager, getEmployees);
+router.get('/:id', authMiddleware, requireAdminOrManager, getEmployeeById);
+router.put('/:id', authMiddleware, requireAdminOrManager, updateEmployee);
+router.patch('/:id/status', authMiddleware, requireAdminOrManager, updateEmployeeStatus);
+router.post('/:id/edit-request/action', authMiddleware, requireAdminOrManager, approveProfileEdit);
 
 export default router;

@@ -1,5 +1,5 @@
 import express from 'express';
-import { authMiddleware, requireAdmin } from '../../../core/auth/auth.middleware.js';
+import { authMiddleware } from '../../../core/auth/auth.middleware.js';
 import { requireHrmsEmployee, requireAdminOrManager } from '../middleware/hrmsAuth.middleware.js';
 import {
     getSettings,
@@ -31,7 +31,7 @@ router.get('/me', authMiddleware, requireHrmsEmployee, getMyReports);
 // =====================================
 router.get('/admin/all', authMiddleware, requireAdminOrManager, getAllReports);
 router.get('/admin/dashboard', authMiddleware, requireAdminOrManager, getAdminDashboardStats);
-router.put('/admin/settings', authMiddleware, requireAdmin, updateSettings);
+router.put('/admin/settings', authMiddleware, requireAdminOrManager, updateSettings);
 router.put('/admin/:id/status', authMiddleware, requireAdminOrManager, updateReportStatus);
 
 // =====================================

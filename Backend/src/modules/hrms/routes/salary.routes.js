@@ -8,8 +8,8 @@ import {
     getPayslipDetail,
     uploadPayslip
 } from '../controllers/salary.controller.js';
-import { authMiddleware, requireAdmin } from '../../../core/auth/auth.middleware.js';
-import { requireHrmsEmployee } from '../middleware/hrmsAuth.middleware.js';
+import { authMiddleware } from '../../../core/auth/auth.middleware.js';
+import { requireHrmsEmployee, requireAdminOrManager } from '../middleware/hrmsAuth.middleware.js';
 
 const router = express.Router();
 
@@ -18,10 +18,10 @@ router.get('/me', authMiddleware, requireHrmsEmployee, getMySalary);
 router.get('/payslip/:id', authMiddleware, requireHrmsEmployee, getPayslipDetail);
 
 // ADMIN: Payroll management
-router.post('/generate', authMiddleware, requireAdmin, generatePayroll);
-router.post('/approve', authMiddleware, requireAdmin, approvePayroll);
-router.post('/mark-paid', authMiddleware, requireAdmin, markPayrollPaid);
-router.post('/:id/upload-payslip', authMiddleware, requireAdmin, uploadPayslip);
-router.get('/', authMiddleware, requireAdmin, getPayroll);
+router.post('/generate', authMiddleware, requireAdminOrManager, generatePayroll);
+router.post('/approve', authMiddleware, requireAdminOrManager, approvePayroll);
+router.post('/mark-paid', authMiddleware, requireAdminOrManager, markPayrollPaid);
+router.post('/:id/upload-payslip', authMiddleware, requireAdminOrManager, uploadPayslip);
+router.get('/', authMiddleware, requireAdminOrManager, getPayroll);
 
 export default router;

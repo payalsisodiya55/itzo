@@ -67,11 +67,12 @@ export const requireAdminOrManager = async (req, res, next) => {
             return next();
         }
 
-        // Check if HRMS Manager
-        if (req.user.role === 'HRMS_EMPLOYEE') {
-            const employee = await HrmsEmployee.findOne({ adminId: req.user.userId }).lean();
+        // Check if HRMS Manager (from HRMS Portal or ECS Admin Portal)
+        if (req.user.role === 'HRMS_EMPLOYEE' || req.user.role === 'EMPLOYEE') {
+            const query = req.user.role === 'EMPLOYEE' ? { adminId: req.user.userId } : { _id: req.user.userId };
+            const employee = await HrmsEmployee.findOne(query).lean();
             if (employee && employee.status === 'Active' &&
-                (employee.hrmsRole === 'Manager' || employee.hrmsRole === 'HR')) {
+                (employee.hrmsRole === 'Manager' || employee.hrmsRole === 'HR' || employee.hrmsRole === 'Admin')) {
                 req.hrmsEmployee = employee;
                 return next();
             }

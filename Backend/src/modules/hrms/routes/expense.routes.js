@@ -5,7 +5,7 @@ import {
     getAllExpenses,
     approveExpense
 } from '../controllers/expense.controller.js';
-import { authMiddleware, requireAdmin } from '../../../core/auth/auth.middleware.js';
+import { authMiddleware } from '../../../core/auth/auth.middleware.js';
 import { requireHrmsEmployee, requireAdminOrManager } from '../middleware/hrmsAuth.middleware.js';
 
 const router = express.Router();

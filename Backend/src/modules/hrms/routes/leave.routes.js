@@ -7,7 +7,7 @@ import {
     getAllLeaves,
     getPendingLeaves
 } from '../controllers/leave.controller.js';
-import { authMiddleware, requireAdmin } from '../../../core/auth/auth.middleware.js';
+import { authMiddleware } from '../../../core/auth/auth.middleware.js';
 import { requireHrmsEmployee, requireAdminOrManager } from '../middleware/hrmsAuth.middleware.js';
 
 const router = express.Router();
@@ -22,6 +22,6 @@ router.get('/pending', authMiddleware, requireAdminOrManager, getPendingLeaves);
 router.post('/:id/action', authMiddleware, requireAdminOrManager, approveLeave);
 
 // ADMIN: All leaves
-router.get('/', authMiddleware, requireAdmin, getAllLeaves);
+router.get('/', authMiddleware, requireAdminOrManager, getAllLeaves);
 
 export default router;

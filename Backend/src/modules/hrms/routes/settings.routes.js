@@ -1,6 +1,7 @@
 import express from 'express';
 import { getSettings, updateSettings, updateSettingsSection, getPublicSettings } from '../controllers/settings.controller.js';
-import { authMiddleware, requireAdmin } from '../../../core/auth/auth.middleware.js';
+import { authMiddleware } from '../../../core/auth/auth.middleware.js';
+import { requireAdminOrManager } from '../middleware/hrmsAuth.middleware.js';
 
 const router = express.Router();
 
@@ -11,9 +12,9 @@ router.get('/public', getPublicSettings);
 router.get('/', authMiddleware, getSettings);
 
 // PUT: Admin-only — update entire settings
-router.put('/', authMiddleware, requireAdmin, updateSettings);
+router.put('/', authMiddleware, requireAdminOrManager, updateSettings);
 
 // PATCH: Admin-only — update a specific section
-router.patch('/:section', authMiddleware, requireAdmin, updateSettingsSection);
+router.patch('/:section', authMiddleware, requireAdminOrManager, updateSettingsSection);
 
 export default router;

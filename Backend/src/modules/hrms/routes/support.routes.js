@@ -1,5 +1,5 @@
 import express from 'express';
-import { authMiddleware, requireAdmin } from '../../../core/auth/auth.middleware.js';
+import { authMiddleware } from '../../../core/auth/auth.middleware.js';
 import { requireHrmsEmployee, requireAdminOrManager } from '../middleware/hrmsAuth.middleware.js';
 import {
     getSettings,
@@ -38,7 +38,7 @@ router.get('/unread-count', authMiddleware, requireHrmsEmployee, getEmployeeUnre
 router.get('/admin/dashboard', authMiddleware, requireAdminOrManager, getAdminDashboardStats);
 router.get('/admin/tickets', authMiddleware, requireAdminOrManager, getAdminTickets);
 router.get('/admin/unread-count', authMiddleware, requireAdminOrManager, getAdminUnreadCount);
-router.put('/admin/settings', authMiddleware, requireAdmin, updateSettings);
+router.put('/admin/settings', authMiddleware, requireAdminOrManager, updateSettings);
 
 // ---------------------------------------------------------
 // SHARED TICKET ACTION ROUTES (Handled by Controller internally)

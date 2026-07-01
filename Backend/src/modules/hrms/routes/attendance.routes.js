@@ -8,7 +8,7 @@ import {
     getAllAttendance,
     getPendingRegularizations
 } from '../controllers/attendance.controller.js';
-import { authMiddleware, requireAdmin } from '../../../core/auth/auth.middleware.js';
+import { authMiddleware } from '../../../core/auth/auth.middleware.js';
 import { requireHrmsEmployee, requireAdminOrManager } from '../middleware/hrmsAuth.middleware.js';
 
 const router = express.Router();
@@ -24,6 +24,6 @@ router.get('/pending-regularizations', authMiddleware, requireAdminOrManager, ge
 router.post('/regularize/:id/action', authMiddleware, requireAdminOrManager, approveRegularization);
 
 // ADMIN: All attendance
-router.get('/', authMiddleware, requireAdmin, getAllAttendance);
+router.get('/', authMiddleware, requireAdminOrManager, getAllAttendance);
 
 export default router;
