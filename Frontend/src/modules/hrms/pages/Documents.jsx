@@ -73,7 +73,7 @@ export default function Documents() {
                                         alt="Offer Letter Thumbnail" 
                                         className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
                                     />
-                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 backdrop-blur-[2px]">
+                                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 backdrop-blur-[2px]">
                                         <button onClick={() => openPreview(offerLetter.url)} className="p-3 bg-white text-slate-900 rounded-full hover:bg-orange-50 hover:text-orange-600 transition-colors shadow-lg" title="Full-Screen Preview">
                                             <ZoomIn className="w-5 h-5" />
                                         </button>
@@ -130,7 +130,7 @@ export default function Documents() {
                                                 alt={doc.name} 
                                                 className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
                                             />
-                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3 backdrop-blur-[2px]">
+                                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3 backdrop-blur-[2px]">
                                                 <button onClick={() => openPreview(doc.url)} className="p-2.5 bg-white text-slate-900 rounded-full hover:bg-orange-50 hover:text-orange-600 transition-colors shadow-lg" title="Full-Screen Preview">
                                                     <ZoomIn className="w-4 h-4" />
                                                 </button>

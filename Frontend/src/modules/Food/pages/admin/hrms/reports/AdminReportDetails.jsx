@@ -286,7 +286,7 @@ export default function AdminReportDetails() {
                                                 {msg.attachments && msg.attachments.length > 0 && (
                                                     <div className="flex flex-wrap gap-2 mt-2 pt-2 border-t border-slate-200/50">
                                                         {msg.attachments.map((att, i) => (
-                                                            <a key={i} href={att.url} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 px-2 py-1 rounded bg-white/50 border border-slate-200/50 text-xs font-medium hover:bg-white">
+                                                            <a key={i} href={att.url} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-500 border border-slate-200/50 text-xs font-medium hover:bg-white">
                                                                 <Download className="w-3 h-3 text-slate-500" /> <span className="truncate max-w-[100px]">{att.name}</span>
                                                             </a>
                                                         ))}

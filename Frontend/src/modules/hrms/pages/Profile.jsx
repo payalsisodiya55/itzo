@@ -137,10 +137,10 @@ export default function Profile() {
             )}
 
             {/* Header */}
-            <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-6 sm:p-8 text-white shadow-xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 text-slate-900 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
                 <div className="flex items-center gap-5">
                     <div className="relative">
-                        <div className="w-20 h-20 rounded-2xl bg-white/10 flex items-center justify-center text-3xl font-bold backdrop-blur-sm border border-white/10 overflow-hidden">
+                        <div className="w-20 h-20 rounded-2xl bg-white/10 flex items-center justify-center text-3xl font-bold backdrop-blur-sm border border-slate-200 overflow-hidden">
                             {(isEditing && editForm.profilePhotoUrl) ? (
                                 <img src={editForm.profilePhotoUrl} alt="Profile" className="w-full h-full object-cover" />
                             ) : (admin?.profileImage || emp?.profilePhotoUrl) ? (
@@ -173,7 +173,7 @@ export default function Profile() {
                             </button>
                         ) : (
                             <div className="flex gap-2">
-                                <button onClick={() => setIsEditing(false)} className="px-4 h-10 bg-white/10 hover:bg-white/20 text-white font-medium rounded-xl text-sm transition-all flex items-center gap-2 backdrop-blur-sm border border-white/10">
+                                <button onClick={() => setIsEditing(false)} className="px-4 h-10 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl text-sm transition-all flex items-center gap-2 backdrop-blur-sm border border-slate-200">
                                     <X className="w-4 h-4" /> Cancel
                                 </button>
                                 <button onClick={submitEdit} disabled={submitting} className="px-5 h-10 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-xl text-sm transition-all flex items-center gap-2 shadow-sm disabled:opacity-50">

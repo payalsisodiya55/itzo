@@ -147,7 +147,7 @@ export default function HrmsSettings() {
                                             type="button"
                                             onClick={() => logoInputRef.current?.click()}
                                             disabled={logoUploading}
-                                            className="flex items-center gap-2 px-4 h-9 bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white text-sm font-medium rounded-xl transition-colors"
+                                            className="flex items-center gap-2 px-4 h-9 bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-slate-900 text-sm font-medium rounded-xl transition-colors"
                                         >
                                             {logoUploading
                                                 ? <><Loader2 className="w-4 h-4 animate-spin" /> Uploading…</>

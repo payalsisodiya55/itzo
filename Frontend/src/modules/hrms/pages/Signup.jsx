@@ -154,14 +154,14 @@ export default function Signup() {
 
     if (submitted) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4">
-                <div className="w-full max-w-md bg-white/[0.06] backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
+            <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
+                <div className="w-full max-w-md bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
                     <div className="h-1.5 bg-gradient-to-r from-emerald-500 to-green-500" />
                     <div className="p-10 text-center">
-                        <div className="w-20 h-20 bg-emerald-500/15 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <Check className="w-10 h-10 text-emerald-400" />
+                        <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <Check className="w-10 h-10 text-emerald-500" />
                         </div>
-                        <h2 className="text-2xl font-bold text-white mb-3">Application Submitted!</h2>
+                        <h2 className="text-2xl font-bold text-slate-900 mb-3">Application Submitted!</h2>
                         <p className="text-slate-400 text-sm leading-relaxed mb-8">
                             Your joining request has been received. Our team will review your application and you'll be notified once it's approved. You cannot login until approved.
                         </p>
@@ -175,7 +175,7 @@ export default function Signup() {
                         </div>
                         <button
                             onClick={() => navigate('/hrms/login')}
-                            className="w-full h-11 bg-white/10 hover:bg-white/15 text-white font-medium rounded-xl transition-all text-sm border border-white/10"
+                            className="w-full h-11 bg-slate-100 hover:bg-slate-200 text-slate-900 font-medium rounded-xl transition-all text-sm border border-slate-200"
                         >
                             Back to Login
                         </button>
@@ -185,11 +185,11 @@ export default function Signup() {
         );
     }
 
-    const inputClass = "w-full h-11 px-4 bg-white/[0.06] border border-white/10 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/30 transition-all text-sm";
-    const labelClass = "text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5 block";
+    const inputClass = "w-full h-11 px-4 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all text-sm";
+    const labelClass = "text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5 block";
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 py-8">
+        <div className="min-h-screen bg-slate-50 p-4 py-8">
             <div className="w-full max-w-2xl mx-auto">
                 {/* Header */}
                 <div className="text-center mb-8">
@@ -200,8 +200,8 @@ export default function Signup() {
                             <Building2 className="w-7 h-7 text-white" />
                         )}
                     </div>
-                    <h1 className="text-2xl font-bold text-white">Join {hrmsSettings?.companyName || 'ItzoFood'}</h1>
-                    <p className="text-sm text-slate-400 mt-1">Submit your joining request</p>
+                    <h1 className="text-2xl font-bold text-slate-900">Join {hrmsSettings?.companyName || 'ItzoFood'}</h1>
+                    <p className="text-sm text-slate-500 mt-1">Submit your joining request</p>
                 </div>
 
                 {/* Stepper */}
@@ -211,26 +211,26 @@ export default function Signup() {
                             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
                                 i < currentStep ? 'bg-emerald-500 text-white'
                                 : i === currentStep ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/30'
-                                : 'bg-white/10 text-slate-500'
+                                : 'bg-slate-200 text-slate-500'
                             }`}>
                                 {i < currentStep ? <Check className="w-4 h-4" /> : i + 1}
                             </div>
-                            <span className={`hidden sm:block text-xs font-medium ${i === currentStep ? 'text-white' : 'text-slate-500'}`}>
+                            <span className={`hidden sm:block text-xs font-medium ${i === currentStep ? 'text-slate-900' : 'text-slate-500'}`}>
                                 {step.title}
                             </span>
-                            {i < STEPS.length - 1 && <div className={`w-8 h-0.5 ${i < currentStep ? 'bg-emerald-500' : 'bg-white/10'}`} />}
+                            {i < STEPS.length - 1 && <div className={`w-8 h-0.5 ${i < currentStep ? 'bg-emerald-500' : 'bg-slate-200'}`} />}
                         </div>
                     ))}
                 </div>
 
                 {/* Form Card */}
-                <div className="bg-white/[0.06] backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
+                <div className="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
                     <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600" />
                     <div className="p-6 sm:p-8">
                         {/* Step 1: Personal Info */}
                         {currentStep === 0 && (
                             <div className="space-y-4">
-                                <h3 className="text-lg font-semibold text-white mb-4">Personal Information</h3>
+                                <h3 className="text-lg font-semibold text-slate-900 mb-4">Personal Information</h3>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div className="sm:col-span-2">
                                         <label className={labelClass}>Full Name *</label>
@@ -275,7 +275,7 @@ export default function Signup() {
                         {/* Step 2: Address & KYC */}
                         {currentStep === 1 && (
                             <div className="space-y-4">
-                                <h3 className="text-lg font-semibold text-white mb-4">Address & KYC Documents</h3>
+                                <h3 className="text-lg font-semibold text-slate-900 mb-4">Address & KYC Documents</h3>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div className="sm:col-span-2">
                                         <label className={labelClass}>Street Address</label>
@@ -301,7 +301,7 @@ export default function Signup() {
                                         <label className={labelClass}>Upload Aadhaar</label>
                                         <div className="relative">
                                             <input type="file" id="aadhaar-upload" className="hidden" accept="image/*,.pdf" onChange={e => handleFileUpload('aadhaar', e.target.files?.[0])} />
-                                            <label htmlFor="aadhaar-upload" className={`flex items-center justify-center gap-2 w-full h-11 border border-dashed border-white/20 rounded-xl cursor-pointer hover:bg-white/5 transition-colors ${form.aadhaarPhotoUrl ? 'text-emerald-400 border-emerald-400/30' : 'text-slate-400'}`}>
+                                            <label htmlFor="aadhaar-upload" className={`flex items-center justify-center gap-2 w-full h-11 border border-dashed border-slate-300 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors ${form.aadhaarPhotoUrl ? 'text-emerald-400 border-emerald-400/30' : 'text-slate-400'}`}>
                                                 {uploading.aadhaar ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
                                                 <span className="text-sm font-medium">{uploading.aadhaar ? 'Uploading...' : form.aadhaarPhotoUrl ? 'Uploaded' : 'Upload File'}</span>
                                             </label>
@@ -315,7 +315,7 @@ export default function Signup() {
                                         <label className={labelClass}>Upload PAN</label>
                                         <div className="relative">
                                             <input type="file" id="pan-upload" className="hidden" accept="image/*,.pdf" onChange={e => handleFileUpload('pan', e.target.files?.[0])} />
-                                            <label htmlFor="pan-upload" className={`flex items-center justify-center gap-2 w-full h-11 border border-dashed border-white/20 rounded-xl cursor-pointer hover:bg-white/5 transition-colors ${form.panPhotoUrl ? 'text-emerald-400 border-emerald-400/30' : 'text-slate-400'}`}>
+                                            <label htmlFor="pan-upload" className={`flex items-center justify-center gap-2 w-full h-11 border border-dashed border-slate-300 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors ${form.panPhotoUrl ? 'text-emerald-400 border-emerald-400/30' : 'text-slate-400'}`}>
                                                 {uploading.pan ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
                                                 <span className="text-sm font-medium">{uploading.pan ? 'Uploading...' : form.panPhotoUrl ? 'Uploaded' : 'Upload File'}</span>
                                             </label>
@@ -328,7 +328,7 @@ export default function Signup() {
                         {/* Step 3: Qualifications */}
                         {currentStep === 2 && (
                             <div className="space-y-4">
-                                <h3 className="text-lg font-semibold text-white mb-4">Role Details & Qualifications</h3>
+                                <h3 className="text-lg font-semibold text-slate-900 mb-4">Role Details & Qualifications</h3>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div className="sm:col-span-2">
                                         <label className={labelClass}>Highest Qualification</label>
@@ -391,7 +391,7 @@ export default function Signup() {
                         {currentStep === 3 && (
                             <div className="space-y-6">
                                 <div>
-                                    <h3 className="text-lg font-semibold text-white mb-4">Bank Details</h3>
+                                    <h3 className="text-lg font-semibold text-slate-900 mb-4">Bank Details</h3>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
                                             <label className={labelClass}>Account Holder Name</label>
@@ -416,7 +416,7 @@ export default function Signup() {
                                     </div>
                                 </div>
                                 <div>
-                                    <h3 className="text-lg font-semibold text-white mb-4">Emergency Contact</h3>
+                                    <h3 className="text-lg font-semibold text-slate-900 mb-4">Emergency Contact</h3>
                                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                         <div>
                                             <label className={labelClass}>Name</label>
@@ -436,10 +436,10 @@ export default function Signup() {
                         )}
 
                         {/* Navigation Buttons */}
-                        <div className="flex items-center justify-between mt-8 pt-6 border-t border-white/10">
+                        <div className="flex items-center justify-between mt-8 pt-6 border-t border-slate-100">
                             <button
                                 onClick={currentStep === 0 ? () => navigate('/hrms/login') : prevStep}
-                                className="flex items-center gap-2 px-5 h-11 bg-white/10 hover:bg-white/15 text-white font-medium rounded-xl transition-all text-sm border border-white/10"
+                                className="flex items-center gap-2 px-5 h-11 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl transition-all text-sm border border-slate-200"
                             >
                                 <ChevronLeft className="w-4 h-4" />
                                 {currentStep === 0 ? 'Login' : 'Previous'}

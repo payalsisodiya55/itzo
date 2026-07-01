@@ -45,7 +45,7 @@ export default function Salary() {
 
             {/* Payslip Detail Modal */}
             {selectedPayslip && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
                     <div className="bg-white rounded-2xl w-full max-w-3xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
                         <div className="p-6 overflow-y-auto">
                             <div className="flex items-center justify-between mb-6">
@@ -140,7 +140,7 @@ export default function Salary() {
             {/* PDF Preview Modal */}
             {previewPdf && (
                 <div className="fixed inset-0 z-50 flex flex-col bg-black/90 backdrop-blur-sm">
-                    <div className="flex items-center justify-between p-4 border-b border-white/10 text-white">
+                    <div className="flex items-center justify-between p-4 border-b border-slate-200 text-white">
                         <h3 className="font-medium text-lg">Payslip Preview</h3>
                         <div className="flex gap-4">
                             <a href={previewPdf} download target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition-colors flex items-center gap-2">
