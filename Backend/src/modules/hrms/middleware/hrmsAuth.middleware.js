@@ -1,5 +1,7 @@
 import { HrmsEmployee } from '../models/employee.model.js';
 import { sendError } from '../../../utils/response.js';
+import { FoodAdmin } from '../../../core/admin/admin.model.js';
+import { getCachedRolePermissions } from '../../../core/auth/auth.middleware.js';
 
 /**
  * Ensures the authenticated user is an HRMS_EMPLOYEE with an active employee profile.
@@ -69,11 +71,34 @@ export const requireAdminOrManager = async (req, res, next) => {
 
         // Check if HRMS Manager (from HRMS Portal or ECS Admin Portal)
         if (req.user.role === 'HRMS_EMPLOYEE' || req.user.role === 'EMPLOYEE') {
+            let hasAccess = false;
+
+            // 1. Check if they have an active HrmsEmployee profile
             const query = req.user.role === 'EMPLOYEE' ? { adminId: req.user.userId } : { _id: req.user.userId };
             const employee = await HrmsEmployee.findOne(query).lean();
             if (employee && employee.status === 'Active' &&
                 (employee.hrmsRole === 'Manager' || employee.hrmsRole === 'HR' || employee.hrmsRole === 'Admin')) {
+                hasAccess = true;
                 req.hrmsEmployee = employee;
+            }
+
+            // 2. If no HrmsEmployee profile, but they are an ECS EMPLOYEE, check their AdminRole permissions
+            if (!hasAccess && req.user.role === 'EMPLOYEE') {
+                const adminUser = await FoodAdmin.findById(req.user.userId).select('adminRoleId isActive').lean();
+                if (adminUser && adminUser.isActive && adminUser.adminRoleId) {
+                    const permissions = await getCachedRolePermissions(adminUser.adminRoleId);
+                    // Check if they have ANY 'hrms' permission (e.g., hrms::dashboard, hrms::employees, etc.)
+                    // Or if they have the root 'food::hrms' permission
+                    if (permissions) {
+                         const hasHrmsPerm = Object.keys(permissions).some(key => key.includes('hrms'));
+                         if (hasHrmsPerm) {
+                             hasAccess = true;
+                         }
+                    }
+                }
+            }
+
+            if (hasAccess) {
                 return next();
             }
         }

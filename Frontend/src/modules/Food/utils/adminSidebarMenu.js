@@ -292,7 +292,7 @@ export const adminSidebarMenu = [
   {
     type: "section",
     label: "CAREERS",
-    permissionKey: "staff_management",
+    permissionKey: "careers",
     items: [
       { type: "link", label: "Jobs", permissionKey: "list", path: "/ecs/food/careers", icon: "Briefcase" },
       { type: "link", label: "Job Applications", permissionKey: "list", path: "/ecs/food/careers/applications", icon: "FileText" },
@@ -324,7 +324,7 @@ export const adminSidebarMenu = [
   {
     type: "section",
     label: "CONSULTING",
-    permissionKey: "pages_social_media",
+    permissionKey: "consulting",
     items: [
       { type: "link", label: "Licensing Requests", permissionKey: "consulting", path: "/ecs/food/consulting/licensing-requests", icon: "FileText" },
     ],
