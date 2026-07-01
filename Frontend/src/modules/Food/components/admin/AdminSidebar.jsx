@@ -419,7 +419,7 @@ export default function AdminSidebar({ isOpen = false, onClose, onCollapseChange
             const currentKey = `${parentKey}::${item.permissionKey}`;
             const hasView = permissions[currentKey]?.view === true;
 
-            if (item.type === "link" && item.permissionKey === "dashboard") {
+            if (item.type === "link" && item.permissionKey === "dashboard" && (parentKey === "food" || parentKey === "quick")) {
               return null;
             }
 
