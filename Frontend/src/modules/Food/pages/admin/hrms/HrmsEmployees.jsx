@@ -91,7 +91,8 @@ export default function HrmsEmployees() {
         setUploading(prev => ({ ...prev, [field]: true }));
         try {
             const formData = new FormData();
-            formData.append('image', file);
+            formData.append('file', file);
+            formData.append('folder', `hrms/employees/${field}s`);
             const res = await axiosInstance.post('/uploads/image', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
