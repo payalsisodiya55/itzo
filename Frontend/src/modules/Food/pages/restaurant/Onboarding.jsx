@@ -452,6 +452,7 @@ export default function RestaurantOnboarding() {
   const [zonesLoading, setZonesLoading] = useState(false)
 
   const [step1, setStep1] = useState({
+    businessType: "Fixed Restaurant",
     restaurantName: "",
     pureVegRestaurant: null,
     ownerName: "",
@@ -1197,6 +1198,7 @@ export default function RestaurantOnboarding() {
         const formData = new FormData()
 
         // Step 1
+        formData.append("businessType", step1.businessType || "Fixed Restaurant")
         formData.append("restaurantName", step1.restaurantName || "")
         formData.append(
           "pureVegRestaurant",
@@ -1318,6 +1320,34 @@ export default function RestaurantOnboarding() {
       <section className="bg-white p-4 sm:p-6 rounded-md">
         <h2 className="text-lg font-semibold text-black mb-4">Restaurant information</h2>
         <div className="space-y-3">
+          <div>
+            <Label className="text-xs text-gray-700">Business Type*</Label>
+            <div className="mt-2 flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => isEditing && setStep1({ ...step1, businessType: "Fixed Restaurant" })}
+                className={`px-3 py-1.5 text-xs rounded-full border ${
+                  step1.businessType === "Fixed Restaurant"
+                    ? "bg-orange-600 text-white border-orange-600"
+                    : "bg-white text-gray-700 border-gray-200"
+                } ${!isEditing ? "opacity-70 cursor-not-allowed" : ""}`}
+              >
+                Fixed Restaurant
+              </button>
+              <button
+                type="button"
+                onClick={() => isEditing && setStep1({ ...step1, businessType: "Street Food Vendor" })}
+                className={`px-3 py-1.5 text-xs rounded-full border ${
+                  step1.businessType === "Street Food Vendor"
+                    ? "bg-orange-600 text-white border-orange-600"
+                    : "bg-white text-gray-700 border-gray-200"
+                } ${!isEditing ? "opacity-70 cursor-not-allowed" : ""}`}
+              >
+                Street Food Vendor
+              </button>
+            </div>
+            <p className="text-[10px] text-gray-500 mt-1">Street Food Vendors will have access to dynamic location features.</p>
+          </div>
           <div>
             <Label className="text-xs text-gray-700">Restaurant name*</Label>
             <Input

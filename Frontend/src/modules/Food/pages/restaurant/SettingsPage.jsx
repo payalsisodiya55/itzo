@@ -36,6 +36,24 @@ export default function SettingsPage() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true)
   const [darkMode, setDarkMode] = useState(false)
 
+  const [restaurantData, setRestaurantData] = useState(null)
+
+  useEffect(() => {
+    const fetchRestaurantData = async () => {
+      try {
+        const { restaurantAPI } = await import("@food/api")
+        const response = await restaurantAPI.getCurrentRestaurant()
+        const data = response?.data?.data?.restaurant || response?.data?.restaurant
+        if (data) {
+          setRestaurantData(data)
+        }
+      } catch (error) {
+        debugError("Error fetching restaurant data:", error)
+      }
+    }
+    fetchRestaurantData()
+  }, [])
+
   // Lenis smooth scrolling
   useEffect(() => {
     const lenis = new Lenis({
@@ -64,6 +82,7 @@ export default function SettingsPage() {
       items: [
         { id: "notifications", label: "Notifications", icon: Bell, hasToggle: true, toggleValue: notificationsEnabled, onToggle: setNotificationsEnabled },
         { id: "privacy", label: "Privacy & Security", icon: Shield, route: "/restaurant/privacy" },
+        ...(restaurantData?.businessType === "Street Food Vendor" ? [{ id: "live-location", label: "Live Location Control", icon: Globe, route: "/restaurant/live-location" }] : [])
       ]
     },
     {

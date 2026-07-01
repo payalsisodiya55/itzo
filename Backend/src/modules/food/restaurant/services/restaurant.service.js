@@ -274,6 +274,7 @@ const notifyAdminsAboutRestaurantProfileReview = async (restaurantId, restaurant
 
 export const registerRestaurant = async (payload, files) => {
     const {
+        businessType,
         restaurantName,
         ownerName,
         ownerEmail,
@@ -404,6 +405,7 @@ export const registerRestaurant = async (payload, files) => {
         }
 
         const restaurant = await FoodRestaurant.create({
+            businessType: businessType || 'Fixed Restaurant',
             restaurantName,
             restaurantNameNormalized,
             ownerName,

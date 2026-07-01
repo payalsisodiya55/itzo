@@ -208,6 +208,18 @@ const restaurantSchema = new mongoose.Schema(
       ref: "FoodZone",
       index: true,
     },
+    businessType: {
+      type: String,
+      enum: ["Fixed Restaurant", "Street Food Vendor"],
+      default: "Fixed Restaurant"
+    },
+    liveTrackingEnabled: { type: Boolean, default: false },
+    lastLocationUpdate: { type: Date },
+    locationSource: { type: String, enum: ["gps", "manual"] },
+    currentLocation: {
+      type: geoPointSchema,
+      default: undefined,
+    },
     businessModel: {
       type: String,
       trim: true,

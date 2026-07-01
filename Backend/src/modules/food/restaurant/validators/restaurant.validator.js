@@ -54,6 +54,7 @@ const timeToMinutes = (value) => {
 };
 
 const restaurantRegisterSchema = z.object({
+    businessType: z.string().optional(),
     restaurantName: z.string().min(1, 'Restaurant name is required'),
     ownerName: z.string().min(1, 'Owner name is required'),
     ownerEmail: emailSchema,

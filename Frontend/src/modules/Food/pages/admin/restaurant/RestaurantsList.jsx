@@ -371,6 +371,7 @@ export default function RestaurantsList() {
   const [filters, setFilters] = useState({
     all: "All",
     zone: "",
+    businessType: "All",
   })
 
   const filteredRestaurants = useMemo(() => {
@@ -395,6 +396,10 @@ export default function RestaurantsList() {
 
     if (filters.zone) {
       result = result.filter(restaurant => restaurant.zone === filters.zone)
+    }
+
+    if (filters.businessType && filters.businessType !== "All") {
+      result = result.filter(restaurant => restaurant.businessType === filters.businessType)
     }
 
     // Apply Sorting
@@ -1496,6 +1501,20 @@ export default function RestaurantsList() {
                 />
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               </div>
+              
+              <div className="relative sm:flex-initial min-w-[200px]">
+                <select
+                  value={filters.businessType}
+                  onChange={(e) => setFilters(prev => ({ ...prev, businessType: e.target.value }))}
+                  className="w-full pl-4 pr-10 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary appearance-none"
+                >
+                  <option value="All">All Business Types</option>
+                  <option value="Fixed Restaurant">Fixed Restaurant</option>
+                  <option value="Street Food Vendor">Street Food Vendor</option>
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+              </div>
+
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -1638,8 +1657,21 @@ export default function RestaurantsList() {
                               >
                                 {restaurant.name}
                               </span>
-                              <span className="text-xs text-slate-500">ID {formatRestaurantId(restaurant.originalData || restaurant)}</span>
-                              <span className="text-xs text-slate-500">{renderStars(restaurant.rating)}</span>
+                              <span className="text-[11px] text-slate-500 font-medium">
+                                {restaurant.businessType === "Street Food Vendor" ? (
+                                  <span className="text-emerald-600 flex items-center gap-1 mt-0.5">
+                                    <MapPin className="w-3 h-3" />
+                                    Street Vendor
+                                    {restaurant.liveTrackingEnabled && (
+                                      <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse ml-1" title="Live tracking active" />
+                                    )}
+                                  </span>
+                                ) : (
+                                  "Fixed Restaurant"
+                                )}
+                              </span>
+                              <span className="text-xs text-slate-500 mt-0.5">ID {formatRestaurantId(restaurant.originalData || restaurant)}</span>
+                              <span className="text-xs text-slate-500 mt-0.5">{renderStars(restaurant.rating)}</span>
                             </div>
                           </div>
                         </td>

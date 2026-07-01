@@ -1021,6 +1021,16 @@ export const restaurantAPI = {
     apiClient.delete("/food/restaurant/delete-account", {
       contextModule: "restaurant",
     }),
+  /** Update live location for Street Food Vendors */
+  updateLiveLocation: (latitude, longitude) =>
+    apiClient.put("/food/vendor-location/live-location", { latitude, longitude }, {
+      contextModule: "restaurant",
+    }),
+  /** Update live tracking status for Street Food Vendors */
+  updateLiveTrackingStatus: (enabled) =>
+    apiClient.put("/food/vendor-location/live-tracking-status", { enabled }, {
+      contextModule: "restaurant",
+    }),
   /** Finance dashboard for `hub-finance`. */
   getFinance: (params = {}) =>
     apiClient.get("/food/restaurant/finance", {
