@@ -216,9 +216,9 @@ export default function AdminReportDetails() {
                                     <div className="p-3 text-center"><p className="text-[10px] uppercase text-slate-400 font-bold">Other</p><p className="text-sm font-semibold">₹{report.travelSummary.otherExpense}</p></div>
                                 </div>
                             </div>
-                            {report.expenseId && (
+                            {report.travelSummary?.expenseId && (
                                 <div className="mt-3 text-xs text-blue-600 flex items-center gap-1.5 p-2 bg-blue-50 rounded-lg">
-                                    <FileText className="w-4 h-4" /> Expense claim automatically generated (Ref: {report.expenseId.slice(-6).toUpperCase()})
+                                    <FileText className="w-4 h-4" /> Expense claim automatically generated (Ref: {String(report.travelSummary.expenseId).slice(-6).toUpperCase()})
                                 </div>
                             )}
                         </section>

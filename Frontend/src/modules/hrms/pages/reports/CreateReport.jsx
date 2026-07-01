@@ -96,23 +96,20 @@ export default function CreateReport() {
 
         setUploading(true);
         try {
-            // Upload each file individually since the backend uses upload.single('file')
-            const uploadPromises = validFiles.map(async (f) => {
-                const singleFormData = new FormData();
-                singleFormData.append('file', f);
-                const res = await axiosInstance.post('/uploads/image', singleFormData, {
-                    headers: { 'Content-Type': 'multipart/form-data' }
-                });
-                return {
-                    url: res.data?.data?.url,
-                    name: f.name,
-                    type: f.type,
-                    size: f.size
-                };
+            const formData = new FormData();
+            validFiles.forEach(f => formData.append('images', f));
+
+            const res = await axiosInstance.post('/uploads/image', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
             });
 
-            const uploadedFiles = await Promise.all(uploadPromises);
-            const newAttachments = uploadedFiles.filter(f => f.url);
+            const urls = res.data?.data || [];
+            const newAttachments = (Array.isArray(urls) ? urls : [urls]).map((url, i) => ({
+                url: typeof url === 'string' ? url : url?.url,
+                name: validFiles[i]?.name || `file-${i}`,
+                type: validFiles[i]?.type || '',
+                size: validFiles[i]?.size || 0
+            })).filter(f => f.url);
 
             setFormData(prev => ({ ...prev, attachments: [...prev.attachments, ...newAttachments] }));
         } catch (error) {

@@ -23,9 +23,14 @@ export const getSettings = async (req, res, next) => {
 };
 
 const validateReportDate = (dateString) => {
-    const d = new Date(dateString);
+    if (!dateString) return null;
+    // Parse YYYY-MM-DD string parts directly to avoid timezone conversion issues.
+    // Indian users (IST = UTC+5:30) sending '2026-07-01' should always get July 1 at UTC midnight,
+    // not June 30 due to timezone offset when using new Date() with timezone.
+    const parts = String(dateString).split('T')[0].split('-');
+    if (parts.length !== 3) return null;
+    const d = new Date(Date.UTC(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]), 0, 0, 0, 0));
     if (isNaN(d.getTime())) return null;
-    d.setUTCHours(0, 0, 0, 0); // Normalize to midnight UTC
     return d;
 };
 

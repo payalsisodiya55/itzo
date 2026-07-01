@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axiosInstance from '@core/api/axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Loader2, ArrowLeft, Paperclip, Send, Download, FileText, User, Building2, CheckCircle } from 'lucide-react';
+import { Loader2, ArrowLeft, Paperclip, Send, Download, FileText, User, Building2, CheckCircle, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function SupportDetails() {

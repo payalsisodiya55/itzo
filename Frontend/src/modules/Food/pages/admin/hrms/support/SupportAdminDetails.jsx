@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axiosInstance from '@core/api/axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Loader2, ArrowLeft, Paperclip, Send, Download, FileText, User, Building2, UserCircle, Briefcase, Mail, Phone, MapPin } from 'lucide-react';
+import { Loader2, ArrowLeft, Paperclip, Send, Download, FileText, User, Building2, UserCircle, Briefcase, Mail, Phone, MapPin, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useAuth } from '@core/context/AuthContext';
 
@@ -118,7 +118,7 @@ export default function SupportAdminDetails() {
     const changeStatus = async (newStatus) => {
         setStatusUpdating(true);
         try {
-            await axiosInstance.put(`/hrms/support/admin/tickets/${id}/status`, { status: newStatus });
+            await axiosInstance.put(`/hrms/support/tickets/${id}/status`, { status: newStatus });
             toast.success(`Status updated to ${newStatus}`);
             setTicket(prev => ({ ...prev, status: newStatus }));
         } catch (error) {
@@ -132,7 +132,7 @@ export default function SupportAdminDetails() {
     const assignToMe = async () => {
         setAssigning(true);
         try {
-            await axiosInstance.put(`/hrms/support/admin/tickets/${id}/assign`, { adminId: currentUser.userId || currentUser._id });
+            await axiosInstance.put(`/hrms/support/tickets/${id}/assign`, { adminId: currentUser.userId || currentUser._id });
             toast.success('Ticket assigned to you');
             await fetchTicket();
         } catch (error) {

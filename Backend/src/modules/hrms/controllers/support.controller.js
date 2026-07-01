@@ -72,7 +72,7 @@ export const createTicket = async (req, res, next) => {
             const autoReply = new HrmsSupportMessage({
                 ticketId: ticket._id,
                 senderType: 'Admin',
-                senderId: req.user.userId, // use system or leave null, but senderId is required. I'll use the user's ID for now, or fetch an admin. We'll use a generic admin ID or the first admin if possible, or just the employee's ID to satisfy the schema, wait senderId is required. Better to find a system admin or just use req.user.userId (it's an ObjectId).
+                senderId: employee._id, // Use employee ObjectId to satisfy required schema; frontend renders by senderType not senderId
                 message: settings.ticketConfig.autoReplyMessage,
                 attachments: []
             });
