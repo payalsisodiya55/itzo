@@ -133,14 +133,32 @@ export default function Footer() {
               <a
                 href="#"
                 className="transition-transform duration-200 hover:scale-110"
+                aria-label="X (formerly Twitter)"
               >
-                <Twitter className="h-5 w-5" />
+                <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
               </a>
               <a
                 href="#"
                 className="transition-transform duration-200 hover:scale-110"
+                aria-label="Instagram"
               >
-                <Instagram className="h-5 w-5" />
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="2" width="20" height="20" rx="5.5" fill="url(#paint0_linear_insta_footer)"/>
+                  <rect x="6" y="6" width="12" height="12" rx="3" stroke="white" strokeWidth="1.8" fill="none" />
+                  <circle cx="12" cy="12" r="3" stroke="white" strokeWidth="1.8" fill="none" />
+                  <circle cx="15.5" cy="8.5" r="0.9" fill="white" />
+                  <defs>
+                    <linearGradient id="paint0_linear_insta_footer" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#FEE140"/>
+                      <stop offset="25%" stopColor="#FA709A"/>
+                      <stop offset="50%" stopColor="#D6017B"/>
+                      <stop offset="75%" stopColor="#8A3AB9"/>
+                      <stop offset="100%" stopColor="#4C5FD7"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
               </a>
             </div>
           </div>
