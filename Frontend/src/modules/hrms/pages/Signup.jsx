@@ -6,7 +6,7 @@ import { useHrmsSettings } from '../context/HrmsSettingsContext';
 import {
     Building2, User, Mail, Phone, Lock, MapPin, FileText,
     GraduationCap, Briefcase, CreditCard, Heart, ChevronLeft,
-    ChevronRight, Check, AlertCircle, Eye, EyeOff
+    ChevronRight, Check, AlertCircle, Eye, EyeOff, Upload, Loader2
 } from 'lucide-react';
 
 const STEPS = [
@@ -28,12 +28,15 @@ export default function Signup() {
         fullName: '', email: '', phone: '', password: '',
         dateOfBirth: '', gender: '',
         street: '', city: '', state: '', pincode: '',
-        aadhaarNumber: '', panNumber: '',
+        aadhaarNumber: '', aadhaarPhotoUrl: '', panNumber: '', panPhotoUrl: '',
         qualification: '', experience: '',
-        preferredDepartment: '', preferredDesignation: '',
+        department: '', designation: '',
         accountHolderName: '', accountNumber: '', bankName: '', ifscCode: '', upiId: '',
         emergencyName: '', emergencyRelation: '', emergencyPhone: '',
+        ctc: '', joiningDate: '', hrmsRole: 'Employee', shift: 'General',
+        employmentType: 'Full-Time', officeLocation: ''
     });
+    const [uploading, setUploading] = useState({ aadhaar: false, pan: false });
 
     const updateField = (field, value) => setForm(prev => ({ ...prev, [field]: value }));
 
@@ -44,6 +47,26 @@ export default function Signup() {
     const isValidAadhaar = (v) => !v || /^\d{12}$/.test(v.replace(/\s/g, ''));
     const isValidPan = (v) => !v || /^[A-Z]{5}\d{4}[A-Z]$/.test(v.trim().toUpperCase());
     const isValidPincode = (v) => !v || /^\d{6}$/.test(v.trim());
+
+    const handleFileUpload = async (field, file) => {
+        if (!file) return;
+        setUploading(prev => ({ ...prev, [field]: true }));
+        try {
+            const formData = new FormData();
+            formData.append('image', file);
+            const res = await axiosInstance.post('/uploads/image', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            const url = res.data?.url || res.data?.data?.url || res.data?.imageUrl;
+            if (!url) throw new Error('No URL returned from server');
+            updateField(`${field}PhotoUrl`, url);
+            toast.success(`${field.toUpperCase()} uploaded successfully`);
+        } catch (e) {
+            toast.error(e.response?.data?.message || `Failed to upload ${field}`);
+        } finally {
+            setUploading(prev => ({ ...prev, [field]: false }));
+        }
+    };
 
     const validateStep = () => {
         switch (currentStep) {
@@ -91,11 +114,19 @@ export default function Signup() {
                     state: form.state, pincode: form.pincode
                 },
                 aadhaarNumber: form.aadhaarNumber || undefined,
+                aadhaarPhotoUrl: form.aadhaarPhotoUrl || undefined,
                 panNumber: form.panNumber || undefined,
+                panPhotoUrl: form.panPhotoUrl || undefined,
                 qualification: form.qualification || undefined,
                 experience: form.experience || undefined,
-                preferredDepartment: form.preferredDepartment || undefined,
-                preferredDesignation: form.preferredDesignation || undefined,
+                department: form.department || undefined,
+                designation: form.designation || undefined,
+                ctc: form.ctc ? Number(form.ctc) : undefined,
+                joiningDate: form.joiningDate || undefined,
+                hrmsRole: form.hrmsRole || undefined,
+                shift: form.shift || undefined,
+                employmentType: form.employmentType || undefined,
+                officeLocation: form.officeLocation || undefined,
                 bankDetails: {
                     accountHolderName: form.accountHolderName,
                     accountNumber: form.accountNumber,
@@ -265,9 +296,29 @@ export default function Signup() {
                                         <label className={labelClass}>Aadhaar Number <span className="text-[10px] font-normal text-slate-500 normal-case tracking-normal">(12 digits)</span></label>
                                         <input className={inputClass} value={form.aadhaarNumber} onChange={e => updateField('aadhaarNumber', e.target.value.replace(/\D/g, '').slice(0, 12))} placeholder="123456789012" maxLength={12} />
                                     </div>
-                                    <div className="sm:col-span-2">
+                                    <div>
+                                        <label className={labelClass}>Upload Aadhaar</label>
+                                        <div className="relative">
+                                            <input type="file" id="aadhaar-upload" className="hidden" accept="image/*,.pdf" onChange={e => handleFileUpload('aadhaar', e.target.files?.[0])} />
+                                            <label htmlFor="aadhaar-upload" className={`flex items-center justify-center gap-2 w-full h-11 border border-dashed border-white/20 rounded-xl cursor-pointer hover:bg-white/5 transition-colors ${form.aadhaarPhotoUrl ? 'text-emerald-400 border-emerald-400/30' : 'text-slate-400'}`}>
+                                                {uploading.aadhaar ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                                                <span className="text-sm font-medium">{uploading.aadhaar ? 'Uploading...' : form.aadhaarPhotoUrl ? 'Uploaded' : 'Upload File'}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div>
                                         <label className={labelClass}>PAN Number <span className="text-[10px] font-normal text-slate-500 normal-case tracking-normal">(e.g. ABCDE1234F)</span></label>
                                         <input className={inputClass} value={form.panNumber} onChange={e => updateField('panNumber', e.target.value.toUpperCase().slice(0, 10))} placeholder="ABCDE1234F" maxLength={10} />
+                                    </div>
+                                    <div>
+                                        <label className={labelClass}>Upload PAN</label>
+                                        <div className="relative">
+                                            <input type="file" id="pan-upload" className="hidden" accept="image/*,.pdf" onChange={e => handleFileUpload('pan', e.target.files?.[0])} />
+                                            <label htmlFor="pan-upload" className={`flex items-center justify-center gap-2 w-full h-11 border border-dashed border-white/20 rounded-xl cursor-pointer hover:bg-white/5 transition-colors ${form.panPhotoUrl ? 'text-emerald-400 border-emerald-400/30' : 'text-slate-400'}`}>
+                                                {uploading.pan ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                                                <span className="text-sm font-medium">{uploading.pan ? 'Uploading...' : form.panPhotoUrl ? 'Uploaded' : 'Upload File'}</span>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -276,7 +327,7 @@ export default function Signup() {
                         {/* Step 3: Qualifications */}
                         {currentStep === 2 && (
                             <div className="space-y-4">
-                                <h3 className="text-lg font-semibold text-white mb-4">Qualifications & Preferences</h3>
+                                <h3 className="text-lg font-semibold text-white mb-4">Role Details & Qualifications</h3>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div className="sm:col-span-2">
                                         <label className={labelClass}>Highest Qualification</label>
@@ -287,12 +338,49 @@ export default function Signup() {
                                         <input className={inputClass} value={form.experience} onChange={e => updateField('experience', e.target.value)} placeholder="e.g., 3 years in Sales" />
                                     </div>
                                     <div>
-                                        <label className={labelClass}>Preferred Department</label>
-                                        <input className={inputClass} value={form.preferredDepartment} onChange={e => updateField('preferredDepartment', e.target.value)} placeholder="e.g., Engineering, Sales" />
+                                        <label className={labelClass}>Department</label>
+                                        <input className={inputClass} value={form.department} onChange={e => updateField('department', e.target.value)} placeholder="e.g., Engineering, Sales" />
                                     </div>
                                     <div>
-                                        <label className={labelClass}>Preferred Designation</label>
-                                        <input className={inputClass} value={form.preferredDesignation} onChange={e => updateField('preferredDesignation', e.target.value)} placeholder="e.g., Associate, Manager" />
+                                        <label className={labelClass}>Designation</label>
+                                        <input className={inputClass} value={form.designation} onChange={e => updateField('designation', e.target.value)} placeholder="e.g., Associate, Manager" />
+                                    </div>
+                                    <div>
+                                        <label className={labelClass}>Expected CTC (Annual ₹)</label>
+                                        <input type="number" className={inputClass} value={form.ctc} onChange={e => updateField('ctc', e.target.value)} placeholder="e.g. 500000" />
+                                    </div>
+                                    <div>
+                                        <label className={labelClass}>Joining Date</label>
+                                        <input type="date" className={inputClass} value={form.joiningDate} onChange={e => updateField('joiningDate', e.target.value)} />
+                                    </div>
+                                    <div>
+                                        <label className={labelClass}>HRMS Role</label>
+                                        <select className={inputClass} value={form.hrmsRole} onChange={e => updateField('hrmsRole', e.target.value)}>
+                                            <option value="Employee">Employee</option>
+                                            <option value="Manager">Manager</option>
+                                            <option value="HR">HR</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className={labelClass}>Shift</label>
+                                        <select className={inputClass} value={form.shift} onChange={e => updateField('shift', e.target.value)}>
+                                            <option value="General">General</option>
+                                            <option value="Morning">Morning</option>
+                                            <option value="Night">Night</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className={labelClass}>Employment Type</label>
+                                        <select className={inputClass} value={form.employmentType} onChange={e => updateField('employmentType', e.target.value)}>
+                                            <option value="Full-Time">Full-Time</option>
+                                            <option value="Part-Time">Part-Time</option>
+                                            <option value="Contract">Contract</option>
+                                            <option value="Internship">Internship</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className={labelClass}>Office Location</label>
+                                        <input className={inputClass} value={form.officeLocation} onChange={e => updateField('officeLocation', e.target.value)} placeholder="e.g., HQ, Remote" />
                                     </div>
                                 </div>
                             </div>

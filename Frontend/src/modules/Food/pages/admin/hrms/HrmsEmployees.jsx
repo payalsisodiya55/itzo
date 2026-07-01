@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axiosInstance from '@core/api/axios';
 import { toast } from 'sonner';
-import { Users, Loader2, Search, Eye, Plus, ChevronLeft, ChevronRight, X, UserPlus, FileText } from 'lucide-react';
+import { Users, Loader2, Search, Eye, Plus, ChevronLeft, ChevronRight, X, UserPlus, FileText, Upload } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 
 export default function HrmsEmployees() {
@@ -15,10 +15,18 @@ export default function HrmsEmployees() {
     const [onboardLoading, setOnboardLoading] = useState(false);
 
     const [onboardForm, setOnboardForm] = useState({
-        fullName: '', email: '', password: '', phone: '', department: '', designation: '',
+        fullName: '', email: '', password: '', phone: '',
+        dateOfBirth: '', gender: '',
+        street: '', city: '', state: '', pincode: '',
+        aadhaarNumber: '', aadhaarPhotoUrl: '', panNumber: '', panPhotoUrl: '',
+        qualification: '', experience: '',
+        department: '', designation: '',
+        accountHolderName: '', accountNumber: '', bankName: '', ifscCode: '', upiId: '',
+        emergencyName: '', emergencyRelation: '', emergencyPhone: '',
         employmentType: 'Full-Time', joiningDate: new Date().toISOString().split('T')[0],
         shift: 'General', ctc: '', hrmsRole: 'Employee', officeLocation: ''
     });
+    const [uploading, setUploading] = useState({ aadhaar: false, pan: false });
 
     const fetchEmployees = useCallback(async (page = 1) => {
         setLoading(true);
@@ -41,13 +49,61 @@ export default function HrmsEmployees() {
         }
         setOnboardLoading(true);
         try {
-            await axiosInstance.post('/hrms/employees', { ...onboardForm, ctc: Number(onboardForm.ctc) || 0 });
+            const payload = {
+                ...onboardForm,
+                ctc: Number(onboardForm.ctc) || 0,
+                address: {
+                    street: onboardForm.street, city: onboardForm.city,
+                    state: onboardForm.state, pincode: onboardForm.pincode
+                },
+                bankDetails: {
+                    accountHolderName: onboardForm.accountHolderName,
+                    accountNumber: onboardForm.accountNumber,
+                    bankName: onboardForm.bankName,
+                    ifscCode: onboardForm.ifscCode,
+                    upiId: onboardForm.upiId
+                },
+                emergencyContact: {
+                    name: onboardForm.emergencyName,
+                    relation: onboardForm.emergencyRelation,
+                    phone: onboardForm.emergencyPhone
+                }
+            };
+            await axiosInstance.post('/hrms/employees', payload);
             toast.success('Employee onboarded successfully');
             setShowOnboard(false);
-            setOnboardForm({ fullName: '', email: '', password: '', phone: '', department: '', designation: '', employmentType: 'Full-Time', joiningDate: new Date().toISOString().split('T')[0], shift: 'General', ctc: '', hrmsRole: 'Employee', officeLocation: '' });
+            setOnboardForm({
+                fullName: '', email: '', password: '', phone: '', dateOfBirth: '', gender: '',
+                street: '', city: '', state: '', pincode: '', aadhaarNumber: '', aadhaarPhotoUrl: '', panNumber: '', panPhotoUrl: '',
+                qualification: '', experience: '', department: '', designation: '',
+                accountHolderName: '', accountNumber: '', bankName: '', ifscCode: '', upiId: '',
+                emergencyName: '', emergencyRelation: '', emergencyPhone: '',
+                employmentType: 'Full-Time', joiningDate: new Date().toISOString().split('T')[0],
+                shift: 'General', ctc: '', hrmsRole: 'Employee', officeLocation: ''
+            });
             fetchEmployees();
         } catch (e) { toast.error(e.response?.data?.message || 'Onboarding failed'); }
         finally { setOnboardLoading(false); }
+    };
+
+    const handleFileUpload = async (field, file) => {
+        if (!file) return;
+        setUploading(prev => ({ ...prev, [field]: true }));
+        try {
+            const formData = new FormData();
+            formData.append('image', file);
+            const res = await axiosInstance.post('/uploads/image', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            const url = res.data?.url || res.data?.data?.url || res.data?.imageUrl;
+            if (!url) throw new Error('No URL returned from server');
+            setOnboardForm(prev => ({ ...prev, [`${field}PhotoUrl`]: url }));
+            toast.success(`${field.toUpperCase()} uploaded successfully`);
+        } catch (e) {
+            toast.error(e.response?.data?.message || `Failed to upload ${field}`);
+        } finally {
+            setUploading(prev => ({ ...prev, [field]: false }));
+        }
     };
 
     const handleStatusChange = async (id, status) => {
@@ -82,28 +138,115 @@ export default function HrmsEmployees() {
 
             {/* Direct Onboard Form */}
             {showOnboard && (
-                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-                    <h3 className="font-semibold text-slate-900 mb-4">Direct Employee Onboarding</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div><label className="text-xs font-medium text-slate-600 mb-1 block">Full Name *</label><input className={inputClass} value={onboardForm.fullName} onChange={e => setOnboardForm(p => ({ ...p, fullName: e.target.value }))} /></div>
-                        <div><label className="text-xs font-medium text-slate-600 mb-1 block">Email *</label><input type="email" className={inputClass} value={onboardForm.email} onChange={e => setOnboardForm(p => ({ ...p, email: e.target.value }))} /></div>
-                        <div><label className="text-xs font-medium text-slate-600 mb-1 block">Password *</label><input type="password" className={inputClass} value={onboardForm.password} onChange={e => setOnboardForm(p => ({ ...p, password: e.target.value }))} /></div>
-                        <div><label className="text-xs font-medium text-slate-600 mb-1 block">Phone</label><input className={inputClass} value={onboardForm.phone} onChange={e => setOnboardForm(p => ({ ...p, phone: e.target.value }))} /></div>
-                        <div><label className="text-xs font-medium text-slate-600 mb-1 block">Department</label><input className={inputClass} value={onboardForm.department} onChange={e => setOnboardForm(p => ({ ...p, department: e.target.value }))} /></div>
-                        <div><label className="text-xs font-medium text-slate-600 mb-1 block">Designation</label><input className={inputClass} value={onboardForm.designation} onChange={e => setOnboardForm(p => ({ ...p, designation: e.target.value }))} /></div>
-                        <div><label className="text-xs font-medium text-slate-600 mb-1 block">CTC (Annual ₹)</label><input type="number" className={inputClass} value={onboardForm.ctc} onChange={e => setOnboardForm(p => ({ ...p, ctc: e.target.value }))} /></div>
-                        <div><label className="text-xs font-medium text-slate-600 mb-1 block">Joining Date *</label><input type="date" className={inputClass} value={onboardForm.joiningDate} onChange={e => setOnboardForm(p => ({ ...p, joiningDate: e.target.value }))} /></div>
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 overflow-hidden">
+                    <h3 className="font-semibold text-slate-900 mb-6 text-lg">Direct Employee Onboarding</h3>
+                    <div className="max-h-[60vh] overflow-y-auto pr-2 space-y-8">
+                        {/* 1. Personal Info */}
                         <div>
-                            <label className="text-xs font-medium text-slate-600 mb-1 block">HRMS Role</label>
-                            <select className={inputClass} value={onboardForm.hrmsRole} onChange={e => setOnboardForm(p => ({ ...p, hrmsRole: e.target.value }))}>
-                                <option>Employee</option><option>Manager</option><option>HR</option>
-                            </select>
+                            <h4 className="text-sm font-semibold text-slate-700 mb-3 uppercase tracking-wide bg-slate-50 p-2 rounded">1. Personal Information</h4>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Full Name *</label><input className={inputClass} value={onboardForm.fullName} onChange={e => setOnboardForm(p => ({ ...p, fullName: e.target.value }))} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Email *</label><input type="email" className={inputClass} value={onboardForm.email} onChange={e => setOnboardForm(p => ({ ...p, email: e.target.value }))} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Password *</label><input type="password" className={inputClass} value={onboardForm.password} onChange={e => setOnboardForm(p => ({ ...p, password: e.target.value }))} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Phone</label><input className={inputClass} value={onboardForm.phone} onChange={e => setOnboardForm(p => ({ ...p, phone: e.target.value }))} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Date of Birth</label><input type="date" className={inputClass} value={onboardForm.dateOfBirth} onChange={e => setOnboardForm(p => ({ ...p, dateOfBirth: e.target.value }))} /></div>
+                                <div>
+                                    <label className="text-xs font-medium text-slate-600 mb-1 block">Gender</label>
+                                    <select className={inputClass} value={onboardForm.gender} onChange={e => setOnboardForm(p => ({ ...p, gender: e.target.value }))}>
+                                        <option value="">Select</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 2. Address & KYC */}
+                        <div>
+                            <h4 className="text-sm font-semibold text-slate-700 mb-3 uppercase tracking-wide bg-slate-50 p-2 rounded">2. Address & KYC</h4>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Street Address</label><input className={inputClass} value={onboardForm.street} onChange={e => setOnboardForm(p => ({ ...p, street: e.target.value }))} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">City</label><input className={inputClass} value={onboardForm.city} onChange={e => setOnboardForm(p => ({ ...p, city: e.target.value }))} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">State</label><input className={inputClass} value={onboardForm.state} onChange={e => setOnboardForm(p => ({ ...p, state: e.target.value }))} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Pincode</label><input className={inputClass} value={onboardForm.pincode} onChange={e => setOnboardForm(p => ({ ...p, pincode: e.target.value }))} maxLength={6} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Aadhaar Number</label><input className={inputClass} value={onboardForm.aadhaarNumber} onChange={e => setOnboardForm(p => ({ ...p, aadhaarNumber: e.target.value }))} maxLength={12} /></div>
+                                <div>
+                                    <label className="text-xs font-medium text-slate-600 mb-1 block">Upload Aadhaar</label>
+                                    <div className="relative">
+                                        <input type="file" id="admin-aadhaar-upload" className="hidden" accept="image/*,.pdf" onChange={e => handleFileUpload('aadhaar', e.target.files?.[0])} />
+                                        <label htmlFor="admin-aadhaar-upload" className={`flex items-center justify-center gap-2 w-full h-10 border border-dashed border-slate-300 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors ${onboardForm.aadhaarPhotoUrl ? 'text-emerald-600 border-emerald-300' : 'text-slate-500'}`}>
+                                            {uploading.aadhaar ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                                            <span className="text-xs font-medium">{uploading.aadhaar ? 'Uploading...' : onboardForm.aadhaarPhotoUrl ? 'Uploaded' : 'Upload File'}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">PAN Number</label><input className={inputClass} value={onboardForm.panNumber} onChange={e => setOnboardForm(p => ({ ...p, panNumber: e.target.value.toUpperCase() }))} maxLength={10} /></div>
+                                <div>
+                                    <label className="text-xs font-medium text-slate-600 mb-1 block">Upload PAN</label>
+                                    <div className="relative">
+                                        <input type="file" id="admin-pan-upload" className="hidden" accept="image/*,.pdf" onChange={e => handleFileUpload('pan', e.target.files?.[0])} />
+                                        <label htmlFor="admin-pan-upload" className={`flex items-center justify-center gap-2 w-full h-10 border border-dashed border-slate-300 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors ${onboardForm.panPhotoUrl ? 'text-emerald-600 border-emerald-300' : 'text-slate-500'}`}>
+                                            {uploading.pan ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                                            <span className="text-xs font-medium">{uploading.pan ? 'Uploading...' : onboardForm.panPhotoUrl ? 'Uploaded' : 'Upload File'}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 3. Role Details & Qualifications */}
+                        <div>
+                            <h4 className="text-sm font-semibold text-slate-700 mb-3 uppercase tracking-wide bg-slate-50 p-2 rounded">3. Role Details & Qualifications</h4>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Highest Qualification</label><input className={inputClass} value={onboardForm.qualification} onChange={e => setOnboardForm(p => ({ ...p, qualification: e.target.value }))} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Experience</label><input className={inputClass} value={onboardForm.experience} onChange={e => setOnboardForm(p => ({ ...p, experience: e.target.value }))} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Department</label><input className={inputClass} value={onboardForm.department} onChange={e => setOnboardForm(p => ({ ...p, department: e.target.value }))} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Designation</label><input className={inputClass} value={onboardForm.designation} onChange={e => setOnboardForm(p => ({ ...p, designation: e.target.value }))} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">CTC (Annual ₹)</label><input type="number" className={inputClass} value={onboardForm.ctc} onChange={e => setOnboardForm(p => ({ ...p, ctc: e.target.value }))} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Joining Date *</label><input type="date" className={inputClass} value={onboardForm.joiningDate} onChange={e => setOnboardForm(p => ({ ...p, joiningDate: e.target.value }))} /></div>
+                                <div>
+                                    <label className="text-xs font-medium text-slate-600 mb-1 block">HRMS Role</label>
+                                    <select className={inputClass} value={onboardForm.hrmsRole} onChange={e => setOnboardForm(p => ({ ...p, hrmsRole: e.target.value }))}>
+                                        <option>Employee</option><option>Manager</option><option>HR</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="text-xs font-medium text-slate-600 mb-1 block">Shift</label>
+                                    <select className={inputClass} value={onboardForm.shift} onChange={e => setOnboardForm(p => ({ ...p, shift: e.target.value }))}>
+                                        <option>General</option><option>Morning</option><option>Night</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="text-xs font-medium text-slate-600 mb-1 block">Employment Type</label>
+                                    <select className={inputClass} value={onboardForm.employmentType} onChange={e => setOnboardForm(p => ({ ...p, employmentType: e.target.value }))}>
+                                        <option>Full-Time</option><option>Part-Time</option><option>Contract</option><option>Internship</option>
+                                    </select>
+                                </div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Office Location</label><input className={inputClass} value={onboardForm.officeLocation} onChange={e => setOnboardForm(p => ({ ...p, officeLocation: e.target.value }))} /></div>
+                            </div>
+                        </div>
+
+                        {/* 4. Bank & Emergency */}
+                        <div>
+                            <h4 className="text-sm font-semibold text-slate-700 mb-3 uppercase tracking-wide bg-slate-50 p-2 rounded">4. Bank & Emergency Contact</h4>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Account Holder</label><input className={inputClass} value={onboardForm.accountHolderName} onChange={e => setOnboardForm(p => ({ ...p, accountHolderName: e.target.value }))} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Account Number</label><input className={inputClass} value={onboardForm.accountNumber} onChange={e => setOnboardForm(p => ({ ...p, accountNumber: e.target.value }))} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Bank Name</label><input className={inputClass} value={onboardForm.bankName} onChange={e => setOnboardForm(p => ({ ...p, bankName: e.target.value }))} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">IFSC Code</label><input className={inputClass} value={onboardForm.ifscCode} onChange={e => setOnboardForm(p => ({ ...p, ifscCode: e.target.value }))} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">UPI ID</label><input className={inputClass} value={onboardForm.upiId} onChange={e => setOnboardForm(p => ({ ...p, upiId: e.target.value }))} /></div>
+                                
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Emergency Contact Name</label><input className={inputClass} value={onboardForm.emergencyName} onChange={e => setOnboardForm(p => ({ ...p, emergencyName: e.target.value }))} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Emergency Relation</label><input className={inputClass} value={onboardForm.emergencyRelation} onChange={e => setOnboardForm(p => ({ ...p, emergencyRelation: e.target.value }))} /></div>
+                                <div><label className="text-xs font-medium text-slate-600 mb-1 block">Emergency Phone</label><input className={inputClass} value={onboardForm.emergencyPhone} onChange={e => setOnboardForm(p => ({ ...p, emergencyPhone: e.target.value }))} /></div>
+                            </div>
                         </div>
                     </div>
-                    <button onClick={handleOnboard} disabled={onboardLoading}
-                        className="mt-4 px-6 h-10 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-all text-sm disabled:opacity-50">
-                        {onboardLoading ? 'Processing...' : 'Onboard Employee'}
-                    </button>
+                    
+                    <div className="pt-6 mt-6 border-t border-slate-100 flex justify-end">
+                        <button onClick={handleOnboard} disabled={onboardLoading}
+                            className="px-8 h-10 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-all text-sm disabled:opacity-50">
+                            {onboardLoading ? 'Processing...' : 'Complete Onboarding'}
+                        </button>
+                    </div>
                 </div>
             )}
 

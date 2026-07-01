@@ -77,9 +77,15 @@ const hrmsJoiningRequestSchema = new mongoose.Schema(
             type: { type: String } // e.g., 'Certificate', 'ID Proof'
         }],
 
-        // 8. Preferred Role / Position
-        preferredDepartment: { type: String, trim: true },
-        preferredDesignation: { type: String, trim: true },
+        // 8. Expected Role / Position Details
+        department: { type: String, trim: true },
+        designation: { type: String, trim: true },
+        ctc: { type: Number, default: 0 },
+        joiningDate: { type: Date },
+        hrmsRole: { type: String, trim: true, default: 'Employee' },
+        shift: { type: String, trim: true, default: 'General' },
+        employmentType: { type: String, trim: true, default: 'Full-Time' },
+        officeLocation: { type: String, trim: true },
 
         // 9. Status & Workflow
         status: {
