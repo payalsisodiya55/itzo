@@ -296,13 +296,13 @@ export default function HrmsEmployees() {
                         </div>
                         <div className="p-6 border-t border-slate-100 bg-slate-50 flex gap-3 justify-end rounded-b-2xl">
                             {selectedEmployee.status === 'Active' && (
-                                <button onClick={() => handleStatusChange(selectedEmployee._id, 'Suspended')} className="px-5 h-10 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-sm font-medium transition-all shadow-sm">Suspend Employee</button>
+                                <button onClick={() => handleStatusChange(selectedEmployee._id, 'Suspended')} className="px-5 h-10 bg-white border-2 border-orange-400 text-orange-500 hover:bg-orange-50 rounded-xl text-sm font-medium transition-all shadow-sm">Suspend Employee</button>
                             )}
                             {selectedEmployee.status === 'Suspended' && (
                                 <button onClick={() => handleStatusChange(selectedEmployee._id, 'Active')} className="px-5 h-10 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-sm font-medium transition-all shadow-sm">Reactivate Employee</button>
                             )}
                             {selectedEmployee.status !== 'Terminated' && (
-                                <button onClick={() => handleStatusChange(selectedEmployee._id, 'Terminated')} className="px-5 h-10 bg-red-500 hover:bg-red-600 text-white rounded-xl text-sm font-medium transition-all shadow-sm">Terminate Employee</button>
+                                <button onClick={() => handleStatusChange(selectedEmployee._id, 'Terminated')} className="px-5 h-10 bg-white border-2 border-orange-500 text-orange-600 hover:bg-orange-50 rounded-xl text-sm font-medium transition-all shadow-sm">Terminate Employee</button>
                             )}
                         </div>
                     </div>
@@ -351,7 +351,7 @@ export default function HrmsEmployees() {
                                         </td>
                                         <td className="px-5 py-3.5 text-slate-600">{emp.department || '—'}</td>
                                         <td className="px-5 py-3.5 text-slate-600">{emp.designation || '—'}</td>
-                                        <td className="px-5 py-3.5"><span className={`px-2 py-0.5 rounded text-xs font-medium ${emp.hrmsRole === 'Manager' ? 'bg-blue-50 text-blue-700' : emp.hrmsRole === 'HR' ? 'bg-violet-50 text-violet-700' : 'bg-slate-100 text-slate-600'}`}>{emp.hrmsRole}</span></td>
+                                        <td className="px-5 py-3.5"><span className={`px-2 py-0.5 rounded text-xs font-medium ${emp.hrmsRole === 'Manager' ? 'bg-orange-50 text-blue-700' : emp.hrmsRole === 'HR' ? 'bg-violet-50 text-violet-700' : 'bg-slate-100 text-slate-600'}`}>{emp.hrmsRole}</span></td>
                                         <td className="px-5 py-3.5"><span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${emp.status === 'Active' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'}`}>{emp.status}</span></td>
                                         <td className="px-5 py-3.5">
                                             <button onClick={() => setSelectedEmployee(emp)} className="flex items-center gap-1.5 text-orange-600 hover:text-orange-700 font-medium text-xs">

@@ -25,7 +25,7 @@ export default function AdminReportDashboard() {
     if (loading) return <div className="flex items-center justify-center h-96"><Loader2 className="w-8 h-8 animate-spin text-orange-500" /></div>;
 
     const cards = [
-        { label: 'Submitted Today', value: stats?.todaySubmitted || 0, icon: FileText, color: 'text-blue-500', bg: 'bg-blue-50' },
+        { label: 'Submitted Today', value: stats?.todaySubmitted || 0, icon: FileText, color: 'text-orange-500', bg: 'bg-orange-50' },
         { label: 'Pending Review', value: stats?.pending || 0, icon: Clock, color: 'text-amber-500', bg: 'bg-amber-50' },
         { label: 'Approved', value: stats?.approved || 0, icon: CheckCircle, color: 'text-emerald-500', bg: 'bg-emerald-50' },
         { label: 'Rejected', value: stats?.rejected || 0, icon: AlertCircle, color: 'text-red-500', bg: 'bg-red-50' }

@@ -238,8 +238,8 @@ export default function HrmsPayroll() {
                                         <p className="text-xs text-slate-400">Travel: ₹{e.travelCost} | Hotel: ₹{e.hotelCost} | Food: ₹{e.foodCost} | Other: ₹{e.otherExpenses} | <strong>Total: ₹{e.totalAmount}</strong></p>
                                     </div>
                                     <div className="flex gap-2">
-                                        <button onClick={() => handleExpenseAction(e._id, 'Approved', e.totalAmount)} className="px-4 h-9 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-sm font-medium">Approve</button>
-                                        <button onClick={() => handleExpenseAction(e._id, 'Rejected')} className="px-4 h-9 bg-red-500 hover:bg-red-600 text-white rounded-xl text-sm font-medium">Reject</button>
+                                        <button onClick={() => handleExpenseAction(e._id, 'Approved', e.totalAmount)} className="px-4 h-9 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-sm font-medium">Approve</button>
+                                        <button onClick={() => handleExpenseAction(e._id, 'Rejected')} className="px-4 h-9 bg-white border-2 border-orange-500 text-orange-600 hover:bg-orange-50 rounded-xl text-sm font-medium">Reject</button>
                                     </div>
                                 </div>
                             ))}
@@ -257,7 +257,7 @@ export default function HrmsPayroll() {
                             <a href={previewPdf} download target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition-colors flex items-center gap-2">
                                 Download
                             </a>
-                            <button onClick={() => setPreviewPdf(null)} className="px-4 py-2 bg-red-500/20 text-red-400 hover:bg-red-500/30 rounded-lg text-sm transition-colors">
+                            <button onClick={() => setPreviewPdf(null)} className="px-4 py-2 bg-orange-100 text-orange-600 hover:bg-orange-200 rounded-lg text-sm transition-colors">
                                 Close
                             </button>
                         </div>

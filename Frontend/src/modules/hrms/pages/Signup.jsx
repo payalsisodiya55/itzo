@@ -156,7 +156,7 @@ export default function Signup() {
         return (
             <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
                 <div className="w-full max-w-md bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
-                    <div className="h-1.5 bg-gradient-to-r from-emerald-500 to-green-500" />
+                    <div className="h-1.5 bg-orange-500 hover:bg-orange-600" />
                     <div className="p-10 text-center">
                         <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-6">
                             <Check className="w-10 h-10 text-emerald-500" />
@@ -301,7 +301,7 @@ export default function Signup() {
                                         <label className={labelClass}>Upload Aadhaar</label>
                                         <div className="relative">
                                             <input type="file" id="aadhaar-upload" className="hidden" accept="image/*,.pdf" onChange={e => handleFileUpload('aadhaar', e.target.files?.[0])} />
-                                            <label htmlFor="aadhaar-upload" className={`flex items-center justify-center gap-2 w-full h-11 border border-dashed border-slate-300 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors ${form.aadhaarPhotoUrl ? 'text-emerald-400 border-emerald-400/30' : 'text-slate-400'}`}>
+                                            <label htmlFor="aadhaar-upload" className={`flex items-center justify-center gap-2 w-full h-11 border border-dashed border-slate-300 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors ${form.aadhaarPhotoUrl ? 'text-orange-500 border-orange-300' : 'text-slate-400'}`}>
                                                 {uploading.aadhaar ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
                                                 <span className="text-sm font-medium">{uploading.aadhaar ? 'Uploading...' : form.aadhaarPhotoUrl ? 'Uploaded' : 'Upload File'}</span>
                                             </label>
@@ -315,7 +315,7 @@ export default function Signup() {
                                         <label className={labelClass}>Upload PAN</label>
                                         <div className="relative">
                                             <input type="file" id="pan-upload" className="hidden" accept="image/*,.pdf" onChange={e => handleFileUpload('pan', e.target.files?.[0])} />
-                                            <label htmlFor="pan-upload" className={`flex items-center justify-center gap-2 w-full h-11 border border-dashed border-slate-300 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors ${form.panPhotoUrl ? 'text-emerald-400 border-emerald-400/30' : 'text-slate-400'}`}>
+                                            <label htmlFor="pan-upload" className={`flex items-center justify-center gap-2 w-full h-11 border border-dashed border-slate-300 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors ${form.panPhotoUrl ? 'text-orange-500 border-orange-300' : 'text-slate-400'}`}>
                                                 {uploading.pan ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
                                                 <span className="text-sm font-medium">{uploading.pan ? 'Uploading...' : form.panPhotoUrl ? 'Uploaded' : 'Upload File'}</span>
                                             </label>
@@ -457,7 +457,7 @@ export default function Signup() {
                                 <button
                                     onClick={handleSubmit}
                                     disabled={loading}
-                                    className="flex items-center gap-2 px-6 h-11 bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/25 transition-all text-sm disabled:opacity-50"
+                                    className="flex items-center gap-2 px-6 h-11 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/25 transition-all text-sm disabled:opacity-50"
                                 >
                                     {loading ? (
                                         <span className="flex items-center gap-2">

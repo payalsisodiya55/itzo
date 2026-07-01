@@ -35,7 +35,7 @@ export default function SupportDashboard() {
     const { counts, recentTickets } = stats || { counts: {}, recentTickets: [] };
 
     const cards = [
-        { title: 'Total Tickets', value: counts.total || 0, icon: Ticket, color: 'text-blue-600 bg-blue-50' },
+        { title: 'Total Tickets', value: counts.total || 0, icon: Ticket, color: 'text-orange-600 bg-orange-50' },
         { title: 'Open', value: counts.open || 0, icon: AlertCircle, color: 'text-amber-600 bg-amber-50' },
         { title: 'In Progress', value: counts.inProgress || 0, icon: Clock, color: 'text-orange-600 bg-orange-50' },
         { title: 'Resolved', value: (counts.resolved || 0) + (counts.closed || 0), icon: CheckCircle, color: 'text-emerald-600 bg-emerald-50' },
@@ -86,7 +86,7 @@ export default function SupportDashboard() {
                                     <div className={`w-2 h-2 rounded-full shrink-0 ${
                                         ticket.priority === 'Urgent' ? 'bg-red-500' :
                                         ticket.priority === 'High' ? 'bg-amber-500' :
-                                        ticket.priority === 'Medium' ? 'bg-blue-500' :
+                                        ticket.priority === 'Medium' ? 'bg-orange-500' :
                                         'bg-slate-300'
                                     }`} />
                                     <div className="min-w-0">
@@ -100,7 +100,7 @@ export default function SupportDashboard() {
                                 </div>
                                 <div className="flex items-center gap-4 shrink-0 pl-4">
                                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${
-                                        ticket.status === 'Open' ? 'bg-blue-100 text-blue-700' :
+                                        ticket.status === 'Open' ? 'bg-orange-100 text-blue-700' :
                                         ticket.status === 'Resolved' || ticket.status === 'Closed' ? 'bg-emerald-100 text-emerald-700' :
                                         'bg-slate-100 text-slate-700'
                                     }`}>

@@ -510,7 +510,7 @@ export default function HrmsDashboard() {
                                     <div className="divide-y divide-slate-100">
                                         {notifications.map((n, i) => {
                                             const IconComp = n.icon === 'UserPlus' ? UserPlus : n.icon === 'CalendarDays' ? CalendarDays : n.icon === 'FileEdit' ? FileEdit : n.icon === 'LifeBuoy' ? LifeBuoy : Clock;
-                                            const typeColor = n.icon === 'UserPlus' ? 'bg-blue-50 text-blue-600' : n.icon === 'CalendarDays' ? 'bg-amber-50 text-amber-600' : n.icon === 'FileEdit' ? 'bg-violet-50 text-violet-600' : n.icon === 'LifeBuoy' ? 'bg-orange-50 text-orange-600' : 'bg-emerald-50 text-emerald-600';
+                                            const typeColor = n.icon === 'UserPlus' ? 'bg-orange-50 text-orange-600' : n.icon === 'CalendarDays' ? 'bg-amber-50 text-amber-600' : n.icon === 'FileEdit' ? 'bg-violet-50 text-violet-600' : n.icon === 'LifeBuoy' ? 'bg-orange-50 text-orange-600' : 'bg-emerald-50 text-emerald-600';
                                             const timeAgo = (() => {
                                                 if (!n.time) return '';
                                                 const diff = Date.now() - new Date(n.time).getTime();

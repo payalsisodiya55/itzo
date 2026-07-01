@@ -291,7 +291,7 @@ export default function HrmsSettings() {
                                         }
                                         input.value = '';
                                     }
-                                }} className="px-4 h-10 bg-slate-900 text-white rounded-xl text-sm font-medium"><Plus className="w-4 h-4" /></button>
+                                }} className="px-4 h-10 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-sm font-medium"><Plus className="w-4 h-4" /></button>
                             </div>
                         </div>
                         <div>
@@ -323,7 +323,7 @@ export default function HrmsSettings() {
                                         }
                                         input.value = '';
                                     }
-                                }} className="px-4 h-10 bg-slate-900 text-white rounded-xl text-sm font-medium"><Plus className="w-4 h-4" /></button>
+                                }} className="px-4 h-10 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-sm font-medium"><Plus className="w-4 h-4" /></button>
                             </div>
                         </div>
                         <button onClick={() => saveSection('organization', settings.organization)} disabled={saving}

@@ -9,7 +9,7 @@ import { useSearchParams } from 'react-router-dom';
 
 const statusStyles = {
     Pending: 'bg-amber-50 text-amber-700 border-amber-200',
-    Under_Review: 'bg-blue-50 text-blue-700 border-blue-200',
+    Under_Review: 'bg-orange-50 text-blue-700 border-blue-200',
     Approved: 'bg-emerald-50 text-emerald-700 border-emerald-200',
     Rejected: 'bg-red-50 text-red-700 border-red-200',
     Info_Requested: 'bg-violet-50 text-violet-700 border-violet-200',
@@ -132,7 +132,7 @@ export default function HrmsJoiningRequests() {
                 <button onClick={() => setMainTab('joining')}
                     className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all ${
                         mainTab === 'joining'
-                            ? 'bg-slate-900 text-white shadow-md'
+                            ? 'bg-orange-500 text-white shadow-md'
                             : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
                     }`}>
                     New Joining Requests
@@ -140,7 +140,7 @@ export default function HrmsJoiningRequests() {
                 <button onClick={() => setMainTab('edits')}
                     className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all ${
                         mainTab === 'edits'
-                            ? 'bg-slate-900 text-white shadow-md'
+                            ? 'bg-orange-500 text-white shadow-md'
                             : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
                     }`}>
                     Edited Profile Approvals
@@ -280,7 +280,7 @@ export default function HrmsJoiningRequests() {
                                             <textarea value={rejectionReason} onChange={e => setRejectionReason(e.target.value)} rows={2} placeholder="Reason for rejection (required)"
                                                 className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500/30 resize-none" />
                                             <button onClick={handleReject} disabled={actionLoading}
-                                                className="mt-2 px-6 h-10 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-xl transition-all text-sm disabled:opacity-50">
+                                                className="mt-2 px-6 h-10 bg-white border-2 border-orange-500 text-orange-600 hover:bg-orange-50 font-semibold rounded-xl transition-all text-sm disabled:opacity-50">
                                                 {actionLoading ? 'Processing...' : 'Reject'}
                                             </button>
                                         </div>
@@ -384,10 +384,10 @@ export default function HrmsJoiningRequests() {
                                             <p className="text-xs text-slate-500 mt-0.5">ID: {edit.employeeId} · Dept: {edit.department}</p>
                                         </div>
                                         <div className="flex gap-2">
-                                            <button onClick={() => handleEditAction(edit._id, 'Approved')} className="px-4 h-9 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-sm font-medium transition-all shadow-sm">
+                                            <button onClick={() => handleEditAction(edit._id, 'Approved')} className="px-4 h-9 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-sm font-medium transition-all shadow-sm">
                                                 Approve
                                             </button>
-                                            <button onClick={() => handleEditAction(edit._id, 'Rejected')} className="px-4 h-9 bg-red-500 hover:bg-red-600 text-white rounded-xl text-sm font-medium transition-all shadow-sm">
+                                            <button onClick={() => handleEditAction(edit._id, 'Rejected')} className="px-4 h-9 bg-white border-2 border-orange-500 text-orange-600 hover:bg-orange-50 rounded-xl text-sm font-medium transition-all shadow-sm">
                                                 Reject
                                             </button>
                                         </div>

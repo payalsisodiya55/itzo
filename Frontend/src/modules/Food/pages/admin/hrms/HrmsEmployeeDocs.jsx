@@ -188,7 +188,7 @@ export default function HrmsEmployeeDocs() {
                                 setUploadType('Other');
                                 setUploadModalOpen(true);
                             }}
-                            className="flex items-center gap-1.5 px-4 h-10 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 transition-colors"
+                            className="flex items-center gap-1.5 px-4 h-10 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-sm font-medium hover:bg-slate-800 transition-colors"
                         >
                             <Plus className="w-4 h-4" /> Upload Document
                         </button>
@@ -299,7 +299,7 @@ export default function HrmsEmployeeDocs() {
                                                             </button>
                                                         </>
                                                     ) : (
-                                                        <button onClick={() => openUploadModal(emp, 'Offer Letter')} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 transition-colors">
+                                                        <button onClick={() => openUploadModal(emp, 'Offer Letter')} className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-xs font-medium hover:bg-slate-800 transition-colors">
                                                             <Upload className="w-3.5 h-3.5" /> Upload
                                                         </button>
                                                     )}

@@ -146,7 +146,7 @@ export default function Salary() {
                             <a href={previewPdf} download target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition-colors flex items-center gap-2">
                                 Download
                             </a>
-                            <button onClick={() => setPreviewPdf(null)} className="px-4 py-2 bg-red-500/20 text-red-400 hover:bg-red-500/30 rounded-lg text-sm transition-colors">
+                            <button onClick={() => setPreviewPdf(null)} className="px-4 py-2 bg-orange-100 text-orange-600 hover:bg-orange-200 rounded-lg text-sm transition-colors">
                                 Close
                             </button>
                         </div>

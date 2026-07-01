@@ -133,7 +133,7 @@ export default function HrmsAttendance() {
                                     </div>
                                     <div className="flex gap-2">
                                         <button onClick={() => handleRegAction(r._id, 'Approved')} className="px-4 h-9 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-sm font-medium">Approve</button>
-                                        <button onClick={() => handleRegAction(r._id, 'Rejected')} className="px-4 h-9 bg-red-500 hover:bg-red-600 text-white rounded-xl text-sm font-medium">Reject</button>
+                                        <button onClick={() => handleRegAction(r._id, 'Rejected')} className="px-4 h-9 bg-white border-2 border-orange-500 text-orange-600 hover:bg-orange-50 rounded-xl text-sm font-medium">Reject</button>
                                     </div>
                                 </div>
                             ))}
@@ -153,7 +153,7 @@ export default function HrmsAttendance() {
                                     </div>
                                     <div className="flex gap-2">
                                         <button onClick={() => handleLeaveAction(l._id, 'Approved')} className="px-4 h-9 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-sm font-medium">Approve</button>
-                                        <button onClick={() => handleLeaveAction(l._id, 'Rejected')} className="px-4 h-9 bg-red-500 hover:bg-red-600 text-white rounded-xl text-sm font-medium">Reject</button>
+                                        <button onClick={() => handleLeaveAction(l._id, 'Rejected')} className="px-4 h-9 bg-white border-2 border-orange-500 text-orange-600 hover:bg-orange-50 rounded-xl text-sm font-medium">Reject</button>
                                     </div>
                                 </div>
                             ))}
