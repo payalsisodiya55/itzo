@@ -1,24 +1,28 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import axiosInstance from '@core/api/axios';
 import { toast } from 'sonner';
-import { FileText, Loader2, Upload, Trash2, Eye, Download, X, Search, Image as ImageIcon } from 'lucide-react';
+import { FileText, Loader2, Upload, Trash2, Eye, Download, X, Search, Image as ImageIcon, Plus } from 'lucide-react';
 
 export default function HrmsEmployeeDocs() {
     const [employees, setEmployees] = useState([]);
-    const [documents, setDocuments] = useState({});
+    const [offerLetterDocs, setOfferLetterDocs] = useState({});
+    const [otherDocs, setOtherDocs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
+    const [activeTab, setActiveTab] = useState('Offer Letter');
     
     // Modal states
     const [uploadModalOpen, setUploadModalOpen] = useState(false);
     const [previewModalOpen, setPreviewModalOpen] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [selectedDocument, setSelectedDocument] = useState(null);
+    const [uploadType, setUploadType] = useState('Offer Letter'); // 'Offer Letter' or 'Other'
     
     // Upload states
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState('');
     const [uploading, setUploading] = useState(false);
+    const [docName, setDocName] = useState('');
     const fileInputRef = useRef(null);
 
     const fetchData = useCallback(async () => {
@@ -27,21 +31,24 @@ export default function HrmsEmployeeDocs() {
             const params = new URLSearchParams({ limit: 500, status: 'Active' });
             if (search) params.append('search', search);
             
-            const [empRes, docRes] = await Promise.all([
+            const [empRes, offerRes, otherRes] = await Promise.all([
                 axiosInstance.get(`/hrms/employees?${params}`),
-                axiosInstance.get('/hrms/documents?documentType=Offer Letter')
+                axiosInstance.get('/hrms/documents?documentType=Offer Letter'),
+                axiosInstance.get('/hrms/documents?documentType=Other')
             ]);
             
             const emps = empRes.data?.data?.employees || [];
-            const docsList = docRes.data?.data || [];
+            const offerList = offerRes.data?.data || [];
+            const otherList = otherRes.data?.data || [];
             
             const docMap = {};
-            docsList.forEach(doc => {
+            offerList.forEach(doc => {
                 docMap[doc.employeeId] = doc;
             });
             
             setEmployees(emps);
-            setDocuments(docMap);
+            setOfferLetterDocs(docMap);
+            setOtherDocs(otherList);
         } catch (e) { 
             console.error(e);
         } finally { 
@@ -69,19 +76,26 @@ export default function HrmsEmployeeDocs() {
 
     const handleUpload = async () => {
         if (!file || !selectedEmployee) return;
+
+        if (uploadType === 'Other' && !docName.trim()) {
+            return toast.error('Please enter a document name');
+        }
+
         setUploading(true);
         
         try {
-            // If replacing, delete old one first
-            const existingDoc = documents[selectedEmployee._id];
-            if (existingDoc) {
-                await axiosInstance.delete(`/hrms/documents/${existingDoc._id}`);
+            // If replacing an offer letter, delete old one first
+            if (uploadType === 'Offer Letter') {
+                const existingDoc = offerLetterDocs[selectedEmployee._id];
+                if (existingDoc) {
+                    await axiosInstance.delete(`/hrms/documents/${existingDoc._id}`);
+                }
             }
 
             // Upload image to Cloudinary via backend proxy
             const formData = new FormData();
             formData.append('file', file);
-            formData.append('folder', 'hrms/offer-letters');
+            formData.append('folder', uploadType === 'Offer Letter' ? 'hrms/offer-letters' : 'hrms/other-docs');
             
             const uploadRes = await axiosInstance.post('/uploads/image', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
@@ -90,15 +104,19 @@ export default function HrmsEmployeeDocs() {
             
             if (!imageUrl) throw new Error('Failed to get image URL');
 
+            const empName = selectedEmployee.adminId?.name || 'Employee';
+
             // Save document record
             await axiosInstance.post('/hrms/documents', {
                 employeeId: selectedEmployee._id,
-                documentType: 'Offer Letter',
-                name: `${selectedEmployee.adminId?.name} - Offer Letter`,
+                documentType: uploadType === 'Offer Letter' ? 'Offer Letter' : 'Other',
+                name: uploadType === 'Offer Letter' 
+                    ? `${empName} - Offer Letter`
+                    : docName.trim(),
                 url: imageUrl
             });
 
-            toast.success('Offer Letter uploaded successfully');
+            toast.success(uploadType === 'Offer Letter' ? 'Offer Letter uploaded successfully' : `"${docName.trim()}" uploaded successfully`);
             closeUploadModal();
             fetchData();
         } catch (e) {
@@ -108,19 +126,20 @@ export default function HrmsEmployeeDocs() {
         }
     };
 
-    const handleDelete = async (docId) => {
-        if (!window.confirm('Are you sure you want to delete this offer letter?')) return;
+    const handleDelete = async (docId, label) => {
+        if (!window.confirm(`Are you sure you want to delete this ${label || 'document'}?`)) return;
         try {
             await axiosInstance.delete(`/hrms/documents/${docId}`);
-            toast.success('Offer Letter deleted');
+            toast.success(`${label || 'Document'} deleted`);
             fetchData();
         } catch (e) {
             toast.error('Failed to delete document');
         }
     };
 
-    const openUploadModal = (emp) => {
+    const openUploadModal = (emp, type) => {
         setSelectedEmployee(emp);
+        setUploadType(type);
         setUploadModalOpen(true);
     };
 
@@ -129,6 +148,8 @@ export default function HrmsEmployeeDocs() {
         setSelectedEmployee(null);
         setFile(null);
         setPreview('');
+        setDocName('');
+        setUploadType('Offer Letter');
     };
 
     const openPreview = (doc) => {
@@ -136,29 +157,87 @@ export default function HrmsEmployeeDocs() {
         setPreviewModalOpen(true);
     };
 
+    // Get other docs grouped by employee for the Other Docs tab
+    const getOtherDocsForEmployee = (empId) => {
+        return otherDocs.filter(d => d.employeeId === empId);
+    };
+
+    // Filtered other docs based on search
+    const filteredOtherDocs = otherDocs.filter(doc => {
+        if (!search) return true;
+        const emp = employees.find(e => e._id === doc.employeeId);
+        const empName = emp?.adminId?.name || '';
+        return empName.toLowerCase().includes(search.toLowerCase()) || doc.name.toLowerCase().includes(search.toLowerCase());
+    });
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                     <h1 className="text-2xl font-bold text-slate-900">Employee Documents</h1>
-                    <p className="text-sm text-slate-500 mt-1">Manage offer letters and official records</p>
+                    <p className="text-sm text-slate-500 mt-1">Manage offer letters, official records and other documents</p>
                 </div>
-                <div className="relative">
-                    <Search className="w-5 h-5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                    <input 
-                        type="text" 
-                        placeholder="Search employees..." 
-                        value={search}
-                        onChange={e => setSearch(e.target.value)}
-                        className="pl-10 pr-4 h-10 w-full sm:w-64 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/30"
-                    />
+                <div className="flex items-center gap-3">
+                    {activeTab === 'Other Docs' && (
+                        <button
+                            onClick={() => {
+                                // Open modal in 'select employee' mode
+                                if (employees.length === 0) {
+                                    return toast.error('No employees found');
+                                }
+                                setUploadType('Other');
+                                setUploadModalOpen(true);
+                            }}
+                            className="flex items-center gap-1.5 px-4 h-10 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 transition-colors"
+                        >
+                            <Plus className="w-4 h-4" /> Upload Document
+                        </button>
+                    )}
+                    <div className="relative">
+                        <Search className="w-5 h-5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                        <input 
+                            type="text" 
+                            placeholder="Search employees..." 
+                            value={search}
+                            onChange={e => setSearch(e.target.value)}
+                            className="pl-10 pr-4 h-10 w-full sm:w-64 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/30"
+                        />
+                    </div>
                 </div>
+            </div>
+
+            {/* Tabs */}
+            <div className="flex border-b border-slate-200">
+                <button
+                    onClick={() => setActiveTab('Offer Letter')}
+                    className={`px-4 py-3 font-medium text-sm transition-colors border-b-2 ${
+                        activeTab === 'Offer Letter'
+                            ? 'border-orange-500 text-orange-600'
+                            : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
+                    }`}
+                >
+                    Offer Letter
+                </button>
+                <button
+                    onClick={() => setActiveTab('Other Docs')}
+                    className={`px-4 py-3 font-medium text-sm transition-colors border-b-2 ${
+                        activeTab === 'Other Docs'
+                            ? 'border-orange-500 text-orange-600'
+                            : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
+                    }`}
+                >
+                    Other Docs
+                    {otherDocs.length > 0 && (
+                        <span className="ml-2 px-1.5 py-0.5 text-xs bg-slate-100 text-slate-600 rounded-full">{otherDocs.length}</span>
+                    )}
+                </button>
             </div>
 
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
                 {loading ? (
                     <div className="flex justify-center p-12"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>
-                ) : (
+                ) : activeTab === 'Offer Letter' ? (
+                    /* ═══════ OFFER LETTER TAB ═══════ */
                     <div className="overflow-x-auto">
                         <table className="w-full text-left text-sm whitespace-nowrap">
                             <thead className="bg-slate-50 border-b border-slate-200 text-slate-500">
@@ -172,7 +251,7 @@ export default function HrmsEmployeeDocs() {
                             </thead>
                             <tbody className="divide-y divide-slate-100">
                                 {employees.map(emp => {
-                                    const doc = documents[emp._id];
+                                    const doc = offerLetterDocs[emp._id];
                                     const hasDoc = !!doc;
                                     return (
                                         <tr key={emp._id} className="hover:bg-slate-50/50 transition-colors">
@@ -212,15 +291,15 @@ export default function HrmsEmployeeDocs() {
                                                             <a href={doc.url} download target="_blank" rel="noopener noreferrer" className="p-1.5 text-orange-500 hover:bg-orange-50 rounded-lg transition-colors" title="Download">
                                                                 <Download className="w-4 h-4" />
                                                             </a>
-                                                            <button onClick={() => openUploadModal(emp)} className="p-1.5 text-orange-600 hover:bg-orange-50 rounded-lg transition-colors" title="Replace">
+                                                            <button onClick={() => openUploadModal(emp, 'Offer Letter')} className="p-1.5 text-orange-600 hover:bg-orange-50 rounded-lg transition-colors" title="Replace">
                                                                 <Upload className="w-4 h-4" />
                                                             </button>
-                                                            <button onClick={() => handleDelete(doc._id)} className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
+                                                            <button onClick={() => handleDelete(doc._id, 'Offer Letter')} className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
                                                                 <Trash2 className="w-4 h-4" />
                                                             </button>
                                                         </>
                                                     ) : (
-                                                        <button onClick={() => openUploadModal(emp)} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 transition-colors">
+                                                        <button onClick={() => openUploadModal(emp, 'Offer Letter')} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 transition-colors">
                                                             <Upload className="w-3.5 h-3.5" /> Upload
                                                         </button>
                                                     )}
@@ -239,6 +318,76 @@ export default function HrmsEmployeeDocs() {
                             </tbody>
                         </table>
                     </div>
+                ) : (
+                    /* ═══════ OTHER DOCS TAB ═══════ */
+                    <div>
+                        {filteredOtherDocs.length === 0 ? (
+                            <div className="flex flex-col items-center justify-center text-center p-12">
+                                <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4 border border-slate-100">
+                                    <FileText className="w-8 h-8 text-slate-300" />
+                                </div>
+                                <h3 className="text-lg font-bold text-slate-900 mb-1">No Documents Yet</h3>
+                                <p className="text-sm text-slate-500 max-w-sm">
+                                    Upload documents for employees using the "Upload Document" button above.
+                                </p>
+                            </div>
+                        ) : (
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left text-sm whitespace-nowrap">
+                                    <thead className="bg-slate-50 border-b border-slate-200 text-slate-500">
+                                        <tr>
+                                            <th className="px-6 py-4 font-medium">Employee</th>
+                                            <th className="px-6 py-4 font-medium">Document Name</th>
+                                            <th className="px-6 py-4 font-medium">Upload Date</th>
+                                            <th className="px-6 py-4 font-medium text-right">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-100">
+                                        {filteredOtherDocs.map(doc => {
+                                            const emp = employees.find(e => e._id === doc.employeeId);
+                                            return (
+                                                <tr key={doc._id} className="hover:bg-slate-50/50 transition-colors">
+                                                    <td className="px-6 py-4">
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="w-8 h-8 rounded-full bg-violet-100 text-violet-600 flex items-center justify-center font-bold text-xs">
+                                                                {(emp?.adminId?.name || 'E').charAt(0).toUpperCase()}
+                                                            </div>
+                                                            <div>
+                                                                <p className="font-medium text-slate-900">{emp?.adminId?.name || 'Unknown'}</p>
+                                                                <p className="text-xs text-slate-500">{emp?.adminId?.email || ''}</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <div className="flex items-center gap-2">
+                                                            <FileText className="w-4 h-4 text-slate-400 shrink-0" />
+                                                            <span className="font-medium text-slate-800">{doc.name}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-4 text-slate-600">
+                                                        {new Date(doc.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
+                                                    </td>
+                                                    <td className="px-6 py-4 text-right">
+                                                        <div className="flex items-center justify-end gap-2">
+                                                            <button onClick={() => openPreview(doc)} className="p-1.5 text-orange-500 hover:bg-orange-50 rounded-lg transition-colors" title="Preview">
+                                                                <Eye className="w-4 h-4" />
+                                                            </button>
+                                                            <a href={doc.url} download target="_blank" rel="noopener noreferrer" className="p-1.5 text-orange-500 hover:bg-orange-50 rounded-lg transition-colors" title="Download">
+                                                                <Download className="w-4 h-4" />
+                                                            </a>
+                                                            <button onClick={() => handleDelete(doc._id, doc.name)} className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
+                                                                <Trash2 className="w-4 h-4" />
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
+                    </div>
                 )}
             </div>
 
@@ -248,16 +397,54 @@ export default function HrmsEmployeeDocs() {
                     <div className="bg-white rounded-2xl w-full max-w-md shadow-xl overflow-hidden">
                         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
                             <h3 className="font-bold text-slate-900">
-                                {documents[selectedEmployee?._id] ? 'Replace' : 'Upload'} Offer Letter
+                                {uploadType === 'Offer Letter'
+                                    ? `${offerLetterDocs[selectedEmployee?._id] ? 'Replace' : 'Upload'} Offer Letter`
+                                    : 'Upload Document'
+                                }
                             </h3>
                             <button onClick={closeUploadModal} className="text-slate-400 hover:text-slate-600">
                                 <X className="w-5 h-5" />
                             </button>
                         </div>
                         <div className="p-6">
-                            <p className="text-sm text-slate-600 mb-4">
-                                Employee: <span className="font-semibold text-slate-900">{selectedEmployee?.adminId?.name}</span>
-                            </p>
+                            {/* Employee selector for Other Docs when no employee pre-selected */}
+                            {uploadType === 'Other' && !selectedEmployee ? (
+                                <div className="mb-4">
+                                    <label className="block text-sm font-semibold text-slate-700 mb-2">Select Employee</label>
+                                    <select
+                                        className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/30 bg-white"
+                                        value=""
+                                        onChange={(e) => {
+                                            const emp = employees.find(em => em._id === e.target.value);
+                                            if (emp) setSelectedEmployee(emp);
+                                        }}
+                                    >
+                                        <option value="">-- Choose Employee --</option>
+                                        {employees.map(emp => (
+                                            <option key={emp._id} value={emp._id}>{emp.adminId?.name || 'Unknown'} ({emp.adminId?.email || ''})</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            ) : (
+                                <p className="text-sm text-slate-600 mb-4">
+                                    Employee: <span className="font-semibold text-slate-900">{selectedEmployee?.adminId?.name}</span>
+                                </p>
+                            )}
+
+                            {/* Document Name field for Other Docs */}
+                            {uploadType === 'Other' && (
+                                <div className="mb-4">
+                                    <label className="block text-sm font-semibold text-slate-700 mb-2">Document Name <span className="text-red-500">*</span></label>
+                                    <input
+                                        type="text"
+                                        value={docName}
+                                        onChange={(e) => setDocName(e.target.value)}
+                                        placeholder="e.g. Experience Certificate, NDA, ID Proof..."
+                                        maxLength={100}
+                                        className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/30"
+                                    />
+                                </div>
+                            )}
                             
                             <div 
                                 className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors ${preview ? 'border-orange-500 bg-orange-50' : 'border-slate-200 hover:border-orange-500 hover:bg-orange-50/50'}`}
@@ -288,7 +475,11 @@ export default function HrmsEmployeeDocs() {
                                 <button onClick={closeUploadModal} className="px-4 h-10 text-slate-600 font-medium hover:bg-slate-100 rounded-xl transition-colors text-sm">
                                     Cancel
                                 </button>
-                                <button onClick={handleUpload} disabled={!file || uploading} className="px-4 h-10 bg-orange-500 text-white font-medium rounded-xl hover:bg-orange-600 transition-colors disabled:opacity-50 flex items-center gap-2 text-sm">
+                                <button 
+                                    onClick={handleUpload} 
+                                    disabled={!file || uploading || (uploadType === 'Other' && !selectedEmployee) || (uploadType === 'Other' && !docName.trim())} 
+                                    className="px-4 h-10 bg-orange-500 text-white font-medium rounded-xl hover:bg-orange-600 transition-colors disabled:opacity-50 flex items-center gap-2 text-sm"
+                                >
                                     {uploading && <Loader2 className="w-4 h-4 animate-spin" />}
                                     {uploading ? 'Uploading...' : 'Save Document'}
                                 </button>

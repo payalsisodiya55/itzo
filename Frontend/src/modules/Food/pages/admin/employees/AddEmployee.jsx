@@ -208,6 +208,7 @@ export default function AddEmployee() {
         navigate("/ecs/food/employees")
       }
     } catch (error) {
+      console.error("[AddEmployee Error Response]:", error.response?.data);
       toast.error(error.response?.data?.message || "Failed to add employee")
     } finally {
       setLoading(false)

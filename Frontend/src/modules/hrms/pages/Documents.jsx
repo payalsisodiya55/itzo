@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '@core/api/axios';
-import { FileText, Loader2, Download, ExternalLink, Image as ImageIcon, X, ZoomIn } from 'lucide-react';
+import { FileText, Loader2, Download, X, ZoomIn } from 'lucide-react';
 
 export default function Documents() {
     const [documents, setDocuments] = useState([]);
@@ -20,14 +20,6 @@ export default function Documents() {
         };
         fetch();
     }, []);
-
-    const typeColors = {
-        'Payslip': 'bg-emerald-50 text-emerald-700',
-        'Aadhaar': 'bg-violet-50 text-violet-700',
-        'PAN': 'bg-amber-50 text-amber-700',
-        'Certificate': 'bg-cyan-50 text-cyan-700',
-        'Resume': 'bg-pink-50 text-pink-700',
-    };
 
     const offerLetter = documents.find(d => d.documentType === 'Offer Letter');
     const otherDocuments = documents.filter(d => d.documentType !== 'Offer Letter');
@@ -119,28 +111,43 @@ export default function Documents() {
                 ) : (
                     <div className="p-5 h-full">
                         {otherDocuments.length === 0 ? (
-                            <div className="text-center p-12">
-                                <FileText className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-                                <p className="text-slate-500 font-medium">No other documents found</p>
+                            <div className="flex flex-col items-center justify-center text-center p-12 h-full">
+                                <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6 shadow-inner border border-slate-100">
+                                    <FileText className="w-10 h-10 text-slate-300" />
+                                </div>
+                                <h3 className="text-xl font-bold text-slate-900 mb-2">No Other Documents</h3>
+                                <p className="text-slate-500 max-w-sm mx-auto">
+                                    No additional documents have been uploaded yet. Please contact HR.
+                                </p>
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {otherDocuments.map(doc => (
-                                    <div key={doc._id} className="border border-slate-200 rounded-xl p-4 hover:shadow-md hover:border-orange-200 transition-all group">
-                                        <div className="flex items-start justify-between mb-3">
-                                            <div className={`px-2.5 py-1 rounded-full text-xs font-semibold ${typeColors[doc.documentType] || 'bg-slate-100 text-slate-600'}`}>
-                                                {doc.documentType}
+                                    <div key={doc._id} className="border border-slate-200 rounded-xl overflow-hidden hover:shadow-md hover:border-orange-200 transition-all group">
+                                        <div className="h-36 bg-slate-100 relative overflow-hidden border-b border-slate-200">
+                                            <img 
+                                                src={doc.url} 
+                                                alt={doc.name} 
+                                                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                                            />
+                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3 backdrop-blur-[2px]">
+                                                <button onClick={() => openPreview(doc.url)} className="p-2.5 bg-white text-slate-900 rounded-full hover:bg-orange-50 hover:text-orange-600 transition-colors shadow-lg" title="Full-Screen Preview">
+                                                    <ZoomIn className="w-4 h-4" />
+                                                </button>
+                                                <a href={doc.url} download target="_blank" rel="noopener noreferrer" className="p-2.5 bg-white text-slate-900 rounded-full hover:bg-orange-50 hover:text-orange-600 transition-colors shadow-lg" title="Download">
+                                                    <Download className="w-4 h-4" />
+                                                </a>
                                             </div>
-                                            <a href={doc.url} target="_blank" rel="noopener noreferrer"
-                                                className="p-1.5 rounded-lg text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-colors">
-                                                <ExternalLink className="w-4 h-4" />
-                                            </a>
                                         </div>
-                                        <h3 className="font-semibold text-slate-900 text-sm mb-1 truncate">{doc.name}</h3>
-                                        <p className="text-xs text-slate-400">
-                                            {doc.month && doc.year ? `${doc.month}/${doc.year} · ` : ''}
-                                            {new Date(doc.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
-                                        </p>
+                                        <div className="p-4">
+                                            <div className="flex items-center gap-2 mb-1">
+                                                <FileText className="w-4 h-4 text-orange-500 shrink-0" />
+                                                <h3 className="font-semibold text-slate-900 text-sm truncate">{doc.name}</h3>
+                                            </div>
+                                            <p className="text-xs text-slate-400 pl-6">
+                                                {new Date(doc.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })}
+                                            </p>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
